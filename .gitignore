@@ -1,0 +1,6 @@
+*.dSYM
+build
+test/build
+*.yaml
+main
+test/run_tests
