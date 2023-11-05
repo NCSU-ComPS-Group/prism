@@ -1,0 +1,3124 @@
+Xsec_based:
+
+    - ID: 1
+      name: E + Ar -> E + Ar, Elastic
+    
+      Xsec_file: "../cross-sections/Ar/Ar1.txt"
+
+      Rtype: elastic
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar"]
+
+      Param:
+            e_thresh: 0
+            m_M: 0.0000136
+  
+    - ID: 2
+      name: E + Ar -> E + Ar(1S5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar2.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar(1S5)"]
+
+      Param:
+            e_thresh: 11.548
+            m_M: 0  
+
+    - ID: 3
+      name: E + Ar -> E + Ar(1S4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar3.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar(1S4)"]
+
+      Param:
+            e_thresh: 11.624
+            m_M: 0
+  
+    - ID: 4
+      name: E + Ar -> E + Ar(1S3), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar4.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar(1S3)"]
+
+      Param:
+            e_thresh: 11.723
+            m_M: 0
+
+
+    - ID: 5
+      name: E + Ar -> E + Ar(1S2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar5.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar(1S2)"]
+
+      Param:
+            e_thresh: 11.828
+            m_M: 0
+
+    - ID: 6
+      name: E + Ar -> E + Ar(2P10), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar6.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 12.907
+            m_M: 0
+              
+    - ID: 7
+      name: E + Ar -> E + Ar(2P9), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar7.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.076
+            m_M: 0  
+
+    - ID: 8
+      name: E + Ar -> E + Ar(2P8), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar8.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.095
+            m_M: 0
+  
+    - ID: 9
+      name: E + Ar -> E + Ar(2P7), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar9.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.153
+            m_M: 0
+
+
+    - ID: 10
+      name: E + Ar -> E + Ar(2P6), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar10.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.172
+            m_M: 0
+
+    - ID: 11
+      name: E + Ar -> E + Ar(2P5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar11.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.273
+            m_M: 0
+
+    - ID: 12
+      name: E + Ar -> E + Ar(2P4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar12.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.283
+            m_M: 0  
+
+    - ID: 13
+      name: E + Ar -> E + Ar(2P3), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar13.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.302
+            m_M: 0
+  
+    - ID: 14
+      name: E + Ar -> E + Ar(2P2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar14.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.328
+            m_M: 0
+
+
+    - ID: 15
+      name: E + Ar -> E + Ar(2P1), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar15.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.48
+            m_M: 0
+
+    - ID: 16
+      name: E + Ar -> E + Ar(3D6), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar16.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.845
+            m_M: 0
+              
+    - ID: 17
+      name: E + Ar -> E + Ar(3D5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar17.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.864
+            m_M: 0  
+
+    - ID: 18
+      name: E + Ar -> E + Ar(3D3), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar18.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.903
+            m_M: 0
+  
+    - ID: 19
+      name: E + Ar -> E + Ar(3D4!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar19.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.979
+            m_M: 0
+
+    - ID: 20
+      name: E + Ar -> E + Ar(3D4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar20.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.013
+            m_M: 0
+
+    - ID: 21
+      name: E + Ar -> E + Ar(3D1!!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar21.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.063
+            m_M: 0
+
+    - ID: 22
+      name: E + Ar -> E + Ar(2S5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar22.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.068
+            m_M: 0  
+
+    - ID: 23
+      name: E + Ar -> E + Ar(2S4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar23.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.09
+            m_M: 0
+  
+    - ID: 24
+      name: E + Ar -> E + Ar(3D1!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar24.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.099
+            m_M: 0
+
+
+    - ID: 25
+      name: E + Ar -> E + Ar(3D2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar25.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.153
+            m_M: 0
+
+    - ID: 26
+      name: E + Ar -> E + Ar(3S1!!!!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar26.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.214
+            m_M: 0
+              
+    - ID: 27
+      name: E + Ar -> E + Ar(3S1!!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar27.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.234
+            m_M: 0  
+
+    - ID: 28
+      name: E + Ar -> E + Ar(3S1!!!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar28.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.236
+            m_M: 0
+  
+    - ID: 29
+      name: E + Ar -> E + Ar(2S3), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar29.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.241
+            m_M: 0
+
+
+    - ID: 30
+      name: E + Ar -> E + Ar(2S2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar30.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.255
+            m_M: 0
+
+    - ID: 31
+      name: E + Ar -> E + Ar(3S1!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar31.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.304
+            m_M: 0
+
+    - ID: 32
+      name: E + Ar -> E + Ar(4D5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar32.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.711
+            m_M: 0  
+
+    - ID: 33
+      name: E + Ar -> E + Ar(3S4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar33.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.848
+            m_M: 0
+  
+    - ID: 34
+      name: E + Ar -> E + Ar(2P2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar34.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 13.328
+            m_M: 0
+
+
+    - ID: 35
+      name: E + Ar -> E + Ar(4D2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar35.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 14.859
+            m_M: 0
+
+    - ID: 36
+      name: E + Ar -> E + Ar(4S1!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar36.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.004
+            m_M: 0
+              
+    - ID: 37
+      name: E + Ar -> E + Ar(3S2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar37.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.022
+            m_M: 0  
+
+    - ID: 38
+      name: E + Ar -> E + Ar(5D5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar38.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.118
+            m_M: 0
+  
+    - ID: 39
+      name: E + Ar -> E + Ar(4S4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar39.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.186
+            m_M: 0
+
+    - ID: 40
+      name: E + Ar -> E + Ar(5D2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar40.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.19
+            m_M: 0
+      
+    - ID: 41
+      name: E + Ar -> E + Ar(6D5), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar41.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.308
+            m_M: 0
+  
+    - ID: 42
+      name: E + Ar -> E + Ar(5S1!), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar42.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.351
+            m_M: 0
+
+    - ID: 43
+      name: E + Ar -> E + Ar(4S2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar43.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.36
+            m_M: 0
+
+    - ID: 44
+      name: E + Ar -> E + Ar(5S4), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar44.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.366
+            m_M: 0
+      
+    - ID: 45
+      name: E + Ar -> E + Ar(6D2), Excitation
+    
+      Xsec_file: "../cross-sections/Ar/Ar45.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E", "Ar**"]
+
+      Param:
+            e_thresh: 15.374
+            m_M: 0
+
+    - ID: 46
+      name: E + Ar -> E + E + Ar+, Ionization
+    
+      Xsec_file: "../cross-sections/Ar/Ar46.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E", "Ar"]
+
+      Products: [ "E","E", "Ar+"]
+
+      Param:
+            e_thresh: 15.76
+            m_M: 0
+
+    - ID: 47
+      name: E + CF4 = CF3 + F + e. table 21
+
+      Xsec_file: "../cross-sections/CF4/CF4_dissoc_CF3_F.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["E","CF3","F"]
+
+      Param:
+            e_thresh: 12.5
+            m_M: 0 
+
+    - ID: 48
+      name: e + CF4 = CF2 + F + F + e. table 21
+
+      Xsec_file: "../cross-sections/CF4/CF4_dissoc_CF2_F_F.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["E","CF2","F","F"]
+
+      Param:
+            e_thresh: 14
+            m_M: 0
+
+    - ID: 49
+      name: e + CF4 = CF + F + F + F + e. table 21
+
+      Xsec_file: "../cross-sections/CF4/CF4_dissoc_CF_F_F_F.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["E","CF","F","F","F"]
+
+      Param:
+            e_thresh: 15
+            m_M: 0
+            
+    - ID: 50
+
+      name: e + CF4 = CF3+ + F + e + e. table 13
+
+      Xsec_file: "../cross-sections/CF4/CF4_iz_CF3.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["CF3+","F","E","E"]
+
+      Param:
+            e_thresh: 14.7
+            m_M: 0
+            
+    - ID: 51
+
+      name: e + CF4 = CF2+ + F + F + e + e. table 13
+
+      Xsec_file: "../cross-sections/CF4/CF4_iz_CF2.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["CF2+","F","F","E","E"]
+
+      Param:
+            e_thresh: 20.19
+            m_M: 0
+            
+    - ID: 52
+
+      name: e + CF4 = CF+ + F + F + F + e + e. table 13
+
+      Xsec_file: "../cross-sections/CF4/CF4_iz_CF.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["CF+","F","F","F","E","E"]
+
+      Param:
+            e_thresh: 23.7
+            m_M: 0
+            
+    
+    - ID: 55
+
+      name: e + CF3 = CF2+ + F + e + e. table 32
+
+      Xsec_file: "../cross-sections/CF4/CF3_iz_CF2.txt"
+
+      Rtype: ionizaiton
+
+      Reactants: [ "E","CF3" ]
+
+      Products: ["CF2+","F","E","E"]
+
+      Param:
+            e_thresh: 17.1
+            m_M: 0
+            
+
+    - ID: 56
+
+      name: e + CF2 = CF2+ + e + e. table 33
+
+      Xsec_file: "../cross-sections/CF4/CF2_iz.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","CF2" ]
+
+      Products: ["CF2+","E","E"]
+
+      Param:
+            e_thresh: 14.6
+            m_M: 0
+            
+            
+    - ID: 58
+
+      name: e + CF = CF+ + e + e. table 31
+
+      Xsec_file: "../cross-sections/CF4/CF_iz.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","CF" ]
+
+      Products: ["CF+","E","E"]
+
+      Param:
+            e_thresh: 5.42
+            m_M: 0
+            
+    - ID: 59
+
+      name: e + F = F+ + e + e. BSR
+
+      Xsec_file: "../cross-sections/CF4/F_iz.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","F" ]
+
+      Products: ["F+","E","E"]
+
+      Param:
+            e_thresh: 17.687
+            m_M: 0
+            
+    - ID: 60
+
+      name: e + F2 = F- + F. siglo
+
+      Xsec_file: "../cross-sections/CF4/F2_att.txt"
+
+      Rtype: attachment
+
+      Reactants: [ "E","F2" ]
+
+      Products: ["F+","F-"]
+
+      Param:
+            e_thresh: 0
+            m_M: 0
+            
+    - ID: 61
+
+      name: e + F2 = F + F + e. siglo
+
+      Xsec_file: "../cross-sections/CF4/F2_diss.txt"
+
+      Rtype: excitation
+
+      Reactants: [ "E","F2" ]
+
+      Products: ["F","F","E"]
+
+      Param:
+            e_thresh: 3.16
+            m_M: 0
+            
+    - ID: 62
+
+      name: e + F2 = F2+ + 2e. siglo
+
+      Xsec_file: "../cross-sections/CF4/F2_iz.txt"
+
+      Rtype: ionization
+
+      Reactants: [ "E","F2" ]
+
+      Products: ["F2+","E","E"]
+
+      Param:
+            e_thresh: 15.69
+            m_M: 0
+
+    - ID: 63
+
+      name: e + CF4 = F- + CF3, Bonham Table IV
+
+      Xsec_file: "../cross-sections/CF4/CF4_dissoc_att_CF3.txt"
+
+      Rtype: attachment
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["F-","CF3"]
+
+      Param:
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 64
+
+      name: e + CF4 = F + CF3-, Bonham Table IV
+
+      Xsec_file: "../cross-sections/CF4/CF4_dissoc_att_F.txt"
+
+      Rtype: attachment
+
+      Reactants: [ "E","CF4" ]
+
+      Products: ["F","CF3-"]
+
+      Param:
+            e_thresh: 0
+            m_M: 0
+
+Rate_based:
+#CFx only Tg based
+    - ID: 1
+      name: e + CF3+ = CF3.
+      Reactants: [ "E","CF3+" ]
+      Products: ["CF3"]
+      Param:
+            A: 6.0e-14  # 5e-7 to be read using pow(5,-7)
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+  
+    - ID: 2
+      name: e + CF2+ = CF2.
+      Reactants: [ "E","CF2+" ]
+      Products: ["CF2"]
+      Param:
+            A: 6.0e-14 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+            
+    - ID: 3
+      name: F- + CF3 = CF4 + e.
+      Reactants: [ "F-","CF3" ]
+      Products: ["E","CF4"]
+      Param:
+            A: 5.0e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 4
+      name: F- + CF2 = CF3 + e.
+      Reactants: [ "F-","CF2" ]
+      Products: ["E","CF3"]
+      Param:
+            A: 3.0e-16
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 5
+      name: F- + CF = CF2 + e.
+      Reactants: [ "F-","CF" ]
+      Products: ["E","CF2"]
+      Param:
+            A: 2.0e-16
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+                
+    - ID: 6
+      name: F- + C = CF + e.
+      Reactants: [ "F-","C" ]
+      Products: ["E","CF"]
+      Param:
+            A: 1.0e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+            
+    - ID: 7
+      name: F- + F = F2 + e.
+      Reactants: [ "F-","F" ]
+      Products: ["E","F2"]
+      Param:
+            A: 1.0e-16
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+           
+    - ID: 8
+      name: F- + CF3+ = CF3 + F.
+      Reactants: [ "F-","CF3+" ]
+      Products: ["CF3","F"]
+      Param:
+            A: 4.0e-13 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0   
+
+    - ID: 9
+      name: F- + CF2+ = CF2 + F.
+      Reactants: [ "F-","CF2+" ]
+      Products: ["CF2","F"]
+      Param:
+            A: 4.0e-13  
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 10
+      name: F- + CF+ = CF + F.
+      Reactants: [ "F-","CF+" ]
+      Products: ["CF","F"]
+      Param:
+            A: 4.0e-13 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 11
+      name: CF2+ + CF4 = CF3+ + CF3.
+      Reactants: [ "CF2+","CF4" ]
+      Products: ["CF3+","CF3"]
+      Param:
+            A: 4.0e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 12
+      name: CF2+ + CF3 = CF3+ + CF2.
+      Reactants: [ "CF2+","CF3" ]
+      Products: ["CF3+","CF2"]
+      Param:
+            A: 1.48e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 13
+      name: CF2+ + CF2 = CF2+ + CF2.
+      Reactants: [ "CF2+","CF2" ]
+      Products: ["CF2+","CF2"]
+      Param:
+            A: 1.0e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 14
+      name: CF2+ + CF = CF3+ + C.
+      Reactants: [ "CF2+","CF" ]
+      Products: ["CF3+","C"]
+      Param:
+            A: 1.0e-15   
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 15
+      name: CF2+ + C = CF+ + CF.
+      Reactants: [ "CF2+","C" ]
+      Products: ["CF+","CF"]
+      Param:
+            A: 1.04e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 16
+      name: CF+ + CF4 = CF3+ + CF2.
+      Reactants: [ "CF+","CF4" ]
+      Products: ["CF3+","CF2"]
+      Param:
+            A: 1.8e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 17
+      name: CF+ + CF3 = CF2+ + CF.
+      Reactants: [ "CF+","CF3" ]
+      Products: ["CF2+","CF"]
+      Param:
+            A: 1.71e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 18
+      name: CF+ + CF2 = CF2+ + CF.
+      Reactants: [ "CF+","CF2" ]
+      Products: ["CF2+","CF"]
+      Param:
+            A: 1.0e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+
+    - ID: 21
+      name: F+ + CF3 = CF2+ + F2.
+      Reactants: [ "F+","CF3" ]
+      Products: ["CF2+","F2"]
+      Param:
+            A: 2.9e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 22
+      name: F+ + CF2 = CF+ + F2.
+      Reactants: [ "F+","CF2" ]
+      Products: ["CF+","F2"]
+      Param:
+            A: 2.28e-15 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 23
+      name: F+ + CF = CF+ + F.
+      Reactants: [ "F+","CF" ]
+      Products: ["CF+","F"]
+      Param:
+            A: 1.0e-15   
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 24
+      name: F+ + CF4 = CF3+ + F2.
+      Reactants: [ "F+","CF4" ]
+      Products: ["CF3+","F2"]
+      Param:
+            A: 1.0e-15   
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 25
+      name: F+ + CF3 = CF3+ + F.
+      Reactants: [ "F+","CF3" ]
+      Products: ["CF3+","F"]
+      Param:
+            A: 1.0e-15   
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 26
+      name: CF3 + F = CF4.
+      Reactants: [ "CF3","F" ]
+      Products: ["CF4"]
+      Param:
+            A: 2.0e-17  
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 27
+      name: CF2 + F = CF3.
+      Reactants: [ "CF2","F" ]
+      Products: ["CF3"]
+      Param:
+            A: 1.8e-17  
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 28
+      name: CF + F = CF2.
+      Reactants: [ "CF","F" ]
+      Products: ["CF2"]
+      Param:
+            A: 9.96e-17  
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 29
+      name: F + F + CF4 = F2 + CF4.
+      Reactants: [ "F","F","CF4" ]
+      Products: ["F2","CF4"]
+      Param:
+            A: 6.77e-40
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: F + F + Ar = F2 + Ar.
+      Reactants: [ "F","F","Ar" ]
+      Products: ["F2","Ar"]
+      Param:
+            A: 6.77e-40 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 31
+      name: CF2 + F2 = CF3 + F.
+      Reactants: [ "CF2","F2" ]
+      Products: ["CF3","F"]
+      Param:
+            A: 8.3e-14  
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+# Ar only all Tg dependent except commented
+    # radiative decay
+    - ID: 32 
+      name: Ar(1S4) = Ar
+      Reactants: ["Ar(1S4)"]
+      Products: ["Ar"]
+      Param:
+            A: 1.32e+8 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database"
+
+    - ID: 33 
+      name: Ar(1s2) = Ar
+      Reactants: ["Ar(1S2)"]
+      Products: ["Ar"]
+      Param:
+            A: 5.32e+8 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database"
+
+    - ID: 34
+      name: Ar** = Ar(1S2)
+      Reactants: ["Ar**"]
+      Products: ["Ar(1S2)"]
+      Param:
+            A: 1.9e+5 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database" 
+
+    - ID: 35
+      name: Ar** = Ar(1S3)
+      Reactants: ["Ar**"]
+      Products: ["Ar(1S3)"]
+      Param:
+            A: 9.8e+5
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database"  
+
+    - ID: 36
+      name: Ar** = Ar(1S4)
+      Reactants: ["Ar**"]
+      Products: ["Ar(1S4)"]
+      Param:
+            A: 5.4e+6
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database"  
+
+    - ID: 37
+      name: Ar** = Ar(1S5)
+      Reactants: ["Ar**"]
+      Products: ["Ar(1S5)"]
+      Param:
+            A: 1.89e+7
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "NIST Atomic Spectra Database" 
+
+    - ID: 38
+      name: Ar2* = Ar + Ar
+      Reactants: ["Ar2*"]
+      Products: ["Ar","Ar"]
+      Param:
+            A: 3.03e+8 #3.3 ns lifetime ,different A in Kannari, Fujioka
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "E. Morikawa, R. Reininger, P. Gurtler, V. Saile, P. Laporte, Argon, krypton, and xenon excimer luminescence: From the dilute gas to the condensed phase, J. Chem. Phys. 91, 1469 (1989); https://doi.org/10.1063/1.457108" 
+    
+    #associative
+    - ID: 39
+      name: Ar(1s5) + Ar + CF4 = Ar2* + CF4 # M based
+      Reactants: [ "Ar(1S5)","Ar","CF4"]
+      Products: ["Ar2*","CF4"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 39
+      name: Ar(1s5) + Ar + Ar = Ar2* + Ar # M based
+      Reactants: [ "Ar(1S5)","Ar","Ar"]
+      Products: ["Ar2*","Ar"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 40
+      name: Ar(1s4) + Ar + CF4 = Ar2* + CF4 #M based
+      Reactants: [ "Ar(1S4)","Ar","CF4"]
+      Products: ["Ar2*","CF4"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 40
+      name: Ar(1s4) + Ar + Ar = Ar2* + Ar #M based
+      Reactants: [ "Ar(1S4)","Ar","Ar"]
+      Products: ["Ar2*","Ar"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 41
+      name: Ar(1s3) + Ar + CF4 = Ar2* + CF4 #M based
+      Reactants: [ "Ar(1S3)","Ar","CF4"]
+      Products: ["Ar2*","CF4"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 41
+      name: Ar(1s3) + Ar + Ar = Ar2* + Ar #M based
+      Reactants: [ "Ar(1S3)","Ar","Ar"]
+      Products: ["Ar2*","Ar"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 42
+      name: Ar(1s2) + Ar + CF4 = Ar2* + CF4 #M based
+      Reactants: [ "Ar(1S2)","Ar","CF4"]
+      Products: ["Ar2*","CF4"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 42
+      name: Ar(1s2) + Ar + Ar = Ar2* + Ar #M based
+      Reactants: [ "Ar(1S2)","Ar","Ar"]
+      Products: ["Ar2*","Ar"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 43
+      name: Ar** + Ar + CF4 = Ar2* + CF4  #M based
+      Reactants: [ "Ar**","Ar","CF4"]
+      Products: ["Ar2*","CF4"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+
+    - ID: 43
+      name: Ar** + Ar + M = Ar2* + Ar  #M based
+      Reactants: [ "Ar**","Ar","Ar"]
+      Products: ["Ar2*","Ar"]
+      Param:
+            A: 3.6e-45 
+            ng:  -0.6
+            Eg:  -0.007
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: "W. Wieme and J. Lenaerts: Argon. krypton. and xenon afterglows, J. Chem. Phys. 74(1).1 Jan. 1981 - for Ar(1s5)"
+    # Penning
+    - ID: 44
+      name: Ar(1S5) + Ar(1S4) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S5)","Ar(1S4)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.412
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S5) + Ar(1S3) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S5)","Ar(1S3)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.511
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S5) + Ar(1S2) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S5)","Ar(1S2)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.616
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S5) + Ar** = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S5)","Ar**"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.695
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S4) + Ar(1S3) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S4)","Ar(1S3)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.587
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S4) + Ar(1S2) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S4)","Ar(1S2)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.692
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S4) + Ar** = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S4)","Ar**"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.771
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S3) + Ar(1S2) = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S3)","Ar(1S2)"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.791
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S3) + Ar** = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S3)","Ar**"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.87
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 44
+      name: Ar(1S2) + Ar** = Ar+ + Ar + e  
+      Reactants: [ "Ar(1S2)","Ar**"]
+      Products: ["Ar+","Ar","E"]
+      Param:
+            A: 6.3e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.975
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+
+    - ID: 35
+      name: Ar(1S5) + Ar(1S4) = Ar2+ + e
+      Reactants: [ "Ar(1S5)","Ar(1S4)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.412
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S5) + Ar(1S3) = Ar2+ + e
+      Reactants: [ "Ar(1S5)","Ar(1S3)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.511
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S5) + Ar(1S2) = Ar2+ + e
+      Reactants: [ "Ar(1S5)","Ar(1S2)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.616
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S5) + Ar** = Ar2+ + e
+      Reactants: [ "Ar(1S5)","Ar**"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.695
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S4) + Ar(1S3) = Ar2+ + e
+      Reactants: [ "Ar(1S4)","Ar(1S3)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.587
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S4) + Ar(1S2) = Ar2+ + e
+      Reactants: [ "Ar(1S4)","Ar(1S2)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.692
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S4) + Ar** = Ar2+ + e
+      Reactants: [ "Ar(1S4)","Ar**"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.771
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S3) + Ar(1S2) = Ar2+ + e
+      Reactants: [ "Ar(1S3)","Ar(1S2)"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -7.791
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S3) + Ar** = Ar2+ + e
+      Reactants: [ "Ar(1S3)","Ar**"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.87
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+    - ID: 35
+      name: Ar(1S2) + Ar** = Ar2+ + e
+      Reactants: [ "Ar(1S2)","Ar**"]
+      Products: ["Ar2+","E"]
+      Param:
+            A: 5.7e-16 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: -8.975
+            m_M: 0
+      Ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+
+
+    #recombination
+    - ID: 36
+      name: Ar+ + e + e = Ar(1S5) + e
+      Reactants: ["Ar+","E","E"]
+      Products: ["Ar(1S5)","E"]
+      Param:
+            A: 5.0e-33
+            ng:  0
+            Eg:  0
+            ne:  -4.5 # Te based! assumed form A*Te^n, with Te in eV
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: " M. A. Biondi in “Principles of Laser Plasmas” ed. G. Bekefi (Wiley, New York, 1976), Ch. 4."
+    - ID: 37
+      name: Ar+ + e = Ar(1S5)
+      Reactants: ["Ar+","E"]
+      Products: ["Ar(1S5)"]
+      Param:
+            A: 4.0e-19 
+            ng:  0
+            Eg:  0
+            ne:  -0.5 # Te based! assumed form A*Te^n, with Te in eV
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+      Ref: " M. A. Biondi in “Principles of Laser Plasmas” ed. G. Bekefi (Wiley, New York, 1976), Ch. 4." 
+# Ar/CFx
+
+#unknown reactions
+    - ID: 1
+      name: CF3- + Ar+ = CF3 + Ar**
+      Reactants: ["CF3-","Ar+"]
+      Products: ["CF3","Ar**"]
+      Param:
+            A: 1.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work " 
+
+    - ID: 2
+      name: CF3- + Ar2+ = CF3 + Ar** + Ar
+      Reactants: ["CF3-","Ar2+"]
+      Products: ["CF3","Ar**","Ar"]
+      Param:
+            A: 1.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work " 
+
+    - ID: 3
+      name: Ar+ + Ar = Ar+ + Ar
+      Reactants: ["Ar+","Ar"]
+      Products: ["Ar+","Ar"]
+      Param:
+            A: 5.66e-16 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: "AP"
+
+    - ID: 4
+      name: Ar+ + Ar** = Ar + Ar+
+      Reactants: ["Ar+","Ar**"]
+      Products: ["Ar","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 4
+      name: Ar+ + Ar(1S5) = Ar + Ar+
+      Reactants: ["Ar+", "Ar(1S5)"]
+      Products: ["Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 4
+      name: Ar+ + Ar(1S4) = Ar + Ar+
+      Reactants: ["Ar+", "Ar(1S4)"]
+      Products: ["Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 4
+      name: Ar+ + Ar(1S3) = Ar + Ar+
+      Reactants: ["Ar+", "Ar(1S3)"]
+      Products: ["Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 4
+      name: Ar+ + Ar(1S2) = Ar + Ar+
+      Reactants: ["Ar+", "Ar(1S2)"]
+      Products: ["Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 5
+      name: Ar+ + Ar2* = Ar2+ + Ar
+      Reactants: ["Ar+","Ar2*"]
+      Products: ["Ar2+","Ar"]
+      Param:
+            A: 1.00e-17 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: "EST"
+
+    - ID: 6
+      name: Ar+ + F2 = F2+ + Ar
+      Reactants: ["Ar+","F2"]
+      Products: ["F2+","Ar"]
+      Param:
+            A: 1.00e-17 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: "EST"
+
+    - ID: 7
+      name: Ar+ + CF4 = Ar + CF3+ + F
+      Reactants: ["Ar+","CF4"]
+      Products: ["Ar","CF3+","F"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: "gas based ignore 0.97"
+
+    - ID: 8
+      name: Ar+ + CF3 = Ar + CF3+
+      Reactants: ["Ar+","CF3"]
+      Products: ["Ar","CF3+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 9
+      name: Ar+ + CF2 = Ar + CF2+
+      Reactants: ["Ar+","CF2"]
+      Products: ["Ar","CF2+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 10
+      name: Ar+ + CF = Ar + CF+
+      Reactants: ["Ar+","CF"]
+      Products: ["Ar","CF+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+    - ID: 11
+      name: Ar2+ + Ar** = Ar + Ar + Ar+
+      Reactants: ["Ar2+","Ar**"]
+      Products: ["Ar","Ar","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 11
+      name: Ar2+ + Ar(1S5) = Ar + Ar + Ar+
+      Reactants: ["Ar2+", "Ar(1S5)"]
+      Products: ["Ar", "Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 11
+      name: Ar2+ + Ar(1S4) = Ar + Ar + Ar+
+      Reactants: ["Ar2+", "Ar(1S4)"]
+      Products: ["Ar", "Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 11
+      name: Ar2+ + Ar(1S3) = Ar + Ar + Ar+
+      Reactants: ["Ar2+", "Ar(1S3)"]
+      Products: ["Ar", "Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 11
+      name: Ar2+ + Ar(1S2) = Ar + Ar + Ar+
+      Reactants: ["Ar2+", "Ar(1S2)"]
+      Products: ["Ar", "Ar", "Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 12
+      name: Ar2+ + Ar2* = Ar2+ + Ar2*
+      Reactants: ["Ar2+","Ar2*"]
+      Products: ["Ar2+","Ar2*"]
+      Param:
+            A: 1.00e-15 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: "EST"
+
+    - ID: 13
+      name: Ar2+ + CF3 = Ar + Ar + CF3+
+      Reactants: ["Ar2+","CF3"]
+      Products: ["Ar","Ar","CF3+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 14
+      name: Ar2+ + CF2 = Ar + Ar + CF2+
+      Reactants: ["Ar2+","CF2"]
+      Products: ["Ar","Ar","CF2+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 15
+      name: Ar2+ + CF = Ar + Ar + CF+
+      Reactants: ["Ar2+","CF"]
+      Products: ["Ar","Ar","CF+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 16
+      name: CF3- + CF3+ = CF2 + F + CF3
+      Reactants: ["CF3-","CF3+"]
+      Products: ["CF2","F","CF3"]
+      Param:
+            A: 2.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 17
+      name: CF3- + CF2+ = CF3 + CF + F
+      Reactants: ["CF3-","CF2+"]
+      Products: ["CF3","CF","F"]
+      Param:
+            A: 2.00e-13 
+            ng: -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 18
+      name: CF3- + CF+ = CF3 + CF
+      Reactants: ["CF3-","CF+"]
+      Products: ["CF3","CF"]
+      Param:
+            A: 2.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 19
+      name: CF3- + C+ = CF3 + C
+      Reactants: ["CF3-","C+"]
+      Products: ["CF3","C"]
+      Param:
+            A: 2.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 20
+      name: CF3- + F+ = CF3 + F*
+      Reactants: ["CF3-","F+"]
+      Products: ["CF3","F*"]
+      Param:
+            A: 2.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 21
+      name: CF3- + F2+ = CF3 + F* + F
+      Reactants: ["CF3-","F2+"]
+      Products: ["CF3","F*","F"]
+      Param:
+            A: 2.00e-13 
+            ng:  -0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+    - ID: 22
+      name: F+ + Ar = Ar+ + F
+      Reactants: ["F+","Ar"]
+      Products: ["Ar+","F"]
+      Param:
+            A: 1.00e-17 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 23
+      name: F+ + Ar** = F + Ar+
+      Reactants: ["F+","Ar**"]
+      Products: ["F","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 23
+      name: F+ + Ar(1S5) = F + Ar+
+      Reactants: ["F+","Ar(1S5)"]
+      Products: ["F","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 23
+      name: F+ + Ar(1S4) = F + Ar+
+      Reactants: ["F+","Ar(1S4)"]
+      Products: ["F","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 23
+      name: F+ + Ar(1S3) = F + Ar+
+      Reactants: ["F+","Ar(1S3)"]
+      Products: ["F","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 23
+      name: F+ + Ar(1S2) = F + Ar+
+      Reactants: ["F+","Ar(1S2)"]
+      Products: ["F","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+
+    - ID: 24
+      name: F+ + Ar2* = Ar2+ + F
+      Reactants: ["F+","Ar2*"]
+      Products: ["Ar2+","F"]
+      Param:
+            A: 1.00e-17 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 25
+      name: F2+ + Ar** = F2 + Ar+
+      Reactants: ["F2+","Ar**"]
+      Products: ["F2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 25
+      name: F2+ + Ar(1S5) = F2 + Ar+
+      Reactants: ["F2+","Ar(1S5)"]
+      Products: ["F2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 25
+      name: F2+ + Ar(1S4) = F2 + Ar+
+      Reactants: ["F2+","Ar(1S4)"]
+      Products: ["F2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 25
+      name: F2+ + Ar(1S3) = F2 + Ar+
+      Reactants: ["F2+","Ar(1S3)"]
+      Products: ["F2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 25
+      name: F2+ + Ar(1S2) = F2 + Ar+
+      Reactants: ["F2+","Ar(1S2)"]
+      Products: ["F2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 26
+      name: F2+ + Ar2* = Ar2+ + F2
+      Reactants: ["F2+","Ar2*"]
+      Products: ["Ar2+","F2"]
+      Param:
+            A: 1.00e-17 
+            ng:  0.0
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 27
+      name: CF3+ + Ar** = CF3 + Ar+
+      Reactants: ["CF3+","Ar**"]
+      Products: ["CF3","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 27
+      name: CF3+ + Ar(1S5) = CF3 + Ar+
+      Reactants: ["CF3+","Ar(1S5)"]
+      Products: ["CF3","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 27
+      name: CF3+ + Ar(1S4) = CF3 + Ar+
+      Reactants: ["CF3+","Ar(1S4)"]
+      Products: ["CF3","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 27
+      name: CF3+ + Ar(1S3) = CF3 + Ar+
+      Reactants: ["CF3+","Ar(1S3)"]
+      Products: ["CF3","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 27
+      name: CF3+ + Ar(1S2) = CF3 + Ar+
+      Reactants: ["CF3+","Ar(1S2)"]
+      Products: ["CF3","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 28
+      name: CF3+ + Ar2* = CF3 + Ar2+
+      Reactants: ["CF3+","Ar2*"]
+      Products: ["CF3","Ar2+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 29
+      name: CF2+ + Ar** = CF2 + Ar+
+      Reactants: ["CF2+","Ar**"]
+      Products: ["CF2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 29
+      name: CF2+ + Ar(1S5) = CF2 + Ar+
+      Reactants: ["CF2+","Ar(1S5)"]
+      Products: ["CF2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 29
+      name: CF2+ + Ar(1S4) = CF2 + Ar+
+      Reactants: ["CF2+","Ar(1S4)"]
+      Products: ["CF2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 29
+      name: CF2+ + Ar(1S3) = CF2 + Ar+
+      Reactants: ["CF2+","Ar(1S3)"]
+      Products: ["CF2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 29
+      name: CF2+ + Ar(1S2) = CF2 + Ar+
+      Reactants: ["CF2+","Ar(1S2)"]
+      Products: ["CF2","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 30
+      name: CF2+ + Ar2* = CF2 + Ar2+
+      Reactants: ["CF2+","Ar2*"]
+      Products: ["CF2","Ar2+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 31
+      name: CF+ + Ar** = CF + Ar+
+      Reactants: ["CF+","Ar**"]
+      Products: ["CF","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 31
+      name: CF+ + Ar(1S5) = CF + Ar+
+      Reactants: ["CF+","Ar(1S5)"]
+      Products: ["CF","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 31
+      name: CF+ + Ar(1S4) = CF + Ar+
+      Reactants: ["CF+","Ar(1S4)"]
+      Products: ["CF","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 31
+      name: CF+ + Ar(1S3) = CF + Ar+
+      Reactants: ["CF+","Ar(1S3)"]
+      Products: ["CF","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 31
+      name: CF+ + Ar(1S2) = CF + Ar+
+      Reactants: ["CF+","Ar(1S2)"]
+      Products: ["CF","Ar+"]
+      Param:
+            A: 1.01e-17 
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+    - ID: 32
+      name: CF+ + Ar2* = CF + Ar2+
+      Reactants: ["CF+","Ar2*"]
+      Products: ["CF","Ar2+"]
+      Param:
+            A: 1.01e-17 
+            ng:  0.5
+            Eg:  0
+            ne:  0 
+            Ee:  0
+            e_thresh: 0
+            m_M: 0
+      Ref: " needs work "
+
+# Reactions to add:
+# - Ar* + Ar = Ar + Ar (collisional quenching) see above ( after ISPC)
+# - Ar(1S5) + Ar = Ar(1S4) + Ar --> for each combination of excited states, from here https://doi.org/10.1063/1.443068 or maybe here: https://doi.org/10.1134/1.2101975, and here: https://iopscience.iop.org/article/10.1088/0022-3727/46/27/275201/pdf (which may be the same as Tian)
+# - Ar+ + Ar + Ar --> Ar2+ + Ar (!)
+# - Ar2* + Ar2* --> Ar2+ + Ar + Ar + e
+# - e + Ar2+ --> Ar + Ar
+# - e + Ar2* --> Ar2+ + e + e (probably only find a rate)
+# - e + Ar2* --> Ar + Ar +e Peng
+#These are from Peng references are in peng multiply 1e-6 if you add more rates as they are in cm-3
+
+    - ID: 1
+      name: Ar(1S5) + Ar = Ar(1S4) + Ar
+      Reactants: ["Ar(1S5)", "Ar"]
+      Products: ["Ar(1S4)", "Ar"]
+      Param:
+            A: 9.3292e-21
+            ng: 0.5
+            Eg: 0.0759
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 2
+      name: Ar(1S4) + Ar = Ar(1S5) + Ar
+      Reactants: ["Ar(1S4)", "Ar"]
+      Products: ["Ar(1S5)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 3
+      name: Ar(1S5) + Ar = Ar(1S3) + Ar
+      Reactants: ["Ar(1S5)", "Ar"]
+      Products: ["Ar(1S3)", "Ar"]
+      Param:
+            A: 3.1097e-21
+            ng: 0.5
+            Eg: 0.1748
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 4
+      name: Ar(1S3) + Ar = Ar(1S5) + Ar
+      Reactants: ["Ar(1S3)", "Ar"]
+      Products: ["Ar(1S5)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 5
+      name: Ar(1S5) + Ar = Ar(1S2) + Ar
+      Reactants: ["Ar(1S5)", "Ar"]
+      Products: ["Ar(1S2)", "Ar"]
+      Param:
+            A: 9.3292e-21
+            ng: 0.5
+            Eg: 0.2797
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 6
+      name: Ar(1S2) + Ar = Ar(1S5) + Ar
+      Reactants: ["Ar(1S2)", "Ar"]
+      Products: ["Ar(1S5)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 7
+      name: Ar(1S4) + Ar = Ar(1S3) + Ar
+      Reactants: ["Ar(1S4)", "Ar"]
+      Products: ["Ar(1S3)", "Ar"]
+      Param:
+            A: 5.1622e-21
+            ng: 0.5
+            Eg: 0.0989
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 8
+      name: Ar(1S3) + Ar = Ar(1S4) + Ar
+      Reactants: ["Ar(1S3)", "Ar"]
+      Products: ["Ar(1S4)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 9
+      name: Ar(1S4) + Ar = Ar(1S2) + Ar
+      Reactants: ["Ar(1S4)", "Ar"]
+      Products: ["Ar(1S2)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0.2038
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 10
+      name: Ar(1S2) + Ar = Ar(1S4) + Ar
+      Reactants: ["Ar(1S2)", "Ar"]
+      Products: ["Ar(1S4)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 11
+      name: Ar(1S3) + Ar = Ar(1S2) + Ar
+      Reactants: ["Ar(1S3)", "Ar"]
+      Products: ["Ar(1S2)", "Ar"]
+      Param:
+            A: 4.6646e-20
+            ng: 0.5
+            Eg: 0.1049
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+
+    - ID: 12
+      name: Ar(1S2) + Ar = Ar(1S3) + Ar
+      Reactants: ["Ar(1S2)", "Ar"]
+      Products: ["Ar(1S3)", "Ar"]
+      Param:
+            A: 1.5549e-20
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "3"
+      
+    - ID: 13
+      name: Ar+ + Ar + Ar = Ar2+ + Ar
+      Reactants: ["Ar+", "Ar", "Ar"]
+      Products: ["Ar2+", "Ar"]
+      Param:
+            A: 6.4630e-45
+            ng: -1
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "15"
+
+    - ID: 14
+      name: Ar2* + Ar2* = Ar2+ + Ar + Ar + E
+      Reactants: ["Ar2*", "Ar2*"]
+      Products: ["Ar2+", "Ar", "Ar", "E"]
+      Param:
+            A: 3.1097e-15
+            ng: 0.5
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "4"
+
+    - ID: 15
+      name: E + Ar2+ = Ar + Ar
+      Reactants: ["E", "Ar2+"]
+      Products: ["Ar", "Ar"]
+      Param:
+            A: 2.69e-14
+            ng: 0
+            Eg: 0
+            ne: -0.67 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "16"
+
+    - ID: 16
+      name: E + Ar2* = Ar2+ + E + E
+      Reactants: ["E", "Ar2*"]
+      Products: ["Ar2+", "E", "E"]
+      Param:
+            A: 9.0e-14
+            ng: 0
+            Eg: 0
+            ne: 0.7 
+            Ee: 3.66
+            e_thresh: 0
+            m_M: 0
+      Ref: "4"
+
+    - ID: 17
+      name: E + Ar2* = Ar + Ar + E
+      Reactants: ["E", "Ar2*"]
+      Products: ["Ar", "Ar", "E"]
+      Param:
+            A: 1.0e-13
+            ng: 0
+            Eg: 0
+            ne: 0 
+            Ee: 0
+            e_thresh: 0
+            m_M: 0
+      Ref: "4"
+
+    - ID: 30
+      name: C2F6 + Ar(1S5) = CF3 + CF3 + Ar.
+      Reactants: ["C2F6","Ar(1S5)"]
+      Products: [ "CF3","CF3","Ar" ]
+      Param:
+            A: 4e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: C2F6 + Ar(1S4) = CF3 + CF3 + Ar.
+      Reactants: ["C2F6","Ar(1S5)"]
+      Products: [ "CF3","CF3","Ar" ]
+      Param:
+            A: 4e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: C2F6 + Ar(1S3) = CF3 + CF3 + Ar.
+      Reactants: ["C2F6","Ar(1S3)"]
+      Products: [ "CF3","CF3","Ar" ]
+      Param:
+            A: 4e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: C2F6 + Ar(1S2) = CF3 + CF3 + Ar.
+      Reactants: ["C2F6","Ar(1S2)"]
+      Products: [ "CF3","CF3","Ar" ]
+      Param:
+            A: 4e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: C2F6 + Ar** = CF3 + CF3 + Ar.
+      Reactants: ["C2F6","Ar**"]
+      Products: [ "CF3","CF3","Ar" ]
+      Param:
+            A: 4e-15
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: CF3 + CF3 + CF4 = C2F6 + CF4.
+      Reactants: [ "CF3","CF3","CF4" ]
+      Products: ["C2F6","CF4"]
+      Param:
+            A: 3.94e-41 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+
+    - ID: 30
+      name: CF3 + CF3 + Ar = C2F6 + Ar.
+      Reactants: [ "CF3","CF3","Ar" ]
+      Products: ["C2F6","Ar"]
+      Param:
+            A: 3.94e-41 
+            ng:  0
+            Eg:  0
+            ne:  0
+            Ee:  0
+            
+            e_thresh: 0
+            m_M: 0
+

@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.12)
+project(rxn-cpp)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set the installation prefix to the Conda environment
+set(CMAKE_INSTALL_PREFIX "$ENV{CONDA_PREFIX}")
+
+# Find and link the Conda libraries you need.
+find_package(yaml-cpp REQUIRED)
+find_package(fmt REQUIRED)
+
+# Define your source files.
+file(GLOB PUBLIC_HEADERS "include/rxn-cpp/*.h")  # Public headers
+file(GLOB SOURCES "src/*.C")
+
+# Create a shared library from your source files.
+add_library(rxn-cpp SHARED ${SOURCES} ${PUBLIC_HEADERS})
+
+# Include the 'include' directory for internal headers.
+target_include_directories(rxn-cpp PRIVATE ${CMAKE_SOURCE_DIR}/include/rxn-cpp)
+
+# Specify the installation destination for the library and public headers.
+install(TARGETS rxn-cpp
+    LIBRARY DESTINATION lib
+)
+
+# Install public headers, including the master header
+install(FILES ${PUBLIC_HEADERS} DESTINATION include/rxn-cpp)
+
+# Link the Conda libraries.
+target_link_libraries(rxn-cpp yaml-cpp::yaml-cpp)
+target_link_libraries(rxn-cpp fmt::fmt)
