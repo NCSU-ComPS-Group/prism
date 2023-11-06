@@ -85,6 +85,18 @@ findFirstNonLetter(const string & s)
   return -1;
 }
 
+
+int
+findFirstLetter(const string & s)
+{
+  for (size_t i = 0; i < s.length(); ++i)
+  {
+    if (isalpha(s[i]))
+      return i;
+  }
+  return -1;
+}
+
 int
 findFirstNum(const string & s)
 {

@@ -7,15 +7,15 @@ SubSpecies::SubSpecies(const string & name)
     subscript(getSubscript()),
     mass(getMass()),
     charge_num(getChargeNumber()),
-    charge(getCharge())
+    charge(getCharge()),
+    latex_name(getLatexName())
 {
 }
 
 std::ostream &
 operator<<(std::ostream & os, const SubSpecies & s)
 {
-  os << s.name << "\nBase " << s.base << "\nModifier " << s.modifier << "\nSubscript "
-     << s.subscript << "\nCharge Number " << s.charge_num << "\nMass " << s.mass << "\n" << s.charge;
+  os << s.name;
   return os;
 }
 
@@ -41,9 +41,10 @@ string
 SubSpecies::getBase()
 {
   if (name.compare("hnu") == 0)
-  {
     return name;
-  }
+
+  if (name.compare("e") == 0 || name.compare("E") == 0)
+    return name;
 
   int base_start = findFirstCapital(name);
 
@@ -74,18 +75,26 @@ SubSpecies::getBase()
 string
 SubSpecies::getModifier()
 {
+  if (name.compare("hnu") == 0)
+    return "";
+
+  if (name.compare("e") == 0 || name.compare("E") == 0)
+    return "";
+
   int base_end = findFirstNonLetter(name);
+  // case for no modifier
+  if (base_end == -1)
+    return "";
+
   return name.substr(base_end, name.length());
 }
 
-int
+unsigned int
 SubSpecies::getSubscript()
 {
   // case when there is no subscript
   if (modifier.length() == 0)
-  {
-    return 0;
-  }
+    return 1;
 
   int sub_stop = findFirstNonNumber(modifier);
   // case when there is only a subscript without charge, modifiers or other elements
@@ -94,9 +103,7 @@ SubSpecies::getSubscript()
 
   // case for when there is no subscript
   if (sub_stop == 0)
-  {
-    return 0;
-  }
+    return 1;
 
   // result.remaining = s.substr(sub_stop, s.length());
   return stoi(modifier.substr(0, sub_stop));
@@ -111,15 +118,25 @@ SubSpecies::getMass()
 int
 SubSpecies::getChargeNumber()
 {
-  const string subscript_str = to_string(subscript);
-  const int charge_start = modifier.find(subscript_str) + subscript_str.length();
-  string s = modifier.substr(charge_start, modifier.length());
+  if (name.compare("e") == 0 || name.compare("E") == 0)
+    return -1;
+
+  if (modifier.length() == 0)
+    return 0;
+
+  string s;
+  if (subscript > 1)
+  {
+    const string subscript_str = to_string(subscript);
+    const int charge_start = modifier.find(subscript_str) + subscript_str.length();
+    s = modifier.substr(charge_start, modifier.length());
+  }
+  else
+    s = modifier;
 
   // case for no charge
   if (s.length() == 0)
-  {
     return 0;
-  }
   // case where there is no special character available but there is part of the string left
   if (findFirstNonSpecial(s) == 0)
     throw invalid_argument("\n\n'" + name + "'" +
@@ -132,6 +149,7 @@ SubSpecies::getChargeNumber()
     return 0;
 
   int sign = 0;
+
   if (s[0] == '-')
     sign = -1;
   else
@@ -142,6 +160,7 @@ SubSpecies::getChargeNumber()
 
   // removing the + or -
   auto sub_s = s.substr(1, s.length());
+
   // lets find the number of charge
   int sub_stop = findFirstNonNumber(sub_s);
 
@@ -162,4 +181,55 @@ float
 SubSpecies::getCharge()
 {
   return static_cast<float>(charge_num) * constants["e"].as<float>();
+}
+
+string
+SubSpecies::getLatexName()
+{
+  if (modifier.length() == 0)
+    return "\\text{" + name + "}";
+
+  string s = "\\text{" + base + "}";
+  // variable used for cutting up the end of the modifier
+  string partial_name = base;
+
+  if (subscript > 1)
+  {
+    s += "_{" + to_string(subscript) + "}";
+    partial_name += to_string(subscript);
+  }
+
+  if (charge_num != 0)
+  {
+    s += "^{";
+    if (charge_num < 0)
+    {
+      s += "-";
+      partial_name += "-";
+    }
+    else
+    {
+      s += "+";
+      partial_name += "+";
+    }
+
+    if (abs(charge_num) == 1)
+      s += "}";
+
+    if (abs(charge_num) > 1)
+    {
+      s += to_string(abs(charge_num)) + "}";
+      partial_name += to_string(abs(charge_num));
+    }
+  }
+  // case for only ion no other modifiers
+  if (partial_name.length() == name.length())
+    return s;
+
+  const int partial_stop = partial_name.length();
+
+  const string partial_modifier = name.substr(partial_stop, name.length());
+  s += "\\text{" + partial_modifier + "}";
+
+  return s;
 }

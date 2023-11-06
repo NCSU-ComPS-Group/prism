@@ -2,6 +2,9 @@ lumped_species:
   - lumped: N2*
     actual: [N2(rotation), N2(vibration), N2(not_used)]
 
+latex_overrides:
+  - species: N2*
+    latex: N_{2}(\text{something})
 
 reactions:
   - reaction: e + N2 -> e + N2(rotation)
@@ -9,7 +12,7 @@ reactions:
     delta_eps_e: blah
     arrhen_coeff: [A, B, C]
     arr_function: A * T^B * exp( - C / T )
-    arr_function: A * T^ne * exp(- Te / Ee ) * T^ng * exp(- Tg / Eg ) * 
+    arr_function: A * T^ne * exp(- Te / Ee ) * T^ng * exp(- Tg / Eg ) *
 
   - reaction: e + N2 -> e + N2(vibration)
     delta_eps_g: blah

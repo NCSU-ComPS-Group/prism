@@ -7,7 +7,6 @@ using namespace std;
 int
 main(int argc, char const * argv[])
 {
-  SubSpecies test = SubSpecies("Ar65+45(dfgd)");
-  cout << test << endl;
+  SubSpecies test = SubSpecies("Ar-100");
   return EXIT_SUCCESS;
 }

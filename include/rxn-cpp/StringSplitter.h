@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 /**
  * This file contains some helper functions that will be useful in breaking reactions
  * apart into their reactants and products
@@ -52,6 +52,8 @@ int findFirstSpecial(const std::string & s);
  * Find the first non-letter
  */
 int findFirstNonLetter(const std::string & s);
+
+int findFirstLetter(const std::string & s);
 
 int findFirstNum(const std::string & s);
 

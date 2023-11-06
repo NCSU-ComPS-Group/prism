@@ -30,11 +30,11 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.C
 
 # Build rule for the test runner
 $(TEST_EXECUTABLE): $(TEST_OBJECTS)
-	$(CXX) $(CXXFLAGS) -I$(GTEST_INCLUDE_DIR) -L$(GTEST_LIB_DIR) -o $@ $^ $(LINKS)
+	@$(CXX) $(CXXFLAGS) -I$(GTEST_INCLUDE_DIR) -L$(GTEST_LIB_DIR) -o $@ $^ $(LINKS)
 
 .PHONY: all clean
 
 all: $(TEST_EXECUTABLE)
 
 clean:
-	rm -rf $(BUILD_DIR)/*.o $(TEST_EXECUTABLE)
+	@rm -rf $(BUILD_DIR)/*.o $(TEST_EXECUTABLE)
