@@ -29,9 +29,6 @@ To ensure no conflicts with other projects you can create a new environment to w
   git clone https://github.com/gsgall/reaction_parser.git
   cd rxn-cpp
 ```
-```bash
-  git submodule update --init yaml-cpp
-```
 
 # Build
 
