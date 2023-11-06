@@ -1,32 +1,32 @@
 #include <gtest/gtest.h>
 #include "rxn-cpp/rxn-cpp.h"
 
-TEST(SubSpeciesTest, LowerCaseElectronTest)
+TEST(SubSpeciesTest, LowerCasesTest)
 {
-  SubSpecies electron = SubSpecies("e");
+  SubSpecies s = SubSpecies("e");
 
-  EXPECT_EQ(electron.name, "e");
-  EXPECT_EQ(electron.base, "e");
-  EXPECT_EQ(electron.modifier, "");
-  EXPECT_EQ(electron.subscript, 1);
-  EXPECT_FLOAT_EQ(electron.mass, 5.4857990943E-4);
-  EXPECT_EQ(electron.charge_num, -1);
-  EXPECT_FLOAT_EQ(electron.charge, -1.602176487E-19);
-  EXPECT_EQ(electron.latex_name, "\\text{e}");
+  EXPECT_EQ(s.name, "e");
+  EXPECT_EQ(s.base, "e");
+  EXPECT_EQ(s.modifier, "");
+  EXPECT_EQ(s.subscript, 1);
+  EXPECT_FLOAT_EQ(s.mass, 5.4857990943E-4);
+  EXPECT_EQ(s.charge_num, -1);
+  EXPECT_FLOAT_EQ(s.charge, -1.602176487E-19);
+  EXPECT_EQ(s.latex_name, "\\text{e}");
 }
 
-TEST(SubSpeciesTest, UpperCaseElectronTest)
+TEST(SubSpeciesTest, UpperCasesTest)
 {
-  SubSpecies electron = SubSpecies("E");
+  SubSpecies s = SubSpecies("E");
 
-  EXPECT_EQ(electron.name, "E");
-  EXPECT_EQ(electron.base, "E");
-  EXPECT_EQ(electron.modifier, "");
-  EXPECT_EQ(electron.subscript, 1);
-  EXPECT_FLOAT_EQ(electron.mass, 5.4857990943E-4);
-  EXPECT_EQ(electron.charge_num, -1);
-  EXPECT_FLOAT_EQ(electron.charge, -1.602176487E-19);
-  EXPECT_EQ(electron.latex_name, "\\text{E}");
+  EXPECT_EQ(s.name, "E");
+  EXPECT_EQ(s.base, "E");
+  EXPECT_EQ(s.modifier, "");
+  EXPECT_EQ(s.subscript, 1);
+  EXPECT_FLOAT_EQ(s.mass, 5.4857990943E-4);
+  EXPECT_EQ(s.charge_num, -1);
+  EXPECT_FLOAT_EQ(s.charge, -1.602176487E-19);
+  EXPECT_EQ(s.latex_name, "\\text{E}");
 }
 
 TEST(SubSpeciesTest, GroundStateNoCharge)

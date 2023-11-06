@@ -12,8 +12,8 @@ When installing mamba using these instructions you can stop after the instructio
 To ensure no conflicts with other projects you can create a new environment to work in.
 
 ```bash
-  conda create --name rxn_mech
-  conda activate rxn_mech
+  conda create --name rxn-cpp
+  conda activate rxn-cpp
   conda install -c conda-forge cmake
   conda install -c conda-forge fmt
   conda install -c conda-forge yaml-cpp
@@ -23,49 +23,24 @@ To ensure no conflicts with other projects you can create a new environment to w
 # Installation
 
 ```bash
-  conda activate rxm_mech
+  conda activate rxn-cpp
   mkdir -p ~/projects
   cd ~/projects
   git clone https://github.com/gsgall/reaction_parser.git
-  cd reaction_parser
+  cd rxn-cpp
 ```
 ```bash
   git submodule update --init yaml-cpp
 ```
 
 # Build
-## Parser and yaml-cpp
 
-* Please note that when buildling yaml-cpp several warnings may appear, you can ignore these.
 
 ```bash
-  make all
-```
-
-## Parser Only
-
-```bash
-  make
-```
-
-## yaml-cpp Only
-
-```bash 
-  make build_yaml
-```
-
-## Clean Up
-
-This will delete all of the files created when building the parser.
-
-```bash
-  make clean
-```
-
-This will delete all of the files created when building the parser and yaml-cpp.
-
-```bash
-  make clobberall
+  mkdir build
+  cd build
+  cmake ..
+  make install
 ```
 
 # Running Unit Tests

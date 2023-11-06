@@ -1,7 +1,7 @@
 #include "SubSpecies.h"
 
 SubSpecies::SubSpecies(const string & name)
-  : name(checkName(name)),
+  : SpeciesBase(name),
     base(getBase()),
     modifier(getModifier()),
     subscript(getSubscript()),
@@ -10,31 +10,6 @@ SubSpecies::SubSpecies(const string & name)
     charge(getCharge()),
     latex_name(getLatexName())
 {
-}
-
-std::ostream &
-operator<<(std::ostream & os, const SubSpecies & s)
-{
-  os << s.name;
-  return os;
-}
-
-string
-SubSpecies::checkName(const string & s)
-{
-  if (s.length() == 0)
-    throw invalid_argument(
-        makeRed("\n\n'" + s + "'" + " is invalid! Species cannot be an empty string\n"));
-
-  if (s[0] == 'e' || s[0] == 'E')
-  {
-    if (s.length() > 1)
-    {
-      throw invalid_argument(
-          makeRed("\n\n'" + s + "'" + " is invalid! Electrons cannot have modifiers\n"));
-    }
-  }
-  return s;
 }
 
 string

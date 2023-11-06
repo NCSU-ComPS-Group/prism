@@ -4,15 +4,13 @@
 #include "Printer.h"
 #include "StringSplitter.h"
 #include "Constants.h"
+#include "SpeciesBase.h"
 
 using namespace std;
-class SubSpecies
+class SubSpecies : public SpeciesBase
 {
 public:
   SubSpecies(const string & name);
-
-  /** The full string of the subspecies */
-  const string name;
   /** This will be just the elemental name */
   const string base;
   /** The rest of name after the elemental name that has been removed */
@@ -26,17 +24,14 @@ public:
   /** The charge of the species in C */
   const float charge;
   /** The name of the spcies formatted for printing in a latex_table */
-  string latex_name;
-  /** override to print the species name as is */
-  friend std::ostream & operator<<(std::ostream & os, const SubSpecies & s);
+  const string latex_name;
 
 private:
-  string checkName(const string & name);
   string getBase();
   string getModifier();
   unsigned int getSubscript();
-  float getMass();
-  int getChargeNumber();
-  float getCharge();
-  string getLatexName();
+  float getMass() override;
+  int getChargeNumber() override;
+  float getCharge() override;
+  string getLatexName() override;
 };
