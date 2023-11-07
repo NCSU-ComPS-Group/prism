@@ -9,9 +9,9 @@ TEST(SubSpeciesTest, LowerCasesTest)
   EXPECT_EQ(s.base, "e");
   EXPECT_EQ(s.modifier, "");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 5.4857990943E-4);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -1);
-  EXPECT_FLOAT_EQ(s.charge, -1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{e}");
 }
 
@@ -23,9 +23,9 @@ TEST(SubSpeciesTest, UpperCasesTest)
   EXPECT_EQ(s.base, "E");
   EXPECT_EQ(s.modifier, "");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 5.4857990943E-4);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -1);
-  EXPECT_FLOAT_EQ(s.charge, -1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{E}");
 }
 
@@ -37,7 +37,7 @@ TEST(SubSpeciesTest, GroundStateNoCharge)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 39.948);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["Ar"].as<float>());
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
   EXPECT_EQ(s.latex_name, "\\text{Ar}");
@@ -51,9 +51,9 @@ TEST(SubSpeciesTest, GroundStateSinglePositiveIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "+");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 39.948);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["Ar"].as<float>() - constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, 1);
-  EXPECT_FLOAT_EQ(s.charge, 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}^{+}");
 }
 
@@ -65,9 +65,10 @@ TEST(SubSpeciesTest, GroundStateMultiplePositiveIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "+4");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 39.948);
+  EXPECT_FLOAT_EQ(s.mass,
+                  constants["mass"]["Ar"].as<float>() - 4 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, 4);
-  EXPECT_FLOAT_EQ(s.charge, 4 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, 4 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}^{+4}");
 }
 
@@ -79,9 +80,9 @@ TEST(SubSpeciesTest, GroundStateSingleNegativeIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "-");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 39.948);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["Ar"].as<float>() + constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -1);
-  EXPECT_FLOAT_EQ(s.charge, -1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}^{-}");
 }
 
@@ -93,9 +94,10 @@ TEST(SubSpeciesTest, GroundStateMultipleNegativeIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "-100");
   EXPECT_EQ(s.subscript, 1);
-  EXPECT_FLOAT_EQ(s.mass, 39.948);
+  EXPECT_FLOAT_EQ(s.mass,
+                  constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -100);
-  EXPECT_FLOAT_EQ(s.charge, -100 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -100 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}^{-100}");
 }
 
@@ -107,7 +109,7 @@ TEST(SubSpeciesTest, GroundStateMolecular)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "2");
   EXPECT_EQ(s.subscript, 2);
-  EXPECT_FLOAT_EQ(s.mass, 2 * 39.948);
+  EXPECT_FLOAT_EQ(s.mass, 2 * constants["mass"]["Ar"].as<float>());
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}");
@@ -121,7 +123,7 @@ TEST(SubSpeciesTest, GroundStateLargeMolecule)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "188");
   EXPECT_EQ(s.subscript, 188);
-  EXPECT_FLOAT_EQ(s.mass, 188 * 39.948);
+  EXPECT_FLOAT_EQ(s.mass, 188 * constants["mass"]["Ar"].as<float>());
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{188}");
@@ -135,9 +137,10 @@ TEST(SubSpeciesTest, MolecularNegativeIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "2-100");
   EXPECT_EQ(s.subscript, 2);
-  EXPECT_FLOAT_EQ(s.mass, 2 * 39.948);
+  EXPECT_FLOAT_EQ(
+      s.mass, 2 * constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -100);
-  EXPECT_FLOAT_EQ(s.charge, -100 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -100 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}");
 }
 
@@ -149,9 +152,10 @@ TEST(SubSpeciesTest, MolecularPositiveIon)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "120+39");
   EXPECT_EQ(s.subscript, 120);
-  EXPECT_FLOAT_EQ(s.mass, 120 * 39.948);
+  EXPECT_FLOAT_EQ(
+      s.mass, 120 * constants["mass"]["Ar"].as<float>() - 39 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, 39);
-  EXPECT_FLOAT_EQ(s.charge, 39 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, 39 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}");
 }
 
@@ -163,9 +167,10 @@ TEST(SubSpeciesTest, MolecularPositiveIonWithModifier)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "120+39(test)");
   EXPECT_EQ(s.subscript, 120);
-  EXPECT_FLOAT_EQ(s.mass, 120 * 39.948);
+  EXPECT_FLOAT_EQ(
+      s.mass, 120 * constants["mass"]["Ar"].as<float>() - 39 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, 39);
-  EXPECT_FLOAT_EQ(s.charge, 39 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, 39 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}\\text{(test)}");
 }
 
@@ -177,8 +182,9 @@ TEST(SubSpeciesTest, MolecularNegativeIonWithModifier)
   EXPECT_EQ(s.base, "Ar");
   EXPECT_EQ(s.modifier, "2-100(test)");
   EXPECT_EQ(s.subscript, 2);
-  EXPECT_FLOAT_EQ(s.mass, 2 * 39.948);
+  EXPECT_FLOAT_EQ(
+      s.mass, 2 * constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>());
   EXPECT_EQ(s.charge_num, -100);
-  EXPECT_FLOAT_EQ(s.charge, -100 * 1.602176487E-19);
+  EXPECT_FLOAT_EQ(s.charge, -100 * constants["e"].as<float>());
   EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}\\text{(test)}");
 }
