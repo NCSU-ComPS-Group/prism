@@ -5,8 +5,8 @@ SubSpecies::SubSpecies(const string & name)
     base(getBase()),
     modifier(getModifier()),
     subscript(getSubscript()),
-    mass(getMass()),
     charge_num(getChargeNumber()),
+    mass(getMass()),
     charge(getCharge()),
     latex_name(getLatexName())
 {
@@ -15,34 +15,34 @@ SubSpecies::SubSpecies(const string & name)
 string
 SubSpecies::getBase()
 {
-  if (name.compare("hnu") == 0)
-    return name;
+  if (this->name.compare("hnu") == 0)
+    return this->name;
 
-  if (name.compare("e") == 0 || name.compare("E") == 0)
-    return name;
+  if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
+    return this->name;
 
-  int base_start = findFirstCapital(name);
+  int base_start = findFirstCapital(this->name);
 
-  if (base_start == -1 && name[0] != 'e')
-    throw invalid_argument("\n\n'" + name + "'" +
+  if (base_start == -1 && this->name[0] != 'e')
+    throw invalid_argument("\n\n'" + this->name + "'" +
                            " is invalid! Species must contain a capital be an electron (e) \n");
 
-  if (base_start != 0 && name[0] != 'e')
-    throw invalid_argument("\n\n'" + name + "'" +
+  if (base_start != 0 && this->name[0] != 'e')
+    throw invalid_argument("\n\n'" + this->name + "'" +
                            " is invalid! Species which are not electrons (e) must start with" +
                            "a capital letter\n");
 
   // find where the base ends
   // the base will end when a number or special character starts
-  int base_end = findFirstNonLetter(name);
+  int base_end = findFirstNonLetter(this->name);
   // case for no other modifiers
   if (base_end == -1)
-    base_end = name.length();
+    base_end = this->name.length();
 
-  auto base = name.substr(0, base_end);
+  auto base = this->name.substr(0, base_end);
 
   if (base.length() > 2)
-    throw invalid_argument("\n\n'" + name + "'" +
+    throw invalid_argument("\n\n'" + this->name + "'" +
                            +" is invalid! Species based can be at most 2 characters long\n");
   return base;
 }
@@ -50,71 +50,65 @@ SubSpecies::getBase()
 string
 SubSpecies::getModifier()
 {
-  if (name.compare("hnu") == 0)
+  if (this->name.compare("hnu") == 0)
     return "";
 
-  if (name.compare("e") == 0 || name.compare("E") == 0)
+  if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
     return "";
 
-  int base_end = findFirstNonLetter(name);
+  int base_end = findFirstNonLetter(this->name);
   // case for no modifier
   if (base_end == -1)
     return "";
 
-  return name.substr(base_end, name.length());
+  return this->name.substr(base_end, this->name.length());
 }
 
 unsigned int
 SubSpecies::getSubscript()
 {
   // case when there is no subscript
-  if (modifier.length() == 0)
+  if (this->modifier.length() == 0)
     return 1;
 
-  int sub_stop = findFirstNonNumber(modifier);
+  int sub_stop = findFirstNonNumber(this->modifier);
   // case when there is only a subscript without charge, modifiers or other elements
   if (sub_stop == -1)
-    sub_stop = modifier.length();
+    sub_stop = this->modifier.length();
 
   // case for when there is no subscript
   if (sub_stop == 0)
     return 1;
 
   // result.remaining = s.substr(sub_stop, s.length());
-  return stoi(modifier.substr(0, sub_stop));
-}
-
-float
-SubSpecies::getMass()
-{
-  return static_cast<float>(subscript) * constants["mass"][base].as<float>();
+  return stoi(this->modifier.substr(0, sub_stop));
 }
 
 int
 SubSpecies::getChargeNumber()
 {
-  if (name.compare("e") == 0 || name.compare("E") == 0)
+  if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
     return -1;
 
-  if (modifier.length() == 0)
+  if (this->modifier.length() == 0)
     return 0;
 
   string s;
   if (subscript > 1)
   {
     const string subscript_str = to_string(subscript);
-    const int charge_start = modifier.find(subscript_str) + subscript_str.length();
-    s = modifier.substr(charge_start, modifier.length());
+    const int charge_start = this->modifier.find(subscript_str) + subscript_str.length();
+    s = this->modifier.substr(charge_start, this->modifier.length());
   }
   else
-    s = modifier;
+    s = this->modifier;
 
   // case for no charge
   if (s.length() == 0)
     return 0;
   // case where there is no special character available but there is part of the string left
   if (findFirstNonSpecial(s) == 0)
-    throw invalid_argument("\n\n'" + name + "'" +
+    throw invalid_argument("\n\n'" + this->name + "'" +
                            " is invalid! Species charge must begin with + or - \n" +
                            "Or other modifiers must be present\n" +
                            "Other modifiers must start with a special character\n");
@@ -153,31 +147,45 @@ SubSpecies::getChargeNumber()
 }
 
 float
+SubSpecies::getMass()
+{
+  float base_mass = static_cast<float>(this->subscript) * constants["mass"][this->base].as<float>();
+  // case for an electron
+  if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
+    return base_mass;
+  float ionization_mass = static_cast<float>(this->charge_num) * constants["mass"]["e"].as<float>();
+  return base_mass - ionization_mass;
+}
+
+float
 SubSpecies::getCharge()
 {
-  return static_cast<float>(charge_num) * constants["e"].as<float>();
+  return static_cast<float>(this->charge_num) * constants["e"].as<float>();
 }
 
 string
 SubSpecies::getLatexName()
 {
-  if (modifier.length() == 0)
-    return "\\text{" + name + "}";
+  if (this->name == "hnu")
+    return "h\\nu";
 
-  string s = "\\text{" + base + "}";
+  if (this->modifier.length() == 0)
+    return "\\text{" + this->name + "}";
+
+  string s = "\\text{" + this->base + "}";
   // variable used for cutting up the end of the modifier
-  string partial_name = base;
+  string partial_name = this->base;
 
-  if (subscript > 1)
+  if (this->subscript > 1)
   {
-    s += "_{" + to_string(subscript) + "}";
-    partial_name += to_string(subscript);
+    s += "_{" + to_string(this->subscript) + "}";
+    partial_name += to_string(this->subscript);
   }
 
-  if (charge_num != 0)
+  if (this->charge_num != 0)
   {
     s += "^{";
-    if (charge_num < 0)
+    if (this->charge_num < 0)
     {
       s += "-";
       partial_name += "-";
@@ -188,23 +196,60 @@ SubSpecies::getLatexName()
       partial_name += "+";
     }
 
-    if (abs(charge_num) == 1)
+    if (abs(this->charge_num) == 1)
       s += "}";
 
-    if (abs(charge_num) > 1)
+    if (abs(this->charge_num) > 1)
     {
-      s += to_string(abs(charge_num)) + "}";
-      partial_name += to_string(abs(charge_num));
+      s += to_string(abs(this->charge_num)) + "}";
+      partial_name += to_string(abs(this->charge_num));
     }
   }
   // case for only ion no other modifiers
-  if (partial_name.length() == name.length())
+  if (partial_name.length() == this->name.length())
     return s;
 
   const int partial_stop = partial_name.length();
 
-  const string partial_modifier = name.substr(partial_stop, name.length());
+  const string partial_modifier = this->name.substr(partial_stop, this->name.length());
   s += "\\text{" + partial_modifier + "}";
 
   return s;
+}
+
+bool
+SubSpecies::operator==(const SubSpecies & other) const
+{
+  // base species are not the same
+  if (SpeciesBase::operator!=(other))
+    return false;
+
+  if (this->base != other.base)
+    return false;
+
+  if (this->modifier != other.modifier)
+    return false;
+
+  if (this->subscript != other.subscript)
+    return false;
+
+  if (this->charge_num != other.charge_num)
+    return false;
+
+  if (abs(this->mass - other.mass) > numeric_limits<float>::epsilon())
+    return false;
+
+  if (abs(this->charge - other.charge) > numeric_limits<float>::epsilon())
+    return false;
+
+  if (this->latex_name != other.latex_name)
+    return false;
+
+  return true;
+}
+
+bool
+SubSpecies::operator!=(const SubSpecies & other) const
+{
+  return !(*this == other);
 }

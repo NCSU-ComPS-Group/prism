@@ -1,7 +1,42 @@
 #include <gtest/gtest.h>
 #include "rxn-cpp/rxn-cpp.h"
 
-TEST(SubSpeciesTest, LowerCasesTest)
+TEST(SubSpeciesTest, Equal)
+{
+  SubSpecies s1 = SubSpecies("e");
+  SubSpecies s2 = SubSpecies("e");
+
+  EXPECT_TRUE(s1 == s1);
+  EXPECT_EQ(s1, s1);
+
+  EXPECT_TRUE(s1 == s2);
+  EXPECT_EQ(s1, s2);
+}
+
+TEST(SubSpeciesTest, NotEqual)
+{
+  SubSpecies s1 = SubSpecies("e");
+  SubSpecies s2 = SubSpecies("E");
+
+  EXPECT_FALSE(s1 == s2);
+  EXPECT_NE(s1, s2);
+}
+
+TEST(SubSpeciesTest, PhotonTest)
+{
+  SubSpecies s = SubSpecies("hnu");
+
+  EXPECT_EQ(s.name, "hnu");
+  EXPECT_EQ(s.base, "hnu");
+  EXPECT_EQ(s.modifier, "");
+  EXPECT_EQ(s.subscript, 1);
+  EXPECT_FLOAT_EQ(s.mass, constants["mass"]["hnu"].as<float>());
+  EXPECT_EQ(s.charge_num, 0);
+  EXPECT_FLOAT_EQ(s.charge, 0);
+  EXPECT_EQ(s.latex_name, "h\\nu");
+}
+
+TEST(SubSpeciesTest, LowerCasesElectronTest)
 {
   SubSpecies s = SubSpecies("e");
 
@@ -15,7 +50,7 @@ TEST(SubSpeciesTest, LowerCasesTest)
   EXPECT_EQ(s.latex_name, "\\text{e}");
 }
 
-TEST(SubSpeciesTest, UpperCasesTest)
+TEST(SubSpeciesTest, UpperCasesElectronTest)
 {
   SubSpecies s = SubSpecies("E");
 

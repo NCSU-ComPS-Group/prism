@@ -15,6 +15,10 @@ public:
   const string name;
   /** override to print the species name as is */
   friend std::ostream & operator<<(std::ostream & os, const SpeciesBase & s);
+  /** Comparison operator checks if the two base species have the same name */
+  bool operator==(const SpeciesBase & other) const;
+  /** Comparison for checking whether or not the two are not equal  */
+  bool operator!=(const SpeciesBase & other) const;
 
 private:
   string checkName(const string & name);

@@ -1,6 +1,49 @@
 #include <gtest/gtest.h>
 #include "rxn-cpp/rxn-cpp.h"
 
+TEST(SpeciesTest, Equal)
+{
+  Species s1 = Species("e");
+  Species s2 = Species("e");
+
+  EXPECT_TRUE(s1 == s1);
+  EXPECT_EQ(s1, s1);
+
+  EXPECT_TRUE(s1 == s2);
+  EXPECT_EQ(s1, s2);
+}
+
+TEST(SpeciesTest, NotEqual)
+{
+  Species s1 = Species("e");
+  Species s2 = Species("E");
+
+  EXPECT_FALSE(s1 == s2);
+  EXPECT_NE(s1, s2);
+}
+
+TEST(SpeciesTest, PhotonTest)
+{
+  Species s = Species("hnu");
+
+  float s_mass = constants["mass"]["hnu"].as<float>();
+  float s_charge = 0;
+  EXPECT_EQ(s.name, "hnu");
+  EXPECT_FLOAT_EQ(s.mass, s_mass);
+  EXPECT_EQ(s.charge_num, 0);
+  EXPECT_FLOAT_EQ(s.charge, s_charge);
+  EXPECT_EQ(s.latex_name, "h\\nu");
+
+  EXPECT_EQ(s.sub_species[0].name, "hnu");
+  EXPECT_EQ(s.sub_species[0].base, "hnu");
+  EXPECT_EQ(s.sub_species[0].modifier, "");
+  EXPECT_EQ(s.sub_species[0].subscript, 1);
+  EXPECT_FLOAT_EQ(s.sub_species[0].mass, constants["mass"]["hnu"].as<float>());
+  EXPECT_EQ(s.sub_species[0].charge_num, 0);
+  EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
+  EXPECT_EQ(s.sub_species[0].latex_name, "h\\nu");
+}
+
 TEST(SpeciesTest, LowerCaseElectronTest)
 {
   Species s = Species("e");

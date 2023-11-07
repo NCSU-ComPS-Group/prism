@@ -21,6 +21,11 @@ public:
   /** The name of the spcies formatted for printing in a latex_table */
   const string latex_name;
 
+  /** Comparison operator checks if the sub species have the same member variables */
+  bool operator==(const Species & other) const;
+  /** Comparison for checking whether or not the two are not equal  */
+  bool operator!=(const Species & other) const;
+
 private:
   vector<SubSpecies> decomposeSpecies();
   float getMass() override;

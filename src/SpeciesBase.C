@@ -26,3 +26,12 @@ SpeciesBase::checkName(const string & s)
   }
   return s;
 }
+
+bool SpeciesBase::operator==(const SpeciesBase & other) const{
+  return this->name == other.name;
+}
+
+
+bool SpeciesBase::operator!=(const SpeciesBase & other) const{
+  return !(*this == other);
+}

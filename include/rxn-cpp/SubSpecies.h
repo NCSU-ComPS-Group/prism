@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <limits>
+
 #include "Printer.h"
 #include "StringSplitter.h"
 #include "Constants.h"
@@ -17,15 +19,19 @@ public:
   const string modifier;
   /** The subscript of the number ex: Ar2 this is 2 */
   const unsigned int subscript;
-  /** The molar mass of the species */
-  const float mass;
   /** The level of ionization ex: Ar-4 this is -4 */
   const int charge_num;
+  /** The molar mass of the species */
+  const float mass;
   /** The charge of the species in C */
   const float charge;
   /** The name of the spcies formatted for printing in a latex_table */
   const string latex_name;
 
+  /** Comparison operator checks if the sub species have the same member variables */
+  bool operator==(const SubSpecies & other) const;
+  /** Comparison for checking whether or not the two are not equal  */
+  bool operator!=(const SubSpecies & other) const;
 private:
   string getBase();
   string getModifier();

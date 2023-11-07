@@ -7,6 +7,6 @@ using namespace std;
 int
 main(int argc, char const * argv[])
 {
-  // test
+  Species test = Species("Ar+");
   return EXIT_SUCCESS;
 }
