@@ -137,3 +137,35 @@ NetworkParser::printSpeciesSummary()
         printRed("\t\t" + r + "\n");
   }
 }
+
+void
+NetworkParser::writeSpeciesSummary(const string & filepath)
+{
+  // open the file to write to
+  if (filepath == this->file)
+    throw invalid_argument(
+        makeRed("\n\nYour summary file cannot have the same name as your input file!"));
+
+  ofstream out(filepath);
+  // lets use the emitter to write to the file
+  // YAML::Emitter out;
+  for (auto it : species)
+  {
+    out << "Species: ";
+    out << it.first;
+    out << endl;
+    out << "  Sources: " << it.second.sources.size() << endl;
+    for (auto s : it.second.sources)
+      out << "    - reaction: " << s << endl;
+
+    out << endl << "  Sinks: " << it.second.sinks.size() << endl;
+    for (auto s : it.second.sinks)
+      out << "    - reaction: " << s << endl;
+    out << endl << endl;
+  }
+
+  // write the conents to a file
+  // out << out.c_str();
+  // close the file to write to
+  out.close();
+}

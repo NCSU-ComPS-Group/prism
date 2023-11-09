@@ -5,6 +5,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <unordered_map>
+#include <fstream>
 
 #include "fmt/core.h"
 #include "yaml-cpp/yaml.h"
@@ -28,6 +29,7 @@ public:
 
   void printReactionSummary();
   void printSpeciesSummary();
+  void writeSpeciesSummary(const string & filepath);
 
 private:
   const string file;

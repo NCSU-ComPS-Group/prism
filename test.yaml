@@ -1,8 +1,8 @@
-lumped_species:
+lumped-species:
   - lumped: N2*
     actual: [N2(rotation), N2(vibration), N2(not_used)]
 
-latex_overrides:
+latex-overrides:
   - species: N2*
     latex: N_{2}(\text{something})
 
@@ -143,7 +143,6 @@ rate-based:
   - reaction: N + NO2 -> NO + NO
   - reaction: N + NO2 -> N2 + O + O
   - reaction: N + NO2 -> N2 + O2
-
 
 
 
