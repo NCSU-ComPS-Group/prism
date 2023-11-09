@@ -1,6 +1,7 @@
 #pragma once
 #include <limits>
 
+#include "GlobalData.h"
 #include "Species.h"
 #include "StringHelper.h"
 #include "Printer.h"

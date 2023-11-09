@@ -4,7 +4,8 @@ NetworkParser::NetworkParser(const string & file)
   : file(checkFile(file)), network(YAML::LoadFile(file))
 {
   parseNetwork();
-  printSummary();
+  printReactionSummary();
+  printSpeciesSummary();
 }
 
 string
@@ -92,7 +93,7 @@ NetworkParser::parseNetwork()
 }
 
 void
-NetworkParser::printSummary()
+NetworkParser::printReactionSummary()
 {
   int rate_rxn_count = rate_rxn.size() + invalid_rate_rxn.size();
   int xsec_rxn_count = xsec_rxn.size() + invalid_xsec_rxn.size();
@@ -112,5 +113,27 @@ NetworkParser::printSummary()
     printGreen(fmt::format("\n\t{:4} Valid Cross Section Based Reactions\n", xsec_rxn.size()));
     printRed(
         fmt::format("\t{:4} Invalid Cross Section Based Reactions\n", invalid_xsec_rxn.size()));
+  }
+}
+
+void
+NetworkParser::printSpeciesSummary()
+{
+  cout << fmt::format("\n\n{:4d} Unique Species\n", species.size());
+  for (auto it : species)
+  {
+    cout << endl << "Species: " + it.first << endl << endl;
+    printGreen(fmt::format("\t{:4d} Sources\n", it.second.sources.size()));
+    if (it.second.sources.size() == 0)
+      printYellow("\nWarning! Species: " + it.first + " has 0 sources\n\n");
+    else
+      for (auto r : it.second.sources)
+        printGreen("\t\t" + r + "\n");
+    printRed(fmt::format("\t{:4d} Sinks\n", it.second.sinks.size()));
+    if (it.second.sinks.size() == 0)
+      printYellow("\nWarning! Species: " + it.first + " has 0 sinks\n\n");
+    else
+      for (auto r : it.second.sinks)
+        printRed("\t\t" + r + "\n");
   }
 }

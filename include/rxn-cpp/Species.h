@@ -11,15 +11,18 @@ class Species : public SpeciesBase
 {
 public:
   Species(const string & name);
-  const vector<SubSpecies> sub_species;
+  vector<SubSpecies> sub_species;
   /** The molar mass of the species */
-  const float mass;
+  float mass;
   /** The level of ionization ex: Ar-4 this is -4 */
-  const int charge_num;
+  int charge_num;
   /** The charge of the species in C */
-  const float charge;
+  float charge;
   /** The name of the spcies formatted for printing in a latex_table */
-  const string latex_name;
+  string latex_name;
+
+  vector<string> sources;
+  vector<string> sinks;
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */

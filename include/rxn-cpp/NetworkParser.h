@@ -12,6 +12,7 @@
 #include "Reaction.h"
 #include "Species.h"
 #include "Constants.h"
+#include "GlobalData.h"
 
 using namespace std;
 
@@ -19,16 +20,14 @@ class NetworkParser
 {
 public:
   NetworkParser(const string & file);
-  // unordered_map<string, string> lumped_map;
-  unordered_map<string, unordered_map<string, Reaction>> species_list;
-  // unordered_map<string, Reaction> test;
   vector<Reaction> rate_rxn;
   vector<Reaction> xsec_rxn;
   vector<string> invalid_rate_rxn;
   vector<string> invalid_xsec_rxn;
   int rxn_count;
 
-  void printSummary();
+  void printReactionSummary();
+  void printSpeciesSummary();
 
 private:
   const string file;

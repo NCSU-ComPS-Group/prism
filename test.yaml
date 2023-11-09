@@ -31,7 +31,7 @@ rate-based:
   - reaction: e + O2(al) -> e + O2(b1)
   - reaction: e + O2(al) -> e + O + O^m
   - reaction: e + O2(al) -> O + O-
-  - reaction: e + O2(bl) -> O + O-
+  - reaction: e + O2(b1) -> O + O-
   - reaction: e + NO -> e + e + NO+
   - reaction: e + O -> e + O^m
   - reaction: e + O -> e + O+
@@ -111,7 +111,7 @@ rate-based:
   - reaction: O2- + O3 -> O3- + O2
   - reaction: O3- + O -> O2- + O2
   - reaction: e + NO+ -> N + O
-  - reaction: E + NO+ -> N + O^m
+  - reaction: e + NO+ -> N + O^m
   - reaction: He^m + NO -> He + NO+ + e
   - reaction: He+ + NO -> He + NO+
   - reaction: He+ + NO -> He + N + O+

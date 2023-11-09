@@ -12,7 +12,7 @@ public:
   SpeciesBase(const string & name);
   virtual ~SpeciesBase() {}
   /** The full string of the subspecies */
-  const string name;
+  string name;
   /** override to print the species name as is */
   friend std::ostream & operator<<(std::ostream & os, const SpeciesBase & s);
   /** Comparison operator checks if the two base species have the same name */

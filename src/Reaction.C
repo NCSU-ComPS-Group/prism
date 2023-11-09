@@ -25,11 +25,37 @@ Reaction::setSides()
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
   vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
 
-  for (auto s : rhs_str)
-    this->products.push_back(Species(s));
-
   for (auto s : lhs_str)
-    this->reactants.push_back(Species(s));
+  {
+    auto it = species.find(s);
+    if (it == species.end())
+    {
+      Species new_species = Species(s);
+      new_species.sinks.push_back(rxn);
+      this->reactants.push_back(new_species);
+      species.emplace(s, new_species);
+      continue;
+    }
+
+    this->reactants.push_back(it->second);
+    it->second.sinks.push_back(rxn);
+  }
+
+  for (auto s : rhs_str)
+  {
+    auto it = species.find(s);
+    if (it == species.end())
+    {
+      Species new_species = Species(s);
+      new_species.sources.push_back(rxn);
+      this->products.push_back(new_species);
+      species.emplace(s, new_species);
+      continue;
+    }
+
+    this->products.push_back(it->second);
+    it->second.sources.push_back(rxn);
+  }
 }
 
 void
@@ -43,6 +69,7 @@ Reaction::validateReaction()
   for (auto s : this->reactants)
   {
     // this reaction is a sink
+    s.sinks.push_back(rxn);
     r_mass += s.mass;
     r_charge_num += s.charge_num;
   }
@@ -54,6 +81,7 @@ Reaction::validateReaction()
   for (auto s : this->products)
   {
     // add this reaction as a source
+    s.sources.push_back(rxn);
     p_mass += s.mass;
     p_charge_num += s.charge_num;
   }

@@ -14,19 +14,19 @@ class SubSpecies : public SpeciesBase
 public:
   SubSpecies(const string & name);
   /** This will be just the elemental name */
-  const string base;
+  string base;
   /** The rest of name after the elemental name that has been removed */
-  const string modifier;
+  string modifier;
   /** The subscript of the number ex: Ar2 this is 2 */
-  const unsigned int subscript;
+  unsigned int subscript;
   /** The level of ionization ex: Ar-4 this is -4 */
-  const int charge_num;
+  int charge_num;
   /** The molar mass of the species */
-  const float mass;
+  float mass;
   /** The charge of the species in C */
-  const float charge;
+  float charge;
   /** The name of the spcies formatted for printing in a latex_table */
-  const string latex_name;
+  string latex_name;
 
   /** override to print the species name as is */
   friend std::ostream & operator<<(std::ostream & os, const SubSpecies & s);
