@@ -4,7 +4,7 @@
 #include <limits>
 
 #include "Printer.h"
-#include "StringSplitter.h"
+#include "StringHelper.h"
 #include "Constants.h"
 #include "SpeciesBase.h"
 
@@ -28,10 +28,13 @@ public:
   /** The name of the spcies formatted for printing in a latex_table */
   const string latex_name;
 
+  /** override to print the species name as is */
+  friend std::ostream & operator<<(std::ostream & os, const SubSpecies & s);
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const SubSpecies & other) const;
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const SubSpecies & other) const;
+
 private:
   string getBase();
   string getModifier();

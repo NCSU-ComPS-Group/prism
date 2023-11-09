@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Printer.h"
-#include "StringSplitter.h"
+#include "StringHelper.h"
 #include "SubSpecies.h"
 
 using namespace std;
@@ -20,7 +20,6 @@ public:
   const float charge;
   /** The name of the spcies formatted for printing in a latex_table */
   const string latex_name;
-
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */

@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Printer.h"
-#include "StringSplitter.h"
+#include "StringHelper.h"
 #include "Constants.h"
 
 using namespace std;

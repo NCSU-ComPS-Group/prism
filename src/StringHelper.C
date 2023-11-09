@@ -1,6 +1,4 @@
-#include "StringSplitter.h"
-
-using namespace std;
+#include "StringHelper.h"
 
 const string WHITESPACE = " \n\r\t\f\v";
 
@@ -84,7 +82,6 @@ findFirstNonLetter(const string & s)
   }
   return -1;
 }
-
 
 int
 findFirstLetter(const string & s)

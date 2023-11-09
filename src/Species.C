@@ -45,7 +45,7 @@ Species::getChargeNumber()
 float
 Species::getCharge()
 {
-  return static_cast<float>(this->charge_num) * constants["e"].as<float>();
+  return static_cast<float>(this->charge_num) * e;
 }
 
 string
@@ -55,6 +55,13 @@ Species::getLatexName()
   for (SubSpecies s : this->sub_species)
     total_name += s.latex_name;
   return total_name;
+}
+
+std::ostream &
+operator<<(std::ostream & os, const Species & s)
+{
+  os << static_cast<const SpeciesBase &>(s);
+  return os;
 }
 
 bool

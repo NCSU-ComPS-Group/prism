@@ -6,19 +6,9 @@ latex_overrides:
   - species: N2*
     latex: N_{2}(\text{something})
 
-reactions:
+rate-based:
   - reaction: e + N2 -> e + N2(rotation)
-    delta_eps_g: blah
-    delta_eps_e: blah
-    arrhen_coeff: [A, B, C]
-    arr_function: A * T^B * exp( - C / T )
-    arr_function: A * T^ne * exp(- Te / Ee ) * T^ng * exp(- Tg / Eg ) *
-
   - reaction: e + N2 -> e + N2(vibration)
-    delta_eps_g: blah
-    delta_eps_e: blah
-    file: something.txt
-
   - reaction: e + N2 -> e + e + N2+
   - reaction: e + N2 -> e + N + N
   - reaction: e + N2 -> e + N2(electronic)

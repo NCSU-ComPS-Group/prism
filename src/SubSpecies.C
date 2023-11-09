@@ -149,18 +149,18 @@ SubSpecies::getChargeNumber()
 float
 SubSpecies::getMass()
 {
-  float base_mass = static_cast<float>(this->subscript) * constants["mass"][this->base].as<float>();
+  float base_mass = static_cast<float>(this->subscript) * base_masses[this->base];
   // case for an electron
   if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
     return base_mass;
-  float ionization_mass = static_cast<float>(this->charge_num) * constants["mass"]["e"].as<float>();
+  float ionization_mass = static_cast<float>(this->charge_num) * base_masses["e"];
   return base_mass - ionization_mass;
 }
 
 float
 SubSpecies::getCharge()
 {
-  return static_cast<float>(this->charge_num) * constants["e"].as<float>();
+  return static_cast<float>(this->charge_num) * e;
 }
 
 string
@@ -215,6 +215,13 @@ SubSpecies::getLatexName()
   s += "\\text{" + partial_modifier + "}";
 
   return s;
+}
+
+std::ostream &
+operator<<(std::ostream & os, const SubSpecies & s)
+{
+  os << static_cast<const SpeciesBase &>(s);
+  return os;
 }
 
 bool

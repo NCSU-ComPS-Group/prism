@@ -26,7 +26,7 @@ TEST(SpeciesTest, PhotonTest)
 {
   Species s = Species("hnu");
 
-  float s_mass = constants["mass"]["hnu"].as<float>();
+  float s_mass = base_masses["hnu"];
   float s_charge = 0;
   EXPECT_EQ(s.name, "hnu");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -38,7 +38,7 @@ TEST(SpeciesTest, PhotonTest)
   EXPECT_EQ(s.sub_species[0].base, "hnu");
   EXPECT_EQ(s.sub_species[0].modifier, "");
   EXPECT_EQ(s.sub_species[0].subscript, 1);
-  EXPECT_FLOAT_EQ(s.sub_species[0].mass, constants["mass"]["hnu"].as<float>());
+  EXPECT_FLOAT_EQ(s.sub_species[0].mass, base_masses["hnu"]);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
   EXPECT_EQ(s.sub_species[0].latex_name, "h\\nu");
@@ -47,8 +47,8 @@ TEST(SpeciesTest, PhotonTest)
 TEST(SpeciesTest, LowerCaseElectronTest)
 {
   Species s = Species("e");
-  float s_mass = constants["mass"]["e"].as<float>();
-  float s_charge = -constants["e"].as<float>();
+  float s_mass = base_masses["e"];
+  float s_charge = -e;
   EXPECT_EQ(s.name, "e");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -1);
@@ -68,8 +68,8 @@ TEST(SpeciesTest, LowerCaseElectronTest)
 TEST(SpeciesTest, UpperCaseElectronTest)
 {
   Species s = Species("E");
-  float s_mass = constants["mass"]["E"].as<float>();
-  float s_charge = -constants["e"].as<float>();
+  float s_mass = base_masses["E"];
+  float s_charge = -e;
   EXPECT_EQ(s.name, "E");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -1);
@@ -89,7 +89,7 @@ TEST(SpeciesTest, UpperCaseElectronTest)
 TEST(SpeciesTest, GroundStateNoCharge)
 {
   Species s = Species("Ar");
-  float s_mass = constants["mass"]["Ar"].as<float>();
+  float s_mass = base_masses["Ar"];
   EXPECT_EQ(s.name, "Ar");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
@@ -110,8 +110,8 @@ TEST(SpeciesTest, GroundStateSinglePositiveIon)
 {
   Species s = Species("Ar+");
 
-  float s_mass = constants["mass"]["Ar"].as<float>() - constants["mass"]["e"].as<float>();
-  float s_charge = constants["e"].as<float>();
+  float s_mass = base_masses["Ar"] - base_masses["e"];
+  float s_charge = e;
   EXPECT_EQ(s.name, "Ar+");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 1);
@@ -131,8 +131,8 @@ TEST(SpeciesTest, GroundStateSinglePositiveIon)
 TEST(SpeciesTest, GroundStateMultiplePositiveIon)
 {
   Species s = Species("Ar+4");
-  float s_mass = constants["mass"]["Ar"].as<float>() - 4 * constants["mass"]["e"].as<float>();
-  float s_charge = 4 * constants["e"].as<float>();
+  float s_mass = base_masses["Ar"] - 4 * base_masses["e"];
+  float s_charge = 4 * e;
   EXPECT_EQ(s.name, "Ar+4");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 4);
@@ -152,8 +152,8 @@ TEST(SpeciesTest, GroundStateMultiplePositiveIon)
 TEST(SpeciesTest, GroundStateSingleNegativeIon)
 {
   Species s = Species("Ar-");
-  float s_mass = constants["mass"]["Ar"].as<float>() + constants["mass"]["e"].as<float>();
-  float s_charge = -constants["e"].as<float>();
+  float s_mass = base_masses["Ar"] + base_masses["e"];
+  float s_charge = -e;
 
   EXPECT_EQ(s.name, "Ar-");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -174,8 +174,8 @@ TEST(SpeciesTest, GroundStateSingleNegativeIon)
 TEST(SpeciesTest, GroundStateMultipleNegativeIon)
 {
   Species s = Species("Ar-100");
-  float s_mass = constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>();
-  float s_charge = -100 * constants["e"].as<float>();
+  float s_mass = base_masses["Ar"] + 100 * base_masses["e"];
+  float s_charge = -100 * e;
 
   EXPECT_EQ(s.name, "Ar-100");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -196,7 +196,7 @@ TEST(SpeciesTest, GroundStateMultipleNegativeIon)
 TEST(SpeciesTest, GroundStateMolecular)
 {
   Species s = Species("Ar2");
-  float s_mass = 2 * constants["mass"]["Ar"].as<float>();
+  float s_mass = 2 * base_masses["Ar"];
 
   EXPECT_EQ(s.name, "Ar2");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -217,7 +217,7 @@ TEST(SpeciesTest, GroundStateMolecular)
 TEST(SpeciesTest, GroundStateLargeMolecule)
 {
   Species s = Species("Ar188");
-  float s_mass = 188 * constants["mass"]["Ar"].as<float>();
+  float s_mass = 188 * base_masses["Ar"];
   EXPECT_EQ(s.name, "Ar188");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
@@ -238,8 +238,8 @@ TEST(SpeciesTest, MolecularNegativeIon)
 {
   Species s = Species("Ar2-100");
 
-  float s_mass = 2 * constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>();
-  float s_charge = -100 * constants["e"].as<float>();
+  float s_mass = 2 * base_masses["Ar"] + 100 * base_masses["e"];
+  float s_charge = -100 * e;
 
   EXPECT_EQ(s.name, "Ar2-100");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -261,8 +261,8 @@ TEST(SpeciesTest, MolecularPositiveIon)
 {
   Species s = Species("Ar120+39");
   float s_mass =
-      120 * constants["mass"]["Ar"].as<float>() - 39 * constants["mass"]["e"].as<float>();
-  float s_charge = 39 * constants["e"].as<float>();
+      120 * base_masses["Ar"] - 39 * base_masses["e"];
+  float s_charge = 39 * e;
 
   EXPECT_EQ(s.name, "Ar120+39");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -284,8 +284,8 @@ TEST(SpeciesTest, MolecularPositiveIonWithModifier)
 {
   Species s = Species("Ar120+39(test)");
   float s_mass =
-      120 * constants["mass"]["Ar"].as<float>() - 39 * constants["mass"]["e"].as<float>();
-  float s_charge = 39 * constants["e"].as<float>();
+      120 * base_masses["Ar"] - 39 * base_masses["e"];
+  float s_charge = 39 * e;
 
   EXPECT_EQ(s.name, "Ar120+39(test)");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -306,8 +306,8 @@ TEST(SpeciesTest, MolecularPositiveIonWithModifier)
 TEST(SpeciesTest, MolecularNegativeIonWithModifier)
 {
   Species s = Species("Ar2-100(test)");
-  float s_mass = 2 * constants["mass"]["Ar"].as<float>() + 100 * constants["mass"]["e"].as<float>();
-  float s_charge = -100 * constants["e"].as<float>();
+  float s_mass = 2 * base_masses["Ar"] + 100 * base_masses["e"];
+  float s_charge = -100 * e;
 
   EXPECT_EQ(s.name, "Ar2-100(test)");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -328,12 +328,12 @@ TEST(SpeciesTest, MolecularNegativeIonWithModifier)
 TEST(SpeciesTest, ComplexPositiveMolecule)
 {
   Species s = Species("Ar2CF4H3+4(test)");
-  float ar_mass = 2 * constants["mass"]["Ar"].as<float>();
-  float c_mass = constants["mass"]["C"].as<float>();
-  float f_mass = 4 * constants["mass"]["F"].as<float>();
-  float h_mass = 3 * constants["mass"]["H"].as<float>();
-  float e_mass = 4 * constants["mass"]["e"].as<float>();
-  float s_charge = 4 * constants["e"].as<float>();
+  float ar_mass = 2 * base_masses["Ar"];
+  float c_mass = base_masses["C"];
+  float f_mass = 4 * base_masses["F"];
+  float h_mass = 3 * base_masses["H"];
+  float e_mass = 4 * base_masses["e"];
+  float s_charge = 4 * e;
 
   float s_mass = ar_mass + c_mass + f_mass + h_mass - e_mass;
   string s_latex = "\\text{Ar}_{2}";

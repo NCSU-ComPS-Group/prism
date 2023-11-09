@@ -7,6 +7,8 @@ using namespace std;
 int
 main(int argc, char const * argv[])
 {
-  Species test = Species("Ar+");
+  NetworkParser test = NetworkParser("test.yaml");
+  // NetworkParser test2 = NetworkParser("test2.yaml");
+
   return EXIT_SUCCESS;
 }
