@@ -1,3 +1,46 @@
+Unique-Species: 40
+  - 1: O3-
+  - 2: NO2
+  - 3: hnu
+  - 4: O2-
+  - 5: O3
+  - 6: He2+
+  - 7: O+
+  - 8: He2^m
+  - 9: O2(al)
+  - 10: M
+  - 11: O2(vibrational)
+  - 12: N2(c)
+  - 13: O2(b1)
+  - 14: O2(a1)
+  - 15: O2(h)
+  - 16: O^m
+  - 17: He^m
+  - 18: N2(vib)
+  - 19: NO+
+  - 20: N2(b)
+  - 21: N2(electronic)
+  - 22: N2+
+  - 23: O-
+  - 24: N2(a)
+  - 25: O2+
+  - 26: N2(vibration)
+  - 27: He+
+  - 28: e
+  - 29: N2(a2)
+  - 30: N2(a1)
+  - 31: NO
+  - 32: N2(rotation)
+  - 33: O
+  - 34: N2
+  - 35: O4+
+  - 36: N4+
+  - 37: O2(rotational)
+  - 38: O2
+  - 39: He
+  - 40: N
+
+
 Species: O3-
   Sources: 2
     - reaction: O- + O3 -> O3- + O

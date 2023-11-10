@@ -29,6 +29,7 @@ public:
 
   void printReactionSummary();
   void printSpeciesSummary();
+  void writeReactionSummary(const string & filepath);
   void writeSpeciesSummary(const string & filepath);
 
 private:

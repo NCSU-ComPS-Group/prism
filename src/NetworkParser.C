@@ -144,11 +144,20 @@ NetworkParser::writeSpeciesSummary(const string & filepath)
   // open the file to write to
   if (filepath == this->file)
     throw invalid_argument(
-        makeRed("\n\nYour summary file cannot have the same name as your input file!"));
+        makeRed("\n\nYour species summary file cannot have the same name as your input file!"));
 
   ofstream out(filepath);
   // lets use the emitter to write to the file
   // YAML::Emitter out;
+  out << "Unique-Species: " << species.size() << endl;
+  int species_count = 0;
+  for (auto it : species)
+  {
+    species_count++;
+    out << "  - " << species_count << ": " << it.first << endl;
+  }
+  out << endl << endl;
+
   for (auto it : species)
   {
     out << "Species: ";
@@ -163,9 +172,31 @@ NetworkParser::writeSpeciesSummary(const string & filepath)
       out << "    - reaction: " << s << endl;
     out << endl << endl;
   }
+  out.close();
+}
 
-  // write the conents to a file
-  // out << out.c_str();
-  // close the file to write to
+void
+NetworkParser::writeReactionSummary(const string & filepath)
+{
+  // open the file to write to
+  if (filepath == this->file)
+    throw invalid_argument(
+        makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
+
+  ofstream out(filepath);
+
+  out << "Total-Reactions: " << rxn_count << endl << endl;
+  out << "Rate-Based: " << rate_rxn.size() + invalid_rate_rxn.size() << endl;
+  out << "  Validated: " << rate_rxn.size() << endl;
+  out << "  Invalid: " << invalid_rate_rxn.size() << endl;
+  for (auto rxn : invalid_rate_rxn)
+    out << "    - reaction: " << rxn << endl;
+  out << endl << endl;
+  out << "Cross-Section-Based: " << xsec_rxn.size() + invalid_xsec_rxn.size() << endl;
+  out << "  Validated: " << xsec_rxn.size() << endl;
+  out << "  Invalid: " << invalid_xsec_rxn.size() << endl;
+  for (auto rxn : invalid_xsec_rxn)
+    out << "      - reaction: " << rxn << endl;
+
   out.close();
 }
