@@ -26,7 +26,7 @@ To ensure no conflicts with other projects you can create a new environment to w
   conda activate rxn-cpp
   mkdir -p ~/projects
   cd ~/projects
-  git clone https://github.com/gsgall/reaction_parser.git
+  git clone https://github.ncsu.edu/NCSU-ComPS-Group/rxn-cpp
   cd rxn-cpp
 ```
 
@@ -52,8 +52,8 @@ To ensure no conflicts with other projects you can create a new environment to w
 If you'd like to remove the environment for any reason you can use the following
 
 ```bash
-  mamba activate base
-  mamba env remove -n rxn_mech
+  conda activate base
+  conda env remove -n rxn-cpp
 ```
 
 # Trouble Shooting
