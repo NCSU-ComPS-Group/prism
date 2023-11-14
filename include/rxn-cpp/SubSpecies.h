@@ -44,3 +44,10 @@ private:
   float getCharge() override;
   string getLatexName() override;
 };
+
+
+template <>
+struct std::hash<SubSpecies>
+{
+  size_t operator()(const SubSpecies & obj) const;
+};

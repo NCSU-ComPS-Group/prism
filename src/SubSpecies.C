@@ -260,3 +260,22 @@ SubSpecies::operator!=(const SubSpecies & other) const
 {
   return !(*this == other);
 }
+
+size_t
+hash<SubSpecies>::operator()(const SubSpecies & obj) const
+{
+  constexpr size_t hash_factor = 37;
+
+  size_t val = 17; // Start with a prime number
+
+  val += hash_factor * hash<SpeciesBase>()(obj);
+  val += hash_factor * hash<string>()(obj.base);
+  val += hash_factor * hash<string>()(obj.modifier);
+  val += hash_factor * hash<unsigned int>()(obj.subscript);
+  val += hash_factor * hash<int>()(obj.charge_num);
+  val += hash_factor * hash<float>()(obj.mass);
+  val += hash_factor * hash<float>()(obj.charge);
+  val += hash_factor * hash<string>()(obj.latex_name);
+  // hash based on the name
+  return val;
+}
