@@ -27,3 +27,10 @@ private:
   virtual float getCharge() = 0;
   virtual string getLatexName() = 0;
 };
+
+/** Custom hash function based only on the name of the species */
+template <>
+struct std::hash<SpeciesBase>
+{
+  size_t operator()(const SpeciesBase & obj) const;
+};

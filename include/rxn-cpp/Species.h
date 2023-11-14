@@ -7,6 +7,7 @@
 
 using namespace std;
 
+class Reaction;
 class Species : public SpeciesBase
 {
 public:
@@ -23,10 +24,13 @@ public:
 
   vector<string> sources;
   vector<string> sinks;
+  /** A map to map reaction number to soic number for each reaction */
+  // unordered_map<Reaction, int> stoic_map;
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const Species & other) const;
+
 
 private:
   vector<SubSpecies> decomposeSpecies();
@@ -35,3 +39,4 @@ private:
   float getCharge() override;
   string getLatexName() override;
 };
+

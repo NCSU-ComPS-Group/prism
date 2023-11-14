@@ -69,7 +69,7 @@ Reaction::validateReaction()
   for (auto s : this->reactants)
   {
     // this reaction is a sink
-    s.sinks.push_back(rxn);
+    // s.sinks.push_back(rxn);
     r_mass += s.mass;
     r_charge_num += s.charge_num;
   }
@@ -81,7 +81,7 @@ Reaction::validateReaction()
   for (auto s : this->products)
   {
     // add this reaction as a source
-    s.sources.push_back(rxn);
+    // s.sources.push_back(rxn);
     p_mass += s.mass;
     p_charge_num += s.charge_num;
   }

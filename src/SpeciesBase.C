@@ -35,3 +35,11 @@ bool SpeciesBase::operator==(const SpeciesBase & other) const{
 bool SpeciesBase::operator!=(const SpeciesBase & other) const{
   return !(*this == other);
 }
+
+
+size_t
+hash<SpeciesBase>::operator()(const SpeciesBase & obj) const
+{
+  // hash based on the name
+  return hash<string>()(obj.name);
+}

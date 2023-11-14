@@ -1,4 +1,5 @@
 #include "Species.h"
+#include "Reaction.h"
 
 Species::Species(const string & name)
   : SpeciesBase(name),

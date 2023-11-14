@@ -37,4 +37,5 @@ $(TEST_EXECUTABLE): $(TEST_OBJECTS)
 all: $(TEST_EXECUTABLE)
 
 clean:
-	@rm -rf $(BUILD_DIR)/*.o $(TEST_EXECUTABLE)
+	@rm -rf $(BUILD_DIR)/*.o
+	@rm -f $(TEST_EXECUTABLE)
