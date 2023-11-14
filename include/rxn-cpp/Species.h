@@ -40,3 +40,8 @@ private:
   string getLatexName() override;
 };
 
+template <>
+struct std::hash<Species>
+{
+  size_t operator()(const Species & obj) const;
+};

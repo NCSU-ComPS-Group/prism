@@ -96,3 +96,20 @@ Species::operator!=(const Species & other) const
 {
   return !(*this == other);
 }
+
+size_t
+hash<Species>::operator()(const Species & obj) const
+{
+  constexpr size_t hash_factor = 37;
+
+  size_t val = 17; // Start with a prime number
+  for ( auto s : obj.sub_species )
+    val += hash_factor * hash<SubSpecies>()(s);
+
+  val += hash_factor * hash<float>()(obj.mass);
+  val += hash_factor * hash<int>()(obj.charge_num);
+  val += hash_factor * hash<string>()(obj.latex_name);
+  // not including the sources and sinks in the hash since those
+  // can change as reactions are added to the network
+  return val;
+}
