@@ -99,3 +99,41 @@ Reaction::validateReaction()
     throw invalid_argument(
         makeRed("\nReaction: " + this->rxn + " is invalid!" + "\n\tCharge is not conserved\n\n"));
 }
+
+bool
+Reaction::operator==(const Reaction & other) const
+{
+  if (this->rxn != other.rxn)
+    return false;
+
+  if (this->rxn_number != other.rxn_number)
+    return false;
+
+  if (this->latex_name != other.latex_name)
+    return false;
+
+  return true;
+}
+
+bool
+Reaction::operator!=(const Reaction & other) const
+{
+  return !(*this == other);
+}
+
+size_t hash<Reaction>::operator()(const Reaction & obj) const
+{
+  constexpr size_t hash_factor = 37;
+
+  size_t val = 17; // Start with a prime number
+
+  val += hash_factor * hash<string>()(obj.rxn);
+  val += hash_factor * hash<int>()(obj.rxn_number);
+  val += hash_factor * hash<string>()(obj.latex_name);
+  // not including the reactants and products in the hash
+  // this is becuase these may change if there are lumped species
+  // or if i want to add a map of reactions to species while I am
+  // still parsing reaction
+  return val;
+}
+

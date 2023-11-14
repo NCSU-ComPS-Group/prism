@@ -19,9 +19,19 @@ public:
   vector<Species> products;
   const string latex_name;
 
+  bool operator==(const Reaction & other) const;
+  bool operator!=(const Reaction & other) const;
+
+
 private:
   string checkReactionString(const string & rxn);
   void setSides();
   void validateReaction();
   string getLatexName();
+};
+
+template <>
+struct std::hash<Reaction>
+{
+  size_t operator()(const Reaction & obj) const;
 };

@@ -103,7 +103,8 @@ hash<Species>::operator()(const Species & obj) const
   constexpr size_t hash_factor = 37;
 
   size_t val = 17; // Start with a prime number
-  for ( auto s : obj.sub_species )
+
+  for (auto s : obj.sub_species)
     val += hash_factor * hash<SubSpecies>()(s);
 
   val += hash_factor * hash<float>()(obj.mass);
