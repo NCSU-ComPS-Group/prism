@@ -32,7 +32,7 @@ TEST(SpeciesTest, PhotonTest)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "h\\nu");
+  EXPECT_EQ(s.latex_name, "$h\\nu$");
 
   EXPECT_EQ(s.sub_species[0].name, "hnu");
   EXPECT_EQ(s.sub_species[0].base, "hnu");
@@ -41,7 +41,7 @@ TEST(SpeciesTest, PhotonTest)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, base_masses["hnu"]);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
-  EXPECT_EQ(s.sub_species[0].latex_name, "h\\nu");
+  EXPECT_EQ(s.sub_species[0].latex_name, "$h\\nu$");
 }
 
 TEST(SpeciesTest, LowerCaseElectronTest)
@@ -53,7 +53,7 @@ TEST(SpeciesTest, LowerCaseElectronTest)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{e}");
+  EXPECT_EQ(s.latex_name, "e");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "e");
   EXPECT_EQ(s.sub_species[0].base, "e");
@@ -62,7 +62,7 @@ TEST(SpeciesTest, LowerCaseElectronTest)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -1);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{e}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "e");
 }
 
 TEST(SpeciesTest, UpperCaseElectronTest)
@@ -74,7 +74,7 @@ TEST(SpeciesTest, UpperCaseElectronTest)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{E}");
+  EXPECT_EQ(s.latex_name, "E");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "E");
   EXPECT_EQ(s.sub_species[0].base, "E");
@@ -83,7 +83,7 @@ TEST(SpeciesTest, UpperCaseElectronTest)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -1);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{E}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "E");
 }
 
 TEST(SpeciesTest, GroundStateNoCharge)
@@ -94,7 +94,7 @@ TEST(SpeciesTest, GroundStateNoCharge)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}");
+  EXPECT_EQ(s.latex_name, "Ar");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -103,7 +103,7 @@ TEST(SpeciesTest, GroundStateNoCharge)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar");
 }
 
 TEST(SpeciesTest, GroundStateSinglePositiveIon)
@@ -116,7 +116,7 @@ TEST(SpeciesTest, GroundStateSinglePositiveIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 1);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{+}");
+  EXPECT_EQ(s.latex_name, "Ar$^{+}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar+");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -125,7 +125,7 @@ TEST(SpeciesTest, GroundStateSinglePositiveIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 1);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}^{+}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$^{+}$");
 }
 
 TEST(SpeciesTest, GroundStateMultiplePositiveIon)
@@ -137,7 +137,7 @@ TEST(SpeciesTest, GroundStateMultiplePositiveIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 4);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{+4}");
+  EXPECT_EQ(s.latex_name, "Ar$^{+4}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar+4");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -146,7 +146,7 @@ TEST(SpeciesTest, GroundStateMultiplePositiveIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 4);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}^{+4}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$^{+4}$");
 }
 
 TEST(SpeciesTest, GroundStateSingleNegativeIon)
@@ -159,7 +159,7 @@ TEST(SpeciesTest, GroundStateSingleNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{-}");
+  EXPECT_EQ(s.latex_name, "Ar$^{-}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar-");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -168,7 +168,7 @@ TEST(SpeciesTest, GroundStateSingleNegativeIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -1);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}^{-}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$^{-}$");
 }
 
 TEST(SpeciesTest, GroundStateMultipleNegativeIon)
@@ -181,7 +181,7 @@ TEST(SpeciesTest, GroundStateMultipleNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{-100}");
+  EXPECT_EQ(s.latex_name, "Ar$^{-100}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar-100");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -190,7 +190,7 @@ TEST(SpeciesTest, GroundStateMultipleNegativeIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -100);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}^{-100}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$^{-100}$");
 }
 
 TEST(SpeciesTest, GroundStateMolecular)
@@ -202,7 +202,7 @@ TEST(SpeciesTest, GroundStateMolecular)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar2");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -211,7 +211,7 @@ TEST(SpeciesTest, GroundStateMolecular)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{2}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{2}$");
 }
 
 TEST(SpeciesTest, GroundStateLargeMolecule)
@@ -222,7 +222,7 @@ TEST(SpeciesTest, GroundStateLargeMolecule)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{188}");
+  EXPECT_EQ(s.latex_name, "Ar$_{188}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar188");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -231,7 +231,7 @@ TEST(SpeciesTest, GroundStateLargeMolecule)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{188}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{188}$");
 }
 
 TEST(SpeciesTest, MolecularNegativeIon)
@@ -245,7 +245,7 @@ TEST(SpeciesTest, MolecularNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$$^{-100}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar2-100");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -254,7 +254,7 @@ TEST(SpeciesTest, MolecularNegativeIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -100);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{2}^{-100}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{2}$$^{-100}$");
 }
 
 TEST(SpeciesTest, MolecularPositiveIon)
@@ -268,7 +268,7 @@ TEST(SpeciesTest, MolecularPositiveIon)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 39);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}");
+  EXPECT_EQ(s.latex_name, "Ar$_{120}$$^{+39}$");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar120+39");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -277,7 +277,7 @@ TEST(SpeciesTest, MolecularPositiveIon)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 39);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{120}^{+39}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{120}$$^{+39}$");
 }
 
 TEST(SpeciesTest, MolecularPositiveIonWithModifier)
@@ -291,7 +291,7 @@ TEST(SpeciesTest, MolecularPositiveIonWithModifier)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, 39);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}\\text{(test)}");
+  EXPECT_EQ(s.latex_name, "Ar$_{120}$$^{+39}$(test)");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar120+39(test)");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -300,7 +300,7 @@ TEST(SpeciesTest, MolecularPositiveIonWithModifier)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 39);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{120}^{+39}\\text{(test)}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{120}$$^{+39}$(test)");
 }
 
 TEST(SpeciesTest, MolecularNegativeIonWithModifier)
@@ -313,7 +313,7 @@ TEST(SpeciesTest, MolecularNegativeIonWithModifier)
   EXPECT_FLOAT_EQ(s.mass, s_mass);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, s_charge);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}\\text{(test)}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$$^{-100}$(test)");
   // lets check the individual species too
   EXPECT_EQ(s.sub_species[0].name, "Ar2-100(test)");
   EXPECT_EQ(s.sub_species[0].base, "Ar");
@@ -322,7 +322,7 @@ TEST(SpeciesTest, MolecularNegativeIonWithModifier)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, s_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, -100);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, s_charge);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{2}^{-100}\\text{(test)}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{2}$$^{-100}$(test)");
 }
 
 TEST(SpeciesTest, ComplexPositiveMolecule)
@@ -336,11 +336,11 @@ TEST(SpeciesTest, ComplexPositiveMolecule)
   float s_charge = 4 * e;
 
   float s_mass = ar_mass + c_mass + f_mass + h_mass - e_mass;
-  string s_latex = "\\text{Ar}_{2}";
-  s_latex += "\\text{C}";
-  s_latex += "\\text{F}_{4}";
-  s_latex += "\\text{H}_{3}";
-  s_latex += "^{+4}\\text{(test)}";
+  string s_latex = "Ar$_{2}$";
+  s_latex += "C";
+  s_latex += "F$_{4}$";
+  s_latex += "H$_{3}$";
+  s_latex += "$^{+4}$(test)";
 
   EXPECT_EQ(s.name, "Ar2CF4H3+4(test)");
   EXPECT_FLOAT_EQ(s.mass, s_mass);
@@ -355,7 +355,7 @@ TEST(SpeciesTest, ComplexPositiveMolecule)
   EXPECT_FLOAT_EQ(s.sub_species[0].mass, ar_mass);
   EXPECT_EQ(s.sub_species[0].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[0].charge, 0);
-  EXPECT_EQ(s.sub_species[0].latex_name, "\\text{Ar}_{2}");
+  EXPECT_EQ(s.sub_species[0].latex_name, "Ar$_{2}$");
   // checking to make sure that C works
   EXPECT_EQ(s.sub_species[1].name, "C");
   EXPECT_EQ(s.sub_species[1].base, "C");
@@ -364,7 +364,7 @@ TEST(SpeciesTest, ComplexPositiveMolecule)
   EXPECT_FLOAT_EQ(s.sub_species[1].mass, c_mass);
   EXPECT_EQ(s.sub_species[1].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[1].charge, 0);
-  EXPECT_EQ(s.sub_species[1].latex_name, "\\text{C}");
+  EXPECT_EQ(s.sub_species[1].latex_name, "C");
   // checking to make sure that F works
   EXPECT_EQ(s.sub_species[2].name, "F4");
   EXPECT_EQ(s.sub_species[2].base, "F");
@@ -373,7 +373,7 @@ TEST(SpeciesTest, ComplexPositiveMolecule)
   EXPECT_FLOAT_EQ(s.sub_species[2].mass, f_mass);
   EXPECT_EQ(s.sub_species[2].charge_num, 0);
   EXPECT_FLOAT_EQ(s.sub_species[2].charge, 0);
-  EXPECT_EQ(s.sub_species[2].latex_name, "\\text{F}_{4}");
+  EXPECT_EQ(s.sub_species[2].latex_name, "F$_{4}$");
   // checking to make sure that H works
   EXPECT_EQ(s.sub_species[3].name, "H3+4(test)");
   EXPECT_EQ(s.sub_species[3].base, "H");
@@ -382,5 +382,5 @@ TEST(SpeciesTest, ComplexPositiveMolecule)
   EXPECT_FLOAT_EQ(s.sub_species[3].mass, h_mass - e_mass);
   EXPECT_EQ(s.sub_species[3].charge_num, 4);
   EXPECT_FLOAT_EQ(s.sub_species[3].charge, s_charge);
-  EXPECT_EQ(s.sub_species[3].latex_name, "\\text{H}_{3}^{+4}\\text{(test)}");
+  EXPECT_EQ(s.sub_species[3].latex_name, "H$_{3}$$^{+4}$(test)");
 }

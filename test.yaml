@@ -1,3 +1,7 @@
+custom-species:
+  - name: A
+    mass: 91
+
 lumped-species:
   - lumped: N2*
     actual: [N2(rotation), N2(vibration), N2(not_used)]
@@ -8,7 +12,19 @@ latex-overrides:
 
 rate-based:
   - reaction: e + N2 -> e + N2(rotation)
+    delta-eps-e: number
+    delta-eps-g: number
+    # not all 5 coeffs are required if less than 5 are provided assume others are 0
+    coeffs: [A, B, C, D, E]
+    # optional assume arrhenius form if not provided
+    type: reaction_type
+
   - reaction: e + N2 -> e + N2(vibration)
+    delta-eps-e: number
+    delta-eps-g: number
+    # path to the file which stores the xsec/rate file
+    file: path
+
   - reaction: e + N2 -> e + e + N2+
   - reaction: e + N2 -> e + N + N
   - reaction: e + N2 -> e + N2(electronic)

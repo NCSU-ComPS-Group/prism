@@ -33,7 +33,7 @@ TEST(SubSpeciesTest, PhotonTest)
   EXPECT_FLOAT_EQ(s.mass, base_masses["hnu"]);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "h\\nu");
+  EXPECT_EQ(s.latex_name, "$h\\nu$");
 }
 
 TEST(SubSpeciesTest, LowerCasesElectronTest)
@@ -47,7 +47,7 @@ TEST(SubSpeciesTest, LowerCasesElectronTest)
   EXPECT_FLOAT_EQ(s.mass, base_masses["e"]);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, -e);
-  EXPECT_EQ(s.latex_name, "\\text{e}");
+  EXPECT_EQ(s.latex_name, "e");
 }
 
 TEST(SubSpeciesTest, UpperCasesElectronTest)
@@ -61,7 +61,7 @@ TEST(SubSpeciesTest, UpperCasesElectronTest)
   EXPECT_FLOAT_EQ(s.mass, base_masses["e"]);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, -e);
-  EXPECT_EQ(s.latex_name, "\\text{E}");
+  EXPECT_EQ(s.latex_name, "E");
 }
 
 TEST(SubSpeciesTest, GroundStateNoCharge)
@@ -75,7 +75,7 @@ TEST(SubSpeciesTest, GroundStateNoCharge)
   EXPECT_FLOAT_EQ(s.mass, base_masses["Ar"]);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}");
+  EXPECT_EQ(s.latex_name, "Ar");
 }
 
 TEST(SubSpeciesTest, GroundStateSinglePositiveIon)
@@ -89,7 +89,7 @@ TEST(SubSpeciesTest, GroundStateSinglePositiveIon)
   EXPECT_FLOAT_EQ(s.mass, base_masses["Ar"] - base_masses["e"]);
   EXPECT_EQ(s.charge_num, 1);
   EXPECT_FLOAT_EQ(s.charge, e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{+}");
+  EXPECT_EQ(s.latex_name, "Ar$^{+}$");
 }
 
 TEST(SubSpeciesTest, GroundStateMultiplePositiveIon)
@@ -103,7 +103,7 @@ TEST(SubSpeciesTest, GroundStateMultiplePositiveIon)
   EXPECT_FLOAT_EQ(s.mass, base_masses["Ar"] - 4 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, 4);
   EXPECT_FLOAT_EQ(s.charge, 4 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{+4}");
+  EXPECT_EQ(s.latex_name, "Ar$^{+4}$");
 }
 
 TEST(SubSpeciesTest, GroundStateSingleNegativeIon)
@@ -117,7 +117,7 @@ TEST(SubSpeciesTest, GroundStateSingleNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, base_masses["Ar"] + base_masses["e"]);
   EXPECT_EQ(s.charge_num, -1);
   EXPECT_FLOAT_EQ(s.charge, -e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{-}");
+  EXPECT_EQ(s.latex_name, "Ar$^{-}$");
 }
 
 TEST(SubSpeciesTest, GroundStateMultipleNegativeIon)
@@ -131,7 +131,7 @@ TEST(SubSpeciesTest, GroundStateMultipleNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, base_masses["Ar"] + 100 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, -100 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}^{-100}");
+  EXPECT_EQ(s.latex_name, "Ar$^{-100}$");
 }
 
 TEST(SubSpeciesTest, GroundStateMolecular)
@@ -145,7 +145,7 @@ TEST(SubSpeciesTest, GroundStateMolecular)
   EXPECT_FLOAT_EQ(s.mass, 2 * base_masses["Ar"]);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$");
 }
 
 TEST(SubSpeciesTest, GroundStateLargeMolecule)
@@ -159,7 +159,7 @@ TEST(SubSpeciesTest, GroundStateLargeMolecule)
   EXPECT_FLOAT_EQ(s.mass, 188 * base_masses["Ar"]);
   EXPECT_EQ(s.charge_num, 0);
   EXPECT_FLOAT_EQ(s.charge, 0);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{188}");
+  EXPECT_EQ(s.latex_name, "Ar$_{188}$");
 }
 
 TEST(SubSpeciesTest, MolecularNegativeIon)
@@ -173,7 +173,7 @@ TEST(SubSpeciesTest, MolecularNegativeIon)
   EXPECT_FLOAT_EQ(s.mass, 2 * base_masses["Ar"] + 100 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, -100 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$$^{-100}$");
 }
 
 TEST(SubSpeciesTest, MolecularPositiveIon)
@@ -187,7 +187,7 @@ TEST(SubSpeciesTest, MolecularPositiveIon)
   EXPECT_FLOAT_EQ(s.mass, 120 * base_masses["Ar"] - 39 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, 39);
   EXPECT_FLOAT_EQ(s.charge, 39 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}");
+  EXPECT_EQ(s.latex_name, "Ar$_{120}$$^{+39}$");
 }
 
 TEST(SubSpeciesTest, MolecularPositiveIonWithModifier)
@@ -201,7 +201,7 @@ TEST(SubSpeciesTest, MolecularPositiveIonWithModifier)
   EXPECT_FLOAT_EQ(s.mass, 120 * base_masses["Ar"] - 39 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, 39);
   EXPECT_FLOAT_EQ(s.charge, 39 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{120}^{+39}\\text{(test)}");
+  EXPECT_EQ(s.latex_name, "Ar$_{120}$$^{+39}$(test)");
 }
 
 TEST(SubSpeciesTest, MolecularNegativeIonWithModifier)
@@ -215,5 +215,5 @@ TEST(SubSpeciesTest, MolecularNegativeIonWithModifier)
   EXPECT_FLOAT_EQ(s.mass, 2 * base_masses["Ar"] + 100 * base_masses["e"]);
   EXPECT_EQ(s.charge_num, -100);
   EXPECT_FLOAT_EQ(s.charge, -100 * e);
-  EXPECT_EQ(s.latex_name, "\\text{Ar}_{2}^{-100}\\text{(test)}");
+  EXPECT_EQ(s.latex_name, "Ar$_{2}$$^{-100}$(test)");
 }

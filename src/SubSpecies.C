@@ -167,24 +167,24 @@ string
 SubSpecies::getLatexName()
 {
   if (this->name == "hnu")
-    return "h\\nu";
+    return "$h\\nu$";
 
   if (this->modifier.length() == 0)
-    return "\\text{" + this->name + "}";
+    return this->name;
 
-  string s = "\\text{" + this->base + "}";
+  string s = this->base;
   // variable used for cutting up the end of the modifier
   string partial_name = this->base;
 
   if (this->subscript > 1)
   {
-    s += "_{" + to_string(this->subscript) + "}";
+    s += "$_{" + to_string(this->subscript) + "}$";
     partial_name += to_string(this->subscript);
   }
 
   if (this->charge_num != 0)
   {
-    s += "^{";
+    s += "$^{";
     if (this->charge_num < 0)
     {
       s += "-";
@@ -197,11 +197,11 @@ SubSpecies::getLatexName()
     }
 
     if (abs(this->charge_num) == 1)
-      s += "}";
+      s += "}$";
 
     if (abs(this->charge_num) > 1)
     {
-      s += to_string(abs(this->charge_num)) + "}";
+      s += to_string(abs(this->charge_num)) + "}$";
       partial_name += to_string(abs(this->charge_num));
     }
   }
@@ -212,7 +212,7 @@ SubSpecies::getLatexName()
   const int partial_stop = partial_name.length();
 
   const string partial_modifier = this->name.substr(partial_stop, this->name.length());
-  s += "\\text{" + partial_modifier + "}";
+  s += partial_modifier;
 
   return s;
 }
