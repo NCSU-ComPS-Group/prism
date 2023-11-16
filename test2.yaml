@@ -763,25 +763,13 @@ Species: e
     - reaction: O2- + N -> NO2 + e
       stoic_coeff: 1
 
-  Sinks: 18
-    - reaction: e + N2 -> e + e + N2+
-      stoic_coeff: 1
-    - reaction: e + He -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + O2 -> e + e + O2+
-      stoic_coeff: 1
+  Sinks: 12
     - reaction: e + O2 -> O + O-
       stoic_coeff: -1
     - reaction: e + O2(al) -> O + O-
       stoic_coeff: -1
     - reaction: e + O2(b1) -> O + O-
       stoic_coeff: -1
-    - reaction: e + NO -> e + e + NO+
-      stoic_coeff: 1
-    - reaction: e + He^m -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + He2^m -> e + e + He2+
-      stoic_coeff: 1
     - reaction: e + He2+ -> He^m + He
       stoic_coeff: -1
     - reaction: e + He+ -> He^m
@@ -1061,7 +1049,7 @@ Species: N2
     - reaction: N + NO2 -> N2 + O2
       stoic_coeff: 1
 
-  Sinks: 15
+  Sinks: 14
     - reaction: e + N2 -> e + N2(rotation)
       stoic_coeff: -1
     - reaction: e + N2 -> e + N2(vibration)
@@ -1090,8 +1078,6 @@ Species: N2
       stoic_coeff: -1
     - reaction: N2+ + N2 + M -> N4+ + M
       stoic_coeff: -1
-    - reaction: N2(a) + N2 -> N2 + N2
-      stoic_coeff: 1
 
 
 Species: O4+
@@ -1200,7 +1186,7 @@ Species: O2
     - reaction: N + NO2 -> N2 + O2
       stoic_coeff: 1
 
-  Sinks: 31
+  Sinks: 30
     - reaction: e + O2 -> e + e + O2+
       stoic_coeff: -1
     - reaction: e + O2 -> e + O + O
@@ -1247,8 +1233,6 @@ Species: O2
       stoic_coeff: -1
     - reaction: N2(c) + O2 -> N2 + O + O
       stoic_coeff: -1
-    - reaction: O2(h) + O2 -> O2 + O2
-      stoic_coeff: 1
     - reaction: O- + O2 -> e + O3
       stoic_coeff: -1
     - reaction: O- + O2 -> e + O3

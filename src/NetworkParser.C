@@ -74,7 +74,7 @@ NetworkParser::parseNetwork()
         {
           // only adding these reactions if they are truly sinks
           // and not actually neutral
-          if (r.stoic_coeffs[it->name] != 0)
+          if (r.stoic_coeffs[it->name] < 0)
             it->sinks.push_back(r);
         }
       }
@@ -245,40 +245,39 @@ NetworkParser::getReactionSummary(const bool yaml_file)
   summary += fmt::format("Total-Reactions: {:d}\n\n", rxn_count);
   summary += fmt::format("Rate-Based: {:d}\n", rate_rxn.size() + invalid_rate_rxn.size());
 
-  if (!yaml_file)
-    summary += "\033[32m";
-  summary += fmt::format("  Validated: {:d}\n", rate_rxn.size());
+  summary += getByTypeReactionSummary(this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason, yaml_file);
 
-  if (!yaml_file)
-    summary += "\033[31m";
-  summary += fmt::format("  Invalid: {:d}\n", invalid_rate_rxn.size());
-
-  for (auto i = 0; i < invalid_rate_rxn.size(); ++i)
-  {
-    summary += fmt::format("    - reaction: {}\n", invalid_rate_rxn[i]);
-    summary += fmt::format("        reason: {}\n", invalid_rate_reason[i]);
-  }
-  if (!yaml_file)
-    summary += "\033[0m";
-
-  summary += "\n\n";
   summary += fmt::format("Cross-Section-Based: {:d}\n", xsec_rxn.size() + invalid_xsec_rxn.size());
+  summary += getByTypeReactionSummary(this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, yaml_file);
+
+  return summary;
+}
+
+string
+NetworkParser::getByTypeReactionSummary(const vector<Reaction> valid_rxn,
+                                        const vector<string> invalid_rxn,
+                                        const vector<string> invalid_reason,
+                                        const bool yaml_file)
+{
+  string summary = "";
 
   if (!yaml_file)
     summary += "\033[32m";
-  summary += fmt::format("  Validated: {:d}\n", xsec_rxn.size());
+  summary += fmt::format("    Valid: {:d}\n", valid_rxn.size());
 
   if (!yaml_file)
     summary += "\033[31m";
-  summary += fmt::format("  Invalid: {:d}\n", invalid_xsec_rxn.size());
-  for (auto i = 0; i < invalid_xsec_rxn.size(); ++i)
+  summary += fmt::format("  Invalid: {:d}\n", invalid_rxn.size());
+
+  for (auto i = 0; i < invalid_rxn.size(); ++i)
   {
-    summary += fmt::format("      - reaction: {}\n", invalid_xsec_rxn[i]);
-    summary += fmt::format("          reason: {}\n", invalid_xsec_reason[i]);
+    summary += fmt::format("    - reaction: {}\n", invalid_rxn[i]);
+    summary += fmt::format("        reason: {}\n", invalid_reason[i]);
   }
   if (!yaml_file)
     summary += "\033[0m";
 
   summary += "\n\n";
+
   return summary;
 }

@@ -45,4 +45,5 @@ private:
   string getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff);
 
   string getReactionSummary(const bool yaml_file=true);
+  string getByTypeReactionSummary(const vector<Reaction> valid_rxn, const vector<string> invalid_rxn, const vector<string> invalid_reason, const bool yaml_file=true);
 };
