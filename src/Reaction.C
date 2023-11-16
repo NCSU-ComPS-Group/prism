@@ -75,22 +75,39 @@ Reaction::validateReaction()
   float r_mass = 0;
   // reactant charge
   int r_charge_num = 0;
-  for (auto it : this->reactants)
+  // all of the elements that exist in the reactants
+  unordered_set<string> r_elements;
+  for (auto r : this->reactants)
   {
     // this reaction is a sink
-    r_mass += it->mass;
-    r_charge_num += it->charge_num;
+    r_mass += r->mass;
+    r_charge_num += r->charge_num;
+    for (auto sub_r : r->sub_species)
+      r_elements.insert(sub_r.base);
   }
   // product mass
   float p_mass = 0;
   // product charge
   int p_charge_num = 0;
 
-  for (auto it : this->products)
+  for (auto p : this->products)
   {
+    // lets check to make sure that all of the elements that make up
+    // the product also exist on the reactant side
+    // no nuclear reactions here
+    for (auto sub_p : p->sub_species)
+    {
+      // we are not checking to make sure electrons and photons are on both sides
+      // can be produced without it being on both sides
+      if (sub_p.base == "e" || sub_p.base == "E" || sub_p.base == "hnu")
+        continue;
+      auto it = r_elements.find(sub_p.base);
+      if ( it == r_elements.end())
+        throw invalid_argument(fmt::format("{} does not appear as a reactant", sub_p.base));
+    }
     // add this reaction as a source
-    p_mass += it->mass;
-    p_charge_num += it->charge_num;
+    p_mass += p->mass;
+    p_charge_num += p->charge_num;
   }
 
   bool mass_conservation = abs(r_mass - p_mass) < MASS_EPS;

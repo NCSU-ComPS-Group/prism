@@ -1,10 +1,11 @@
 #pragma once
 #include <limits>
-
+#include <unordered_set>
 #include "GlobalData.h"
 #include "Species.h"
 #include "StringHelper.h"
 #include "Printer.h"
+
 using namespace std;
 class Reaction
 {

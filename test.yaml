@@ -1,17 +1,38 @@
+# this block should be totally optional
 custom-species:
   - name: A
     mass: 91
-
+# this block will also be totall optional
 lumped-species:
   - lumped: N2*
+    # lets give a warning if one of these is not used
     actual: [N2(rotation), N2(vibration), N2(not_used)]
 
+
 latex-overrides:
+  # lets give a warning if the species you are overriding is not in the reaction network
   - species: N2*
     latex: N_{2}(\text{something})
 
+custom-equation:
+  # string
+  - eqn: A + B + C
+    # string
+    coeffs: [A, B, C]
+    # string
+    latex_form:
+
+# for reactions lets give an error is no coefficients and no file is provided
+# lets give an error if more than 5 coefficients are provided and a custom reaction type
+# is not provided
+
+# lets make delta-eps-e and delta-eps-g optional if they are not provided we are
+# going to assume that they are 0
+
+# lets do a check to make sure that all of the products exist on the reactants side
 rate-based:
   - reaction: e + N2 -> e + N2(rotation)
+    # these are optinional if they are not provided they will be assumed to be 0
     delta-eps-e: number
     delta-eps-g: number
     # not all 5 coeffs are required if less than 5 are provided assume others are 0
@@ -159,7 +180,6 @@ rate-based:
   - reaction: N + NO2 -> NO + NO
   - reaction: N + NO2 -> N2 + O + O
   - reaction: N + NO2 -> N2 + O2
-
 
 
 
