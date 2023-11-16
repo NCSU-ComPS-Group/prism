@@ -27,34 +27,44 @@ Reaction::setSides()
 
   for (auto s : lhs_str)
   {
+    auto stoic_it = this->stoic_coeffs.find(s);
+    if ( stoic_it == this->stoic_coeffs.end())
+      this->stoic_coeffs.emplace(s, -1);
+    else
+      this->stoic_coeffs[s] -= 1;
+
     auto it = species.find(s);
     if (it == species.end())
     {
-      Species new_species = Species(s);
-      new_species.sinks.push_back(rxn);
-      this->reactants.push_back(new_species);
+      // shared pointer so that all of the reactions and modify the
+      // species and then have those changed reflected in the global data
+      shared_ptr<Species> new_species = make_shared<Species>(s);
       species.emplace(s, new_species);
+      this->reactants.push_back(new_species);
       continue;
     }
 
     this->reactants.push_back(it->second);
-    it->second.sinks.push_back(rxn);
   }
 
   for (auto s : rhs_str)
   {
+    auto stoic_it = this->stoic_coeffs.find(s);
+    if ( stoic_it == this->stoic_coeffs.end())
+      this->stoic_coeffs.emplace(s, 1);
+    else
+      this->stoic_coeffs[s] += 1;
+
     auto it = species.find(s);
     if (it == species.end())
     {
-      Species new_species = Species(s);
-      new_species.sources.push_back(rxn);
-      this->products.push_back(new_species);
+      shared_ptr<Species> new_species = make_shared<Species>(s);
       species.emplace(s, new_species);
+      this->products.push_back(new_species);
       continue;
     }
 
     this->products.push_back(it->second);
-    it->second.sources.push_back(rxn);
   }
 }
 
@@ -65,39 +75,33 @@ Reaction::validateReaction()
   float r_mass = 0;
   // reactant charge
   int r_charge_num = 0;
-
-  for (auto s : this->reactants)
+  for (auto it : this->reactants)
   {
     // this reaction is a sink
-    // s.sinks.push_back(rxn);
-    r_mass += s.mass;
-    r_charge_num += s.charge_num;
+    r_mass += it->mass;
+    r_charge_num += it->charge_num;
   }
   // product mass
   float p_mass = 0;
   // product charge
   int p_charge_num = 0;
 
-  for (auto s : this->products)
+  for (auto it : this->products)
   {
     // add this reaction as a source
-    // s.sources.push_back(rxn);
-    p_mass += s.mass;
-    p_charge_num += s.charge_num;
+    p_mass += it->mass;
+    p_charge_num += it->charge_num;
   }
 
   bool mass_conservation = abs(r_mass - p_mass) < MASS_EPS;
   bool charge_conservation = r_charge_num == p_charge_num;
   if (!mass_conservation && !charge_conservation)
-    throw invalid_argument(makeRed("\nReaction: " + this->rxn + " is invalid!" +
-                                   "\n\tNeither mass nor charge is conserved\n\n"));
+    throw invalid_argument("Neither mass nor charge is conserved");
   if (!mass_conservation)
-    throw invalid_argument(
-        makeRed("\nReaction: " + this->rxn + " is invalid!" + "\n\tMass is not conserved\n\n"));
+    throw invalid_argument("Mass is not conserved");
 
   if (!charge_conservation)
-    throw invalid_argument(
-        makeRed("\nReaction: " + this->rxn + " is invalid!" + "\n\tCharge is not conserved\n\n"));
+    throw invalid_argument("Charge is not conserved");
 }
 
 bool

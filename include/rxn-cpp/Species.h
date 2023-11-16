@@ -21,11 +21,12 @@ public:
   float charge;
   /** The name of the spcies formatted for printing in a latex_table */
   string latex_name;
-
-  vector<string> sources;
-  vector<string> sinks;
-  /** A map to map reaction number to soic number for each reaction */
-  // unordered_map<Reaction, int> stoic_map;
+  /** Reactions where the stoiciometric coeff is greater than 1*/
+  vector<Reaction> sources;
+  /** Reactions where the stoiciometric coeff is less than 1*/
+  vector<Reaction> sinks;
+  /** Reactions where the stoiciometric coeff is 0 */
+  vector<Reaction> balanced;
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */

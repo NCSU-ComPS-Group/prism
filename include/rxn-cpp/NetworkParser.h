@@ -24,7 +24,9 @@ public:
   vector<Reaction> rate_rxn;
   vector<Reaction> xsec_rxn;
   vector<string> invalid_rate_rxn;
+  vector<string> invalid_rate_reason;
   vector<string> invalid_xsec_rxn;
+  vector<string> invalid_xsec_reason;
   int rxn_count;
 
   void printReactionSummary();
@@ -37,4 +39,10 @@ private:
   const YAML::Node network;
   string checkFile(const string & file);
   void parseNetwork();
+
+  string getSpeciesSummary(const bool yaml_file=true);
+  string getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file);
+  string getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff);
+
+  string getReactionSummary(const bool yaml_file=true);
 };

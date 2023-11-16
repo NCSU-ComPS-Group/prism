@@ -14,9 +14,11 @@ public:
   const string rxn;
   const int rxn_number;
   /** The species that are the reactants */
-  vector<Species> reactants;
+  vector<shared_ptr<Species>> reactants;
   /** The species that are the products */
-  vector<Species> products;
+  vector<shared_ptr<Species>> products;
+
+  unordered_map<string, int> stoic_coeffs;
   const string latex_name;
 
   bool operator==(const Reaction & other) const;

@@ -5,7 +5,7 @@ NetworkParser::NetworkParser(const string & file)
 {
   parseNetwork();
   printReactionSummary();
-  printSpeciesSummary();
+  // printSpeciesSummary();
 }
 
 string
@@ -60,11 +60,31 @@ NetworkParser::parseNetwork()
         Reaction r = Reaction(rxn_str, this->rxn_count);
         this->rate_rxn.push_back(r);
         printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+
+        for (auto it : r.products) {
+          // add all of the reactions that produce this species
+          if (r.stoic_coeffs[it->name] > 0)
+            it->sources.push_back(r);
+          // add all of the reactions where there is neither a gain
+          // nor a loss of species
+          if (r.stoic_coeffs[it->name] == 0)
+            it->balanced.push_back(r);
+        }
+        for (auto it : r.reactants)
+        {
+          // only adding these reactions if they are truly sinks
+          // and not actually neutral
+          if (r.stoic_coeffs[it->name] != 0)
+            it->sinks.push_back(r);
+        }
       }
       catch (invalid_argument & e)
       {
         this->invalid_rate_rxn.push_back(rxn_str);
-        cout << e.what();
+        this->invalid_rate_reason.push_back(e.what());
+        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+        printRed(e.what());
+        cout << "\n\n";
         continue;
       }
     }
@@ -85,57 +105,21 @@ NetworkParser::parseNetwork()
       catch (invalid_argument & e)
       {
         this->invalid_xsec_rxn.push_back(rxn_str);
-        cout << e.what();
+        this->invalid_xsec_reason.push_back(e.what());
+        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+        printRed(e.what());
+        cout << "\n\n";
         continue;
       }
     }
   }
-}
-
-void
-NetworkParser::printReactionSummary()
-{
-  int rate_rxn_count = rate_rxn.size() + invalid_rate_rxn.size();
-  int xsec_rxn_count = xsec_rxn.size() + invalid_xsec_rxn.size();
-
-  cout << fmt::format("\n\n{:4d} Reactions Parsed\n", rxn_count);
-  cout << fmt::format("\t{:4d} Rate Based Reactions\n", rate_rxn_count);
-  cout << fmt::format("\t{:4d} Cross Section Based Reactions\n", xsec_rxn_count);
-
-  if (rate_rxn.size() + invalid_rate_rxn.size() > 0)
-  {
-    printGreen(fmt::format("\n\t{:4} Valid Rate Based Reactions\n", rate_rxn.size()));
-    printRed(fmt::format("\t{:4} Invalid Rate Based Reactions\n", invalid_rate_rxn.size()));
-  }
-
-  if (xsec_rxn.size() + invalid_xsec_rxn.size() > 0)
-  {
-    printGreen(fmt::format("\n\t{:4} Valid Cross Section Based Reactions\n", xsec_rxn.size()));
-    printRed(
-        fmt::format("\t{:4} Invalid Cross Section Based Reactions\n", invalid_xsec_rxn.size()));
-  }
+  cout << endl << endl;
 }
 
 void
 NetworkParser::printSpeciesSummary()
 {
-  cout << fmt::format("\n\n{:4d} Unique Species\n", species.size());
-  for (auto it : species)
-  {
-    cout << endl << "Species: " + it.first << endl << endl;
-    printGreen(fmt::format("\t{:4d} Sources\n", it.second.sources.size()));
-    if (it.second.sources.size() == 0)
-      printYellow("\nWarning! Species: " + it.first + " has 0 sources\n\n");
-    else
-      for (auto r : it.second.sources)
-        printGreen("\t\t" + r + "\n");
-    printRed(fmt::format("\t{:4d} Sinks\n", it.second.sinks.size()));
-    if (it.second.sinks.size() == 0)
-      printYellow("\nWarning! Species: " + it.first + " has 0 sinks\n\n");
-    else
-      for (auto r : it.second.sinks)
-        printRed("\t\t" + r + "\n");
-  }
+  cout << getSpeciesSummary(false);
 }
 
 void
@@ -147,32 +131,92 @@ NetworkParser::writeSpeciesSummary(const string & filepath)
         makeRed("\n\nYour species summary file cannot have the same name as your input file!"));
 
   ofstream out(filepath);
-  // lets use the emitter to write to the file
-  // YAML::Emitter out;
-  out << "Unique-Species: " << species.size() << endl;
+  out << getSpeciesSummary();
+  out.close();
+}
+
+string
+NetworkParser::getSpeciesSummary(const bool yaml_file)
+{
+  string summary = "";
+
+  summary += fmt::format("Unique-Species: {:d}\n", species.size());
   int species_count = 0;
-  for (auto it : species)
+  for (auto it = species.begin(); it != species.end(); ++it)
   {
     species_count++;
-    out << "  - " << species_count << ": " << it.first << endl;
+    summary += fmt::format("  - {:d}: {}\n", species_count, it->first);
   }
-  out << endl << endl;
+  summary += "\n\n";
 
-  for (auto it : species)
+  for (auto it = species.begin(); it != species.end(); ++it)
   {
-    out << "Species: ";
-    out << it.first;
-    out << endl;
-    out << "  Sources: " << it.second.sources.size() << endl;
-    for (auto s : it.second.sources)
-      out << "    - reaction: " << s << endl;
-
-    out << endl << "  Sinks: " << it.second.sinks.size() << endl;
-    for (auto s : it.second.sinks)
-      out << "    - reaction: " << s << endl;
-    out << endl << endl;
+    summary += getSingleSpeciesSummary(it->second, yaml_file);
   }
-  out.close();
+
+  return summary;
+}
+
+string
+NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file)
+{
+  string summary = "\n\n";
+  if (s->sources.size() == 0)
+  {
+    if (yaml_file)
+      summary += "# ";
+    else
+      summary += "\033[33m";
+
+    summary += "Warning! Species has no sources\n";
+    if (!yaml_file)
+      summary += "\033[0m";
+  }
+  if (s->sinks.size() == 0)
+  {
+    if (yaml_file)
+      summary += "# ";
+    else
+      summary += "\033[33m";
+
+    summary += "Warning! Species has no sinks\n";
+    if (!yaml_file)
+      summary += "\033[0m";
+  }
+  summary += "Species: ";
+  summary += s->name;
+  summary += "\n";
+  summary += fmt::format("  Balanced: {}\n", s->balanced.size());
+  summary += getSpeciesDependantReactionSummary(s->balanced, s->name, false);
+
+
+  if (!yaml_file)
+    summary += "\033[32m";
+  summary += fmt::format("\n  Sources: {}\n", s->sources.size());
+  summary += getSpeciesDependantReactionSummary(s->sources, s->name, yaml_file);
+
+
+  if (!yaml_file)
+    summary += "\033[31m";
+  summary += fmt::format("\n  Sinks: {}\n", s->sinks.size());
+  summary += getSpeciesDependantReactionSummary(s->sinks, s->name, yaml_file);
+
+  if (!yaml_file)
+    summary += "\033[0m";
+  return summary;
+}
+
+string
+NetworkParser::getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff )
+{
+  string summary = "";
+  for (auto r : r_list)
+  {
+    summary += fmt::format("    - reaction: {}\n", r.rxn);
+    if (show_coeff)
+      summary += fmt::format("      stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
+  }
+  return summary;
 }
 
 void
@@ -184,19 +228,57 @@ NetworkParser::writeReactionSummary(const string & filepath)
         makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
 
   ofstream out(filepath);
-
-  out << "Total-Reactions: " << rxn_count << endl << endl;
-  out << "Rate-Based: " << rate_rxn.size() + invalid_rate_rxn.size() << endl;
-  out << "  Validated: " << rate_rxn.size() << endl;
-  out << "  Invalid: " << invalid_rate_rxn.size() << endl;
-  for (auto rxn : invalid_rate_rxn)
-    out << "    - reaction: " << rxn << endl;
-  out << endl << endl;
-  out << "Cross-Section-Based: " << xsec_rxn.size() + invalid_xsec_rxn.size() << endl;
-  out << "  Validated: " << xsec_rxn.size() << endl;
-  out << "  Invalid: " << invalid_xsec_rxn.size() << endl;
-  for (auto rxn : invalid_xsec_rxn)
-    out << "      - reaction: " << rxn << endl;
-
+  out << getReactionSummary();
   out.close();
+}
+
+void
+NetworkParser::printReactionSummary()
+{
+  cout << getReactionSummary(false);
+}
+
+string
+NetworkParser::getReactionSummary(const bool yaml_file)
+{
+  string summary = "";
+  summary += fmt::format("Total-Reactions: {:d}\n\n", rxn_count);
+  summary += fmt::format("Rate-Based: {:d}\n", rate_rxn.size() + invalid_rate_rxn.size());
+
+  if (!yaml_file)
+    summary += "\033[32m";
+  summary += fmt::format("  Validated: {:d}\n", rate_rxn.size());
+
+  if (!yaml_file)
+    summary += "\033[31m";
+  summary += fmt::format("  Invalid: {:d}\n", invalid_rate_rxn.size());
+
+  for (auto i = 0; i < invalid_rate_rxn.size(); ++i)
+  {
+    summary += fmt::format("    - reaction: {}\n", invalid_rate_rxn[i]);
+    summary += fmt::format("        reason: {}\n", invalid_rate_reason[i]);
+  }
+  if (!yaml_file)
+    summary += "\033[0m";
+
+  summary += "\n\n";
+  summary += fmt::format("Cross-Section-Based: {:d}\n", xsec_rxn.size() + invalid_xsec_rxn.size());
+
+  if (!yaml_file)
+    summary += "\033[32m";
+  summary += fmt::format("  Validated: {:d}\n", xsec_rxn.size());
+
+  if (!yaml_file)
+    summary += "\033[31m";
+  summary += fmt::format("  Invalid: {:d}\n", invalid_xsec_rxn.size());
+  for (auto i = 0; i < invalid_xsec_rxn.size(); ++i)
+  {
+    summary += fmt::format("      - reaction: {}\n", invalid_xsec_rxn[i]);
+    summary += fmt::format("          reason: {}\n", invalid_xsec_reason[i]);
+  }
+  if (!yaml_file)
+    summary += "\033[0m";
+
+  summary += "\n\n";
+  return summary;
 }
