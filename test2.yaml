@@ -1,4 +1,4 @@
-Unique-Species: 41
+Unique-Species: 40
   - 1: O3-
   - 2: NO2
   - 3: hnu
@@ -31,15 +31,14 @@ Unique-Species: 41
   - 30: N2(a1)
   - 31: NO
   - 32: N2(rotation)
-  - 33: Ar
-  - 34: O
-  - 35: N2
-  - 36: O4+
-  - 37: N4+
-  - 38: O2(rotational)
-  - 39: O2
-  - 40: He
-  - 41: N
+  - 33: O
+  - 34: N2
+  - 35: O4+
+  - 36: N4+
+  - 37: O2(rotational)
+  - 38: O2
+  - 39: He
+  - 40: N
 
 
 
@@ -882,16 +881,6 @@ Species: N2(rotation)
   Sources: 1
     - reaction: e + N2 -> e + N2(rotation)
       stoic_coeff: 1
-
-  Sinks: 0
-
-
-# Warning! Species has no sources
-# Warning! Species has no sinks
-Species: Ar
-  Balanced: 0
-
-  Sources: 0
 
   Sinks: 0
 

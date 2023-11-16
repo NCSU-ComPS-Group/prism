@@ -14,7 +14,6 @@ Species::Species(const string & name)
 vector<SubSpecies>
 Species::decomposeSpecies()
 {
-
   vector<string> parts = splitByCapital(this->name);
 
   vector<SubSpecies> sub_sp;

@@ -180,6 +180,7 @@ rate-based:
   - reaction: N + NO2 -> NO + NO
   - reaction: N + NO2 -> N2 + O + O
   - reaction: N + NO2 -> N2 + O2
+  - reaction: 2N + e -> 3N + e
 
 
 
