@@ -44,1324 +44,1638 @@ Unique-Species: 40
 
 
 Species: O3-
-  Balanced: 0
+  - Rate-Based: 6
+    Balanced: 0
 
-  Sources: 2
-    - reaction: O- + O3 -> O3- + O
-      stoic_coeff: 1
-    - reaction: O2- + O3 -> O3- + O2
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: O- + O3 -> O3- + O
+        stoic_coeff: 1
+      - reaction: O2- + O3 -> O3- + O2
+        stoic_coeff: 1
 
-  Sinks: 4
-    - reaction: O3- + O2+ -> O3 + O2
-      stoic_coeff: -1
-    - reaction: O3- + O+ -> O3 + O
-      stoic_coeff: -1
-    - reaction: O3- + He+ -> O3 + He
-      stoic_coeff: -1
-    - reaction: O3- + O -> O2- + O2
-      stoic_coeff: -1
+    Sinks: 4
+      - reaction: O3- + O2+ -> O3 + O2
+        stoic_coeff: -1
+      - reaction: O3- + O+ -> O3 + O
+        stoic_coeff: -1
+      - reaction: O3- + He+ -> O3 + He
+        stoic_coeff: -1
+      - reaction: O3- + O -> O2- + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: NO2
-  Balanced: 1
-    - reaction: NO2 + O^m -> NO2 + O
+  - Rate-Based: 12
+    Balanced: 1
+      - reaction: NO2 + O^m -> NO2 + O
 
-  Sources: 6
-    - reaction: O- + NO -> NO2 + e
-      stoic_coeff: 1
-    - reaction: O2- + N -> NO2 + e
-      stoic_coeff: 1
-    - reaction: NO + O3 -> NO2 + O2
-      stoic_coeff: 1
-    - reaction: NO + O + He -> NO2 + He
-      stoic_coeff: 1
-    - reaction: NO + O + O2 -> NO2 + O2
-      stoic_coeff: 1
-    - reaction: NO + O + N2 -> NO2 + N2
-      stoic_coeff: 1
+    Sources: 6
+      - reaction: O- + NO -> NO2 + e
+        stoic_coeff: 1
+      - reaction: O2- + N -> NO2 + e
+        stoic_coeff: 1
+      - reaction: NO + O3 -> NO2 + O2
+        stoic_coeff: 1
+      - reaction: NO + O + He -> NO2 + He
+        stoic_coeff: 1
+      - reaction: NO + O + O2 -> NO2 + O2
+        stoic_coeff: 1
+      - reaction: NO + O + N2 -> NO2 + N2
+        stoic_coeff: 1
 
-  Sinks: 5
-    - reaction: NO2 + O -> NO + O2
-      stoic_coeff: -1
-    - reaction: NO2 + O^m -> NO + O2
-      stoic_coeff: -1
-    - reaction: N + NO2 -> NO + NO
-      stoic_coeff: -1
-    - reaction: N + NO2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N + NO2 -> N2 + O2
-      stoic_coeff: -1
+    Sinks: 5
+      - reaction: NO2 + O -> NO + O2
+        stoic_coeff: -1
+      - reaction: NO2 + O^m -> NO + O2
+        stoic_coeff: -1
+      - reaction: N + NO2 -> NO + NO
+        stoic_coeff: -1
+      - reaction: N + NO2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N + NO2 -> N2 + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: hnu
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: N2(c) -> N2(b) + hnu
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: N2(c) -> N2(b) + hnu
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2-
-  Balanced: 0
+  - Rate-Based: 9
+    Balanced: 0
 
-  Sources: 2
-    - reaction: e + O2 + O2 -> O2- + O2
-      stoic_coeff: 1
-    - reaction: O3- + O -> O2- + O2
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: e + O2 + O2 -> O2- + O2
+        stoic_coeff: 1
+      - reaction: O3- + O -> O2- + O2
+        stoic_coeff: 1
 
-  Sinks: 7
-    - reaction: O2- + O4+ -> O2 + O2 + O2
-      stoic_coeff: -1
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-      stoic_coeff: -1
-    - reaction: O2- + O2+ + M -> O2 + O2 + M
-      stoic_coeff: -1
-    - reaction: O2- + O -> e + O3
-      stoic_coeff: -1
-    - reaction: O2- + O3 -> O3- + O2
-      stoic_coeff: -1
-    - reaction: NO+ + O2- -> NO + O2
-      stoic_coeff: -1
-    - reaction: O2- + N -> NO2 + e
-      stoic_coeff: -1
+    Sinks: 7
+      - reaction: O2- + O4+ -> O2 + O2 + O2
+        stoic_coeff: -1
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+        stoic_coeff: -1
+      - reaction: O2- + O2+ + M -> O2 + O2 + M
+        stoic_coeff: -1
+      - reaction: O2- + O -> e + O3
+        stoic_coeff: -1
+      - reaction: O2- + O3 -> O3- + O2
+        stoic_coeff: -1
+      - reaction: NO+ + O2- -> NO + O2
+        stoic_coeff: -1
+      - reaction: O2- + N -> NO2 + e
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O3
-  Balanced: 1
-    - reaction: N + O + O3 -> NO + O3
+  - Rate-Based: 19
+    Balanced: 1
+      - reaction: N + O + O3 -> NO + O3
 
-  Sources: 13
-    - reaction: O- + O2(a1) -> e + O3
-      stoic_coeff: 1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: 1
-    - reaction: O2- + O -> e + O3
-      stoic_coeff: 1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: 1
-    - reaction: O + O2 + N2 -> N2 + O3
-      stoic_coeff: 1
-    - reaction: O + O2 + O2 -> O2 + O3
-      stoic_coeff: 1
-    - reaction: O4+ + O -> O2+ + O3
-      stoic_coeff: 1
-    - reaction: O- + O2+ + N2 -> O3 + N2
-      stoic_coeff: 1
-    - reaction: O- + O2+ + O2 -> O3 + O2
-      stoic_coeff: 1
-    - reaction: O + O + O2 -> O3 + O
-      stoic_coeff: 1
-    - reaction: O3- + O2+ -> O3 + O2
-      stoic_coeff: 1
-    - reaction: O3- + O+ -> O3 + O
-      stoic_coeff: 1
-    - reaction: O3- + He+ -> O3 + He
-      stoic_coeff: 1
+    Sources: 13
+      - reaction: O- + O2(a1) -> e + O3
+        stoic_coeff: 1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: 1
+      - reaction: O2- + O -> e + O3
+        stoic_coeff: 1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: 1
+      - reaction: O + O2 + N2 -> N2 + O3
+        stoic_coeff: 1
+      - reaction: O + O2 + O2 -> O2 + O3
+        stoic_coeff: 1
+      - reaction: O4+ + O -> O2+ + O3
+        stoic_coeff: 1
+      - reaction: O- + O2+ + N2 -> O3 + N2
+        stoic_coeff: 1
+      - reaction: O- + O2+ + O2 -> O3 + O2
+        stoic_coeff: 1
+      - reaction: O + O + O2 -> O3 + O
+        stoic_coeff: 1
+      - reaction: O3- + O2+ -> O3 + O2
+        stoic_coeff: 1
+      - reaction: O3- + O+ -> O3 + O
+        stoic_coeff: 1
+      - reaction: O3- + He+ -> O3 + He
+        stoic_coeff: 1
 
-  Sinks: 5
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: -1
-    - reaction: He+ + O3 -> He + O2 + O+
-      stoic_coeff: -1
-    - reaction: O- + O3 -> O3- + O
-      stoic_coeff: -1
-    - reaction: O2- + O3 -> O3- + O2
-      stoic_coeff: -1
-    - reaction: NO + O3 -> NO2 + O2
-      stoic_coeff: -1
+    Sinks: 5
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: -1
+      - reaction: He+ + O3 -> He + O2 + O+
+        stoic_coeff: -1
+      - reaction: O- + O3 -> O3- + O
+        stoic_coeff: -1
+      - reaction: O2- + O3 -> O3- + O2
+        stoic_coeff: -1
+      - reaction: NO + O3 -> NO2 + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: He2+
-  Balanced: 0
+  - Rate-Based: 4
+    Balanced: 0
 
-  Sources: 2
-    - reaction: e + He2^m -> e + e + He2+
-      stoic_coeff: 1
-    - reaction: He+ + He + He -> He2+ + He
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: e + He2^m -> e + e + He2+
+        stoic_coeff: 1
+      - reaction: He+ + He + He -> He2+ + He
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: e + He2+ -> He^m + He
-      stoic_coeff: -1
-    - reaction: He2+ + N2 -> N2+ + He + He
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: e + He2+ -> He^m + He
+        stoic_coeff: -1
+      - reaction: He2+ + N2 -> N2+ + He + He
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O+
-  Balanced: 0
+  - Rate-Based: 10
+    Balanced: 0
 
-  Sources: 8
-    - reaction: He^m + O -> e + He + O+
-      stoic_coeff: 1
-    - reaction: He^m + O^m -> e + He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2 -> O + He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O3 -> He + O2 + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2(a1) -> He + O + O+
-      stoic_coeff: 1
-    - reaction: He+ + O -> He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O^m -> He + O+
-      stoic_coeff: 1
-    - reaction: He+ + NO -> He + N + O+
-      stoic_coeff: 1
+    Sources: 8
+      - reaction: He^m + O -> e + He + O+
+        stoic_coeff: 1
+      - reaction: He^m + O^m -> e + He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2 -> O + He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O3 -> He + O2 + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2(a1) -> He + O + O+
+        stoic_coeff: 1
+      - reaction: He+ + O -> He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O^m -> He + O+
+        stoic_coeff: 1
+      - reaction: He+ + NO -> He + N + O+
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: O3- + O+ -> O3 + O
-      stoic_coeff: -1
-    - reaction: O+ + NO -> O + NO+
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: O3- + O+ -> O3 + O
+        stoic_coeff: -1
+      - reaction: O+ + NO -> O + NO+
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: He2^m
-  Balanced: 0
+  - Rate-Based: 3
+    Balanced: 0
 
-  Sources: 1
-    - reaction: He^m + He + He -> He2^m + He
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: He^m + He + He -> He2^m + He
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: e + He2^m -> e + e + He2+
-      stoic_coeff: -1
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: e + He2^m -> e + e + He2+
+        stoic_coeff: -1
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 # Warning! Species has no sources
+# Warning! Species has no sinks
 Species: O2(al)
-  Balanced: 0
+  - Rate-Based: 3
+    Balanced: 0
 
-  Sources: 0
+    Sources: 0
 
-  Sinks: 3
-    - reaction: e + O2(al) -> e + O2(b1)
-      stoic_coeff: -1
-    - reaction: e + O2(al) -> e + O + O^m
-      stoic_coeff: -1
-    - reaction: e + O2(al) -> O + O-
-      stoic_coeff: -1
+    Sinks: 3
+      - reaction: e + O2(al) -> e + O2(b1)
+        stoic_coeff: -1
+      - reaction: e + O2(al) -> e + O + O^m
+        stoic_coeff: -1
+      - reaction: e + O2(al) -> O + O-
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 # Warning! Species has no sources
 # Warning! Species has no sinks
 Species: M
-  Balanced: 5
-    - reaction: N2+ + N2 + M -> N4+ + M
-    - reaction: O2+ + O2 + M -> O4+ + M
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-    - reaction: O2+ + O2 + M -> O4+ + M
-    - reaction: O2- + O2+ + M -> O2 + O2 + M
+  - Rate-Based: 5
+    Balanced: 5
+      - reaction: N2+ + N2 + M -> N4+ + M
+      - reaction: O2+ + O2 + M -> O4+ + M
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+      - reaction: O2+ + O2 + M -> O4+ + M
+      - reaction: O2- + O2+ + M -> O2 + O2 + M
 
-  Sources: 0
+    Sources: 0
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: O2(vibrational)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + O2 -> e + O2(vibrational)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + O2 -> e + O2(vibrational)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N2(c)
-  Balanced: 0
+  - Rate-Based: 5
+    Balanced: 0
 
-  Sources: 2
-    - reaction: e + N2 -> e + N2(c)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(a) -> N2 + N2(c)
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: e + N2 -> e + N2(c)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(a) -> N2 + N2(c)
+        stoic_coeff: 1
 
-  Sinks: 3
-    - reaction: N2(c) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(c) + N2 -> N2(a1) + N2
-      stoic_coeff: -1
-    - reaction: N2(c) -> N2(b) + hnu
-      stoic_coeff: -1
+    Sinks: 3
+      - reaction: N2(c) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(c) + N2 -> N2(a1) + N2
+        stoic_coeff: -1
+      - reaction: N2(c) -> N2(b) + hnu
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2(b1)
-  Balanced: 0
+  - Rate-Based: 7
+    Balanced: 0
 
-  Sources: 5
-    - reaction: e + O2 -> e + O2(b1)
-      stoic_coeff: 1
-    - reaction: e + O2(al) -> e + O2(b1)
-      stoic_coeff: 1
-    - reaction: N2(a) + O2 -> N2 + O2(b1)
-      stoic_coeff: 1
-    - reaction: O2(h) + O2 -> O2(b1) + O2
-      stoic_coeff: 1
-    - reaction: O2(h) + O -> O2(b1) + O
-      stoic_coeff: 1
+    Sources: 5
+      - reaction: e + O2 -> e + O2(b1)
+        stoic_coeff: 1
+      - reaction: e + O2(al) -> e + O2(b1)
+        stoic_coeff: 1
+      - reaction: N2(a) + O2 -> N2 + O2(b1)
+        stoic_coeff: 1
+      - reaction: O2(h) + O2 -> O2(b1) + O2
+        stoic_coeff: 1
+      - reaction: O2(h) + O -> O2(b1) + O
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: e + O2(b1) -> O + O-
-      stoic_coeff: -1
-    - reaction: He^m + O2(b1) -> e + He + O2+
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: e + O2(b1) -> O + O-
+        stoic_coeff: -1
+      - reaction: He^m + O2(b1) -> e + He + O2+
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2(a1)
-  Balanced: 1
-    - reaction: N + O + O2(a1) -> NO + O2(a1)
+  - Rate-Based: 8
+    Balanced: 1
+      - reaction: N + O + O2(a1) -> NO + O2(a1)
 
-  Sources: 3
-    - reaction: e + O2 -> e + O2(a1)
-      stoic_coeff: 1
-    - reaction: O2(h) + O2 -> O2(a1) + O2
-      stoic_coeff: 1
-    - reaction: O2(h) + O -> O2(a1) + O
-      stoic_coeff: 1
+    Sources: 3
+      - reaction: e + O2 -> e + O2(a1)
+        stoic_coeff: 1
+      - reaction: O2(h) + O2 -> O2(a1) + O2
+        stoic_coeff: 1
+      - reaction: O2(h) + O -> O2(a1) + O
+        stoic_coeff: 1
 
-  Sinks: 4
-    - reaction: He+ + O2(a1) -> He + O + O+
-      stoic_coeff: -1
-    - reaction: He+ + O2(a1) -> He + O2+
-      stoic_coeff: -1
-    - reaction: O- + O2(a1) -> e + O3
-      stoic_coeff: -1
-    - reaction: NO + O2(a1) -> NO + O2
-      stoic_coeff: -1
+    Sinks: 4
+      - reaction: He+ + O2(a1) -> He + O + O+
+        stoic_coeff: -1
+      - reaction: He+ + O2(a1) -> He + O2+
+        stoic_coeff: -1
+      - reaction: O- + O2(a1) -> e + O3
+        stoic_coeff: -1
+      - reaction: NO + O2(a1) -> NO + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2(h)
-  Balanced: 0
+  - Rate-Based: 7
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + O2 -> e + O2(h)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + O2 -> e + O2(h)
+        stoic_coeff: 1
 
-  Sinks: 6
-    - reaction: O2(h) + O2 -> O2(a1) + O2
-      stoic_coeff: -1
-    - reaction: O2(h) + O2 -> O2(b1) + O2
-      stoic_coeff: -1
-    - reaction: O2(h) + O2 -> O2 + O2
-      stoic_coeff: -1
-    - reaction: O2(h) + O -> O2 + O
-      stoic_coeff: -1
-    - reaction: O2(h) + O -> O2(a1) + O
-      stoic_coeff: -1
-    - reaction: O2(h) + O -> O2(b1) + O
-      stoic_coeff: -1
+    Sinks: 6
+      - reaction: O2(h) + O2 -> O2(a1) + O2
+        stoic_coeff: -1
+      - reaction: O2(h) + O2 -> O2(b1) + O2
+        stoic_coeff: -1
+      - reaction: O2(h) + O2 -> O2 + O2
+        stoic_coeff: -1
+      - reaction: O2(h) + O -> O2 + O
+        stoic_coeff: -1
+      - reaction: O2(h) + O -> O2(a1) + O
+        stoic_coeff: -1
+      - reaction: O2(h) + O -> O2(b1) + O
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O^m
-  Balanced: 0
+  - Rate-Based: 10
+    Balanced: 0
 
-  Sources: 4
-    - reaction: e + O2 -> e + O + O^m
-      stoic_coeff: 1
-    - reaction: e + O2(al) -> e + O + O^m
-      stoic_coeff: 1
-    - reaction: e + O -> e + O^m
-      stoic_coeff: 1
-    - reaction: e + NO+ -> N + O^m
-      stoic_coeff: 1
+    Sources: 4
+      - reaction: e + O2 -> e + O + O^m
+        stoic_coeff: 1
+      - reaction: e + O2(al) -> e + O + O^m
+        stoic_coeff: 1
+      - reaction: e + O -> e + O^m
+        stoic_coeff: 1
+      - reaction: e + NO+ -> N + O^m
+        stoic_coeff: 1
 
-  Sinks: 6
-    - reaction: He^m + O^m -> e + He + O+
-      stoic_coeff: -1
-    - reaction: He+ + O^m -> He + O+
-      stoic_coeff: -1
-    - reaction: NO + O^m -> N + O2
-      stoic_coeff: -1
-    - reaction: NO + O^m -> NO + O
-      stoic_coeff: -1
-    - reaction: NO2 + O^m -> NO2 + O
-      stoic_coeff: -1
-    - reaction: NO2 + O^m -> NO + O2
-      stoic_coeff: -1
+    Sinks: 6
+      - reaction: He^m + O^m -> e + He + O+
+        stoic_coeff: -1
+      - reaction: He+ + O^m -> He + O+
+        stoic_coeff: -1
+      - reaction: NO + O^m -> N + O2
+        stoic_coeff: -1
+      - reaction: NO + O^m -> NO + O
+        stoic_coeff: -1
+      - reaction: NO2 + O^m -> NO2 + O
+        stoic_coeff: -1
+      - reaction: NO2 + O^m -> NO + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: He^m
-  Balanced: 0
+  - Rate-Based: 16
+    Balanced: 0
 
-  Sources: 4
-    - reaction: e + He -> e + He^m
-      stoic_coeff: 1
-    - reaction: e + He2+ -> He^m + He
-      stoic_coeff: 1
-    - reaction: e + He+ -> He^m
-      stoic_coeff: 1
-    - reaction: e + e + He+ -> e + He^m
-      stoic_coeff: 1
+    Sources: 4
+      - reaction: e + He -> e + He^m
+        stoic_coeff: 1
+      - reaction: e + He2+ -> He^m + He
+        stoic_coeff: 1
+      - reaction: e + He+ -> He^m
+        stoic_coeff: 1
+      - reaction: e + e + He+ -> e + He^m
+        stoic_coeff: 1
 
-  Sinks: 12
-    - reaction: e + He^m -> e + e + He+
-      stoic_coeff: -1
-    - reaction: He^m + He^m -> e + He + He+
-      stoic_coeff: -2
-    - reaction: He^m + He^m -> e + He + He+
-      stoic_coeff: -2
-    - reaction: e + He^m -> e + He
-      stoic_coeff: -1
-    - reaction: He^m + He + He -> He2^m + He
-      stoic_coeff: -1
-    - reaction: He^m + N2 -> e + He + N2+
-      stoic_coeff: -1
-    - reaction: He^m + O2 -> e + He + O2+
-      stoic_coeff: -1
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: -1
-    - reaction: He^m + O2(b1) -> e + He + O2+
-      stoic_coeff: -1
-    - reaction: He^m + O -> e + He + O+
-      stoic_coeff: -1
-    - reaction: He^m + O^m -> e + He + O+
-      stoic_coeff: -1
-    - reaction: He^m + NO -> He + NO+ + e
-      stoic_coeff: -1
+    Sinks: 12
+      - reaction: e + He^m -> e + e + He+
+        stoic_coeff: -1
+      - reaction: He^m + He^m -> e + He + He+
+        stoic_coeff: -2
+      - reaction: He^m + He^m -> e + He + He+
+        stoic_coeff: -2
+      - reaction: e + He^m -> e + He
+        stoic_coeff: -1
+      - reaction: He^m + He + He -> He2^m + He
+        stoic_coeff: -1
+      - reaction: He^m + N2 -> e + He + N2+
+        stoic_coeff: -1
+      - reaction: He^m + O2 -> e + He + O2+
+        stoic_coeff: -1
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: -1
+      - reaction: He^m + O2(b1) -> e + He + O2+
+        stoic_coeff: -1
+      - reaction: He^m + O -> e + He + O+
+        stoic_coeff: -1
+      - reaction: He^m + O^m -> e + He + O+
+        stoic_coeff: -1
+      - reaction: He^m + NO -> He + NO+ + e
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 # Warning! Species has no sources
+# Warning! Species has no sinks
 Species: N2(vib)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 0
+    Sources: 0
 
-  Sinks: 1
-    - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-      stoic_coeff: -1
+    Sinks: 1
+      - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: NO+
-  Balanced: 0
+  - Rate-Based: 10
+    Balanced: 0
 
-  Sources: 6
-    - reaction: e + NO -> e + e + NO+
-      stoic_coeff: 1
-    - reaction: He^m + NO -> He + NO+ + e
-      stoic_coeff: 1
-    - reaction: He+ + NO -> He + NO+
-      stoic_coeff: 1
-    - reaction: O+ + NO -> O + NO+
-      stoic_coeff: 1
-    - reaction: O2+ + NO -> O2 + NO+
-      stoic_coeff: 1
-    - reaction: O2+ + N -> NO+ + O
-      stoic_coeff: 1
+    Sources: 6
+      - reaction: e + NO -> e + e + NO+
+        stoic_coeff: 1
+      - reaction: He^m + NO -> He + NO+ + e
+        stoic_coeff: 1
+      - reaction: He+ + NO -> He + NO+
+        stoic_coeff: 1
+      - reaction: O+ + NO -> O + NO+
+        stoic_coeff: 1
+      - reaction: O2+ + NO -> O2 + NO+
+        stoic_coeff: 1
+      - reaction: O2+ + N -> NO+ + O
+        stoic_coeff: 1
 
-  Sinks: 4
-    - reaction: e + NO+ -> N + O
-      stoic_coeff: -1
-    - reaction: e + NO+ -> N + O^m
-      stoic_coeff: -1
-    - reaction: NO+ + O- -> NO + O
-      stoic_coeff: -1
-    - reaction: NO+ + O2- -> NO + O2
-      stoic_coeff: -1
+    Sinks: 4
+      - reaction: e + NO+ -> N + O
+        stoic_coeff: -1
+      - reaction: e + NO+ -> N + O^m
+        stoic_coeff: -1
+      - reaction: NO+ + O- -> NO + O
+        stoic_coeff: -1
+      - reaction: NO+ + O2- -> NO + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N2(b)
-  Balanced: 0
+  - Rate-Based: 6
+    Balanced: 0
 
-  Sources: 4
-    - reaction: e + N2 -> e + N2(b)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(a) -> N2 + N2(b)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-      stoic_coeff: 1
-    - reaction: N2(c) -> N2(b) + hnu
-      stoic_coeff: 1
+    Sources: 4
+      - reaction: e + N2 -> e + N2(b)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(a) -> N2 + N2(b)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+        stoic_coeff: 1
+      - reaction: N2(c) -> N2(b) + hnu
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: N2(b) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(b) + N2 -> N2(a) + N2
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: N2(b) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(b) + N2 -> N2(a) + N2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: N2(electronic)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + N2 -> e + N2(electronic)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + N2 -> e + N2(electronic)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N2+
-  Balanced: 0
+  - Rate-Based: 7
+    Balanced: 0
 
-  Sources: 5
-    - reaction: e + N2 -> e + e + N2+
-      stoic_coeff: 1
-    - reaction: He^m + N2 -> e + He + N2+
-      stoic_coeff: 1
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: 1
-    - reaction: He+ + N2 -> N2+ + He
-      stoic_coeff: 1
-    - reaction: He2+ + N2 -> N2+ + He + He
-      stoic_coeff: 1
+    Sources: 5
+      - reaction: e + N2 -> e + e + N2+
+        stoic_coeff: 1
+      - reaction: He^m + N2 -> e + He + N2+
+        stoic_coeff: 1
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: 1
+      - reaction: He+ + N2 -> N2+ + He
+        stoic_coeff: 1
+      - reaction: He2+ + N2 -> N2+ + He + He
+        stoic_coeff: 1
 
-  Sinks: 2
-    - reaction: N2+ + N2 + M -> N4+ + M
-      stoic_coeff: -1
-    - reaction: N2+ + O2 -> O2+ + N2
-      stoic_coeff: -1
+    Sinks: 2
+      - reaction: N2+ + N2 + M -> N4+ + M
+        stoic_coeff: -1
+      - reaction: N2+ + O2 -> O2+ + N2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O-
-  Balanced: 0
+  - Rate-Based: 12
+    Balanced: 0
 
-  Sources: 3
-    - reaction: e + O2 -> O + O-
-      stoic_coeff: 1
-    - reaction: e + O2(al) -> O + O-
-      stoic_coeff: 1
-    - reaction: e + O2(b1) -> O + O-
-      stoic_coeff: 1
+    Sources: 3
+      - reaction: e + O2 -> O + O-
+        stoic_coeff: 1
+      - reaction: e + O2(al) -> O + O-
+        stoic_coeff: 1
+      - reaction: e + O2(b1) -> O + O-
+        stoic_coeff: 1
 
-  Sinks: 9
-    - reaction: O- + O2+ -> O + O2
-      stoic_coeff: -1
-    - reaction: O- + O2(a1) -> e + O3
-      stoic_coeff: -1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: -1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: -1
-    - reaction: O- + O2+ + N2 -> O3 + N2
-      stoic_coeff: -1
-    - reaction: O- + O2+ + O2 -> O3 + O2
-      stoic_coeff: -1
-    - reaction: O- + O3 -> O3- + O
-      stoic_coeff: -1
-    - reaction: NO+ + O- -> NO + O
-      stoic_coeff: -1
-    - reaction: O- + NO -> NO2 + e
-      stoic_coeff: -1
+    Sinks: 9
+      - reaction: O- + O2+ -> O + O2
+        stoic_coeff: -1
+      - reaction: O- + O2(a1) -> e + O3
+        stoic_coeff: -1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: -1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: -1
+      - reaction: O- + O2+ + N2 -> O3 + N2
+        stoic_coeff: -1
+      - reaction: O- + O2+ + O2 -> O3 + O2
+        stoic_coeff: -1
+      - reaction: O- + O3 -> O3- + O
+        stoic_coeff: -1
+      - reaction: NO+ + O- -> NO + O
+        stoic_coeff: -1
+      - reaction: O- + NO -> NO2 + e
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N2(a)
-  Balanced: 0
+  - Rate-Based: 12
+    Balanced: 0
 
-  Sources: 2
-    - reaction: e + N2 -> e + N2(a)
-      stoic_coeff: 1
-    - reaction: N2(b) + N2 -> N2(a) + N2
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: e + N2 -> e + N2(a)
+        stoic_coeff: 1
+      - reaction: N2(b) + N2 -> N2(a) + N2
+        stoic_coeff: 1
 
-  Sinks: 10
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(a) + O2 -> N2 + O2(b1)
-      stoic_coeff: -1
-    - reaction: N2(a) + N2(a) -> N2 + N2(b)
-      stoic_coeff: -2
-    - reaction: N2(a) + N2(a) -> N2 + N2(b)
-      stoic_coeff: -2
-    - reaction: N2(a) + N2(a) -> N2 + N2(c)
-      stoic_coeff: -2
-    - reaction: N2(a) + N2(a) -> N2 + N2(c)
-      stoic_coeff: -2
-    - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-      stoic_coeff: -1
-    - reaction: N2(a) + O -> N2 + O
-      stoic_coeff: -1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(a) + N2 -> N2 + N2
-      stoic_coeff: -1
+    Sinks: 10
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(a) + O2 -> N2 + O2(b1)
+        stoic_coeff: -1
+      - reaction: N2(a) + N2(a) -> N2 + N2(b)
+        stoic_coeff: -2
+      - reaction: N2(a) + N2(a) -> N2 + N2(b)
+        stoic_coeff: -2
+      - reaction: N2(a) + N2(a) -> N2 + N2(c)
+        stoic_coeff: -2
+      - reaction: N2(a) + N2(a) -> N2 + N2(c)
+        stoic_coeff: -2
+      - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+        stoic_coeff: -1
+      - reaction: N2(a) + O -> N2 + O
+        stoic_coeff: -1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(a) + N2 -> N2 + N2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2+
-  Balanced: 0
+  - Rate-Based: 19
+    Balanced: 0
 
-  Sources: 9
-    - reaction: e + O2 -> e + e + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O2 -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O2(b1) -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He+ + O2 -> O2+ + He
-      stoic_coeff: 1
-    - reaction: He+ + O2(a1) -> He + O2+
-      stoic_coeff: 1
-    - reaction: N4+ + O2 -> O2+ + N2 + N2
-      stoic_coeff: 1
-    - reaction: N2+ + O2 -> O2+ + N2
-      stoic_coeff: 1
-    - reaction: O4+ + O -> O2+ + O3
-      stoic_coeff: 1
+    Sources: 9
+      - reaction: e + O2 -> e + e + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O2 -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O2(b1) -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He+ + O2 -> O2+ + He
+        stoic_coeff: 1
+      - reaction: He+ + O2(a1) -> He + O2+
+        stoic_coeff: 1
+      - reaction: N4+ + O2 -> O2+ + N2 + N2
+        stoic_coeff: 1
+      - reaction: N2+ + O2 -> O2+ + N2
+        stoic_coeff: 1
+      - reaction: O4+ + O -> O2+ + O3
+        stoic_coeff: 1
 
-  Sinks: 10
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: -1
-    - reaction: e + O2+ -> O + O
-      stoic_coeff: -1
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: -1
-    - reaction: O2- + O2+ + M -> O2 + O2 + M
-      stoic_coeff: -1
-    - reaction: O- + O2+ -> O + O2
-      stoic_coeff: -1
-    - reaction: O- + O2+ + N2 -> O3 + N2
-      stoic_coeff: -1
-    - reaction: O- + O2+ + O2 -> O3 + O2
-      stoic_coeff: -1
-    - reaction: O3- + O2+ -> O3 + O2
-      stoic_coeff: -1
-    - reaction: O2+ + NO -> O2 + NO+
-      stoic_coeff: -1
-    - reaction: O2+ + N -> NO+ + O
-      stoic_coeff: -1
+    Sinks: 10
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: -1
+      - reaction: e + O2+ -> O + O
+        stoic_coeff: -1
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: -1
+      - reaction: O2- + O2+ + M -> O2 + O2 + M
+        stoic_coeff: -1
+      - reaction: O- + O2+ -> O + O2
+        stoic_coeff: -1
+      - reaction: O- + O2+ + N2 -> O3 + N2
+        stoic_coeff: -1
+      - reaction: O- + O2+ + O2 -> O3 + O2
+        stoic_coeff: -1
+      - reaction: O3- + O2+ -> O3 + O2
+        stoic_coeff: -1
+      - reaction: O2+ + NO -> O2 + NO+
+        stoic_coeff: -1
+      - reaction: O2+ + N -> NO+ + O
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: N2(vibration)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + N2 -> e + N2(vibration)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + N2 -> e + N2(vibration)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: He+
-  Balanced: 0
+  - Rate-Based: 17
+    Balanced: 0
 
-  Sources: 3
-    - reaction: e + He -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + He^m -> e + e + He+
-      stoic_coeff: 1
-    - reaction: He^m + He^m -> e + He + He+
-      stoic_coeff: 1
+    Sources: 3
+      - reaction: e + He -> e + e + He+
+        stoic_coeff: 1
+      - reaction: e + He^m -> e + e + He+
+        stoic_coeff: 1
+      - reaction: He^m + He^m -> e + He + He+
+        stoic_coeff: 1
 
-  Sinks: 14
-    - reaction: He+ + He + He -> He2+ + He
-      stoic_coeff: -1
-    - reaction: e + He+ -> He^m
-      stoic_coeff: -1
-    - reaction: e + e + He+ -> e + He^m
-      stoic_coeff: -1
-    - reaction: He+ + N2 -> N2+ + He
-      stoic_coeff: -1
-    - reaction: He+ + O2 -> O + He + O+
-      stoic_coeff: -1
-    - reaction: He+ + O3 -> He + O2 + O+
-      stoic_coeff: -1
-    - reaction: He+ + O2 -> O2+ + He
-      stoic_coeff: -1
-    - reaction: He+ + O2(a1) -> He + O + O+
-      stoic_coeff: -1
-    - reaction: He+ + O2(a1) -> He + O2+
-      stoic_coeff: -1
-    - reaction: He+ + O -> He + O+
-      stoic_coeff: -1
-    - reaction: He+ + O^m -> He + O+
-      stoic_coeff: -1
-    - reaction: O3- + He+ -> O3 + He
-      stoic_coeff: -1
-    - reaction: He+ + NO -> He + NO+
-      stoic_coeff: -1
-    - reaction: He+ + NO -> He + N + O+
-      stoic_coeff: -1
+    Sinks: 14
+      - reaction: He+ + He + He -> He2+ + He
+        stoic_coeff: -1
+      - reaction: e + He+ -> He^m
+        stoic_coeff: -1
+      - reaction: e + e + He+ -> e + He^m
+        stoic_coeff: -1
+      - reaction: He+ + N2 -> N2+ + He
+        stoic_coeff: -1
+      - reaction: He+ + O2 -> O + He + O+
+        stoic_coeff: -1
+      - reaction: He+ + O3 -> He + O2 + O+
+        stoic_coeff: -1
+      - reaction: He+ + O2 -> O2+ + He
+        stoic_coeff: -1
+      - reaction: He+ + O2(a1) -> He + O + O+
+        stoic_coeff: -1
+      - reaction: He+ + O2(a1) -> He + O2+
+        stoic_coeff: -1
+      - reaction: He+ + O -> He + O+
+        stoic_coeff: -1
+      - reaction: He+ + O^m -> He + O+
+        stoic_coeff: -1
+      - reaction: O3- + He+ -> O3 + He
+        stoic_coeff: -1
+      - reaction: He+ + NO -> He + NO+
+        stoic_coeff: -1
+      - reaction: He+ + NO -> He + N + O+
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: e
-  Balanced: 21
-    - reaction: e + N2 -> e + N2(rotation)
-    - reaction: e + N2 -> e + N2(vibration)
-    - reaction: e + N2 -> e + N + N
-    - reaction: e + N2 -> e + N2(electronic)
-    - reaction: e + N2 -> e + N2(a)
-    - reaction: e + N2 -> e + N2(a2)
-    - reaction: e + N2 -> e + N2(b)
-    - reaction: e + N2 -> e + N2(c)
-    - reaction: e + He -> e + He^m
-    - reaction: e + O2 -> e + O + O
-    - reaction: e + O2 -> e + O + O^m
-    - reaction: e + O2 -> e + O2(rotational)
-    - reaction: e + O2 -> e + O2
-    - reaction: e + O2 -> e + O2(h)
-    - reaction: e + O2 -> e + O2(a1)
-    - reaction: e + O2 -> e + O2(b1)
-    - reaction: e + O2 -> e + O2(vibrational)
-    - reaction: e + O2(al) -> e + O2(b1)
-    - reaction: e + O2(al) -> e + O + O^m
-    - reaction: e + O -> e + O^m
-    - reaction: e + He^m -> e + He
+  - Rate-Based: 60
+    Balanced: 21
+      - reaction: e + N2 -> e + N2(rotation)
+      - reaction: e + N2 -> e + N2(vibration)
+      - reaction: e + N2 -> e + N + N
+      - reaction: e + N2 -> e + N2(electronic)
+      - reaction: e + N2 -> e + N2(a)
+      - reaction: e + N2 -> e + N2(a2)
+      - reaction: e + N2 -> e + N2(b)
+      - reaction: e + N2 -> e + N2(c)
+      - reaction: e + He -> e + He^m
+      - reaction: e + O2 -> e + O + O
+      - reaction: e + O2 -> e + O + O^m
+      - reaction: e + O2 -> e + O2(rotational)
+      - reaction: e + O2 -> e + O2
+      - reaction: e + O2 -> e + O2(h)
+      - reaction: e + O2 -> e + O2(a1)
+      - reaction: e + O2 -> e + O2(b1)
+      - reaction: e + O2 -> e + O2(vibrational)
+      - reaction: e + O2(al) -> e + O2(b1)
+      - reaction: e + O2(al) -> e + O + O^m
+      - reaction: e + O -> e + O^m
+      - reaction: e + He^m -> e + He
 
-  Sources: 27
-    - reaction: e + N2 -> e + e + N2+
-      stoic_coeff: 1
-    - reaction: e + N2 -> e + e + N2+
-      stoic_coeff: 1
-    - reaction: e + He -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + He -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + O2 -> e + e + O2+
-      stoic_coeff: 1
-    - reaction: e + O2 -> e + e + O2+
-      stoic_coeff: 1
-    - reaction: e + NO -> e + e + NO+
-      stoic_coeff: 1
-    - reaction: e + NO -> e + e + NO+
-      stoic_coeff: 1
-    - reaction: e + He^m -> e + e + He+
-      stoic_coeff: 1
-    - reaction: e + He^m -> e + e + He+
-      stoic_coeff: 1
-    - reaction: He^m + He^m -> e + He + He+
-      stoic_coeff: 1
-    - reaction: e + He2^m -> e + e + He2+
-      stoic_coeff: 1
-    - reaction: e + He2^m -> e + e + He2+
-      stoic_coeff: 1
-    - reaction: He^m + N2 -> e + He + N2+
-      stoic_coeff: 1
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: 1
-    - reaction: He^m + O2 -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O2(b1) -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O -> e + He + O+
-      stoic_coeff: 1
-    - reaction: He^m + O^m -> e + He + O+
-      stoic_coeff: 1
-    - reaction: O- + O2(a1) -> e + O3
-      stoic_coeff: 1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: 1
-    - reaction: O2- + O -> e + O3
-      stoic_coeff: 1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: 1
-    - reaction: He^m + NO -> He + NO+ + e
-      stoic_coeff: 1
-    - reaction: O- + NO -> NO2 + e
-      stoic_coeff: 1
-    - reaction: O2- + N -> NO2 + e
-      stoic_coeff: 1
+    Sources: 27
+      - reaction: e + N2 -> e + e + N2+
+        stoic_coeff: 1
+      - reaction: e + N2 -> e + e + N2+
+        stoic_coeff: 1
+      - reaction: e + He -> e + e + He+
+        stoic_coeff: 1
+      - reaction: e + He -> e + e + He+
+        stoic_coeff: 1
+      - reaction: e + O2 -> e + e + O2+
+        stoic_coeff: 1
+      - reaction: e + O2 -> e + e + O2+
+        stoic_coeff: 1
+      - reaction: e + NO -> e + e + NO+
+        stoic_coeff: 1
+      - reaction: e + NO -> e + e + NO+
+        stoic_coeff: 1
+      - reaction: e + He^m -> e + e + He+
+        stoic_coeff: 1
+      - reaction: e + He^m -> e + e + He+
+        stoic_coeff: 1
+      - reaction: He^m + He^m -> e + He + He+
+        stoic_coeff: 1
+      - reaction: e + He2^m -> e + e + He2+
+        stoic_coeff: 1
+      - reaction: e + He2^m -> e + e + He2+
+        stoic_coeff: 1
+      - reaction: He^m + N2 -> e + He + N2+
+        stoic_coeff: 1
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: 1
+      - reaction: He^m + O2 -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O2(b1) -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O -> e + He + O+
+        stoic_coeff: 1
+      - reaction: He^m + O^m -> e + He + O+
+        stoic_coeff: 1
+      - reaction: O- + O2(a1) -> e + O3
+        stoic_coeff: 1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: 1
+      - reaction: O2- + O -> e + O3
+        stoic_coeff: 1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: 1
+      - reaction: He^m + NO -> He + NO+ + e
+        stoic_coeff: 1
+      - reaction: O- + NO -> NO2 + e
+        stoic_coeff: 1
+      - reaction: O2- + N -> NO2 + e
+        stoic_coeff: 1
 
-  Sinks: 12
-    - reaction: e + O2 -> O + O-
-      stoic_coeff: -1
-    - reaction: e + O2(al) -> O + O-
-      stoic_coeff: -1
-    - reaction: e + O2(b1) -> O + O-
-      stoic_coeff: -1
-    - reaction: e + He2+ -> He^m + He
-      stoic_coeff: -1
-    - reaction: e + He+ -> He^m
-      stoic_coeff: -1
-    - reaction: e + e + He+ -> e + He^m
-      stoic_coeff: -1
-    - reaction: e + e + He+ -> e + He^m
-      stoic_coeff: -1
-    - reaction: e + O4+ -> O2 + O2
-      stoic_coeff: -1
-    - reaction: e + O2+ -> O + O
-      stoic_coeff: -1
-    - reaction: e + O2 + O2 -> O2- + O2
-      stoic_coeff: -1
-    - reaction: e + NO+ -> N + O
-      stoic_coeff: -1
-    - reaction: e + NO+ -> N + O^m
-      stoic_coeff: -1
+    Sinks: 12
+      - reaction: e + O2 -> O + O-
+        stoic_coeff: -1
+      - reaction: e + O2(al) -> O + O-
+        stoic_coeff: -1
+      - reaction: e + O2(b1) -> O + O-
+        stoic_coeff: -1
+      - reaction: e + He2+ -> He^m + He
+        stoic_coeff: -1
+      - reaction: e + He+ -> He^m
+        stoic_coeff: -1
+      - reaction: e + e + He+ -> e + He^m
+        stoic_coeff: -1
+      - reaction: e + e + He+ -> e + He^m
+        stoic_coeff: -1
+      - reaction: e + O4+ -> O2 + O2
+        stoic_coeff: -1
+      - reaction: e + O2+ -> O + O
+        stoic_coeff: -1
+      - reaction: e + O2 + O2 -> O2- + O2
+        stoic_coeff: -1
+      - reaction: e + NO+ -> N + O
+        stoic_coeff: -1
+      - reaction: e + NO+ -> N + O^m
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: N2(a2)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + N2 -> e + N2(a2)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + N2 -> e + N2(a2)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: N2(a1)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: N2(c) + N2 -> N2(a1) + N2
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: N2(c) + N2 -> N2(a1) + N2
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: NO
-  Balanced: 2
-    - reaction: NO + O2(a1) -> NO + O2
-    - reaction: NO + O^m -> NO + O
+  - Rate-Based: 28
+    Balanced: 2
+      - reaction: NO + O2(a1) -> NO + O2
+      - reaction: NO + O^m -> NO + O
 
-  Sources: 14
-    - reaction: NO+ + O- -> NO + O
-      stoic_coeff: 1
-    - reaction: NO+ + O2- -> NO + O2
-      stoic_coeff: 1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: 1
-    - reaction: N + O2 -> NO + O
-      stoic_coeff: 1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: 1
-    - reaction: N + O + O2 -> NO + O2
-      stoic_coeff: 1
-    - reaction: N + O + He -> NO + He
-      stoic_coeff: 1
-    - reaction: N + O + O2(a1) -> NO + O2(a1)
-      stoic_coeff: 1
-    - reaction: N + O + O -> NO + O
-      stoic_coeff: 1
-    - reaction: N + O + O3 -> NO + O3
-      stoic_coeff: 1
-    - reaction: NO2 + O -> NO + O2
-      stoic_coeff: 1
-    - reaction: NO2 + O^m -> NO + O2
-      stoic_coeff: 1
-    - reaction: N + NO2 -> NO + NO
-      stoic_coeff: 2
-    - reaction: N + NO2 -> NO + NO
-      stoic_coeff: 2
+    Sources: 14
+      - reaction: NO+ + O- -> NO + O
+        stoic_coeff: 1
+      - reaction: NO+ + O2- -> NO + O2
+        stoic_coeff: 1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: 1
+      - reaction: N + O2 -> NO + O
+        stoic_coeff: 1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: 1
+      - reaction: N + O + O2 -> NO + O2
+        stoic_coeff: 1
+      - reaction: N + O + He -> NO + He
+        stoic_coeff: 1
+      - reaction: N + O + O2(a1) -> NO + O2(a1)
+        stoic_coeff: 1
+      - reaction: N + O + O -> NO + O
+        stoic_coeff: 1
+      - reaction: N + O + O3 -> NO + O3
+        stoic_coeff: 1
+      - reaction: NO2 + O -> NO + O2
+        stoic_coeff: 1
+      - reaction: NO2 + O^m -> NO + O2
+        stoic_coeff: 1
+      - reaction: N + NO2 -> NO + NO
+        stoic_coeff: 2
+      - reaction: N + NO2 -> NO + NO
+        stoic_coeff: 2
 
-  Sinks: 12
-    - reaction: e + NO -> e + e + NO+
-      stoic_coeff: -1
-    - reaction: He^m + NO -> He + NO+ + e
-      stoic_coeff: -1
-    - reaction: He+ + NO -> He + NO+
-      stoic_coeff: -1
-    - reaction: He+ + NO -> He + N + O+
-      stoic_coeff: -1
-    - reaction: O+ + NO -> O + NO+
-      stoic_coeff: -1
-    - reaction: O2+ + NO -> O2 + NO+
-      stoic_coeff: -1
-    - reaction: NO + O^m -> N + O2
-      stoic_coeff: -1
-    - reaction: O- + NO -> NO2 + e
-      stoic_coeff: -1
-    - reaction: NO + O3 -> NO2 + O2
-      stoic_coeff: -1
-    - reaction: NO + O + He -> NO2 + He
-      stoic_coeff: -1
-    - reaction: NO + O + O2 -> NO2 + O2
-      stoic_coeff: -1
-    - reaction: NO + O + N2 -> NO2 + N2
-      stoic_coeff: -1
+    Sinks: 12
+      - reaction: e + NO -> e + e + NO+
+        stoic_coeff: -1
+      - reaction: He^m + NO -> He + NO+ + e
+        stoic_coeff: -1
+      - reaction: He+ + NO -> He + NO+
+        stoic_coeff: -1
+      - reaction: He+ + NO -> He + N + O+
+        stoic_coeff: -1
+      - reaction: O+ + NO -> O + NO+
+        stoic_coeff: -1
+      - reaction: O2+ + NO -> O2 + NO+
+        stoic_coeff: -1
+      - reaction: NO + O^m -> N + O2
+        stoic_coeff: -1
+      - reaction: O- + NO -> NO2 + e
+        stoic_coeff: -1
+      - reaction: NO + O3 -> NO2 + O2
+        stoic_coeff: -1
+      - reaction: NO + O + He -> NO2 + He
+        stoic_coeff: -1
+      - reaction: NO + O + O2 -> NO2 + O2
+        stoic_coeff: -1
+      - reaction: NO + O + N2 -> NO2 + N2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: N2(rotation)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + N2 -> e + N2(rotation)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + N2 -> e + N2(rotation)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O
-  Balanced: 4
-    - reaction: N2(a) + O -> N2 + O
-    - reaction: O2(h) + O -> O2 + O
-    - reaction: O2(h) + O -> O2(a1) + O
-    - reaction: O2(h) + O -> O2(b1) + O
+  - Rate-Based: 58
+    Balanced: 4
+      - reaction: N2(a) + O -> N2 + O
+      - reaction: O2(h) + O -> O2 + O
+      - reaction: O2(h) + O -> O2(a1) + O
+      - reaction: O2(h) + O -> O2(b1) + O
 
-  Sources: 32
-    - reaction: e + O2 -> e + O + O
-      stoic_coeff: 2
-    - reaction: e + O2 -> e + O + O
-      stoic_coeff: 2
-    - reaction: e + O2 -> e + O + O^m
-      stoic_coeff: 1
-    - reaction: e + O2 -> O + O-
-      stoic_coeff: 1
-    - reaction: e + O2(al) -> e + O + O^m
-      stoic_coeff: 1
-    - reaction: e + O2(al) -> O + O-
-      stoic_coeff: 1
-    - reaction: e + O2(b1) -> O + O-
-      stoic_coeff: 1
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: 1
-    - reaction: He+ + O2 -> O + He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2(a1) -> He + O + O+
-      stoic_coeff: 1
-    - reaction: e + O2+ -> O + O
-      stoic_coeff: 2
-    - reaction: e + O2+ -> O + O
-      stoic_coeff: 2
-    - reaction: O- + O2+ -> O + O2
-      stoic_coeff: 1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(b) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(b) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(c) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N2(c) + O2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: O3- + O+ -> O3 + O
-      stoic_coeff: 1
-    - reaction: O- + O3 -> O3- + O
-      stoic_coeff: 1
-    - reaction: e + NO+ -> N + O
-      stoic_coeff: 1
-    - reaction: O+ + NO -> O + NO+
-      stoic_coeff: 1
-    - reaction: O2+ + N -> NO+ + O
-      stoic_coeff: 1
-    - reaction: NO+ + O- -> NO + O
-      stoic_coeff: 1
-    - reaction: NO + O^m -> NO + O
-      stoic_coeff: 1
-    - reaction: N + O2 -> NO + O
-      stoic_coeff: 1
-    - reaction: NO2 + O^m -> NO2 + O
-      stoic_coeff: 1
-    - reaction: N + NO2 -> N2 + O + O
-      stoic_coeff: 2
-    - reaction: N + NO2 -> N2 + O + O
-      stoic_coeff: 2
+    Sources: 32
+      - reaction: e + O2 -> e + O + O
+        stoic_coeff: 2
+      - reaction: e + O2 -> e + O + O
+        stoic_coeff: 2
+      - reaction: e + O2 -> e + O + O^m
+        stoic_coeff: 1
+      - reaction: e + O2 -> O + O-
+        stoic_coeff: 1
+      - reaction: e + O2(al) -> e + O + O^m
+        stoic_coeff: 1
+      - reaction: e + O2(al) -> O + O-
+        stoic_coeff: 1
+      - reaction: e + O2(b1) -> O + O-
+        stoic_coeff: 1
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: 1
+      - reaction: He+ + O2 -> O + He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2(a1) -> He + O + O+
+        stoic_coeff: 1
+      - reaction: e + O2+ -> O + O
+        stoic_coeff: 2
+      - reaction: e + O2+ -> O + O
+        stoic_coeff: 2
+      - reaction: O- + O2+ -> O + O2
+        stoic_coeff: 1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(b) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(b) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(c) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N2(c) + O2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: O3- + O+ -> O3 + O
+        stoic_coeff: 1
+      - reaction: O- + O3 -> O3- + O
+        stoic_coeff: 1
+      - reaction: e + NO+ -> N + O
+        stoic_coeff: 1
+      - reaction: O+ + NO -> O + NO+
+        stoic_coeff: 1
+      - reaction: O2+ + N -> NO+ + O
+        stoic_coeff: 1
+      - reaction: NO+ + O- -> NO + O
+        stoic_coeff: 1
+      - reaction: NO + O^m -> NO + O
+        stoic_coeff: 1
+      - reaction: N + O2 -> NO + O
+        stoic_coeff: 1
+      - reaction: NO2 + O^m -> NO2 + O
+        stoic_coeff: 1
+      - reaction: N + NO2 -> N2 + O + O
+        stoic_coeff: 2
+      - reaction: N + NO2 -> N2 + O + O
+        stoic_coeff: 2
 
-  Sinks: 22
-    - reaction: e + O -> e + O^m
-      stoic_coeff: -1
-    - reaction: He^m + O -> e + He + O+
-      stoic_coeff: -1
-    - reaction: He+ + O -> He + O+
-      stoic_coeff: -1
-    - reaction: O2- + O -> e + O3
-      stoic_coeff: -1
-    - reaction: O + O2 + N2 -> N2 + O3
-      stoic_coeff: -1
-    - reaction: O + O2 + O2 -> O2 + O3
-      stoic_coeff: -1
-    - reaction: O4+ + O -> O2+ + O3
-      stoic_coeff: -1
-    - reaction: O + O + O2 -> O3 + O
-      stoic_coeff: -1
-    - reaction: O + O + O2 -> O3 + O
-      stoic_coeff: -1
-    - reaction: O3- + O -> O2- + O2
-      stoic_coeff: -1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: -1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: -1
-    - reaction: N + O + O2 -> NO + O2
-      stoic_coeff: -1
-    - reaction: N + O + He -> NO + He
-      stoic_coeff: -1
-    - reaction: N + O + O2(a1) -> NO + O2(a1)
-      stoic_coeff: -1
-    - reaction: N + O + O -> NO + O
-      stoic_coeff: -1
-    - reaction: N + O + O -> NO + O
-      stoic_coeff: -1
-    - reaction: N + O + O3 -> NO + O3
-      stoic_coeff: -1
-    - reaction: NO + O + He -> NO2 + He
-      stoic_coeff: -1
-    - reaction: NO + O + O2 -> NO2 + O2
-      stoic_coeff: -1
-    - reaction: NO + O + N2 -> NO2 + N2
-      stoic_coeff: -1
-    - reaction: NO2 + O -> NO + O2
-      stoic_coeff: -1
+    Sinks: 22
+      - reaction: e + O -> e + O^m
+        stoic_coeff: -1
+      - reaction: He^m + O -> e + He + O+
+        stoic_coeff: -1
+      - reaction: He+ + O -> He + O+
+        stoic_coeff: -1
+      - reaction: O2- + O -> e + O3
+        stoic_coeff: -1
+      - reaction: O + O2 + N2 -> N2 + O3
+        stoic_coeff: -1
+      - reaction: O + O2 + O2 -> O2 + O3
+        stoic_coeff: -1
+      - reaction: O4+ + O -> O2+ + O3
+        stoic_coeff: -1
+      - reaction: O + O + O2 -> O3 + O
+        stoic_coeff: -1
+      - reaction: O + O + O2 -> O3 + O
+        stoic_coeff: -1
+      - reaction: O3- + O -> O2- + O2
+        stoic_coeff: -1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: -1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: -1
+      - reaction: N + O + O2 -> NO + O2
+        stoic_coeff: -1
+      - reaction: N + O + He -> NO + He
+        stoic_coeff: -1
+      - reaction: N + O + O2(a1) -> NO + O2(a1)
+        stoic_coeff: -1
+      - reaction: N + O + O -> NO + O
+        stoic_coeff: -1
+      - reaction: N + O + O -> NO + O
+        stoic_coeff: -1
+      - reaction: N + O + O3 -> NO + O3
+        stoic_coeff: -1
+      - reaction: NO + O + He -> NO2 + He
+        stoic_coeff: -1
+      - reaction: NO + O + O2 -> NO2 + O2
+        stoic_coeff: -1
+      - reaction: NO + O + N2 -> NO2 + N2
+        stoic_coeff: -1
+      - reaction: NO2 + O -> NO + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N2
-  Balanced: 7
-    - reaction: N2(b) + N2 -> N2(a) + N2
-    - reaction: N2(c) + N2 -> N2(a1) + N2
-    - reaction: O + O2 + N2 -> N2 + O3
-    - reaction: O- + O2+ + N2 -> O3 + N2
-    - reaction: N + O + N2 -> NO + N2
-    - reaction: N + O + N2 -> NO + N2
-    - reaction: NO + O + N2 -> NO2 + N2
+  - Rate-Based: 37
+    Balanced: 7
+      - reaction: N2(b) + N2 -> N2(a) + N2
+      - reaction: N2(c) + N2 -> N2(a1) + N2
+      - reaction: O + O2 + N2 -> N2 + O3
+      - reaction: O- + O2+ + N2 -> O3 + N2
+      - reaction: N + O + N2 -> NO + N2
+      - reaction: N + O + N2 -> NO + N2
+      - reaction: NO + O + N2 -> NO2 + N2
 
-  Sources: 16
-    - reaction: N4+ + O2 -> O2+ + N2 + N2
-      stoic_coeff: 2
-    - reaction: N4+ + O2 -> O2+ + N2 + N2
-      stoic_coeff: 2
-    - reaction: N2+ + O2 -> O2+ + N2
-      stoic_coeff: 1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 1
-    - reaction: N2(a) + O2 -> N2 + O2(b1)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(a) -> N2 + N2(b)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(a) -> N2 + N2(c)
-      stoic_coeff: 1
-    - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-      stoic_coeff: 1
-    - reaction: N2(a) + O -> N2 + O
-      stoic_coeff: 1
-    - reaction: N2(b) + O2 -> N2 + O + O
-      stoic_coeff: 1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: 1
-    - reaction: N2(a) + N2 -> N2 + N2
-      stoic_coeff: 1
-    - reaction: N2(a) + N2 -> N2 + N2
-      stoic_coeff: 1
-    - reaction: N2(c) + O2 -> N2 + O + O
-      stoic_coeff: 1
-    - reaction: N + NO2 -> N2 + O + O
-      stoic_coeff: 1
-    - reaction: N + NO2 -> N2 + O2
-      stoic_coeff: 1
+    Sources: 16
+      - reaction: N4+ + O2 -> O2+ + N2 + N2
+        stoic_coeff: 2
+      - reaction: N4+ + O2 -> O2+ + N2 + N2
+        stoic_coeff: 2
+      - reaction: N2+ + O2 -> O2+ + N2
+        stoic_coeff: 1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 1
+      - reaction: N2(a) + O2 -> N2 + O2(b1)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(a) -> N2 + N2(b)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(a) -> N2 + N2(c)
+        stoic_coeff: 1
+      - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+        stoic_coeff: 1
+      - reaction: N2(a) + O -> N2 + O
+        stoic_coeff: 1
+      - reaction: N2(b) + O2 -> N2 + O + O
+        stoic_coeff: 1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: 1
+      - reaction: N2(a) + N2 -> N2 + N2
+        stoic_coeff: 1
+      - reaction: N2(a) + N2 -> N2 + N2
+        stoic_coeff: 1
+      - reaction: N2(c) + O2 -> N2 + O + O
+        stoic_coeff: 1
+      - reaction: N + NO2 -> N2 + O + O
+        stoic_coeff: 1
+      - reaction: N + NO2 -> N2 + O2
+        stoic_coeff: 1
 
-  Sinks: 14
-    - reaction: e + N2 -> e + N2(rotation)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(vibration)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + e + N2+
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N + N
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(electronic)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(a)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(a2)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(b)
-      stoic_coeff: -1
-    - reaction: e + N2 -> e + N2(c)
-      stoic_coeff: -1
-    - reaction: He^m + N2 -> e + He + N2+
-      stoic_coeff: -1
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: -1
-    - reaction: He+ + N2 -> N2+ + He
-      stoic_coeff: -1
-    - reaction: He2+ + N2 -> N2+ + He + He
-      stoic_coeff: -1
-    - reaction: N2+ + N2 + M -> N4+ + M
-      stoic_coeff: -1
+    Sinks: 14
+      - reaction: e + N2 -> e + N2(rotation)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(vibration)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + e + N2+
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N + N
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(electronic)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(a)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(a2)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(b)
+        stoic_coeff: -1
+      - reaction: e + N2 -> e + N2(c)
+        stoic_coeff: -1
+      - reaction: He^m + N2 -> e + He + N2+
+        stoic_coeff: -1
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: -1
+      - reaction: He+ + N2 -> N2+ + He
+        stoic_coeff: -1
+      - reaction: He2+ + N2 -> N2+ + He + He
+        stoic_coeff: -1
+      - reaction: N2+ + N2 + M -> N4+ + M
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O4+
-  Balanced: 0
+  - Rate-Based: 6
+    Balanced: 0
 
-  Sources: 2
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: 1
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: 1
+    Sources: 2
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: 1
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: 1
 
-  Sinks: 4
-    - reaction: e + O4+ -> O2 + O2
-      stoic_coeff: -1
-    - reaction: O2- + O4+ -> O2 + O2 + O2
-      stoic_coeff: -1
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-      stoic_coeff: -1
-    - reaction: O4+ + O -> O2+ + O3
-      stoic_coeff: -1
+    Sinks: 4
+      - reaction: e + O4+ -> O2 + O2
+        stoic_coeff: -1
+      - reaction: O2- + O4+ -> O2 + O2 + O2
+        stoic_coeff: -1
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+        stoic_coeff: -1
+      - reaction: O4+ + O -> O2+ + O3
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N4+
-  Balanced: 0
+  - Rate-Based: 2
+    Balanced: 0
 
-  Sources: 1
-    - reaction: N2+ + N2 + M -> N4+ + M
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: N2+ + N2 + M -> N4+ + M
+        stoic_coeff: 1
 
-  Sinks: 1
-    - reaction: N4+ + O2 -> O2+ + N2 + N2
-      stoic_coeff: -1
+    Sinks: 1
+      - reaction: N4+ + O2 -> O2+ + N2 + N2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
-# Warning! Species has no sinks
 Species: O2(rotational)
-  Balanced: 0
+  - Rate-Based: 1
+    Balanced: 0
 
-  Sources: 1
-    - reaction: e + O2 -> e + O2(rotational)
-      stoic_coeff: 1
+    Sources: 1
+      - reaction: e + O2 -> e + O2(rotational)
+        stoic_coeff: 1
 
-  Sinks: 0
+    Sinks: 0
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: O2
-  Balanced: 6
-    - reaction: e + O2 -> e + O2
-    - reaction: O2(h) + O2 -> O2(a1) + O2
-    - reaction: O2(h) + O2 -> O2(b1) + O2
-    - reaction: O- + O2+ + O2 -> O3 + O2
-    - reaction: N + O + O2 -> NO + O2
-    - reaction: NO + O + O2 -> NO2 + O2
+  - Rate-Based: 62
+    Balanced: 6
+      - reaction: e + O2 -> e + O2
+      - reaction: O2(h) + O2 -> O2(a1) + O2
+      - reaction: O2(h) + O2 -> O2(b1) + O2
+      - reaction: O- + O2+ + O2 -> O3 + O2
+      - reaction: N + O + O2 -> NO + O2
+      - reaction: NO + O + O2 -> NO2 + O2
 
-  Sources: 26
-    - reaction: He+ + O3 -> He + O2 + O+
-      stoic_coeff: 1
-    - reaction: e + O4+ -> O2 + O2
-      stoic_coeff: 2
-    - reaction: e + O4+ -> O2 + O2
-      stoic_coeff: 2
-    - reaction: O2- + O4+ -> O2 + O2 + O2
-      stoic_coeff: 3
-    - reaction: O2- + O4+ -> O2 + O2 + O2
-      stoic_coeff: 3
-    - reaction: O2- + O4+ -> O2 + O2 + O2
-      stoic_coeff: 3
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-      stoic_coeff: 3
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-      stoic_coeff: 3
-    - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-      stoic_coeff: 3
-    - reaction: O2- + O2+ + M -> O2 + O2 + M
-      stoic_coeff: 2
-    - reaction: O2- + O2+ + M -> O2 + O2 + M
-      stoic_coeff: 2
-    - reaction: O- + O2+ -> O + O2
-      stoic_coeff: 1
-    - reaction: O2(h) + O2 -> O2 + O2
-      stoic_coeff: 1
-    - reaction: O2(h) + O2 -> O2 + O2
-      stoic_coeff: 1
-    - reaction: O2(h) + O -> O2 + O
-      stoic_coeff: 1
-    - reaction: O3- + O2+ -> O3 + O2
-      stoic_coeff: 1
-    - reaction: O2- + O3 -> O3- + O2
-      stoic_coeff: 1
-    - reaction: O3- + O -> O2- + O2
-      stoic_coeff: 1
-    - reaction: O2+ + NO -> O2 + NO+
-      stoic_coeff: 1
-    - reaction: NO+ + O2- -> NO + O2
-      stoic_coeff: 1
-    - reaction: NO + O2(a1) -> NO + O2
-      stoic_coeff: 1
-    - reaction: NO + O^m -> N + O2
-      stoic_coeff: 1
-    - reaction: NO + O3 -> NO2 + O2
-      stoic_coeff: 1
-    - reaction: NO2 + O -> NO + O2
-      stoic_coeff: 1
-    - reaction: NO2 + O^m -> NO + O2
-      stoic_coeff: 1
-    - reaction: N + NO2 -> N2 + O2
-      stoic_coeff: 1
+    Sources: 26
+      - reaction: He+ + O3 -> He + O2 + O+
+        stoic_coeff: 1
+      - reaction: e + O4+ -> O2 + O2
+        stoic_coeff: 2
+      - reaction: e + O4+ -> O2 + O2
+        stoic_coeff: 2
+      - reaction: O2- + O4+ -> O2 + O2 + O2
+        stoic_coeff: 3
+      - reaction: O2- + O4+ -> O2 + O2 + O2
+        stoic_coeff: 3
+      - reaction: O2- + O4+ -> O2 + O2 + O2
+        stoic_coeff: 3
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+        stoic_coeff: 3
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+        stoic_coeff: 3
+      - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+        stoic_coeff: 3
+      - reaction: O2- + O2+ + M -> O2 + O2 + M
+        stoic_coeff: 2
+      - reaction: O2- + O2+ + M -> O2 + O2 + M
+        stoic_coeff: 2
+      - reaction: O- + O2+ -> O + O2
+        stoic_coeff: 1
+      - reaction: O2(h) + O2 -> O2 + O2
+        stoic_coeff: 1
+      - reaction: O2(h) + O2 -> O2 + O2
+        stoic_coeff: 1
+      - reaction: O2(h) + O -> O2 + O
+        stoic_coeff: 1
+      - reaction: O3- + O2+ -> O3 + O2
+        stoic_coeff: 1
+      - reaction: O2- + O3 -> O3- + O2
+        stoic_coeff: 1
+      - reaction: O3- + O -> O2- + O2
+        stoic_coeff: 1
+      - reaction: O2+ + NO -> O2 + NO+
+        stoic_coeff: 1
+      - reaction: NO+ + O2- -> NO + O2
+        stoic_coeff: 1
+      - reaction: NO + O2(a1) -> NO + O2
+        stoic_coeff: 1
+      - reaction: NO + O^m -> N + O2
+        stoic_coeff: 1
+      - reaction: NO + O3 -> NO2 + O2
+        stoic_coeff: 1
+      - reaction: NO2 + O -> NO + O2
+        stoic_coeff: 1
+      - reaction: NO2 + O^m -> NO + O2
+        stoic_coeff: 1
+      - reaction: N + NO2 -> N2 + O2
+        stoic_coeff: 1
 
-  Sinks: 30
-    - reaction: e + O2 -> e + e + O2+
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O + O
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O + O^m
-      stoic_coeff: -1
-    - reaction: e + O2 -> O + O-
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O2(rotational)
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O2(h)
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O2(a1)
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O2(b1)
-      stoic_coeff: -1
-    - reaction: e + O2 -> e + O2(vibrational)
-      stoic_coeff: -1
-    - reaction: He^m + O2 -> e + He + O2+
-      stoic_coeff: -1
-    - reaction: He+ + O2 -> O + He + O+
-      stoic_coeff: -1
-    - reaction: He+ + O2 -> O2+ + He
-      stoic_coeff: -1
-    - reaction: N4+ + O2 -> O2+ + N2 + N2
-      stoic_coeff: -1
-    - reaction: N2+ + O2 -> O2+ + N2
-      stoic_coeff: -1
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: -1
-    - reaction: e + O2 + O2 -> O2- + O2
-      stoic_coeff: -1
-    - reaction: e + O2 + O2 -> O2- + O2
-      stoic_coeff: -1
-    - reaction: O2+ + O2 + M -> O4+ + M
-      stoic_coeff: -1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(a) + O2 -> N2 + O2(b1)
-      stoic_coeff: -1
-    - reaction: N2(b) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(a) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N2(c) + O2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: -1
-    - reaction: O- + O2 -> e + O3
-      stoic_coeff: -1
-    - reaction: O + O2 + N2 -> N2 + O3
-      stoic_coeff: -1
-    - reaction: O + O2 + O2 -> O2 + O3
-      stoic_coeff: -1
-    - reaction: O + O2 + O2 -> O2 + O3
-      stoic_coeff: -1
-    - reaction: O + O + O2 -> O3 + O
-      stoic_coeff: -1
-    - reaction: N + O2 -> NO + O
-      stoic_coeff: -1
+    Sinks: 30
+      - reaction: e + O2 -> e + e + O2+
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O + O
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O + O^m
+        stoic_coeff: -1
+      - reaction: e + O2 -> O + O-
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O2(rotational)
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O2(h)
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O2(a1)
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O2(b1)
+        stoic_coeff: -1
+      - reaction: e + O2 -> e + O2(vibrational)
+        stoic_coeff: -1
+      - reaction: He^m + O2 -> e + He + O2+
+        stoic_coeff: -1
+      - reaction: He+ + O2 -> O + He + O+
+        stoic_coeff: -1
+      - reaction: He+ + O2 -> O2+ + He
+        stoic_coeff: -1
+      - reaction: N4+ + O2 -> O2+ + N2 + N2
+        stoic_coeff: -1
+      - reaction: N2+ + O2 -> O2+ + N2
+        stoic_coeff: -1
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: -1
+      - reaction: e + O2 + O2 -> O2- + O2
+        stoic_coeff: -1
+      - reaction: e + O2 + O2 -> O2- + O2
+        stoic_coeff: -1
+      - reaction: O2+ + O2 + M -> O4+ + M
+        stoic_coeff: -1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(a) + O2 -> N2 + O2(b1)
+        stoic_coeff: -1
+      - reaction: N2(b) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(a) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N2(c) + O2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: -1
+      - reaction: O- + O2 -> e + O3
+        stoic_coeff: -1
+      - reaction: O + O2 + N2 -> N2 + O3
+        stoic_coeff: -1
+      - reaction: O + O2 + O2 -> O2 + O3
+        stoic_coeff: -1
+      - reaction: O + O2 + O2 -> O2 + O3
+        stoic_coeff: -1
+      - reaction: O + O + O2 -> O3 + O
+        stoic_coeff: -1
+      - reaction: N + O2 -> NO + O
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: He
-  Balanced: 2
-    - reaction: N + O + He -> NO + He
-    - reaction: NO + O + He -> NO2 + He
+  - Rate-Based: 33
+    Balanced: 2
+      - reaction: N + O + He -> NO + He
+      - reaction: NO + O + He -> NO2 + He
 
-  Sources: 25
-    - reaction: He^m + He^m -> e + He + He+
-      stoic_coeff: 1
-    - reaction: e + He^m -> e + He
-      stoic_coeff: 1
-    - reaction: e + He2+ -> He^m + He
-      stoic_coeff: 1
-    - reaction: He^m + N2 -> e + He + N2+
-      stoic_coeff: 1
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: 2
-    - reaction: He2^m + N2 -> e + He + He + N2+
-      stoic_coeff: 2
-    - reaction: He+ + N2 -> N2+ + He
-      stoic_coeff: 1
-    - reaction: He2+ + N2 -> N2+ + He + He
-      stoic_coeff: 2
-    - reaction: He2+ + N2 -> N2+ + He + He
-      stoic_coeff: 2
-    - reaction: He^m + O2 -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O3 -> e + O + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O2(b1) -> e + He + O2+
-      stoic_coeff: 1
-    - reaction: He^m + O -> e + He + O+
-      stoic_coeff: 1
-    - reaction: He^m + O^m -> e + He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2 -> O + He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O3 -> He + O2 + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2 -> O2+ + He
-      stoic_coeff: 1
-    - reaction: He+ + O2(a1) -> He + O + O+
-      stoic_coeff: 1
-    - reaction: He+ + O2(a1) -> He + O2+
-      stoic_coeff: 1
-    - reaction: He+ + O -> He + O+
-      stoic_coeff: 1
-    - reaction: He+ + O^m -> He + O+
-      stoic_coeff: 1
-    - reaction: O3- + He+ -> O3 + He
-      stoic_coeff: 1
-    - reaction: He^m + NO -> He + NO+ + e
-      stoic_coeff: 1
-    - reaction: He+ + NO -> He + NO+
-      stoic_coeff: 1
-    - reaction: He+ + NO -> He + N + O+
-      stoic_coeff: 1
+    Sources: 25
+      - reaction: He^m + He^m -> e + He + He+
+        stoic_coeff: 1
+      - reaction: e + He^m -> e + He
+        stoic_coeff: 1
+      - reaction: e + He2+ -> He^m + He
+        stoic_coeff: 1
+      - reaction: He^m + N2 -> e + He + N2+
+        stoic_coeff: 1
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: 2
+      - reaction: He2^m + N2 -> e + He + He + N2+
+        stoic_coeff: 2
+      - reaction: He+ + N2 -> N2+ + He
+        stoic_coeff: 1
+      - reaction: He2+ + N2 -> N2+ + He + He
+        stoic_coeff: 2
+      - reaction: He2+ + N2 -> N2+ + He + He
+        stoic_coeff: 2
+      - reaction: He^m + O2 -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O3 -> e + O + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O2(b1) -> e + He + O2+
+        stoic_coeff: 1
+      - reaction: He^m + O -> e + He + O+
+        stoic_coeff: 1
+      - reaction: He^m + O^m -> e + He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2 -> O + He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O3 -> He + O2 + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2 -> O2+ + He
+        stoic_coeff: 1
+      - reaction: He+ + O2(a1) -> He + O + O+
+        stoic_coeff: 1
+      - reaction: He+ + O2(a1) -> He + O2+
+        stoic_coeff: 1
+      - reaction: He+ + O -> He + O+
+        stoic_coeff: 1
+      - reaction: He+ + O^m -> He + O+
+        stoic_coeff: 1
+      - reaction: O3- + He+ -> O3 + He
+        stoic_coeff: 1
+      - reaction: He^m + NO -> He + NO+ + e
+        stoic_coeff: 1
+      - reaction: He+ + NO -> He + NO+
+        stoic_coeff: 1
+      - reaction: He+ + NO -> He + N + O+
+        stoic_coeff: 1
 
-  Sinks: 6
-    - reaction: e + He -> e + e + He+
-      stoic_coeff: -1
-    - reaction: e + He -> e + He^m
-      stoic_coeff: -1
-    - reaction: He^m + He + He -> He2^m + He
-      stoic_coeff: -1
-    - reaction: He^m + He + He -> He2^m + He
-      stoic_coeff: -1
-    - reaction: He+ + He + He -> He2+ + He
-      stoic_coeff: -1
-    - reaction: He+ + He + He -> He2+ + He
-      stoic_coeff: -1
+    Sinks: 6
+      - reaction: e + He -> e + e + He+
+        stoic_coeff: -1
+      - reaction: e + He -> e + He^m
+        stoic_coeff: -1
+      - reaction: He^m + He + He -> He2^m + He
+        stoic_coeff: -1
+      - reaction: He^m + He + He -> He2^m + He
+        stoic_coeff: -1
+      - reaction: He+ + He + He -> He2+ + He
+        stoic_coeff: -1
+      - reaction: He+ + He + He -> He2+ + He
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
 
 
 Species: N
-  Balanced: 0
+  - Rate-Based: 19
+    Balanced: 0
 
-  Sources: 6
-    - reaction: e + N2 -> e + N + N
-      stoic_coeff: 2
-    - reaction: e + N2 -> e + N + N
-      stoic_coeff: 2
-    - reaction: e + NO+ -> N + O
-      stoic_coeff: 1
-    - reaction: e + NO+ -> N + O^m
-      stoic_coeff: 1
-    - reaction: He+ + NO -> He + N + O+
-      stoic_coeff: 1
-    - reaction: NO + O^m -> N + O2
-      stoic_coeff: 1
+    Sources: 6
+      - reaction: e + N2 -> e + N + N
+        stoic_coeff: 2
+      - reaction: e + N2 -> e + N + N
+        stoic_coeff: 2
+      - reaction: e + NO+ -> N + O
+        stoic_coeff: 1
+      - reaction: e + NO+ -> N + O^m
+        stoic_coeff: 1
+      - reaction: He+ + NO -> He + N + O+
+        stoic_coeff: 1
+      - reaction: NO + O^m -> N + O2
+        stoic_coeff: 1
 
-  Sinks: 13
-    - reaction: O2+ + N -> NO+ + O
-      stoic_coeff: -1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: -1
-    - reaction: N + O2 -> NO + O
-      stoic_coeff: -1
-    - reaction: N + O + N2 -> NO + N2
-      stoic_coeff: -1
-    - reaction: N + O + O2 -> NO + O2
-      stoic_coeff: -1
-    - reaction: N + O + He -> NO + He
-      stoic_coeff: -1
-    - reaction: N + O + O2(a1) -> NO + O2(a1)
-      stoic_coeff: -1
-    - reaction: N + O + O -> NO + O
-      stoic_coeff: -1
-    - reaction: N + O + O3 -> NO + O3
-      stoic_coeff: -1
-    - reaction: O2- + N -> NO2 + e
-      stoic_coeff: -1
-    - reaction: N + NO2 -> NO + NO
-      stoic_coeff: -1
-    - reaction: N + NO2 -> N2 + O + O
-      stoic_coeff: -1
-    - reaction: N + NO2 -> N2 + O2
-      stoic_coeff: -1
+    Sinks: 13
+      - reaction: O2+ + N -> NO+ + O
+        stoic_coeff: -1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: -1
+      - reaction: N + O2 -> NO + O
+        stoic_coeff: -1
+      - reaction: N + O + N2 -> NO + N2
+        stoic_coeff: -1
+      - reaction: N + O + O2 -> NO + O2
+        stoic_coeff: -1
+      - reaction: N + O + He -> NO + He
+        stoic_coeff: -1
+      - reaction: N + O + O2(a1) -> NO + O2(a1)
+        stoic_coeff: -1
+      - reaction: N + O + O -> NO + O
+        stoic_coeff: -1
+      - reaction: N + O + O3 -> NO + O3
+        stoic_coeff: -1
+      - reaction: O2- + N -> NO2 + e
+        stoic_coeff: -1
+      - reaction: N + NO2 -> NO + NO
+        stoic_coeff: -1
+      - reaction: N + NO2 -> N2 + O + O
+        stoic_coeff: -1
+      - reaction: N + NO2 -> N2 + O2
+        stoic_coeff: -1
+
+  - Cross-Section-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0

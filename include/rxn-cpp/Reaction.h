@@ -12,7 +12,7 @@ class Reaction
 public:
   Reaction(const string & name, const int rxn_number);
   /** The string representation of the reaction */
-  const string rxn;
+  const string name;
   const int rxn_number;
   /** The species that are the reactants */
   vector<shared_ptr<Species>> reactants;
@@ -25,6 +25,8 @@ public:
   bool operator==(const Reaction & other) const;
   bool operator!=(const Reaction & other) const;
 
+
+  int getStoicCoeffByName(const string s);
 
 private:
   string checkReactionString(const string & rxn);

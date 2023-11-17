@@ -113,3 +113,40 @@ hash<Species>::operator()(const Species & obj) const
   // can change as reactions are added to the network
   return val;
 }
+
+
+vector<Reaction>
+Species::getRateBasedBalanced()
+{
+  return this->rate_balanced;
+}
+
+vector<Reaction>
+Species::getXSecBasedBalanced()
+{
+  return this->xsec_balanced;
+}
+
+vector<Reaction>
+Species::getRateBasedSources()
+{
+  return this->rate_sources;
+}
+
+vector<Reaction>
+Species::getXSecBasedSources()
+{
+  return this->xsec_sources;
+}
+
+vector<Reaction>
+Species::getRateBasedSinks()
+{
+  return this->rate_sinks;
+}
+
+vector<Reaction>
+Species::getXSecBasedSinks()
+{
+  return this->xsec_sinks;
+}

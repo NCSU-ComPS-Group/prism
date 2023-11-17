@@ -23,6 +23,7 @@ public:
   NetworkParser(const string & file);
   vector<Reaction> rate_rxn;
   vector<Reaction> xsec_rxn;
+
   vector<string> invalid_rate_rxn;
   vector<string> invalid_rate_reason;
   vector<string> invalid_xsec_rxn;
@@ -33,6 +34,11 @@ public:
   void printSpeciesSummary();
   void writeReactionSummary(const string & filepath);
   void writeSpeciesSummary(const string & filepath);
+
+
+  vector<Reaction> getRateBasedReactions();
+  vector<Reaction> getXSecBasedReactions();
+  vector<Species> getSpecies();
 
 private:
   const string file;

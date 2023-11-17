@@ -5,7 +5,7 @@ NetworkParser::NetworkParser(const string & file)
 {
   parseNetwork();
   printReactionSummary();
-  // printSpeciesSummary();
+  printSpeciesSummary();
 }
 
 string
@@ -64,18 +64,18 @@ NetworkParser::parseNetwork()
         for (auto it : r.products) {
           // add all of the reactions that produce this species
           if (r.stoic_coeffs[it->name] > 0)
-            it->sources.push_back(r);
+            it->rate_sources.push_back(r);
           // add all of the reactions where there is neither a gain
           // nor a loss of species
           if (r.stoic_coeffs[it->name] == 0)
-            it->balanced.push_back(r);
+            it->rate_balanced.push_back(r);
         }
         for (auto it : r.reactants)
         {
           // only adding these reactions if they are truly sinks
           // and not actually neutral
           if (r.stoic_coeffs[it->name] < 0)
-            it->sinks.push_back(r);
+            it->rate_sinks.push_back(r);
         }
       }
       catch (invalid_argument & e)
@@ -96,16 +96,35 @@ NetworkParser::parseNetwork()
     {
       try
       {
-        string rxn_str = rxn["reaction"].as<string>();
+        rxn_str = rxn["reaction"].as<string>();
         this->rxn_count++;
         Reaction r = Reaction(rxn_str, this->rxn_count);
         this->xsec_rxn.push_back(r);
         printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+
+        for (auto it : r.products)
+        {
+          // add all of the reactions that produce this species
+          if (r.stoic_coeffs[it->name] > 0)
+            it->xsec_sources.push_back(r);
+          // add all of the reactions where there is neither a gain
+          // nor a loss of species
+          if (r.stoic_coeffs[it->name] == 0)
+            it->xsec_balanced.push_back(r);
+        }
+        for (auto it : r.reactants)
+        {
+          // only adding these reactions if they are truly sinks
+          // and not actually neutral
+          if (r.stoic_coeffs[it->name] < 0)
+            it->xsec_sinks.push_back(r);
+        }
       }
+
       catch (invalid_argument & e)
       {
-        this->invalid_xsec_rxn.push_back(rxn_str);
-        this->invalid_xsec_reason.push_back(e.what());
+        this->invalid_rate_rxn.push_back(rxn_str);
+        this->invalid_rate_reason.push_back(e.what());
         printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
         printRed(e.what());
         cout << "\n\n";
@@ -161,7 +180,7 @@ string
 NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file)
 {
   string summary = "\n\n";
-  if (s->sources.size() == 0)
+  if (s->rate_sources.size() + s->xsec_sources.size() == 0)
   {
     if (yaml_file)
       summary += "# ";
@@ -172,7 +191,7 @@ NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool y
     if (!yaml_file)
       summary += "\033[0m";
   }
-  if (s->sinks.size() == 0)
+  if (s->rate_sources.size() + s->xsec_sources.size() == 0)
   {
     if (yaml_file)
       summary += "# ";
@@ -186,23 +205,46 @@ NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool y
   summary += "Species: ";
   summary += s->name;
   summary += "\n";
-  summary += fmt::format("  Balanced: {}\n", s->balanced.size());
-  summary += getSpeciesDependantReactionSummary(s->balanced, s->name, false);
-
+  // rate based summary
+  int rate_rxn_count = s->rate_balanced.size() + s->rate_sources.size() + s->rate_sinks.size();
+  summary += fmt::format("  - Rate-Based: {:d}\n", rate_rxn_count);
+  summary += fmt::format("    Balanced: {}\n", s->rate_balanced.size());
+  summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->name, false);
 
   if (!yaml_file)
     summary += "\033[32m";
-  summary += fmt::format("\n  Sources: {}\n", s->sources.size());
-  summary += getSpeciesDependantReactionSummary(s->sources, s->name, yaml_file);
+  summary += fmt::format("\n    Sources: {}\n", s->rate_sources.size());
+  summary += getSpeciesDependantReactionSummary(s->rate_sources, s->name, yaml_file);
 
 
   if (!yaml_file)
     summary += "\033[31m";
-  summary += fmt::format("\n  Sinks: {}\n", s->sinks.size());
-  summary += getSpeciesDependantReactionSummary(s->sinks, s->name, yaml_file);
+  summary += fmt::format("\n    Sinks: {}\n", s->rate_sinks.size());
+  summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->name, yaml_file);
 
   if (!yaml_file)
     summary += "\033[0m";
+
+  summary += "\n";
+  // xsec based summary
+  int xsec_rxn_count = s->xsec_balanced.size() + s->xsec_sources.size() + s->xsec_sinks.size();
+  summary += fmt::format("  - Cross-Section-Based: {:d}\n", xsec_rxn_count);
+  summary += fmt::format("    Balanced: {}\n", s->xsec_balanced.size());
+  summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->name, false);
+
+  if (!yaml_file)
+    summary += "\033[32m";
+  summary += fmt::format("\n    Sources: {}\n", s->xsec_sources.size());
+  summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->name, yaml_file);
+
+  if (!yaml_file)
+    summary += "\033[31m";
+  summary += fmt::format("\n    Sinks: {}\n", s->xsec_sinks.size());
+  summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->name, yaml_file);
+
+  if (!yaml_file)
+    summary += "\033[0m\n";
+
   return summary;
 }
 
@@ -212,9 +254,9 @@ NetworkParser::getSpeciesDependantReactionSummary(const vector<Reaction> r_list,
   string summary = "";
   for (auto r : r_list)
   {
-    summary += fmt::format("    - reaction: {}\n", r.rxn);
+    summary += fmt::format("      - reaction: {}\n", r.name);
     if (show_coeff)
-      summary += fmt::format("      stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
+      summary += fmt::format("        stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
   }
   return summary;
 }
@@ -280,4 +322,29 @@ NetworkParser::getByTypeReactionSummary(const vector<Reaction> valid_rxn,
   summary += "\n\n";
 
   return summary;
+}
+
+
+vector<Reaction>
+NetworkParser::getRateBasedReactions()
+{
+  return rate_rxn;
+}
+
+vector<Reaction>
+NetworkParser::getXSecBasedReactions()
+{
+  return xsec_rxn;
+}
+
+vector<Species>
+NetworkParser::getSpecies()
+{
+  vector<Species> species_list;
+
+   for (auto it = species.begin(); it != species.end(); ++it)
+   {
+      species_list.push_back(*it->second);
+   }
+  return species_list;
 }

@@ -22,16 +22,26 @@ public:
   /** The name of the spcies formatted for printing in a latex_table */
   string latex_name;
   /** Reactions where the stoiciometric coeff is greater than 1*/
-  vector<Reaction> sources;
+  vector<Reaction> rate_sources;
+  vector<Reaction> xsec_sources;
   /** Reactions where the stoiciometric coeff is less than 1*/
-  vector<Reaction> sinks;
+  vector<Reaction> rate_sinks;
+  vector<Reaction> xsec_sinks;
   /** Reactions where the stoiciometric coeff is 0 */
   vector<Reaction> balanced;
+  vector<Reaction> rate_balanced;
+  vector<Reaction> xsec_balanced;
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const Species & other) const;
 
+  vector<Reaction> getRateBasedBalanced();
+  vector<Reaction> getXSecBasedBalanced();
+  vector<Reaction> getRateBasedSources();
+  vector<Reaction> getXSecBasedSources();
+  vector<Reaction> getRateBasedSinks();
+  vector<Reaction> getXSecBasedSinks();
 
 private:
   vector<SubSpecies> decomposeSpecies();

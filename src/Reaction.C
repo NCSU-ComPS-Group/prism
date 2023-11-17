@@ -1,7 +1,7 @@
 #include "Reaction.h"
 
 Reaction::Reaction(const string & name, const int rxn_number)
-  : rxn(checkReactionString(name)), rxn_number(rxn_number)
+  : name(checkReactionString(name)), rxn_number(rxn_number)
 {
   setSides();
   validateReaction();
@@ -21,7 +21,7 @@ void
 Reaction::setSides()
 {
   vector<vector<Species>> species_sides;
-  vector<string> sides = splitByDelimiter(this->rxn, " -> ");
+  vector<string> sides = splitByDelimiter(this->name, " -> ");
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
   vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
 
@@ -163,7 +163,7 @@ Reaction::validateReaction()
   for (auto it : r_elements)
     if (p_elements[it.first] != it.second)
       throw invalid_argument(
-          fmt::format("Element {} appears {:d} times as a reactant and {:d} times as a product",
+          fmt::format("Element {} appears {:d} times as a reactant and {:d} times as a product.",
                       it.first,
                       p_elements[it.first], it.second));
 
@@ -181,7 +181,7 @@ Reaction::validateReaction()
 bool
 Reaction::operator==(const Reaction & other) const
 {
-  if (this->rxn != other.rxn)
+  if (this->name != other.name)
     return false;
 
   if (this->rxn_number != other.rxn_number)
@@ -205,7 +205,7 @@ size_t hash<Reaction>::operator()(const Reaction & obj) const
 
   size_t val = 17; // Start with a prime number
 
-  val += hash_factor * hash<string>()(obj.rxn);
+  val += hash_factor * hash<string>()(obj.name);
   val += hash_factor * hash<int>()(obj.rxn_number);
   val += hash_factor * hash<string>()(obj.latex_name);
   // not including the reactants and products in the hash
@@ -215,3 +215,8 @@ size_t hash<Reaction>::operator()(const Reaction & obj) const
   return val;
 }
 
+int
+Reaction::getStoicCoeffByName(const string s)
+{
+  return this->stoic_coeffs[s];
+}
