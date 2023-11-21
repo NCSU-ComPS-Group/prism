@@ -110,6 +110,7 @@ Species: NO2
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: hnu
   - Rate-Based: 1
     Balanced: 0
@@ -298,7 +299,6 @@ Species: He2^m
 
 
 # Warning! Species has no sources
-# Warning! Species has no sinks
 Species: O2(al)
   - Rate-Based: 3
     Balanced: 0
@@ -344,6 +344,7 @@ Species: M
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: O2(vibrational)
   - Rate-Based: 1
     Balanced: 0
@@ -564,7 +565,6 @@ Species: He^m
 
 
 # Warning! Species has no sources
-# Warning! Species has no sinks
 Species: N2(vib)
   - Rate-Based: 1
     Balanced: 0
@@ -647,6 +647,7 @@ Species: N2(b)
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: N2(electronic)
   - Rate-Based: 1
     Balanced: 0
@@ -829,6 +830,7 @@ Species: O2+
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: N2(vibration)
   - Rate-Based: 1
     Balanced: 0
@@ -1012,6 +1014,7 @@ Species: e
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: N2(a2)
   - Rate-Based: 1
     Balanced: 0
@@ -1030,6 +1033,7 @@ Species: N2(a2)
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: N2(a1)
   - Rate-Based: 1
     Balanced: 0
@@ -1118,6 +1122,7 @@ Species: NO
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: N2(rotation)
   - Rate-Based: 1
     Balanced: 0
@@ -1395,6 +1400,7 @@ Species: N4+
     Sinks: 0
 
 
+# Warning! Species has no sinks
 Species: O2(rotational)
   - Rate-Based: 1
     Balanced: 0

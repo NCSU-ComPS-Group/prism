@@ -1,350 +1,354 @@
 #include "NetworkParser.h"
 
-NetworkParser::NetworkParser(const string & file)
-  : file(checkFile(file)), network(YAML::LoadFile(file))
-{
-  parseNetwork();
-  printReactionSummary();
-  printSpeciesSummary();
-}
-
-string
-NetworkParser::checkFile(const string & file)
-{
-  struct stat buffer;
-  if (stat(file.c_str(), &buffer) != 0)
-    throw invalid_argument(makeRed("\n\nFile: '" + file + "' does not exist\n"));
-
-  return file;
-}
-
-void
-NetworkParser::parseNetwork()
+namespace rxn
 {
 
-  this->rxn_count = 0;
-  int num_rate_based;
-  int num_xsec_based;
-  try
+  NetworkParser::NetworkParser(const string & file)
+    : file(checkFile(file)), network(YAML::LoadFile(file))
   {
-    num_rate_based = this->network[RATE_BASED_KEY].size();
-  }
-  catch (YAML::InvalidNode)
-  {
-    num_rate_based = 0;
+    parseNetwork();
+    printReactionSummary();
+    printSpeciesSummary();
   }
 
-  try
+  string
+  NetworkParser::checkFile(const string & file)
   {
-    num_xsec_based = this->network[XSEC_BASED_KEY].size();
+    struct stat buffer;
+    if (stat(file.c_str(), &buffer) != 0)
+      throw invalid_argument(makeRed("\n\nFile: '" + file + "' does not exist\n"));
+
+    return file;
   }
-  catch (YAML::InvalidNode)
-  {
-    num_xsec_based = 0;
-  }
 
-  if (num_rate_based == 0 && num_xsec_based == 0)
-    throw invalid_argument(
-        makeRed("\n\nFile: '" + this->file + "' does not contain any reactions\n"));
-
-  string rxn_str;
-  if (num_rate_based > 0)
+  void
+  NetworkParser::parseNetwork()
   {
 
-    for (auto rxn : this->network[RATE_BASED_KEY])
+    this->rxn_count = 0;
+    int num_rate_based;
+    int num_xsec_based;
+    try
     {
-      try
-      {
-        rxn_str = rxn["reaction"].as<string>();
-        this->rxn_count++;
-        Reaction r = Reaction(rxn_str, this->rxn_count);
-        this->rate_rxn.push_back(r);
-        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+      num_rate_based = this->network[RATE_BASED_KEY].size();
+    }
+    catch (YAML::InvalidNode)
+    {
+      num_rate_based = 0;
+    }
 
-        for (auto it : r.products) {
-          // add all of the reactions that produce this species
-          if (r.stoic_coeffs[it->name] > 0)
-            it->rate_sources.push_back(r);
-          // add all of the reactions where there is neither a gain
-          // nor a loss of species
-          if (r.stoic_coeffs[it->name] == 0)
-            it->rate_balanced.push_back(r);
-        }
-        for (auto it : r.reactants)
-        {
-          // only adding these reactions if they are truly sinks
-          // and not actually neutral
-          if (r.stoic_coeffs[it->name] < 0)
-            it->rate_sinks.push_back(r);
-        }
-      }
-      catch (invalid_argument & e)
+    try
+    {
+      num_xsec_based = this->network[XSEC_BASED_KEY].size();
+    }
+    catch (YAML::InvalidNode)
+    {
+      num_xsec_based = 0;
+    }
+
+    if (num_rate_based == 0 && num_xsec_based == 0)
+      throw invalid_argument(
+          makeRed("\n\nFile: '" + this->file + "' does not contain any reactions\n"));
+
+    string rxn_str;
+    if (num_rate_based > 0)
+    {
+
+      for (auto rxn : this->network[RATE_BASED_KEY])
       {
-        this->invalid_rate_rxn.push_back(rxn_str);
-        this->invalid_rate_reason.push_back(e.what());
-        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
-        printRed(e.what());
-        cout << "\n\n";
-        continue;
+        try
+        {
+          rxn_str = rxn["reaction"].as<string>();
+          this->rxn_count++;
+          Reaction r = Reaction(rxn_str, this->rxn_count);
+          this->rate_rxn.push_back(r);
+          printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+
+          for (auto it : r.products) {
+            // add all of the reactions that produce this species
+            if (r.stoic_coeffs[it->name] > 0)
+              it->rate_sources.push_back(r);
+            // add all of the reactions where there is neither a gain
+            // nor a loss of species
+            if (r.stoic_coeffs[it->name] == 0)
+              it->rate_balanced.push_back(r);
+          }
+          for (auto it : r.reactants)
+          {
+            // only adding these reactions if they are truly sinks
+            // and not actually neutral
+            if (r.stoic_coeffs[it->name] < 0)
+              it->rate_sinks.push_back(r);
+          }
+        }
+        catch (invalid_argument & e)
+        {
+          this->invalid_rate_rxn.push_back(rxn_str);
+          this->invalid_rate_reason.push_back(e.what());
+          printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+          printRed(e.what());
+          cout << "\n\n";
+          continue;
+        }
       }
     }
-  }
 
-  if (num_xsec_based > 0)
-  {
-    for (auto rxn : this->network[XSEC_BASED_KEY])
+    if (num_xsec_based > 0)
     {
-      try
+      for (auto rxn : this->network[XSEC_BASED_KEY])
       {
-        rxn_str = rxn["reaction"].as<string>();
-        this->rxn_count++;
-        Reaction r = Reaction(rxn_str, this->rxn_count);
-        this->xsec_rxn.push_back(r);
-        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
-
-        for (auto it : r.products)
+        try
         {
-          // add all of the reactions that produce this species
-          if (r.stoic_coeffs[it->name] > 0)
-            it->xsec_sources.push_back(r);
-          // add all of the reactions where there is neither a gain
-          // nor a loss of species
-          if (r.stoic_coeffs[it->name] == 0)
-            it->xsec_balanced.push_back(r);
-        }
-        for (auto it : r.reactants)
-        {
-          // only adding these reactions if they are truly sinks
-          // and not actually neutral
-          if (r.stoic_coeffs[it->name] < 0)
-            it->xsec_sinks.push_back(r);
-        }
-      }
+          rxn_str = rxn["reaction"].as<string>();
+          this->rxn_count++;
+          Reaction r = Reaction(rxn_str, this->rxn_count);
+          this->xsec_rxn.push_back(r);
+          printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
 
-      catch (invalid_argument & e)
-      {
-        this->invalid_rate_rxn.push_back(rxn_str);
-        this->invalid_rate_reason.push_back(e.what());
-        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
-        printRed(e.what());
-        cout << "\n\n";
-        continue;
+          for (auto it : r.products)
+          {
+            // add all of the reactions that produce this species
+            if (r.stoic_coeffs[it->name] > 0)
+              it->xsec_sources.push_back(r);
+            // add all of the reactions where there is neither a gain
+            // nor a loss of species
+            if (r.stoic_coeffs[it->name] == 0)
+              it->xsec_balanced.push_back(r);
+          }
+          for (auto it : r.reactants)
+          {
+            // only adding these reactions if they are truly sinks
+            // and not actually neutral
+            if (r.stoic_coeffs[it->name] < 0)
+              it->xsec_sinks.push_back(r);
+          }
+        }
+
+        catch (invalid_argument & e)
+        {
+          this->invalid_rate_rxn.push_back(rxn_str);
+          this->invalid_rate_reason.push_back(e.what());
+          printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+          printRed(e.what());
+          cout << "\n\n";
+          continue;
+        }
       }
     }
-  }
-  cout << endl << endl;
-}
-
-void
-NetworkParser::printSpeciesSummary()
-{
-  cout << getSpeciesSummary(false);
-}
-
-void
-NetworkParser::writeSpeciesSummary(const string & filepath)
-{
-  // open the file to write to
-  if (filepath == this->file)
-    throw invalid_argument(
-        makeRed("\n\nYour species summary file cannot have the same name as your input file!"));
-
-  ofstream out(filepath);
-  out << getSpeciesSummary();
-  out.close();
-}
-
-string
-NetworkParser::getSpeciesSummary(const bool yaml_file)
-{
-  string summary = "";
-
-  summary += fmt::format("Unique-Species: {:d}\n", species.size());
-  int species_count = 0;
-  for (auto it = species.begin(); it != species.end(); ++it)
-  {
-    species_count++;
-    summary += fmt::format("  - {:d}: {}\n", species_count, it->first);
-  }
-  summary += "\n\n";
-
-  for (auto it = species.begin(); it != species.end(); ++it)
-  {
-    summary += getSingleSpeciesSummary(it->second, yaml_file);
+    cout << endl << endl;
   }
 
-  return summary;
-}
-
-string
-NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file)
-{
-  string summary = "\n\n";
-  if (s->rate_sources.size() + s->xsec_sources.size() == 0)
+  void
+  NetworkParser::printSpeciesSummary()
   {
-    if (yaml_file)
-      summary += "# ";
-    else
-      summary += "\033[33m";
+    cout << getSpeciesSummary(false);
+  }
 
-    summary += "Warning! Species has no sources\n";
+  void
+  NetworkParser::writeSpeciesSummary(const string & filepath)
+  {
+    // open the file to write to
+    if (filepath == this->file)
+      throw invalid_argument(
+          makeRed("\n\nYour species summary file cannot have the same name as your input file!"));
+
+    ofstream out(filepath);
+    out << getSpeciesSummary();
+    out.close();
+  }
+
+  string
+  NetworkParser::getSpeciesSummary(const bool yaml_file)
+  {
+    string summary = "";
+
+    summary += fmt::format("Unique-Species: {:d}\n", species.size());
+    int species_count = 0;
+    for (auto it = species.begin(); it != species.end(); ++it)
+    {
+      species_count++;
+      summary += fmt::format("  - {:d}: {}\n", species_count, it->first);
+    }
+    summary += "\n\n";
+
+    for (auto it = species.begin(); it != species.end(); ++it)
+    {
+      summary += getSingleSpeciesSummary(it->second, yaml_file);
+    }
+
+    return summary;
+  }
+
+  string
+  NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file)
+  {
+    string summary = "\n\n";
+    if (s->rate_sources.size() + s->xsec_sources.size() == 0)
+    {
+      if (yaml_file)
+        summary += "# ";
+      else
+        summary += "\033[33m";
+
+      summary += "Warning! Species has no sources\n";
+      if (!yaml_file)
+        summary += "\033[0m";
+    }
+    if (s->rate_sinks.size() + s->xsec_sinks.size() == 0)
+    {
+      if (yaml_file)
+        summary += "# ";
+      else
+        summary += "\033[33m";
+
+      summary += "Warning! Species has no sinks\n";
+      if (!yaml_file)
+        summary += "\033[0m";
+    }
+    summary += "Species: ";
+    summary += s->name;
+    summary += "\n";
+    // rate based summary
+    int rate_rxn_count = s->rate_balanced.size() + s->rate_sources.size() + s->rate_sinks.size();
+    summary += fmt::format("  - Rate-Based: {:d}\n", rate_rxn_count);
+    summary += fmt::format("    Balanced: {}\n", s->rate_balanced.size());
+    summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->name, false);
+
+    if (!yaml_file)
+      summary += "\033[32m";
+    summary += fmt::format("\n    Sources: {}\n", s->rate_sources.size());
+    summary += getSpeciesDependantReactionSummary(s->rate_sources, s->name, yaml_file);
+
+
+    if (!yaml_file)
+      summary += "\033[31m";
+    summary += fmt::format("\n    Sinks: {}\n", s->rate_sinks.size());
+    summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->name, yaml_file);
+
     if (!yaml_file)
       summary += "\033[0m";
-  }
-  if (s->rate_sources.size() + s->xsec_sources.size() == 0)
-  {
-    if (yaml_file)
-      summary += "# ";
-    else
-      summary += "\033[33m";
 
-    summary += "Warning! Species has no sinks\n";
+    summary += "\n";
+    // xsec based summary
+    int xsec_rxn_count = s->xsec_balanced.size() + s->xsec_sources.size() + s->xsec_sinks.size();
+    summary += fmt::format("  - Cross-Section-Based: {:d}\n", xsec_rxn_count);
+    summary += fmt::format("    Balanced: {}\n", s->xsec_balanced.size());
+    summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->name, false);
+
+    if (!yaml_file)
+      summary += "\033[32m";
+    summary += fmt::format("\n    Sources: {}\n", s->xsec_sources.size());
+    summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->name, yaml_file);
+
+    if (!yaml_file)
+      summary += "\033[31m";
+    summary += fmt::format("\n    Sinks: {}\n", s->xsec_sinks.size());
+    summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->name, yaml_file);
+
+    if (!yaml_file)
+      summary += "\033[0m\n";
+
+    return summary;
+  }
+
+  string
+  NetworkParser::getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff )
+  {
+    string summary = "";
+    for (auto r : r_list)
+    {
+      summary += fmt::format("      - reaction: {}\n", r.name);
+      if (show_coeff)
+        summary += fmt::format("        stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
+    }
+    return summary;
+  }
+
+  void
+  NetworkParser::writeReactionSummary(const string & filepath)
+  {
+    // open the file to write to
+    if (filepath == this->file)
+      throw invalid_argument(
+          makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
+
+    ofstream out(filepath);
+    out << getReactionSummary();
+    out.close();
+  }
+
+  void
+  NetworkParser::printReactionSummary()
+  {
+    cout << getReactionSummary(false);
+  }
+
+  string
+  NetworkParser::getReactionSummary(const bool yaml_file)
+  {
+    string summary = "";
+    summary += fmt::format("Total-Reactions: {:d}\n\n", rxn_count);
+    summary += fmt::format("Rate-Based: {:d}\n", rate_rxn.size() + invalid_rate_rxn.size());
+
+    summary += getByTypeReactionSummary(this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason, yaml_file);
+
+    summary += fmt::format("Cross-Section-Based: {:d}\n", xsec_rxn.size() + invalid_xsec_rxn.size());
+    summary += getByTypeReactionSummary(this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, yaml_file);
+
+    return summary;
+  }
+
+  string
+  NetworkParser::getByTypeReactionSummary(const vector<Reaction> valid_rxn,
+                                          const vector<string> invalid_rxn,
+                                          const vector<string> invalid_reason,
+                                          const bool yaml_file)
+  {
+    string summary = "";
+
+    if (!yaml_file)
+      summary += "\033[32m";
+    summary += fmt::format("    Valid: {:d}\n", valid_rxn.size());
+
+    if (!yaml_file)
+      summary += "\033[31m";
+    summary += fmt::format("  Invalid: {:d}\n", invalid_rxn.size());
+
+    for (auto i = 0; i < invalid_rxn.size(); ++i)
+    {
+      summary += fmt::format("    - reaction: {}\n", invalid_rxn[i]);
+      summary += fmt::format("        reason: {}\n", invalid_reason[i]);
+    }
     if (!yaml_file)
       summary += "\033[0m";
+
+    summary += "\n\n";
+
+    return summary;
   }
-  summary += "Species: ";
-  summary += s->name;
-  summary += "\n";
-  // rate based summary
-  int rate_rxn_count = s->rate_balanced.size() + s->rate_sources.size() + s->rate_sinks.size();
-  summary += fmt::format("  - Rate-Based: {:d}\n", rate_rxn_count);
-  summary += fmt::format("    Balanced: {}\n", s->rate_balanced.size());
-  summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->name, false);
-
-  if (!yaml_file)
-    summary += "\033[32m";
-  summary += fmt::format("\n    Sources: {}\n", s->rate_sources.size());
-  summary += getSpeciesDependantReactionSummary(s->rate_sources, s->name, yaml_file);
 
 
-  if (!yaml_file)
-    summary += "\033[31m";
-  summary += fmt::format("\n    Sinks: {}\n", s->rate_sinks.size());
-  summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->name, yaml_file);
-
-  if (!yaml_file)
-    summary += "\033[0m";
-
-  summary += "\n";
-  // xsec based summary
-  int xsec_rxn_count = s->xsec_balanced.size() + s->xsec_sources.size() + s->xsec_sinks.size();
-  summary += fmt::format("  - Cross-Section-Based: {:d}\n", xsec_rxn_count);
-  summary += fmt::format("    Balanced: {}\n", s->xsec_balanced.size());
-  summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->name, false);
-
-  if (!yaml_file)
-    summary += "\033[32m";
-  summary += fmt::format("\n    Sources: {}\n", s->xsec_sources.size());
-  summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->name, yaml_file);
-
-  if (!yaml_file)
-    summary += "\033[31m";
-  summary += fmt::format("\n    Sinks: {}\n", s->xsec_sinks.size());
-  summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->name, yaml_file);
-
-  if (!yaml_file)
-    summary += "\033[0m\n";
-
-  return summary;
-}
-
-string
-NetworkParser::getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff )
-{
-  string summary = "";
-  for (auto r : r_list)
+  vector<Reaction>
+  NetworkParser::getRateBasedReactions()
   {
-    summary += fmt::format("      - reaction: {}\n", r.name);
-    if (show_coeff)
-      summary += fmt::format("        stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
+    return rate_rxn;
   }
-  return summary;
-}
 
-void
-NetworkParser::writeReactionSummary(const string & filepath)
-{
-  // open the file to write to
-  if (filepath == this->file)
-    throw invalid_argument(
-        makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
-
-  ofstream out(filepath);
-  out << getReactionSummary();
-  out.close();
-}
-
-void
-NetworkParser::printReactionSummary()
-{
-  cout << getReactionSummary(false);
-}
-
-string
-NetworkParser::getReactionSummary(const bool yaml_file)
-{
-  string summary = "";
-  summary += fmt::format("Total-Reactions: {:d}\n\n", rxn_count);
-  summary += fmt::format("Rate-Based: {:d}\n", rate_rxn.size() + invalid_rate_rxn.size());
-
-  summary += getByTypeReactionSummary(this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason, yaml_file);
-
-  summary += fmt::format("Cross-Section-Based: {:d}\n", xsec_rxn.size() + invalid_xsec_rxn.size());
-  summary += getByTypeReactionSummary(this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, yaml_file);
-
-  return summary;
-}
-
-string
-NetworkParser::getByTypeReactionSummary(const vector<Reaction> valid_rxn,
-                                        const vector<string> invalid_rxn,
-                                        const vector<string> invalid_reason,
-                                        const bool yaml_file)
-{
-  string summary = "";
-
-  if (!yaml_file)
-    summary += "\033[32m";
-  summary += fmt::format("    Valid: {:d}\n", valid_rxn.size());
-
-  if (!yaml_file)
-    summary += "\033[31m";
-  summary += fmt::format("  Invalid: {:d}\n", invalid_rxn.size());
-
-  for (auto i = 0; i < invalid_rxn.size(); ++i)
+  vector<Reaction>
+  NetworkParser::getXSecBasedReactions()
   {
-    summary += fmt::format("    - reaction: {}\n", invalid_rxn[i]);
-    summary += fmt::format("        reason: {}\n", invalid_reason[i]);
+    return xsec_rxn;
   }
-  if (!yaml_file)
-    summary += "\033[0m";
 
-  summary += "\n\n";
+  vector<Species>
+  NetworkParser::getSpecies()
+  {
+    vector<Species> species_list;
 
-  return summary;
-}
-
-
-vector<Reaction>
-NetworkParser::getRateBasedReactions()
-{
-  return rate_rxn;
-}
-
-vector<Reaction>
-NetworkParser::getXSecBasedReactions()
-{
-  return xsec_rxn;
-}
-
-vector<Species>
-NetworkParser::getSpecies()
-{
-  vector<Species> species_list;
-
-   for (auto it = species.begin(); it != species.end(); ++it)
-   {
-      species_list.push_back(*it->second);
-   }
-  return species_list;
+    for (auto it = species.begin(); it != species.end(); ++it)
+    {
+        species_list.push_back(*it->second);
+    }
+    return species_list;
+  }
 }

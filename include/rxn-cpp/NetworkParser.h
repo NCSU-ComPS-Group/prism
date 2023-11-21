@@ -17,39 +17,42 @@
 
 using namespace std;
 
-class NetworkParser
+namespace rxn
 {
-public:
-  NetworkParser(const string & file);
-  vector<Reaction> rate_rxn;
-  vector<Reaction> xsec_rxn;
+  class NetworkParser
+  {
+  public:
+    NetworkParser(const string & file);
+    vector<Reaction> rate_rxn;
+    vector<Reaction> xsec_rxn;
 
-  vector<string> invalid_rate_rxn;
-  vector<string> invalid_rate_reason;
-  vector<string> invalid_xsec_rxn;
-  vector<string> invalid_xsec_reason;
-  int rxn_count;
+    vector<string> invalid_rate_rxn;
+    vector<string> invalid_rate_reason;
+    vector<string> invalid_xsec_rxn;
+    vector<string> invalid_xsec_reason;
+    int rxn_count;
 
-  void printReactionSummary();
-  void printSpeciesSummary();
-  void writeReactionSummary(const string & filepath);
-  void writeSpeciesSummary(const string & filepath);
+    void printReactionSummary();
+    void printSpeciesSummary();
+    void writeReactionSummary(const string & filepath);
+    void writeSpeciesSummary(const string & filepath);
 
 
-  vector<Reaction> getRateBasedReactions();
-  vector<Reaction> getXSecBasedReactions();
-  vector<Species> getSpecies();
+    vector<Reaction> getRateBasedReactions();
+    vector<Reaction> getXSecBasedReactions();
+    vector<Species> getSpecies();
 
-private:
-  const string file;
-  const YAML::Node network;
-  string checkFile(const string & file);
-  void parseNetwork();
+  private:
+    const string file;
+    const YAML::Node network;
+    string checkFile(const string & file);
+    void parseNetwork();
 
-  string getSpeciesSummary(const bool yaml_file=true);
-  string getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file);
-  string getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff);
+    string getSpeciesSummary(const bool yaml_file=true);
+    string getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file);
+    string getSpeciesDependantReactionSummary(const vector<Reaction> r_list, const string s_name, const bool show_coeff);
 
-  string getReactionSummary(const bool yaml_file=true);
-  string getByTypeReactionSummary(const vector<Reaction> valid_rxn, const vector<string> invalid_rxn, const vector<string> invalid_reason, const bool yaml_file=true);
-};
+    string getReactionSummary(const bool yaml_file=true);
+    string getByTypeReactionSummary(const vector<Reaction> valid_rxn, const vector<string> invalid_rxn, const vector<string> invalid_reason, const bool yaml_file=true);
+  };
+}
