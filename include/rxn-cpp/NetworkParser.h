@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <unordered_map>
 #include <fstream>
+#include <unordered_set>
 
 #include "fmt/core.h"
 #include "yaml-cpp/yaml.h"
@@ -22,15 +23,9 @@ namespace rxn
   class NetworkParser
   {
   public:
-    NetworkParser(const string & file);
-    vector<Reaction> rate_rxn;
-    vector<Reaction> xsec_rxn;
+    NetworkParser();
 
-    vector<string> invalid_rate_rxn;
-    vector<string> invalid_rate_reason;
-    vector<string> invalid_xsec_rxn;
-    vector<string> invalid_xsec_reason;
-    int rxn_count;
+    void parseNetwork(const string & file);
 
     void printReactionSummary();
     void printSpeciesSummary();
@@ -42,11 +37,23 @@ namespace rxn
     vector<Reaction> getXSecBasedReactions();
     vector<Species> getSpecies();
 
+    YAML::Node getYamlByFileName(const string & file);
+
   private:
+    unordered_map<string, YAML::Node> yaml_map;
+    vector<Reaction> rate_rxn;
+    vector<Reaction> xsec_rxn;
+
+    vector<string> invalid_rate_rxn;
+    vector<string> invalid_rate_reason;
+    vector<string> invalid_xsec_rxn;
+    vector<string> invalid_xsec_reason;
+
+    int rxn_count;
+
     const string file;
-    const YAML::Node network;
-    string checkFile(const string & file);
-    void parseNetwork();
+    void checkFile(const string & file);
+
 
     string getSpeciesSummary(const bool yaml_file=true);
     string getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file);

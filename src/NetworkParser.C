@@ -2,35 +2,33 @@
 
 namespace rxn
 {
+  NetworkParser::NetworkParser() {}
 
-  NetworkParser::NetworkParser(const string & file)
-    : file(checkFile(file)), network(YAML::LoadFile(file))
-  {
-    parseNetwork();
-    printReactionSummary();
-    printSpeciesSummary();
-  }
-
-  string
+  void
   NetworkParser::checkFile(const string & file)
   {
     struct stat buffer;
     if (stat(file.c_str(), &buffer) != 0)
       throw invalid_argument(makeRed("\n\nFile: '" + file + "' does not exist\n"));
-
-    return file;
+    auto it = this->yaml_map.find(file);
+    if (it != yaml_map.end())
+      throw invalid_argument(makeRed("\n\nFile: '" + file + "' has already been parsed\n"));
   }
 
   void
-  NetworkParser::parseNetwork()
+  NetworkParser::parseNetwork(const string & file)
   {
+    checkFile(file);
+    YAML::Node network = YAML::LoadFile(file);
+
+    this->yaml_map[file] = network;
 
     this->rxn_count = 0;
     int num_rate_based;
     int num_xsec_based;
     try
     {
-      num_rate_based = this->network[RATE_BASED_KEY].size();
+      num_rate_based = network[RATE_BASED_KEY].size();
     }
     catch (YAML::InvalidNode)
     {
@@ -39,7 +37,7 @@ namespace rxn
 
     try
     {
-      num_xsec_based = this->network[XSEC_BASED_KEY].size();
+      num_xsec_based = network[XSEC_BASED_KEY].size();
     }
     catch (YAML::InvalidNode)
     {
@@ -54,7 +52,7 @@ namespace rxn
     if (num_rate_based > 0)
     {
 
-      for (auto rxn : this->network[RATE_BASED_KEY])
+      for (auto rxn : network[RATE_BASED_KEY])
       {
         try
         {
@@ -95,7 +93,7 @@ namespace rxn
 
     if (num_xsec_based > 0)
     {
-      for (auto rxn : this->network[XSEC_BASED_KEY])
+      for (auto rxn : network[XSEC_BASED_KEY])
       {
         try
         {
@@ -331,13 +329,13 @@ namespace rxn
   vector<Reaction>
   NetworkParser::getRateBasedReactions()
   {
-    return rate_rxn;
+    return this->rate_rxn;
   }
 
   vector<Reaction>
   NetworkParser::getXSecBasedReactions()
   {
-    return xsec_rxn;
+    return this->xsec_rxn;
   }
 
   vector<Species>
@@ -350,5 +348,15 @@ namespace rxn
         species_list.push_back(*it->second);
     }
     return species_list;
+  }
+
+  YAML::Node
+  NetworkParser::getYamlByFileName(const string & file)
+  {
+    auto it = this->yaml_map.find(file);
+    if (it != yaml_map.end())
+      throw invalid_argument(makeRed("\n\nFile: '" + file + "' has not been parsed\n"));
+
+    return this->yaml_map[file];
   }
 }
