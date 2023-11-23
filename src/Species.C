@@ -126,6 +126,12 @@ namespace rxn
   {
     return this->xsec_sinks;
   }
+
+  vector<SubSpecies>
+  Species::getSubSpecies() const
+  {
+    return this->sub_species;
+  }
 }
 
 
@@ -136,7 +142,7 @@ hash<rxn::Species>::operator()(const rxn::Species & obj) const
 
   size_t val = 17; // Start with a prime number
 
-  for (auto s : obj.sub_species)
+  for (auto s : obj.getSubSpecies())
     val += hash_factor * hash<rxn::SubSpecies>()(s);
 
   val += hash_factor * hash<float>()(obj.getMass());
