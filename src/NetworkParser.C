@@ -46,7 +46,7 @@ namespace rxn
 
     if (num_rate_based == 0 && num_xsec_based == 0)
       throw invalid_argument(
-          makeRed("\n\nFile: '" + this->file + "' does not contain any reactions\n"));
+          makeRed("\n\nFile: '" + file + "' does not contain any reactions\n"));
 
     string rxn_str;
     if (num_rate_based > 0)
@@ -62,20 +62,20 @@ namespace rxn
           this->rate_rxn.push_back(r);
           printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
 
-          for (auto it : r.products) {
+          for (auto it : r.getProducts()) {
             // add all of the reactions that produce this species
-            if (r.stoic_coeffs[it->name] > 0)
+            if (r.getStoicCoeffByName(it->name) > 0)
               it->rate_sources.push_back(r);
             // add all of the reactions where there is neither a gain
             // nor a loss of species
-            if (r.stoic_coeffs[it->name] == 0)
+            if (r.getStoicCoeffByName(it->name) == 0)
               it->rate_balanced.push_back(r);
           }
-          for (auto it : r.reactants)
+          for (auto it : r.getReactants())
           {
             // only adding these reactions if they are truly sinks
             // and not actually neutral
-            if (r.stoic_coeffs[it->name] < 0)
+            if (r.getStoicCoeffByName(it->name) < 0)
               it->rate_sinks.push_back(r);
           }
         }
@@ -103,21 +103,21 @@ namespace rxn
           this->xsec_rxn.push_back(r);
           printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
 
-          for (auto it : r.products)
+          for (auto it : r.getProducts())
           {
             // add all of the reactions that produce this species
-            if (r.stoic_coeffs[it->name] > 0)
+            if (r.getStoicCoeffByName(it->name) > 0)
               it->xsec_sources.push_back(r);
             // add all of the reactions where there is neither a gain
             // nor a loss of species
-            if (r.stoic_coeffs[it->name] == 0)
+            if (r.getStoicCoeffByName(it->name) == 0)
               it->xsec_balanced.push_back(r);
           }
-          for (auto it : r.reactants)
+          for (auto it : r.getReactants())
           {
             // only adding these reactions if they are truly sinks
             // and not actually neutral
-            if (r.stoic_coeffs[it->name] < 0)
+            if (r.getStoicCoeffByName(it->name) < 0)
               it->xsec_sinks.push_back(r);
           }
         }
@@ -145,10 +145,11 @@ namespace rxn
   void
   NetworkParser::writeSpeciesSummary(const string & filepath)
   {
-    // open the file to write to
-    if (filepath == this->file)
-      throw invalid_argument(
-          makeRed("\n\nYour species summary file cannot have the same name as your input file!"));
+    for (auto it : yaml_map)
+      // open the file to write to
+      if (filepath == it.first)
+        throw invalid_argument(
+            makeRed("\n\nYour species summary file cannot have the same name as an input file!"));
 
     ofstream out(filepath);
     out << getSpeciesSummary();
@@ -255,9 +256,10 @@ namespace rxn
     string summary = "";
     for (auto r : r_list)
     {
-      summary += fmt::format("      - reaction: {}\n", r.name);
+      summary += fmt::format("      - reaction: {}\n", r.getName());
       if (show_coeff)
-        summary += fmt::format("        stoic_coeff: {:d}\n", r.stoic_coeffs[s_name]);
+        summary +=
+            fmt::format("        stoic_coeff: {:d}\n", r.getStoicCoeffByName(s_name));
     }
     return summary;
   }
@@ -265,10 +267,10 @@ namespace rxn
   void
   NetworkParser::writeReactionSummary(const string & filepath)
   {
-    // open the file to write to
-    if (filepath == this->file)
-      throw invalid_argument(
-          makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
+    for (auto it : yaml_map)
+      if (filepath == it.first)
+        throw invalid_argument(
+            makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
 
     ofstream out(filepath);
     out << getReactionSummary();
@@ -351,12 +353,12 @@ namespace rxn
   }
 
   YAML::Node
-  NetworkParser::getYamlByFileName(const string & file)
+  NetworkParser::getYamlByFileName(const string & filename)
   {
-    auto it = this->yaml_map.find(file);
+    auto it = this->yaml_map.find(filename);
     if (it != yaml_map.end())
-      throw invalid_argument(makeRed("\n\nFile: '" + file + "' has not been parsed\n"));
+      throw invalid_argument(makeRed("\n\nFile: '" + filename + "' has not been parsed\n"));
 
-    return this->yaml_map[file];
+    return this->yaml_map[filename];
   }
 }

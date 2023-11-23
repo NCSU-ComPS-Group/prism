@@ -204,6 +204,36 @@ namespace rxn
   {
     return !(*this == other);
   }
+
+  string
+  Reaction::getLatexName() const
+  {
+    return this->latex_name;
+  }
+
+  vector<shared_ptr<Species>>
+  Reaction::getReactants() const
+  {
+    return this->reactants;
+  }
+
+  vector<shared_ptr<Species>>
+  Reaction::getProducts() const
+  {
+    return this->products;
+  }
+
+  int
+  Reaction::getReactionNumber() const
+  {
+    return this->rxn_number;
+  }
+
+  string
+  Reaction::getName() const
+  {
+    return this->name;
+  }
 }
 
 
@@ -213,9 +243,9 @@ size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const
 
   size_t val = 17; // Start with a prime number
 
-  val += hash_factor * hash<string>()(obj.name);
-  val += hash_factor * hash<int>()(obj.rxn_number);
-  val += hash_factor * hash<string>()(obj.latex_name);
+  val += hash_factor * hash<string>()(obj.getName());
+  val += hash_factor * hash<int>()(obj.getReactionNumber());
+  val += hash_factor * hash<string>()(obj.getLatexName());
   // not including the reactants and products in the hash
   // this is becuase these may change if there are lumped species
   // or if i want to add a map of reactions to species while I am

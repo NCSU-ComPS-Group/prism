@@ -14,6 +14,7 @@ namespace rxn
   {
   public:
     Species(const string & name);
+    /** the list of the sub_species in the the class */
     vector<SubSpecies> sub_species;
     /** The molar mass of the species */
     float mass;
@@ -23,15 +24,19 @@ namespace rxn
     float charge;
     /** The name of the spcies formatted for printing in a latex_table */
     string latex_name;
-    /** Reactions where the stoiciometric coeff is greater than 1*/
+    /** Rate based reactions where the stoiciometric coeff is greater than 1 */
     vector<Reaction> rate_sources;
+    /** Cross section based reactions where the stoiciometric coeff is greater than 1 */
     vector<Reaction> xsec_sources;
-    /** Reactions where the stoiciometric coeff is less than 1*/
+    /** Rate based reactions where the stoiciometric coeff is less than 1 */
     vector<Reaction> rate_sinks;
+    /** Cross section based reactions where the stoiciometric coeff is less than 1 */
     vector<Reaction> xsec_sinks;
-    /** Reactions where the stoiciometric coeff is 0 */
+    /** All reactions where the stoiciometric coeff is 0 */
     vector<Reaction> balanced;
+    /** Rate based reactions where the stoiciometric coeff is 0*/
     vector<Reaction> rate_balanced;
+    /** Cross section based reactions where the stoiciometric coeff is 0*/
     vector<Reaction> xsec_balanced;
     /** Comparison operator checks if the sub species have the same member variables */
     bool operator==(const Species & other) const;

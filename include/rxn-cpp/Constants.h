@@ -9,9 +9,9 @@ namespace rxn
   #define RATE_BASED_KEY "rate-based"
   #define XSEC_BASED_KEY "xsec-based"
   #define MASS_EPS 1e-5;
-  /** Storing the mass of all known species
-   * Using this instead of a yaml file so that the user
-   * doesnt need to keep track of provided masses
+  /**
+   * Storing the mass of all elements in the periodic table
+   * this will be able
    */
   extern unordered_map<string, float> base_masses;
   /** Avagadros number in 1 / mol */

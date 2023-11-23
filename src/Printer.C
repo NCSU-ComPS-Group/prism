@@ -7,19 +7,19 @@ namespace rxn
   void
   printGreen(const string & s)
   {
-    fmt::print("\033[32m{}\033[0m", s);
+    fmt::print("{}", makeGreen(s));
   }
 
   void
   printRed(const string & s)
   {
-    fmt::print("\033[31m{}\033[0m", s);
+    fmt::print("{}", makeRed(s));
   }
 
   void
   printYellow(const string & s)
   {
-    fmt::print("\033[33m{}\033[0m", s);
+    fmt::print("{}", makeYellow(s));
   }
 
   string
