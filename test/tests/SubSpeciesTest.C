@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "rxn-cpp/rxn-cpp.h"
-#include <iostream>
 using namespace rxn;
 
 TEST(SubSpeciesTest, Equal)
@@ -214,6 +213,37 @@ TEST(SubSpeciesTest, MolecularNegativeIonWithModifier)
   EXPECT_EQ(s.getModifier(), "2-100(test)");
   EXPECT_EQ(s.getSubscript(), 2);
   EXPECT_FLOAT_EQ(s.getMass(), 2 * base_masses["Ar"] + 100 * base_masses["e"]);
+  EXPECT_EQ(s.getChargeNumber(), -100);
+  EXPECT_FLOAT_EQ(s.getCharge(), -100 * e);
+  EXPECT_EQ(s.getLatexName(), "Ar$_{2}$$^{-100}$(test)");
+}
+
+TEST(SubSpeciesTest, CustomSpeciesBase)
+{
+  base_masses["A"] = 5;
+  SubSpecies s = SubSpecies("A2-100(test)");
+
+  EXPECT_EQ(s.getName(), "A2-100(test)");
+  EXPECT_EQ(s.getBase(), "A");
+  EXPECT_EQ(s.getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubscript(), 2);
+  EXPECT_FLOAT_EQ(s.getMass(), 2 * base_masses["A"] + 100 * base_masses["e"]);
+  EXPECT_EQ(s.getChargeNumber(), -100);
+  EXPECT_FLOAT_EQ(s.getCharge(), -100 * e);
+  EXPECT_EQ(s.getLatexName(), "A$_{2}$$^{-100}$(test)");
+}
+
+
+TEST(SubSpeciesTest, MassOverride)
+{
+  base_masses["Ar"] = 5;
+  SubSpecies s = SubSpecies("Ar2-100(test)");
+
+  EXPECT_EQ(s.getName(), "Ar2-100(test)");
+  EXPECT_EQ(s.getBase(), "Ar");
+  EXPECT_EQ(s.getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubscript(), 2);
+  EXPECT_FLOAT_EQ(s.getMass(), 2 * 5 + 100 * base_masses["e"]);
   EXPECT_EQ(s.getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getCharge(), -100 * e);
   EXPECT_EQ(s.getLatexName(), "Ar$_{2}$$^{-100}$(test)");

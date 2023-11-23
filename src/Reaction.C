@@ -2,8 +2,14 @@
 
 namespace rxn
 {
-  Reaction::Reaction(const string & name, const int rxn_number)
-    : name(checkReactionString(name)), rxn_number(rxn_number)
+  Reaction::Reaction(const string & name,
+                     const int rxn_number,
+                     const float delta_eps_e,
+                     const float delta_eps_g) :
+      name(checkReactionString(name)),
+      rxn_number(rxn_number),
+      delta_eps_e(delta_eps_e),
+      delta_eps_g(delta_eps_g)
   {
     setSides();
     validateReaction();

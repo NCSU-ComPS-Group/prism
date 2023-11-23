@@ -78,6 +78,7 @@ namespace rxn
     YAML::Node getYamlByFileName(const string & filename);
 
   private:
+    void parseReactions( const YAML::Node rxn, vector<Reaction> & valid, vector<string> & invalid, vector<string> & invalid_reason, const bool rate_based=true );
     /** Map of YAML::Node from all of the files which networks have been parsed */
     unordered_map<string, YAML::Node> yaml_map;
     /** A list of all rate based reactions */

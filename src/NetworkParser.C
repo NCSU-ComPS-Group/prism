@@ -48,92 +48,105 @@ namespace rxn
       throw invalid_argument(
           makeRed("\n\nFile: '" + file + "' does not contain any reactions\n"));
 
-    string rxn_str;
+    // string rxn_str;
     if (num_rate_based > 0)
-    {
-
-      for (auto rxn : network[RATE_BASED_KEY])
-      {
-        try
-        {
-          rxn_str = rxn["reaction"].as<string>();
-          this->rxn_count++;
-          Reaction r = Reaction(rxn_str, this->rxn_count);
-          this->rate_rxn.push_back(r);
-          printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
-
-          for (auto it : r.getProducts()) {
-            // add all of the reactions that produce this species
-            if (r.getStoicCoeffByName(it->getName()) > 0)
-              it->rate_sources.push_back(r);
-            // add all of the reactions where there is neither a gain
-            // nor a loss of species
-            if (r.getStoicCoeffByName(it->getName()) == 0)
-              it->rate_balanced.push_back(r);
-          }
-          for (auto it : r.getReactants())
-          {
-            // only adding these reactions if they are truly sinks
-            // and not actually neutral
-            if (r.getStoicCoeffByName(it->getName()) < 0)
-              it->rate_sinks.push_back(r);
-          }
-        }
-        catch (invalid_argument & e)
-        {
-          this->invalid_rate_rxn.push_back(rxn_str);
-          this->invalid_rate_reason.push_back(e.what());
-          printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
-          printRed(e.what());
-          cout << "\n\n";
-          continue;
-        }
-      }
-    }
+      parseReactions(network, this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason);
 
     if (num_xsec_based > 0)
-    {
-      for (auto rxn : network[XSEC_BASED_KEY])
-      {
-        try
-        {
-          rxn_str = rxn["reaction"].as<string>();
-          this->rxn_count++;
-          Reaction r = Reaction(rxn_str, this->rxn_count);
-          this->xsec_rxn.push_back(r);
-          printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+      parseReactions(network, this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, false);
 
-          for (auto it : r.getProducts())
+    cout << endl << endl;
+  }
+
+  void NetworkParser::parseReactions(const YAML::Node network,
+                                    vector<Reaction> & valid,
+                                    vector<string> & invalid,
+                                    vector<string> & invalid_reason,
+                                    const bool rate_based)
+  {
+    YAML::Node reactions;
+    string rxn_str;
+    // getting the reactions based on whether or not it is rate based or xsec
+    if (rate_based)
+      reactions = network[RATE_BASED_KEY];
+    else
+      reactions = network[XSEC_BASED_KEY];
+
+    for (auto rxn : reactions)
+    {
+      try
+      {
+        // get the reaction and add to the total count
+        rxn_str = rxn["reaction"].as<string>();
+        this->rxn_count++;
+        // try to create the actual reaction
+        Reaction r = Reaction(rxn_str, this->rxn_count);
+        this->rate_rxn.push_back(r);
+        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+        // products can have either sources or balanced but an
+        // element that purely a product cannot have a sink reaction
+        for (auto it : r.getProducts())
+        {
+          // add all of the reactions that produce this species
+          if (r.getStoicCoeffByName(it->getName()) > 0)
           {
-            // add all of the reactions that produce this species
-            if (r.getStoicCoeffByName(it->getName()) > 0)
+            if (rate_based)
+            {
+              it->rate_sources.push_back(r);
+              continue;
+            }
+            else
+            {
               it->xsec_sources.push_back(r);
-            // add all of the reactions where there is neither a gain
-            // nor a loss of species
-            if (r.getStoicCoeffByName(it->getName()) == 0)
-              it->xsec_balanced.push_back(r);
+              continue;
+            }
           }
-          for (auto it : r.getReactants())
+          // add all of the reactions where there is neither a gain
+          // nor a loss of species
+          if (r.getStoicCoeffByName(it->getName()) == 0)
           {
-            // only adding these reactions if they are truly sinks
-            // and not actually neutral
-            if (r.getStoicCoeffByName(it->getName()) < 0)
-              it->xsec_sinks.push_back(r);
+            if (rate_based)
+            {
+              it->rate_balanced.push_back(r);
+              continue;
+            }
+            else
+            {
+              it->xsec_balanced.push_back(r);
+              continue;
+            }
           }
         }
-
-        catch (invalid_argument & e)
+        // only need to check for sinks with reactants
+        for (auto it : r.getReactants())
         {
-          this->invalid_rate_rxn.push_back(rxn_str);
-          this->invalid_rate_reason.push_back(e.what());
-          printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
-          printRed(e.what());
-          cout << "\n\n";
-          continue;
+          // only adding these reactions if they are truly sinks
+          // and not actually neutral
+          if (r.getStoicCoeffByName(it->getName()) < 0)
+          {
+            if (rate_based)
+            {
+              it->rate_sinks.push_back(r);
+              continue;
+            }
+            else
+            {
+              it->xsec_sinks.push_back(r);
+              continue;
+            }
+          }
         }
       }
+      catch (invalid_argument & e)
+      {
+        invalid.push_back(rxn_str);
+        invalid_reason.push_back(e.what());
+        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+        printRed(e.what());
+        cout << "\n\n";
+        continue;
+      }
     }
-    cout << endl << endl;
   }
 
   void

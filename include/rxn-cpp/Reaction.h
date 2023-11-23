@@ -13,7 +13,9 @@ namespace rxn
   class Reaction
   {
   public:
-    Reaction(const string & name, const int rxn_number);
+    Reaction(const string & name, const int rxn_number,
+             const float delta_eps_e = 0.00,
+             const float delta_eps_g = 0.00);
     /**
      * equality operator override and compares the reaction name
      * the latex name of the reaction and the reaction number is the same
@@ -52,6 +54,8 @@ namespace rxn
     */
     string getName() const;
   private:
+    const float delta_eps_e;
+    const float delta_eps_g;
     /** The string representation of the reaction */
     const string name;
     /** The number of reaction this one is in the network file */
