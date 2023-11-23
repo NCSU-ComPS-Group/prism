@@ -108,22 +108,22 @@ namespace rxn
     for (auto r : this->reactants)
     {
       // this reaction is a sink
-      r_mass += r->mass;
-      r_charge_num += r->charge_num;
+      r_mass += r->getMass();
+      r_charge_num += r->getChargeNumber();
       for (auto sub_r : r->sub_species)
       {
         // we can't keep track of the electrons and photons in the same way
         // as heavy species so we'll ignore them for this check
-        if (sub_r.base == "e" || sub_r.base == "E" || sub_r.base == "hnu")
+        if (sub_r.getBase() == "e" || sub_r.getBase() == "E" || sub_r.getBase() == "hnu")
           continue;
         // lets check to see if it the element is already known
-        if (r_elements.count(sub_r.base) == 0)
+        if (r_elements.count(sub_r.getBase()) == 0)
         {
-          r_elements[sub_r.base] = sub_r.subscript;
+          r_elements[sub_r.getBase()] = sub_r.getSubscript();
           continue;
         }
         // if the element is known increase the count
-        r_elements[sub_r.base] += sub_r.subscript;
+        r_elements[sub_r.getBase()] += sub_r.getSubscript();
       }
 
     }
@@ -141,24 +141,24 @@ namespace rxn
       {
         // we are not checking to make sure electrons and photons are on both sides
         // can be produced without it being on both sides
-        if (sub_p.base == "e" || sub_p.base == "E" || sub_p.base == "hnu")
+        if (sub_p.getBase() == "e" || sub_p.getBase() == "E" || sub_p.getBase() == "hnu")
           continue;
-        auto it = r_elements.find(sub_p.base);
+        auto it = r_elements.find(sub_p.getBase());
 
         if ( it == r_elements.end())
-          throw invalid_argument(fmt::format("{} does not appear as a reactant", sub_p.base));
+          throw invalid_argument(fmt::format("{} does not appear as a reactant", sub_p.getBase()));
         // we'll keep track of the element count on both sides
-        if (p_elements.count(sub_p.base) == 0)
+        if (p_elements.count(sub_p.getBase()) == 0)
         {
-          p_elements[sub_p.base] = sub_p.subscript;
+          p_elements[sub_p.getBase()] = sub_p.getSubscript();
           continue;
         }
         // if the element is known increase the count
-        p_elements[sub_p.base] += sub_p.subscript;
+        p_elements[sub_p.getBase()] += sub_p.getSubscript();
       }
       // add this reaction as a source
-      p_mass += p->mass;
-      p_charge_num += p->charge_num;
+      p_mass += p->getMass();
+      p_charge_num += p->getChargeNumber();
     }
 
     // check here to make sure the reaction is properly balanced

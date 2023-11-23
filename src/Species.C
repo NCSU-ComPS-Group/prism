@@ -6,12 +6,11 @@ namespace rxn
 
   Species::Species(const string & name)
     : SpeciesBase(name),
-      sub_species(decomposeSpecies()),
-      mass(getMass()),
-      charge_num(getChargeNumber()),
-      charge(getCharge()),
-      latex_name(getLatexName())
+      sub_species(decomposeSpecies())
   {
+    setMass();
+    setChargeNumber();
+    setLatexName();
   }
 
   vector<SubSpecies>
@@ -27,37 +26,32 @@ namespace rxn
     return sub_sp;
   }
 
-  float
-  Species::getMass()
+  void
+  Species::setMass()
   {
     float total_mass = 0;
     for (SubSpecies s : this->sub_species)
-      total_mass += s.mass;
-    return total_mass;
+      total_mass += s.getMass();
+    this->mass = total_mass;
   }
 
-  int
-  Species::getChargeNumber()
+  void
+  Species::setChargeNumber()
   {
     int total_num = 0;
     for (SubSpecies s : this->sub_species)
-      total_num += s.charge_num;
-    return total_num;
+      total_num += s.getChargeNumber();
+    this->charge_num = total_num;
   }
 
-  float
-  Species::getCharge()
-  {
-    return static_cast<float>(this->charge_num) * e;
-  }
 
-  string
-  Species::getLatexName()
+  void
+  Species::setLatexName()
   {
     string total_name = "";
     for (SubSpecies s : this->sub_species)
-      total_name += s.latex_name;
-    return total_name;
+      total_name += s.getLatexName();
+    this->latex_name = total_name;
   }
 
   std::ostream &
@@ -79,9 +73,6 @@ namespace rxn
     if (this->charge_num != other.charge_num)
       return false;
 
-    if (abs(this->charge - other.charge) > numeric_limits<float>::epsilon())
-      return false;
-
     if (this->latex_name != other.latex_name)
       return false;
 
@@ -100,39 +91,38 @@ namespace rxn
   }
 
 
-
   vector<Reaction>
-  Species::getRateBasedBalanced()
+  Species::getRateBasedBalanced() const
   {
     return this->rate_balanced;
   }
 
   vector<Reaction>
-  Species::getXSecBasedBalanced()
+  Species::getXSecBasedBalanced() const
   {
     return this->xsec_balanced;
   }
 
   vector<Reaction>
-  Species::getRateBasedSources()
+  Species::getRateBasedSources() const
   {
     return this->rate_sources;
   }
 
   vector<Reaction>
-  Species::getXSecBasedSources()
+  Species::getXSecBasedSources() const
   {
     return this->xsec_sources;
   }
 
   vector<Reaction>
-  Species::getRateBasedSinks()
+  Species::getRateBasedSinks() const
   {
     return this->rate_sinks;
   }
 
   vector<Reaction>
-  Species::getXSecBasedSinks()
+  Species::getXSecBasedSinks() const
   {
     return this->xsec_sinks;
   }
@@ -149,9 +139,9 @@ hash<rxn::Species>::operator()(const rxn::Species & obj) const
   for (auto s : obj.sub_species)
     val += hash_factor * hash<rxn::SubSpecies>()(s);
 
-  val += hash_factor * hash<float>()(obj.mass);
-  val += hash_factor * hash<int>()(obj.charge_num);
-  val += hash_factor * hash<string>()(obj.latex_name);
+  val += hash_factor * hash<float>()(obj.getMass());
+  val += hash_factor * hash<int>()(obj.getChargeNumber());
+  val += hash_factor * hash<string>()(obj.getLatexName());
   // not including the sources and sinks in the hash since those
   // can change as reactions are added to the network
   return val;

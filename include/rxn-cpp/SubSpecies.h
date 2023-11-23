@@ -15,20 +15,7 @@ namespace rxn
   {
   public:
     SubSpecies(const string & name);
-    /** This will be just the elemental name */
-    string base;
-    /** The rest of name after the elemental name that has been removed */
-    string modifier;
-    /** The subscript of the number ex: Ar2 this is 2 */
-    unsigned int subscript;
-    /** The level of ionization ex: Ar-4 this is -4 */
-    int charge_num;
-    /** The molar mass of the species */
-    float mass;
-    /** The charge of the species in C */
-    float charge;
-    /** The name of the spcies formatted for printing in a latex_table */
-    string latex_name;
+
 
     /** override to print the species name as is */
     friend std::ostream & operator<<(std::ostream & os, const SubSpecies & s);
@@ -37,19 +24,51 @@ namespace rxn
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const SubSpecies & other) const;
 
+    /** getter method for the elemental base of the species */
+    string getBase() const;
+    /** getter method for the modifier string */
+    string getModifier() const;
+    /** getter method for the subscript on the subspecies */
+    unsigned int getSubscript() const;
+
   private:
-    string getBase();
-    string getModifier();
-    unsigned int getSubscript();
-    float getMass() override;
-    int getChargeNumber() override;
-    float getCharge() override;
-    string getLatexName() override;
+    /** This will be just the elemental name */
+    const string base;
+    /** The rest of name after the elemental name that has been removed */
+    const string modifier;
+    /** The subscript of the number ex: Ar2 this is 2 */
+    const unsigned int subscript;
+    /** method for the setting the element which the species modifies */
+    string setBase();
+    /**
+     * Method sets the modifier of the species,
+     * anything after the subscript and charge
+    */
+    string setModifier();
+    /**
+     * Method for getting the subscript as an integer
+    */
+    unsigned int setSubscript();
+    /**
+     * Method for setting the mass of the subspecies based on the
+     * subscript and elemental mass
+    */
+    void setMass() override;
+    /**
+     * Method for setting the charge number of the species base
+    */
+    void setChargeNumber() override;
+    /** Method for setting the latex name of the species */
+    void setLatexName() override;
   };
 } // namespace RXN
 
 template <>
 struct std::hash<rxn::SubSpecies>
 {
+  /**
+   * Custom override for the hash method
+   * Hash is only based on the name string
+  */
   size_t operator()(const rxn::SubSpecies & obj) const;
 };

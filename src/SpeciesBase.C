@@ -2,7 +2,12 @@
 
 namespace rxn
 {
-  SpeciesBase::SpeciesBase(const string & name) : name(checkName(name)) {}
+  SpeciesBase::SpeciesBase(const string & name) :
+    name(checkName(name))
+  {
+  }
+
+
 
   std::ostream &
   operator<<(std::ostream & os, const SpeciesBase & s)
@@ -41,12 +46,42 @@ namespace rxn
   {
     return !(*this == other);
   }
+
+  string
+  SpeciesBase::getName() const
+  {
+    return this->name;
+  }
+
+  float
+  SpeciesBase::getMass() const
+  {
+    return this->mass;
+  }
+
+  int
+  SpeciesBase::getChargeNumber() const
+  {
+    return this->charge_num;
+  }
+
+  float
+  SpeciesBase::getCharge() const
+  {
+    return static_cast<float>(this->charge_num) * e;
+  }
+
+  string
+  SpeciesBase::getLatexName() const
+  {
+    return this->latex_name;
+  }
 } // namespace RXN
 
 size_t
 hash <rxn::SpeciesBase>::operator()(const rxn::SpeciesBase & obj) const
 {
   // hash based on the name
-  return hash<string>()(obj.name);
+  return hash<string>()(obj.getName());
 }
 

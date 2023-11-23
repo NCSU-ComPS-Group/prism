@@ -5,18 +5,17 @@ namespace rxn
 
   SubSpecies::SubSpecies(const string & name)
     : SpeciesBase(name),
-      base(getBase()),
-      modifier(getModifier()),
-      subscript(getSubscript()),
-      charge_num(getChargeNumber()),
-      mass(getMass()),
-      charge(getCharge()),
-      latex_name(getLatexName())
+      base(setBase()),
+      modifier(setModifier()),
+      subscript(setSubscript())
   {
+    setChargeNumber();
+    setMass();
+    setLatexName();
   }
 
   string
-  SubSpecies::getBase()
+  SubSpecies::setBase()
   {
     if (this->name.compare("hnu") == 0)
       return this->name;
@@ -51,7 +50,7 @@ namespace rxn
   }
 
   string
-  SubSpecies::getModifier()
+  SubSpecies::setModifier()
   {
     if (this->name.compare("hnu") == 0)
       return "";
@@ -68,7 +67,7 @@ namespace rxn
   }
 
   unsigned int
-  SubSpecies::getSubscript()
+  SubSpecies::setSubscript()
   {
     // case when there is no subscript
     if (this->modifier.length() == 0)
@@ -87,14 +86,22 @@ namespace rxn
     return stoi(this->modifier.substr(0, sub_stop));
   }
 
-  int
-  SubSpecies::getChargeNumber()
+  void
+  SubSpecies::setChargeNumber()
   {
     if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
-      return -1;
+    {
+      this->charge_num = -1;
+      return;
+    }
+
 
     if (this->modifier.length() == 0)
-      return 0;
+    {
+      this->charge_num = 0;
+      return;
+    }
+
 
     string s;
     if (subscript > 1)
@@ -108,17 +115,24 @@ namespace rxn
 
     // case for no charge
     if (s.length() == 0)
-      return 0;
+    {
+      this->charge_num = 0;
+      return;
+    }
+
     // case where there is no special character available but there is part of the string left
     if (findFirstNonSpecial(s) == 0)
       throw invalid_argument("\n\n'" + this->name + "'" +
                             " is invalid! Species charge must begin with + or - \n" +
                             "Or other modifiers must be present\n" +
                             "Other modifiers must start with a special character\n");
-
     // case of some other modifier but not ionized
     if (findFirstSpecial(s) == 0 && (s[0] != '-' && s[0] != '+'))
-      return 0;
+    {
+      this->charge_num = 0;
+      return;
+    }
+
 
     int sign = 0;
 
@@ -128,7 +142,11 @@ namespace rxn
       sign = 1;
     // case for only a + or a - on the subspecies
     if (s.length() == 1)
-      return sign;
+    {
+      this->charge_num = sign;
+      return;
+    }
+
 
     // removing the + or -
     auto sub_s = s.substr(1, s.length());
@@ -143,37 +161,46 @@ namespace rxn
     sub_s = sub_s.substr(0, sub_stop);
     // case for when it is only a + or a - with another modifier
     if (sub_s.length() == 0)
-      return sign;
+    {
+      this->charge_num = sign;
+      return;
+    }
+
     // case for when we have a number with the ionization
     int charge = sign * stoi(sub_s);
-    return charge;
+
+    this->charge_num = charge;
   }
 
-  float
-  SubSpecies::getMass()
+  void
+  SubSpecies::setMass()
   {
     float base_mass = static_cast<float>(this->subscript) * base_masses[this->base];
     // case for an electron
     if (this->name.compare("e") == 0 || this->name.compare("E") == 0)
-      return base_mass;
+    {
+      this->mass = base_mass;
+      return;
+    }
+
     float ionization_mass = static_cast<float>(this->charge_num) * base_masses["e"];
-    return base_mass - ionization_mass;
+    this->mass = base_mass - ionization_mass;
   }
 
-  float
-  SubSpecies::getCharge()
-  {
-    return static_cast<float>(this->charge_num) * e;
-  }
-
-  string
-  SubSpecies::getLatexName()
+  void
+  SubSpecies::setLatexName()
   {
     if (this->name == "hnu")
-      return "$h\\nu$";
+    {
+      this->latex_name = "$h\\nu$";
+      return;
+    }
 
     if (this->modifier.length() == 0)
-      return this->name;
+    {
+      this->latex_name = this->name;
+      return;
+    }
 
     string s = this->base;
     // variable used for cutting up the end of the modifier
@@ -210,14 +237,17 @@ namespace rxn
     }
     // case for only ion no other modifiers
     if (partial_name.length() == this->name.length())
-      return s;
+    {
+      this->latex_name = s;
+      return;
+    }
 
     const int partial_stop = partial_name.length();
 
     const string partial_modifier = this->name.substr(partial_stop, this->name.length());
     s += partial_modifier;
 
-    return s;
+    this->latex_name = s;
   }
 
   std::ostream &
@@ -249,9 +279,6 @@ namespace rxn
     if (abs(this->mass - other.mass) > numeric_limits<float>::epsilon())
       return false;
 
-    if (abs(this->charge - other.charge) > numeric_limits<float>::epsilon())
-      return false;
-
     if (this->latex_name != other.latex_name)
       return false;
 
@@ -263,6 +290,24 @@ namespace rxn
   {
     return !(*this == other);
   }
+
+  string
+  SubSpecies::getBase() const
+  {
+    return this->base;
+  }
+
+  string
+  SubSpecies::getModifier() const
+  {
+    return this->modifier;
+  }
+
+  unsigned int
+  SubSpecies::getSubscript() const
+  {
+    return this->subscript;
+  }
 }
 
 size_t
@@ -273,13 +318,13 @@ hash<rxn::SubSpecies>::operator()(const rxn::SubSpecies & obj) const
   size_t val = 17; // Start with a prime number
 
   val += hash_factor * hash<rxn::SpeciesBase>()(obj);
-  val += hash_factor * hash<string>()(obj.base);
-  val += hash_factor * hash<string>()(obj.modifier);
-  val += hash_factor * hash<unsigned int>()(obj.subscript);
-  val += hash_factor * hash<int>()(obj.charge_num);
-  val += hash_factor * hash<float>()(obj.mass);
-  val += hash_factor * hash<float>()(obj.charge);
-  val += hash_factor * hash<string>()(obj.latex_name);
+  val += hash_factor * hash<string>()(obj.getBase());
+  val += hash_factor * hash<string>()(obj.getModifier());
+  val += hash_factor * hash<unsigned int>()(obj.getSubscript());
+  val += hash_factor * hash<int>()(obj.getChargeNumber());
+  val += hash_factor * hash<float>()(obj.getMass());
+  val += hash_factor * hash<float>()(obj.getCharge());
+  val += hash_factor * hash<string>()(obj.getLatexName());
   // hash based on the name
   return val;
 }

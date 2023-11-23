@@ -16,14 +16,6 @@ namespace rxn
     Species(const string & name);
     /** the list of the sub_species in the the class */
     vector<SubSpecies> sub_species;
-    /** The molar mass of the species */
-    float mass;
-    /** The level of ionization ex: Ar-4 this is -4 */
-    int charge_num;
-    /** The charge of the species in C */
-    float charge;
-    /** The name of the spcies formatted for printing in a latex_table */
-    string latex_name;
     /** Rate based reactions where the stoiciometric coeff is greater than 1 */
     vector<Reaction> rate_sources;
     /** Cross section based reactions where the stoiciometric coeff is greater than 1 */
@@ -42,25 +34,45 @@ namespace rxn
     bool operator==(const Species & other) const;
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const Species & other) const;
+    /** Getter method for the rate based reactions with a stoiciometric coefficient of 0 */
+    vector<Reaction> getRateBasedBalanced() const;
+    /** Getter method for the cross section based reactions with a stoiciometric coefficient of 0 */
+    vector<Reaction> getXSecBasedBalanced() const;
+    /** Getter method for the rate based reactions with a stoiciometric coefficient greater than 0 */
+    vector<Reaction> getRateBasedSources() const;
+    /** Getter method for the cross section based reactions with a stoiciometric coefficient greater than 0 */
+    vector<Reaction> getXSecBasedSources() const;
+    /** Getter method for the rate based reactions with a stoiciometric coefficient less than 0 */
+    vector<Reaction> getRateBasedSinks() const;
+    /** Getter method for the cross section based reactions with a stoiciometric coefficient less than 0 */
+    vector<Reaction> getXSecBasedSinks() const;
 
-    vector<Reaction> getRateBasedBalanced();
-    vector<Reaction> getXSecBasedBalanced();
-    vector<Reaction> getRateBasedSources();
-    vector<Reaction> getXSecBasedSources();
-    vector<Reaction> getRateBasedSinks();
-    vector<Reaction> getXSecBasedSinks();
 
-    string getLatexName() override;
   private:
+    /** Method for constructing the latex name of the species  */
+    void setLatexName() override;
+    /**
+     * This method breaks down the species into the various
+     * different elements that are in the species
+    */
     vector<SubSpecies> decomposeSpecies();
-    float getMass() override;
-    int getChargeNumber() override;
-    float getCharge() override;
+    /** Method for getting the total mass based on all of the subspecies */
+    void setMass() override;
+    /** Method for getting the total charge number based on all of the subspecies */
+    void setChargeNumber() override;
   };
 }
 
 template <>
 struct std::hash<rxn::Species>
 {
+  /**
+   * Hash method for species hashing is based on
+   * the hash of each subspecies
+   * the total mass
+   * the charge number
+   * the latexname of the species
+   * * @param obj the Species to be hashed
+   */
   size_t operator()(const rxn::Species & obj) const;
 };

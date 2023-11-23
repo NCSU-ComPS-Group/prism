@@ -64,18 +64,18 @@ namespace rxn
 
           for (auto it : r.getProducts()) {
             // add all of the reactions that produce this species
-            if (r.getStoicCoeffByName(it->name) > 0)
+            if (r.getStoicCoeffByName(it->getName()) > 0)
               it->rate_sources.push_back(r);
             // add all of the reactions where there is neither a gain
             // nor a loss of species
-            if (r.getStoicCoeffByName(it->name) == 0)
+            if (r.getStoicCoeffByName(it->getName()) == 0)
               it->rate_balanced.push_back(r);
           }
           for (auto it : r.getReactants())
           {
             // only adding these reactions if they are truly sinks
             // and not actually neutral
-            if (r.getStoicCoeffByName(it->name) < 0)
+            if (r.getStoicCoeffByName(it->getName()) < 0)
               it->rate_sinks.push_back(r);
           }
         }
@@ -106,18 +106,18 @@ namespace rxn
           for (auto it : r.getProducts())
           {
             // add all of the reactions that produce this species
-            if (r.getStoicCoeffByName(it->name) > 0)
+            if (r.getStoicCoeffByName(it->getName()) > 0)
               it->xsec_sources.push_back(r);
             // add all of the reactions where there is neither a gain
             // nor a loss of species
-            if (r.getStoicCoeffByName(it->name) == 0)
+            if (r.getStoicCoeffByName(it->getName()) == 0)
               it->xsec_balanced.push_back(r);
           }
           for (auto it : r.getReactants())
           {
             // only adding these reactions if they are truly sinks
             // and not actually neutral
-            if (r.getStoicCoeffByName(it->name) < 0)
+            if (r.getStoicCoeffByName(it->getName()) < 0)
               it->xsec_sinks.push_back(r);
           }
         }
@@ -205,24 +205,24 @@ namespace rxn
         summary += "\033[0m";
     }
     summary += "Species: ";
-    summary += s->name;
+    summary += s->getName();
     summary += "\n";
     // rate based summary
     int rate_rxn_count = s->rate_balanced.size() + s->rate_sources.size() + s->rate_sinks.size();
     summary += fmt::format("  - Rate-Based: {:d}\n", rate_rxn_count);
     summary += fmt::format("    Balanced: {}\n", s->rate_balanced.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->name, false);
+    summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->getName(), false);
 
     if (!yaml_file)
       summary += "\033[32m";
     summary += fmt::format("\n    Sources: {}\n", s->rate_sources.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_sources, s->name, yaml_file);
+    summary += getSpeciesDependantReactionSummary(s->rate_sources, s->getName(), yaml_file);
 
 
     if (!yaml_file)
       summary += "\033[31m";
     summary += fmt::format("\n    Sinks: {}\n", s->rate_sinks.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->name, yaml_file);
+    summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[0m";
@@ -232,17 +232,17 @@ namespace rxn
     int xsec_rxn_count = s->xsec_balanced.size() + s->xsec_sources.size() + s->xsec_sinks.size();
     summary += fmt::format("  - Cross-Section-Based: {:d}\n", xsec_rxn_count);
     summary += fmt::format("    Balanced: {}\n", s->xsec_balanced.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->name, false);
+    summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->getName(), false);
 
     if (!yaml_file)
       summary += "\033[32m";
     summary += fmt::format("\n    Sources: {}\n", s->xsec_sources.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->name, yaml_file);
+    summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[31m";
     summary += fmt::format("\n    Sinks: {}\n", s->xsec_sinks.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->name, yaml_file);
+    summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[0m\n";
