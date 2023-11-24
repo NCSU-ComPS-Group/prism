@@ -23,6 +23,16 @@ namespace rxn
 
     this->yaml_map[file] = network;
 
+    // check to see if the use provides a location for their reaction files
+    try {
+      string data_path = network[PATH_KEY].as<string>();
+      this->data_paths[file] = data_path;
+    }
+    catch (YAML::InvalidNode)
+    {
+      this->data_paths[file] = "data";
+    }
+
     this->rxn_count = 0;
     int num_rate_based;
     int num_xsec_based;
@@ -50,42 +60,67 @@ namespace rxn
 
     // string rxn_str;
     if (num_rate_based > 0)
-      parseReactions(network, this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason);
+      parseReactions(network, file,
+                     this->rate_rxn,
+                     this->invalid_rate_rxn,
+                     this->invalid_rate_reason,
+                     this->custom_rate_rxn,
+                     this->from_file_rate_rxn,
+                     this->arr_rate_rxn);
 
     if (num_xsec_based > 0)
-      parseReactions(network, this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, false);
+      parseReactions(network,
+                     file,
+                     this->xsec_rxn,
+                     this->invalid_xsec_rxn,
+                     this->invalid_xsec_reason,
+                     this->custom_xsec_rxn,
+                     this->from_file_xsec_rxn,
+                     this->arr_xsec_rxn,
+                    false);
+
+    if (this->invalid_xsec_rxn.size() > 0 || this->invalid_rate_rxn.size() > 0)
+    {
+      this->printReactionSummary();
+      printRed("Invalid reactions listed above must be addressed\n");
+      exit(EXIT_FAILURE);
+    }
+
 
     cout << endl << endl;
   }
 
-  void NetworkParser::parseReactions(const YAML::Node network,
-                                    vector<Reaction> & valid,
-                                    vector<string> & invalid,
-                                    vector<string> & invalid_reason,
-                                    const bool rate_based)
+  void
+  NetworkParser::parseReactions(const YAML::Node network,
+                                const string & filename,
+                                vector<Reaction> & valid,
+                                vector<string> & invalid,
+                                vector<string> & invalid_reason,
+                                vector<Reaction> & custom,
+                                vector<Reaction> & from_file,
+                                vector<Reaction> & arrhenius,
+                                const bool rate_based)
   {
     YAML::Node reactions;
     string rxn_str;
+    string rxn_file;
     // getting the reactions based on whether or not it is rate based or xsec
     if (rate_based)
       reactions = network[RATE_BASED_KEY];
     else
       reactions = network[XSEC_BASED_KEY];
 
-    for (auto rxn : reactions)
+    for (auto rxn_input : reactions)
     {
       try
       {
         // get the reaction and add to the total count
-        rxn_str = rxn["reaction"].as<string>();
         this->rxn_count++;
         // try to create the actual reaction
-        Reaction r = Reaction(rxn_str, this->rxn_count);
-        this->rate_rxn.push_back(r);
-        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, rxn_str));
+        Reaction r = Reaction(rxn_input, this->rxn_count, this->data_paths[filename]);
         // products can have either sources or balanced but an
         // element that purely a product cannot have a sink reaction
-        for (auto it : r.getProducts())
+        for (auto it : r.products)
         {
           // add all of the reactions that produce this species
           if (r.getStoicCoeffByName(it->getName()) > 0)
@@ -118,7 +153,7 @@ namespace rxn
           }
         }
         // only need to check for sinks with reactants
-        for (auto it : r.getReactants())
+        for (auto it : r.reactants)
         {
           // only adding these reactions if they are truly sinks
           // and not actually neutral
@@ -136,10 +171,31 @@ namespace rxn
             }
           }
         }
+
+        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, r.getName()));
+        // add the valid reaction to the list
+        valid.push_back(r);
+
+        if (r.eqn_type == FROM_FILE_STR)
+        {
+          from_file.push_back(r);
+          continue;
+        }
+
+        if (r.eqn_type == ARRHENIUS_STR)
+        {
+          arrhenius.push_back(r);
+          continue;
+        }
+
+        // if its not arrhenius or from file its got a cutsom
+        // for for its equation
+        custom.push_back(r);
+
       }
       catch (invalid_argument & e)
       {
-        invalid.push_back(rxn_str);
+        invalid.push_back(rxn_input[REACTION_KEY].as<string>());
         invalid_reason.push_back(e.what());
         printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
         printRed(e.what());
@@ -329,6 +385,9 @@ namespace rxn
 
     for (auto i = 0; i < invalid_rxn.size(); ++i)
     {
+      if (!yaml_file)
+        summary += "\033[31m";
+
       summary += fmt::format("    - reaction: {}\n", invalid_rxn[i]);
       summary += fmt::format("        reason: {}\n", invalid_reason[i]);
     }

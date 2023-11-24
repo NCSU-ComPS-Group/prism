@@ -2,17 +2,147 @@
 
 namespace rxn
 {
-  Reaction::Reaction(const string & name,
-                     const int rxn_number,
-                     const float delta_eps_e,
-                     const float delta_eps_g) :
-      name(checkReactionString(name)),
-      rxn_number(rxn_number),
-      delta_eps_e(delta_eps_e),
-      delta_eps_g(delta_eps_g)
+  Reaction::Reaction(const YAML::Node rxn_input,
+                    const int rxn_number,
+                    const string & data_path) :
+  rxn_number(rxn_number),
+  delta_eps_e(0.0),
+  delta_eps_g(0.0)
   {
+    // lets try and get the name
+    try {
+      string rxn_str = rxn_input[REACTION_KEY].as<string>();
+      this->name = checkReactionString(rxn_str);
+    } catch (YAML::BadConversion) {
+      throw invalid_argument(makeRed("- reaction: input must be a string"));
+    } catch (YAML::InvalidNode) {
+      throw invalid_argument(makeRed("Reaction string must be provided"));
+    }
+    // setting up the reactants and products
     setSides();
+    // making sure the reaction is valid
     validateReaction();
+
+    try{
+      this->reference = rxn_input[REFERENCE_KEY].as<string>();
+    } catch (YAML::BadConversion) {
+      throw invalid_argument(makeRed("References must be provided in string form"));
+    } catch(YAML::InvalidNode) {
+      throw invalid_argument(makeRed("All reactions must have an associated reference"));
+    }
+
+    // getting the changes in energy
+    // lets check to see if the user has provided values for delta-eps-e
+    try {
+      float delta_eps_e = rxn_input[DELTA_EPS_E_KEY].as<float>();
+      this->delta_eps_e = delta_eps_e;
+    }
+    // lets do nothing since we provide default values
+    catch (YAML::BadConversion) {}
+    catch (YAML::InvalidNode) {}
+
+    // lets check to see if the user has provided values for delta-eps-g
+    try {
+      float delta_eps_g = rxn_input[DELTA_EPS_G_KEY].as<float>();
+      this->delta_eps_e = delta_eps_g;
+
+    }
+    // lets do nothing since we provide default values
+    catch (YAML::BadConversion) {}
+    catch (YAML::InvalidNode) {}
+
+    // lets check to see if the user has provided a file for data to be provided
+
+    try {
+      string rxn_file = rxn_input[FILE_KEY].as<string>();
+      // lets make sure no one provides a file and params
+      try
+      {
+        auto param_test = rxn_input[PARAM_KEY].as<vector<float>>();
+        throw invalid_argument(makeRed("Providing a file location and params for the same reaction is invalid"));
+        // if there is no params with a file this is what we want so
+        // well do nothing here
+      }
+      catch(YAML::BadConversion) {}
+      catch(YAML::InvalidNode) {}
+      // lets make sure that no equation type is provided with a
+      // reaction that gives a file
+      try
+      {
+        string eqn_type_test = rxn_input[EQN_TYPE_KEY].as<string>();
+        throw invalid_argument(makeRed(
+            "Providing a file location and an equation type for the same reaction is invalid"));
+      }
+      // we'll do nothing here since this is what we want
+      catch(YAML::BadConversion) {}
+      catch(YAML::InvalidNode) {}
+
+      if (data_path.length() == 0)
+        this->filepath = rxn_file;
+      else
+        this->filepath = data_path + "/" + rxn_file;
+
+      struct stat buffer;
+      if (stat(this->filepath.c_str(), &buffer) != 0)
+        throw invalid_argument(makeRed("File: '" + this->filepath + "' does not exist"));
+      this->eqn_type = FROM_FILE_STR;
+    }
+    catch (YAML::BadConversion)
+    {
+      this->filepath = "";
+    }
+    catch(YAML::InvalidNode) {
+      this->filepath = "";
+    }
+
+    // lets get the function parameters if the user isn't giving us
+    // a file
+    vector<float> temp_params;
+    float temp_param;
+    if (this->filepath == "")
+    {
+      try {
+        temp_params = rxn_input[PARAM_KEY].as<vector<float>>();
+      } catch (YAML::BadConversion) {
+        // if they didn't provide a list of parameters we can check if
+        // they provided it as a single param
+        try
+        {
+          temp_param = rxn_input[PARAM_KEY].as<float>();
+          this->params = {temp_param, 0, 0, 0, 0};
+        }
+        catch (YAML::InvalidNode)
+        {
+          throw invalid_argument(
+              makeRed("Since no file is provided params must be included"));
+        }
+      }
+      // now that we have the parameters lets add the equation type
+      try {
+        // if its a custom equation we won't put limits on the
+        // params vector
+
+        // cout << rxn_input[EQN_TYPE_KEY] << endl;
+        // auto test = rxn_input[EQN_TYPE_KEY].as<string>();
+        // cout << "Here" << endl;
+        this->eqn_type = rxn_input[EQN_TYPE_KEY].as<string>();
+        this->params = temp_params;
+      }
+      // if there is not equation type lets assume its
+      // arrhenius
+      catch (YAML::InvalidNode) {
+        this->eqn_type = ARRHENIUS_STR;
+        if (temp_params.size() > 5)
+          throw invalid_argument(
+              makeRed("For the default equation type you must provided at most 5 parameters"));
+        // lets allow the user to provide less than 5 parameters
+        // anytime they provide less than the maximum amount of parameters the
+        // remaining ones will be assumed to 0
+        this->params = {0, 0, 0, 0, 0};
+        for (size_t i = 0; i < temp_params.size(); ++i)
+          this->params[i] = temp_params[i];
+      }
+    }
   }
 
   string
@@ -20,7 +150,7 @@ namespace rxn
   {
     if (rxn.find(" -> ") == string::npos)
       throw invalid_argument(
-          makeRed("\n\n'" + rxn + "'" + " is invalid!\n" + "Reactions must contain '->'\n"));
+          makeRed("'" + rxn + "'" + " is invalid!\n" + "Reactions must contain '->'"));
 
     return rxn;
   }
@@ -217,16 +347,23 @@ namespace rxn
     return this->latex_name;
   }
 
-  vector<shared_ptr<Species>>
+  vector<Species>
   Reaction::getReactants() const
   {
-    return this->reactants;
+    vector<Species> r;
+    for (auto s : this->reactants)
+      r.push_back(*s);
+    return r;
   }
 
-  vector<shared_ptr<Species>>
+  vector<Species>
   Reaction::getProducts() const
   {
-    return this->products;
+    vector<Species> p;
+    for (auto s : this->products)
+      p.push_back(*s);
+
+    return p;
   }
 
   int
@@ -239,6 +376,42 @@ namespace rxn
   Reaction::getName() const
   {
     return this->name;
+  }
+
+  string
+  Reaction::getEquationType() const
+  {
+    return this->eqn_type;
+  }
+
+  vector<float>
+  Reaction::getParams() const
+  {
+    return this->params;
+  }
+
+  string
+  Reaction::getPathToData() const
+  {
+    return this->filepath;
+  }
+
+  float
+  Reaction::getDeltaEnergyElectron() const
+  {
+    return this->delta_eps_e;
+  }
+
+  float
+  Reaction::getDeltaEnergyGas() const
+  {
+    return this->delta_eps_g;
+  }
+
+  string
+  Reaction::getReference() const
+  {
+    return this->reference;
   }
 }
 

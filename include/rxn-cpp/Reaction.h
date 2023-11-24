@@ -1,10 +1,13 @@
 #pragma once
 #include <limits>
+#include <fstream>
+#include <sys/stat.h>
 #include <unordered_set>
 #include "GlobalData.h"
 #include "Species.h"
 #include "StringHelper.h"
 #include "Printer.h"
+#include "yaml-cpp/yaml.h"
 
 using namespace std;
 
@@ -13,9 +16,7 @@ namespace rxn
   class Reaction
   {
   public:
-    Reaction(const string & name, const int rxn_number,
-             const float delta_eps_e = 0.00,
-             const float delta_eps_g = 0.00);
+    Reaction(const YAML::Node rxn_input, const int rxn_number, const string & data_path);
     /**
      * equality operator override and compares the reaction name
      * the latex name of the reaction and the reaction number is the same
@@ -44,20 +45,35 @@ namespace rxn
     /**
      * * Getter method for the reactants member variable
      */
-    vector<shared_ptr<Species>> getReactants() const;
+    vector<Species> getReactants() const;
     /**
      * * Getter method for the products member variable
      */
-    vector<shared_ptr<Species>> getProducts() const;
+    vector<Species> getProducts() const;
     /**
      * Getter method for the string representation of the reaction
     */
     string getName() const;
+
+    string getEquationType() const;
+    vector<float> getParams() const;
+    string getPathToData() const;
+    float getDeltaEnergyElectron() const;
+    float getDeltaEnergyGas() const;
+    string getReference() const;
+
+  protected:
+    friend class NetworkParser;
+    string eqn_type;
+    vector<float> params;
+    string filepath;
+    float delta_eps_e;
+    float delta_eps_g;
+    string reference;
+
   private:
-    const float delta_eps_e;
-    const float delta_eps_g;
     /** The string representation of the reaction */
-    const string name;
+    string name;
     /** The number of reaction this one is in the network file */
     const int rxn_number;
     /** The species that are the reactants */
