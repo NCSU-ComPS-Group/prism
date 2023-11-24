@@ -1,0 +1,40 @@
+data-path: test/inputs/data/
+
+xsec-based:
+  - reaction: e + Ar -> e + Ar*
+    delta-eps-e: -11.56
+    file: reaction1.txt
+    reference: nothing real
+
+  - reaction: e + Ar -> 2e + Ar+
+    delta-eps-e: -15.7
+    file: reaction2.txt
+    reference: nothing real
+
+  - reaction: e + Ar* -> e + Ar
+    delta-eps-e: 11.56
+    file: reaction3.txt
+    reference: nothing real
+
+  - reaction: e + Ar* -> 2e + Ar+
+    delta-eps-e: -4.14
+    file: reaction4.txt
+    reference: nothing real
+
+  - reaction: e + Ar* -> e + Ar_r
+    params: 1.2044e11
+    reference: nothing real
+
+  - reaction: Ar* + Ar* -> Ar+ + Ar + e
+    params: 373364000
+    reference: nothing real
+
+  - reaction: Ar* + Ar -> Ar + Ar
+    params: 1806.6
+    reference: nothing real
+
+  - reaction: Ar* + 2Ar -> Ar2 + Ar
+    params: 39890.9324
+    reference: nothing real
+
+
