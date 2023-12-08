@@ -4,3 +4,5 @@ test/build
 *.yaml
 main
 test/run_tests
+doc/animations/media
+doc/animations/__pycache__
