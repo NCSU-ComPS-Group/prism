@@ -80,7 +80,7 @@ namespace rxn
       if (data_path.length() == 0)
         this->filepath = rxn_file;
       else
-        this->filepath = data_path + "/" + rxn_file;
+        this->filepath = data_path + rxn_file;
 
       struct stat buffer;
       if (stat(this->filepath.c_str(), &buffer) != 0)

@@ -30,7 +30,7 @@ namespace rxn
     }
     catch (YAML::InvalidNode)
     {
-      this->data_paths[file] = "data";
+      this->data_paths[file] = "data/";
     }
 
     this->rxn_count = 0;

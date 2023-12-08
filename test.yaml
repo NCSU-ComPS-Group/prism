@@ -36,7 +36,7 @@ rate-based:
     delta-eps-e: number
     delta-eps-g: number
     # not all 5 coeffs are required if less than 5 are provided assume others are 0
-    coeffs: [A, B, C, D, E]
+    params: [A, B, C, D, E]
     # optional assume arrhenius form if not provided
     type: reaction_type
 
