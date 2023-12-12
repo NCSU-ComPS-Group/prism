@@ -90,30 +90,30 @@ namespace rxn
 
     void setLatexOverrides(const YAML::Node network) const;
     /** Map of YAML::Node from all of the files which networks have been parsed */
-    unordered_map<string, YAML::Node> yaml_map;
+    unordered_map<string, YAML::Node> _yaml_map;
     /** Map of data paths for where reaction files are stored */
-    unordered_map<string, string> data_paths;
-    vector<Reaction> custom_rate_rxn;
-    vector<Reaction> from_file_rate_rxn;
-    vector<Reaction> arr_rate_rxn;
+    unordered_map<string, string> _data_paths;
+    vector<Reaction> _custom_rate_rxn;
+    vector<Reaction> _from_file_rate_rxn;
+    vector<Reaction> _arr_rate_rxn;
 
-    vector<Reaction> custom_xsec_rxn;
-    vector<Reaction> from_file_xsec_rxn;
-    vector<Reaction> arr_xsec_rxn;
+    vector<Reaction> _custom_xsec_rxn;
+    vector<Reaction> _from_file_xsec_rxn;
+    vector<Reaction> _arr_xsec_rxn;
     /** A list of all rate based reactions */
-    vector<Reaction> rate_rxn;
+    vector<Reaction> _rate_rxn;
     /** A list of cross section based reactions */
-    vector<Reaction> xsec_rxn;
+    vector<Reaction> _xsec_rxn;
     /** A list of the strings representation of rate based reactions which are invalid */
-    vector<string> invalid_rate_rxn;
+    vector<string> _invalid_rate_rxn;
     /** A list of all of the reasons for which the reactions in invalid_rate_rxn were found to be invalid */
-    vector<string> invalid_rate_reason;
+    vector<string> _invalid_rate_reason;
     /** A list of the strings representation of cross section based reactions which are invalid */
-    vector<string> invalid_xsec_rxn;
+    vector<string> _invalid_xsec_rxn;
     /** A list of all of the reasons for which the reactions in invalid_xsec_rxn were found to be invalid */
-    vector<string> invalid_xsec_reason;
+    vector<string> _invalid_xsec_reason;
     /** The total number of reactions parsed both valid and invalid */
-    int rxn_count;
+    int _rxn_count;
     /**
      * Helper method which checks to make sure that a file exists before reading it
      * @param file a string holding the path to the file

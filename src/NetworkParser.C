@@ -10,8 +10,8 @@ namespace rxn
     struct stat buffer;
     if (stat(file.c_str(), &buffer) != 0)
       throw invalid_argument(makeRed("\n\nFile: '" + file + "' does not exist\n"));
-    auto it = this->yaml_map.find(file);
-    if (it != yaml_map.end())
+    auto it = _yaml_map.find(file);
+    if (it != _yaml_map.end())
       throw invalid_argument(makeRed("\n\nFile: '" + file + "' has already been parsed\n"));
   }
 
@@ -55,19 +55,19 @@ namespace rxn
     checkFile(file);
     YAML::Node network = YAML::LoadFile(file);
     setLatexOverrides(network);
-    this->yaml_map[file] = network;
+    _yaml_map[file] = network;
 
     // check to see if the use provides a location for their reaction files
     try {
       string data_path = network[PATH_KEY].as<string>();
-      this->data_paths[file] = data_path;
+      _data_paths[file] = data_path;
     }
     catch (YAML::InvalidNode)
     {
-      this->data_paths[file] = "data/";
+      _data_paths[file] = "data/";
     }
 
-    this->rxn_count = 0;
+    _rxn_count = 0;
     int num_rate_based;
     int num_xsec_based;
     try
@@ -95,27 +95,27 @@ namespace rxn
     // string rxn_str;
     if (num_rate_based > 0)
       parseReactions(network, file,
-                     this->rate_rxn,
-                     this->invalid_rate_rxn,
-                     this->invalid_rate_reason,
-                     this->custom_rate_rxn,
-                     this->from_file_rate_rxn,
-                     this->arr_rate_rxn);
+                     _rate_rxn,
+                     _invalid_rate_rxn,
+                     _invalid_rate_reason,
+                     _custom_rate_rxn,
+                     _from_file_rate_rxn,
+                     _arr_rate_rxn);
 
     if (num_xsec_based > 0)
       parseReactions(network,
                      file,
-                     this->xsec_rxn,
-                     this->invalid_xsec_rxn,
-                     this->invalid_xsec_reason,
-                     this->custom_xsec_rxn,
-                     this->from_file_xsec_rxn,
-                     this->arr_xsec_rxn,
+                     _xsec_rxn,
+                     _invalid_xsec_rxn,
+                     _invalid_xsec_reason,
+                     _custom_xsec_rxn,
+                     _from_file_xsec_rxn,
+                     _arr_xsec_rxn,
                     false);
 
-    if (this->invalid_xsec_rxn.size() > 0 || this->invalid_rate_rxn.size() > 0)
+    if (_invalid_xsec_rxn.size() > 0 || _invalid_rate_rxn.size() > 0)
     {
-      this->printReactionSummary();
+      printReactionSummary();
       printRed("Invalid reactions listed above must be addressed\n");
     }
     cout << endl << endl;
@@ -146,9 +146,9 @@ namespace rxn
       try
       {
         // get the reaction and add to the total count
-        this->rxn_count++;
+        _rxn_count++;
         // try to create the actual reaction
-        Reaction r = Reaction(rxn_input, this->rxn_count, this->data_paths[filename]);
+        Reaction r = Reaction(rxn_input, _rxn_count, _data_paths[filename]);
         // products can have either sources or balanced but an
         // element that purely a product cannot have a sink reaction
         for (auto it : r.products)
@@ -203,7 +203,7 @@ namespace rxn
           }
         }
 
-        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", rxn_count, r.getName()));
+        printGreen(fmt::format("Success! Reaction {:4d}: {}\n", _rxn_count, r.getName()));
         // add the valid reaction to the list
         valid.push_back(r);
 
@@ -228,7 +228,7 @@ namespace rxn
       {
         invalid.push_back(rxn_input[REACTION_KEY].as<string>());
         invalid_reason.push_back(e.what());
-        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", rxn_count, rxn_str));
+        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", _rxn_count, rxn_str));
         printRed(e.what());
         cout << "\n\n";
         continue;
@@ -245,7 +245,7 @@ namespace rxn
   void
   NetworkParser::writeSpeciesSummary(const string & filepath)
   {
-    for (auto it : yaml_map)
+    for (auto it : _yaml_map)
       // open the file to write to
       if (filepath == it.first)
         throw invalid_argument(
@@ -367,7 +367,7 @@ namespace rxn
   void
   NetworkParser::writeReactionSummary(const string & filepath)
   {
-    for (auto it : yaml_map)
+    for (auto it : _yaml_map)
       if (filepath == it.first)
         throw invalid_argument(
             makeRed("\n\nYour reaction summary file cannot have the same name as your input file!"));
@@ -387,13 +387,13 @@ namespace rxn
   NetworkParser::getReactionSummary(const bool yaml_file)
   {
     string summary = "";
-    summary += fmt::format("Total-Reactions: {:d}\n\n", rxn_count);
-    summary += fmt::format("Rate-Based: {:d}\n", rate_rxn.size() + invalid_rate_rxn.size());
+    summary += fmt::format("Total-Reactions: {:d}\n\n", _rxn_count);
+    summary += fmt::format("Rate-Based: {:d}\n", _rate_rxn.size() + _invalid_rate_rxn.size());
 
-    summary += getByTypeReactionSummary(this->rate_rxn, this->invalid_rate_rxn, this->invalid_rate_reason, yaml_file);
+    summary += getByTypeReactionSummary(_rate_rxn, _invalid_rate_rxn, _invalid_rate_reason, yaml_file);
 
-    summary += fmt::format("Cross-Section-Based: {:d}\n", xsec_rxn.size() + invalid_xsec_rxn.size());
-    summary += getByTypeReactionSummary(this->xsec_rxn, this->invalid_xsec_rxn, this->invalid_xsec_reason, yaml_file);
+    summary += fmt::format("Cross-Section-Based: {:d}\n", _xsec_rxn.size() + _invalid_xsec_rxn.size());
+    summary += getByTypeReactionSummary(_xsec_rxn, _invalid_xsec_rxn, _invalid_xsec_reason, yaml_file);
 
     return summary;
   }
@@ -434,13 +434,13 @@ namespace rxn
   vector<Reaction>
   NetworkParser::getRateBasedReactions()
   {
-    return this->rate_rxn;
+    return _rate_rxn;
   }
 
   vector<Reaction>
   NetworkParser::getXSecBasedReactions()
   {
-    return this->xsec_rxn;
+    return _xsec_rxn;
   }
 
   vector<Species>
@@ -458,10 +458,10 @@ namespace rxn
   YAML::Node
   NetworkParser::getYamlByFileName(const string & filename)
   {
-    auto it = this->yaml_map.find(filename);
-    if (it != yaml_map.end())
+    auto it = _yaml_map.find(filename);
+    if (it != _yaml_map.end())
       throw invalid_argument(makeRed("\n\nFile: '" + filename + "' has not been parsed\n"));
 
-    return this->yaml_map[filename];
+    return _yaml_map[filename];
   }
 }
