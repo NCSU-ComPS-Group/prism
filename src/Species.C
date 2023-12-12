@@ -54,6 +54,12 @@ namespace rxn
     this->latex_name = total_name;
   }
 
+  string
+  Species::getLatexName() const
+  {
+    return this->latex_name;
+  }
+
   std::ostream &
   operator<<(std::ostream & os, const Species & s)
   {

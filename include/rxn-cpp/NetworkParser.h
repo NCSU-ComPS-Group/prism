@@ -78,7 +78,7 @@ namespace rxn
     YAML::Node getYamlByFileName(const string & filename);
 
   private:
-    void parseReactions(const YAML::Node rxn,
+    void parseReactions(const YAML::Node network,
                         const string & filename,
                         vector<Reaction> & valid,
                         vector<string> & invalid,
@@ -86,7 +86,9 @@ namespace rxn
                         vector<Reaction> & custom,
                         vector<Reaction> & from_file,
                         vector<Reaction> & arrhenius,
-                        const bool rate_based=true);
+                        const bool rate_based = true);
+
+    void setLatexOverrides(const YAML::Node network) const;
     /** Map of YAML::Node from all of the files which networks have been parsed */
     unordered_map<string, YAML::Node> yaml_map;
     /** Map of data paths for where reaction files are stored */

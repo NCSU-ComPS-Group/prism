@@ -86,6 +86,18 @@ namespace rxn
       if (stat(this->filepath.c_str(), &buffer) != 0)
         throw invalid_argument(makeRed("File: '" + this->filepath + "' does not exist"));
       this->eqn_type = FROM_FILE_STR;
+
+      // now that we have checked that a file exists lets also make sure that the data base
+      // that was used to generate this is included in the input
+      try
+      {
+        string data_base = rxn_input[DATA_BASE_KEY].as<string>();
+      }
+      // lets throw an exception if this isn't provided. The data has to have come from somwhere
+      catch (YAML::InvalidNode)
+      {
+        throw invalid_argument(makeRed("Data from file provided but 'database' field is empty"));
+      }
     }
     catch (YAML::BadConversion)
     {
@@ -134,7 +146,7 @@ namespace rxn
         this->eqn_type = ARRHENIUS_STR;
         if (temp_params.size() > 5)
           throw invalid_argument(
-              makeRed("For the default equation type you must provided at most 5 parameters"));
+              makeRed("For the default equation type you must provide at most 5 parameters"));
         // lets allow the user to provide less than 5 parameters
         // anytime they provide less than the maximum amount of parameters the
         // remaining ones will be assumed to 0
@@ -143,6 +155,8 @@ namespace rxn
           this->params[i] = temp_params[i];
       }
     }
+
+    setLatexName();
   }
 
   string
@@ -190,11 +204,13 @@ namespace rxn
           // species and then have those changed reflected in the global data
           shared_ptr<Species> new_species = make_shared<Species>(s);
           species.emplace(s, new_species);
+          this->reactant_count.emplace(new_species, 1);
           this->reactants.push_back(new_species);
           continue;
         }
 
         this->reactants.push_back(it->second);
+        this->reactant_count[it->second] += 1;
       }
     }
 
@@ -222,11 +238,13 @@ namespace rxn
         {
           shared_ptr<Species> new_species = make_shared<Species>(s);
           species.emplace(s, new_species);
+          this->product_count.emplace(new_species, 1);
           this->products.push_back(new_species);
           continue;
         }
 
         this->products.push_back(it->second);
+        this->product_count[it->second] += 1;
       }
     }
   }
@@ -339,6 +357,55 @@ namespace rxn
   Reaction::operator!=(const Reaction & other) const
   {
     return !(*this == other);
+  }
+
+  void
+  Reaction::setLatexName()
+  {
+    // we are going to use this to make sure we don't duplicate species in the
+    // latex string
+    unordered_set<shared_ptr<Species>> unique_check;
+    for (size_t i = 0; i < this->reactants.size(); ++i)
+    {
+      // lets check to see if we have added this reactant
+      auto it = unique_check.find(this->reactants[i]);
+      // if its already in the equation no need to add it again
+      if (it != unique_check.end())
+        continue;
+      // add it to the set if its not in already
+      unique_check.emplace(this->reactants[i]);
+
+      auto count_it = this->reactant_count.find(this->reactants[i]);
+      if (count_it->second != 1)
+        this->latex_name += fmt::format("{:d}", count_it->second);
+
+      this->latex_name += this->reactants[i]->getLatexName();
+      if (unique_check.size() != this->reactant_count.size())
+        this->latex_name += " + ";
+    }
+
+    // clear the set so we can reuse it
+    unique_check.clear();
+    this->latex_name += " $\\rightarrow$ ";
+
+    for (size_t i = 0; i < this->products.size(); ++i)
+    {
+      // lets check to see if we have added this product
+      auto it = unique_check.find(this->products[i]);
+      // if its already in the equation no need to add it again
+      if (it != unique_check.end())
+        continue;
+      // add it to the set if its not in already
+      unique_check.emplace(this->products[i]);
+
+      auto count_it = this->product_count.find(this->products[i]);
+      if (count_it->second != 1)
+        this->latex_name += fmt::format("{:d}", count_it->second);
+
+      this->latex_name += this->products[i]->getLatexName();
+      if (unique_check.size() != this->product_count.size())
+        this->latex_name += " + ";
+    }
   }
 
   string

@@ -16,11 +16,45 @@ namespace rxn
   }
 
   void
+  NetworkParser::setLatexOverrides(const YAML::Node network) const
+  {
+    try
+    {
+      auto overrides = network[LATEX_OVERRIDE_KEY];
+      for (auto override : overrides)
+      {
+        try
+        {
+          string species = override[SPECIES_KEY].as<string>();
+          string latex = override[LATEX_KEY].as<string>();
+          latex_overrides.emplace(species, latex);
+        }
+        catch (YAML::InvalidNode)
+        {
+          invalid_argument(
+              makeRed(fmt::format("You must provide '{}' and '{}' when defining a LaTeX override",
+                                  SPECIES_KEY,
+                                  LATEX_KEY)));
+        }
+        catch (YAML::BadConversion)
+        {
+          invalid_argument(makeRed(fmt::format(
+              "'{}' and '{}' must both be provided as strings", SPECIES_KEY, LATEX_KEY)));
+        }
+      }
+    }
+    // if there is no latex overrides that's okay
+    catch (YAML::InvalidNode)
+    {
+    }
+  }
+
+  void
   NetworkParser::parseNetwork(const string & file)
   {
     checkFile(file);
     YAML::Node network = YAML::LoadFile(file);
-
+    setLatexOverrides(network);
     this->yaml_map[file] = network;
 
     // check to see if the use provides a location for their reaction files
@@ -83,10 +117,7 @@ namespace rxn
     {
       this->printReactionSummary();
       printRed("Invalid reactions listed above must be addressed\n");
-      exit(EXIT_FAILURE);
     }
-
-
     cout << endl << endl;
   }
 

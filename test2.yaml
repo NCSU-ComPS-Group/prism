@@ -11,7 +11,14 @@ Unique-Species: 6
 
 # Warning! Species has no sinks
 Species: Ar2
-  - Rate-Based: 1
+  - Rate-Based: 0
+    Balanced: 0
+
+    Sources: 0
+
+    Sinks: 0
+
+  - Cross-Section-Based: 1
     Balanced: 0
 
     Sources: 1
@@ -20,16 +27,16 @@ Species: Ar2
 
     Sinks: 0
 
-  - Cross-Section-Based: 0
+
+Species: Ar
+  - Rate-Based: 0
     Balanced: 0
 
     Sources: 0
 
     Sinks: 0
 
-
-Species: Ar
-  - Rate-Based: 8
+  - Cross-Section-Based: 8
     Balanced: 0
 
     Sources: 4
@@ -52,17 +59,17 @@ Species: Ar
       - reaction: Ar* + 2Ar -> Ar2 + Ar
         stoic_coeff: -1
 
-  - Cross-Section-Based: 0
+
+# Warning! Species has no sinks
+Species: Ar_r
+  - Rate-Based: 0
     Balanced: 0
 
     Sources: 0
 
     Sinks: 0
 
-
-# Warning! Species has no sinks
-Species: Ar_r
-  - Rate-Based: 1
+  - Cross-Section-Based: 1
     Balanced: 0
 
     Sources: 1
@@ -71,16 +78,16 @@ Species: Ar_r
 
     Sinks: 0
 
-  - Cross-Section-Based: 0
+
+Species: Ar*
+  - Rate-Based: 0
     Balanced: 0
 
     Sources: 0
 
     Sinks: 0
 
-
-Species: Ar*
-  - Rate-Based: 8
+  - Cross-Section-Based: 8
     Balanced: 0
 
     Sources: 1
@@ -103,17 +110,17 @@ Species: Ar*
       - reaction: Ar* + 2Ar -> Ar2 + Ar
         stoic_coeff: -1
 
-  - Cross-Section-Based: 0
+
+# Warning! Species has no sinks
+Species: Ar+
+  - Rate-Based: 0
     Balanced: 0
 
     Sources: 0
 
     Sinks: 0
 
-
-# Warning! Species has no sinks
-Species: Ar+
-  - Rate-Based: 3
+  - Cross-Section-Based: 3
     Balanced: 0
 
     Sources: 3
@@ -126,17 +133,17 @@ Species: Ar+
 
     Sinks: 0
 
-  - Cross-Section-Based: 0
+
+# Warning! Species has no sinks
+Species: e
+  - Rate-Based: 0
     Balanced: 0
 
     Sources: 0
 
     Sinks: 0
 
-
-# Warning! Species has no sinks
-Species: e
-  - Rate-Based: 8
+  - Cross-Section-Based: 8
     Balanced: 3
       - reaction: e + Ar -> e + Ar*
       - reaction: e + Ar* -> e + Ar
@@ -153,12 +160,5 @@ Species: e
         stoic_coeff: 1
       - reaction: Ar* + Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
-
-    Sinks: 0
-
-  - Cross-Section-Based: 0
-    Balanced: 0
-
-    Sources: 0
 
     Sinks: 0

@@ -18,6 +18,10 @@ namespace rxn
   #define EQN_TYPE_KEY "equation-type"
   #define REACTION_KEY "reaction"
   #define REFERENCE_KEY "reference"
+  #define DATA_BASE_KEY "database"
+  #define LATEX_OVERRIDE_KEY "latex-overrides"
+  #define SPECIES_KEY "species"
+  #define LATEX_KEY "latex"
   #define MASS_EPS 1e-5;
   /**
    * Storing the mass of all elements in the periodic table
@@ -30,4 +34,7 @@ namespace rxn
   extern const float e;
   /** A map to store all the bibtex references we'll need to create a solid file */
   extern unordered_map<string, string> references;
+
+  /** The map which will allow us to make substitutions with custom latex representations */
+  extern unordered_map<string, string> latex_overrides;
 }

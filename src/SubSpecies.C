@@ -190,6 +190,14 @@ namespace rxn
   void
   SubSpecies::setLatexName()
   {
+    auto it = latex_overrides.find(this->name);
+    // if the user defined an override we use what they've given
+    if (it != latex_overrides.end())
+    {
+      this->latex_name = it->second;
+      return;
+    }
+
     if (this->name == "hnu")
     {
       this->latex_name = "$h\\nu$";

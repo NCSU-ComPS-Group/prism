@@ -33,8 +33,9 @@ namespace rxn
     */
     int getStoicCoeffByName(const string s);
 
+    void setLatexName();
     /**
-     * Method to get the LaTeX string of the species
+     * Method to get the LaTeX string for the reaction
      */
     string getLatexName() const;
 
@@ -78,12 +79,16 @@ namespace rxn
     const int rxn_number;
     /** The species that are the reactants */
     vector<shared_ptr<Species>> reactants;
+    /** The coefficient for each species on the lhs */
+    unordered_map<shared_ptr<Species>, unsigned int> reactant_count;
     /** The species that are the products */
     vector<shared_ptr<Species>> products;
+    /** The coefficient for each species on the rhs */
+    unordered_map<shared_ptr<Species>, unsigned int> product_count;
     /**
      * The LaTeX representation of the species name
      */
-    const string latex_name;
+    string latex_name;
 
     /**
      * A map which stores the stoiciometric coefficents for each species

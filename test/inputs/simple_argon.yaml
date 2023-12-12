@@ -1,25 +1,33 @@
 data-path: test/inputs/data/
 
+latex-overrides:
+  - species: Ar_r
+    latex: Ar$_r$
+
 xsec-based:
   - reaction: e + Ar -> e + Ar*
     delta-eps-e: -11.56
     file: reaction1.txt
     reference: nothing real
+    database: test
 
   - reaction: e + Ar -> 2e + Ar+
     delta-eps-e: -15.7
     file: reaction2.txt
     reference: nothing real
+    database: test
 
   - reaction: e + Ar* -> e + Ar
     delta-eps-e: 11.56
     file: reaction3.txt
     reference: nothing real
+    database: test
 
   - reaction: e + Ar* -> 2e + Ar+
     delta-eps-e: -4.14
     file: reaction4.txt
     reference: nothing real
+    database: test
 
   - reaction: e + Ar* -> e + Ar_r
     params: 1.2044e11

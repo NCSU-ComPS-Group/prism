@@ -128,6 +128,8 @@ namespace rxn
 
   const float e = 1.602176487E-19;
 
+  unordered_map<string, string> latex_overrides;
+
   unordered_map<string, string> references = {
       {"chart_of_nuclides",
       "@book{chart_of_nuclides,\n"
