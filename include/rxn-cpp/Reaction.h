@@ -65,37 +65,37 @@ namespace rxn
 
   protected:
     friend class NetworkParser;
-    string eqn_type;
-    vector<float> params;
-    string filepath;
-    float delta_eps_e;
-    float delta_eps_g;
-    string reference;
+    string _eqn_type;
+    vector<float> _params;
+    string _filepath;
+    float _delta_eps_e;
+    float _delta_eps_g;
+    string _reference;
 
   private:
     /** The string representation of the reaction */
-    string name;
+    string _name;
     /** The number of reaction this one is in the network file */
-    const int rxn_number;
+    const int _rxn_number;
     /** The species that are the reactants */
-    vector<shared_ptr<Species>> reactants;
+    vector<shared_ptr<Species>> _reactants;
     /** The coefficient for each species on the lhs */
-    unordered_map<shared_ptr<Species>, unsigned int> reactant_count;
+    unordered_map<shared_ptr<Species>, unsigned int> _reactant_count;
     /** The species that are the products */
-    vector<shared_ptr<Species>> products;
+    vector<shared_ptr<Species>> _products;
     /** The coefficient for each species on the rhs */
-    unordered_map<shared_ptr<Species>, unsigned int> product_count;
+    unordered_map<shared_ptr<Species>, unsigned int> _product_count;
     /**
      * The LaTeX representation of the species name
      */
-    string latex_name;
+    string _latex_name;
 
     /**
      * A map which stores the stoiciometric coefficents for each species
      * the keys are the string representation of the species
      * the value is the stoiciometric coefficient of the species
      */
-    unordered_map<string, int> stoic_coeffs;
+    unordered_map<string, int> _stoic_coeffs;
 
     /**
      * Checks to make sure that there is a -> in the reaction string

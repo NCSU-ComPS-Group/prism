@@ -10,7 +10,8 @@ TEST(ReactionTest, TestBasicReactionFromFile)
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
-  Reaction r = Reaction(rxn_input, 0, "inputs/data");
+  rxn_input[DATA_BASE_KEY] = "test";
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
 
   Species s1 = Species("Ar");
   Species s2 = Species("e");
@@ -107,8 +108,9 @@ TEST(ReactionTest, TestSpeciesWithCoeffReaction)
   rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
+  rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
 
 
   Species s1 = Species("Ar");
@@ -139,8 +141,9 @@ TEST(ReactionTest, TestUnbalanced)
   rxn_input[REACTION_KEY] = "e + Ar* -> 2e + Ar+";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
+  rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
 
   Species s1 = Species("Ar*");
   Species s2 = Species("e");
@@ -172,8 +175,9 @@ TEST(ReactionTest, TestMolecularBreakDown)
   rxn_input[REACTION_KEY] = "e + CF4 -> CF2+ + 2F + 2e";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
+  rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
 
   Species s1 = Species("e");
   Species s2 = Species("CF4");

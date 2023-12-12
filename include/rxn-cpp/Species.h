@@ -40,21 +40,21 @@ namespace rxn
     friend class NetworkParser;
     friend class Reaction;
     /** the list of the sub_species in the the class */
-    vector<SubSpecies> sub_species;
+    vector<SubSpecies> _sub_species;
     /** Rate based reactions where the stoiciometric coeff is greater than 1 */
-    vector<Reaction> rate_sources;
+    vector<Reaction> _rate_sources;
     /** Cross section based reactions where the stoiciometric coeff is greater than 1 */
-    vector<Reaction> xsec_sources;
+    vector<Reaction> _xsec_sources;
     /** Rate based reactions where the stoiciometric coeff is less than 1 */
-    vector<Reaction> rate_sinks;
+    vector<Reaction> _rate_sinks;
     /** Cross section based reactions where the stoiciometric coeff is less than 1 */
-    vector<Reaction> xsec_sinks;
+    vector<Reaction> _xsec_sinks;
     /** All reactions where the stoiciometric coeff is 0 */
-    vector<Reaction> balanced;
+    vector<Reaction> _balanced;
     /** Rate based reactions where the stoiciometric coeff is 0*/
-    vector<Reaction> rate_balanced;
+    vector<Reaction> _rate_balanced;
     /** Cross section based reactions where the stoiciometric coeff is 0*/
-    vector<Reaction> xsec_balanced;
+    vector<Reaction> _xsec_balanced;
 
   private:
     /** Method for constructing the latex name of the species  */

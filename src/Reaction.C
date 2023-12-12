@@ -5,14 +5,14 @@ namespace rxn
   Reaction::Reaction(const YAML::Node rxn_input,
                     const int rxn_number,
                     const string & data_path) :
-  rxn_number(rxn_number),
-  delta_eps_e(0.0),
-  delta_eps_g(0.0)
+  _rxn_number(rxn_number),
+  _delta_eps_e(0.0),
+  _delta_eps_g(0.0)
   {
     // lets try and get the name
     try {
       string rxn_str = rxn_input[REACTION_KEY].as<string>();
-      this->name = checkReactionString(rxn_str);
+      _name = checkReactionString(rxn_str);
     } catch (YAML::BadConversion) {
       throw invalid_argument(makeRed("- reaction: input must be a string"));
     } catch (YAML::InvalidNode) {
@@ -24,7 +24,7 @@ namespace rxn
     validateReaction();
 
     try{
-      this->reference = rxn_input[REFERENCE_KEY].as<string>();
+      _reference = rxn_input[REFERENCE_KEY].as<string>();
     } catch (YAML::BadConversion) {
       throw invalid_argument(makeRed("References must be provided in string form"));
     } catch(YAML::InvalidNode) {
@@ -35,7 +35,7 @@ namespace rxn
     // lets check to see if the user has provided values for delta-eps-e
     try {
       float delta_eps_e = rxn_input[DELTA_EPS_E_KEY].as<float>();
-      this->delta_eps_e = delta_eps_e;
+      _delta_eps_e = delta_eps_e;
     }
     // lets do nothing since we provide default values
     catch (YAML::BadConversion) {}
@@ -44,7 +44,7 @@ namespace rxn
     // lets check to see if the user has provided values for delta-eps-g
     try {
       float delta_eps_g = rxn_input[DELTA_EPS_G_KEY].as<float>();
-      this->delta_eps_e = delta_eps_g;
+      _delta_eps_e = delta_eps_g;
 
     }
     // lets do nothing since we provide default values
@@ -78,14 +78,14 @@ namespace rxn
       catch(YAML::InvalidNode) {}
 
       if (data_path.length() == 0)
-        this->filepath = rxn_file;
+        _filepath = rxn_file;
       else
-        this->filepath = data_path + rxn_file;
+        _filepath = data_path + rxn_file;
 
       struct stat buffer;
-      if (stat(this->filepath.c_str(), &buffer) != 0)
-        throw invalid_argument(makeRed("File: '" + this->filepath + "' does not exist"));
-      this->eqn_type = FROM_FILE_STR;
+      if (stat(_filepath.c_str(), &buffer) != 0)
+        throw invalid_argument(makeRed("File: '" + _filepath + "' does not exist"));
+      _eqn_type = FROM_FILE_STR;
 
       // now that we have checked that a file exists lets also make sure that the data base
       // that was used to generate this is included in the input
@@ -101,17 +101,17 @@ namespace rxn
     }
     catch (YAML::BadConversion)
     {
-      this->filepath = "";
+      _filepath = "";
     }
     catch(YAML::InvalidNode) {
-      this->filepath = "";
+      _filepath = "";
     }
 
     // lets get the function parameters if the user isn't giving us
     // a file
     vector<float> temp_params;
     float temp_param;
-    if (this->filepath == "")
+    if (_filepath == "")
     {
       try {
         temp_params = rxn_input[PARAM_KEY].as<vector<float>>();
@@ -121,7 +121,7 @@ namespace rxn
         try
         {
           temp_param = rxn_input[PARAM_KEY].as<float>();
-          this->params = {temp_param, 0, 0, 0, 0};
+          _params = {temp_param, 0, 0, 0, 0};
         }
         catch (YAML::InvalidNode)
         {
@@ -137,22 +137,22 @@ namespace rxn
         // cout << rxn_input[EQN_TYPE_KEY] << endl;
         // auto test = rxn_input[EQN_TYPE_KEY].as<string>();
         // cout << "Here" << endl;
-        this->eqn_type = rxn_input[EQN_TYPE_KEY].as<string>();
-        this->params = temp_params;
+        _eqn_type = rxn_input[EQN_TYPE_KEY].as<string>();
+        _params = temp_params;
       }
       // if there is not equation type lets assume its
       // arrhenius
       catch (YAML::InvalidNode) {
-        this->eqn_type = ARRHENIUS_STR;
+        _eqn_type = ARRHENIUS_STR;
         if (temp_params.size() > 5)
           throw invalid_argument(
               makeRed("For the default equation type you must provide at most 5 parameters"));
         // lets allow the user to provide less than 5 parameters
         // anytime they provide less than the maximum amount of parameters the
         // remaining ones will be assumed to 0
-        this->params = {0, 0, 0, 0, 0};
+        _params = {0, 0, 0, 0, 0};
         for (size_t i = 0; i < temp_params.size(); ++i)
-          this->params[i] = temp_params[i];
+          _params[i] = temp_params[i];
       }
     }
 
@@ -173,7 +173,7 @@ namespace rxn
   Reaction::setSides()
   {
     vector<vector<Species>> species_sides;
-    vector<string> sides = splitByDelimiter(this->name, " -> ");
+    vector<string> sides = splitByDelimiter(_name, " -> ");
     vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
     vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
 
@@ -191,11 +191,11 @@ namespace rxn
 
       for (int i = 0; i < coeff; ++i)
       {
-        auto stoic_it = this->stoic_coeffs.find(s);
-        if ( stoic_it == this->stoic_coeffs.end())
-          this->stoic_coeffs.emplace(s, -1);
+        auto stoic_it = _stoic_coeffs.find(s);
+        if ( stoic_it == _stoic_coeffs.end())
+          _stoic_coeffs.emplace(s, -1);
         else
-          this->stoic_coeffs[s] -= 1;
+          _stoic_coeffs[s] -= 1;
 
         auto it = species.find(s);
         if (it == species.end())
@@ -204,13 +204,13 @@ namespace rxn
           // species and then have those changed reflected in the global data
           shared_ptr<Species> new_species = make_shared<Species>(s);
           species.emplace(s, new_species);
-          this->reactant_count.emplace(new_species, 1);
-          this->reactants.push_back(new_species);
+          _reactant_count.emplace(new_species, 1);
+          _reactants.push_back(new_species);
           continue;
         }
 
-        this->reactants.push_back(it->second);
-        this->reactant_count[it->second] += 1;
+        _reactants.push_back(it->second);
+        _reactant_count[it->second] += 1;
       }
     }
 
@@ -227,24 +227,24 @@ namespace rxn
 
       for (int i = 0; i < coeff; ++i)
       {
-        auto stoic_it = this->stoic_coeffs.find(s);
-        if (stoic_it == this->stoic_coeffs.end())
-          this->stoic_coeffs.emplace(s, 1);
+        auto stoic_it = _stoic_coeffs.find(s);
+        if (stoic_it == _stoic_coeffs.end())
+          _stoic_coeffs.emplace(s, 1);
         else
-          this->stoic_coeffs[s] += 1;
+          _stoic_coeffs[s] += 1;
 
         auto it = species.find(s);
         if (it == species.end())
         {
           shared_ptr<Species> new_species = make_shared<Species>(s);
           species.emplace(s, new_species);
-          this->product_count.emplace(new_species, 1);
-          this->products.push_back(new_species);
+          _product_count.emplace(new_species, 1);
+          _products.push_back(new_species);
           continue;
         }
 
-        this->products.push_back(it->second);
-        this->product_count[it->second] += 1;
+        _products.push_back(it->second);
+        _product_count[it->second] += 1;
       }
     }
   }
@@ -259,12 +259,12 @@ namespace rxn
     // all of the elements that exist in the reactants
     // unordered_set<string> r_elements;
     unordered_map<string, int> r_elements;
-    for (auto r : this->reactants)
+    for (auto r : _reactants)
     {
       // this reaction is a sink
       r_mass += r->getMass();
       r_charge_num += r->getChargeNumber();
-      for (auto sub_r : r->sub_species)
+      for (auto sub_r : r->_sub_species)
       {
         // we can't keep track of the electrons and photons in the same way
         // as heavy species so we'll ignore them for this check
@@ -286,12 +286,12 @@ namespace rxn
     // product charge
     int p_charge_num = 0;
     unordered_map<string, int> p_elements;
-    for (auto p : this->products)
+    for (auto p : _products)
     {
       // lets check to make sure that all of the elements that make up
       // the product also exist on the reactant side
       // no nuclear reactions here
-      for (auto sub_p : p->sub_species)
+      for (auto sub_p : p->_sub_species)
       {
         // we are not checking to make sure electrons and photons are on both sides
         // can be produced without it being on both sides
@@ -337,13 +337,13 @@ namespace rxn
   bool
   Reaction::operator==(const Reaction & other) const
   {
-    if (this->name != other.name)
+    if (_name != other._name)
       return false;
 
-    if (this->rxn_number != other.rxn_number)
+    if (_rxn_number != other._rxn_number)
       return false;
 
-    if (this->latex_name != other.latex_name)
+    if (_latex_name != other._latex_name)
       return false;
 
     return true;
@@ -351,7 +351,7 @@ namespace rxn
   int
   Reaction::getStoicCoeffByName(const string s)
   {
-    return this->stoic_coeffs[s];
+    return _stoic_coeffs[s];
   }
   bool
   Reaction::operator!=(const Reaction & other) const
@@ -365,60 +365,60 @@ namespace rxn
     // we are going to use this to make sure we don't duplicate species in the
     // latex string
     unordered_set<shared_ptr<Species>> unique_check;
-    for (size_t i = 0; i < this->reactants.size(); ++i)
+    for (size_t i = 0; i < _reactants.size(); ++i)
     {
       // lets check to see if we have added this reactant
-      auto it = unique_check.find(this->reactants[i]);
+      auto it = unique_check.find(_reactants[i]);
       // if its already in the equation no need to add it again
       if (it != unique_check.end())
         continue;
       // add it to the set if its not in already
-      unique_check.emplace(this->reactants[i]);
+      unique_check.emplace(_reactants[i]);
 
-      auto count_it = this->reactant_count.find(this->reactants[i]);
+      auto count_it = _reactant_count.find(_reactants[i]);
       if (count_it->second != 1)
-        this->latex_name += fmt::format("{:d}", count_it->second);
+        _latex_name += fmt::format("{:d}", count_it->second);
 
-      this->latex_name += this->reactants[i]->getLatexName();
-      if (unique_check.size() != this->reactant_count.size())
-        this->latex_name += " + ";
+      _latex_name += _reactants[i]->getLatexName();
+      if (unique_check.size() != _reactant_count.size())
+        _latex_name += " + ";
     }
 
     // clear the set so we can reuse it
     unique_check.clear();
-    this->latex_name += " $\\rightarrow$ ";
+    _latex_name += " $\\rightarrow$ ";
 
-    for (size_t i = 0; i < this->products.size(); ++i)
+    for (size_t i = 0; i < _products.size(); ++i)
     {
       // lets check to see if we have added this product
-      auto it = unique_check.find(this->products[i]);
+      auto it = unique_check.find(_products[i]);
       // if its already in the equation no need to add it again
       if (it != unique_check.end())
         continue;
       // add it to the set if its not in already
-      unique_check.emplace(this->products[i]);
+      unique_check.emplace(_products[i]);
 
-      auto count_it = this->product_count.find(this->products[i]);
+      auto count_it = _product_count.find(_products[i]);
       if (count_it->second != 1)
-        this->latex_name += fmt::format("{:d}", count_it->second);
+        _latex_name += fmt::format("{:d}", count_it->second);
 
-      this->latex_name += this->products[i]->getLatexName();
-      if (unique_check.size() != this->product_count.size())
-        this->latex_name += " + ";
+      _latex_name += _products[i]->getLatexName();
+      if (unique_check.size() != _product_count.size())
+        _latex_name += " + ";
     }
   }
 
   string
   Reaction::getLatexName() const
   {
-    return this->latex_name;
+    return _latex_name;
   }
 
   vector<Species>
   Reaction::getReactants() const
   {
     vector<Species> r;
-    for (auto s : this->reactants)
+    for (auto s : _reactants)
       r.push_back(*s);
     return r;
   }
@@ -427,7 +427,7 @@ namespace rxn
   Reaction::getProducts() const
   {
     vector<Species> p;
-    for (auto s : this->products)
+    for (auto s : _products)
       p.push_back(*s);
 
     return p;
@@ -436,49 +436,49 @@ namespace rxn
   int
   Reaction::getReactionNumber() const
   {
-    return this->rxn_number;
+    return _rxn_number;
   }
 
   string
   Reaction::getName() const
   {
-    return this->name;
+    return _name;
   }
 
   string
   Reaction::getEquationType() const
   {
-    return this->eqn_type;
+    return _eqn_type;
   }
 
   vector<float>
   Reaction::getParams() const
   {
-    return this->params;
+    return _params;
   }
 
   string
   Reaction::getPathToData() const
   {
-    return this->filepath;
+    return _filepath;
   }
 
   float
   Reaction::getDeltaEnergyElectron() const
   {
-    return this->delta_eps_e;
+    return _delta_eps_e;
   }
 
   float
   Reaction::getDeltaEnergyGas() const
   {
-    return this->delta_eps_g;
+    return _delta_eps_g;
   }
 
   string
   Reaction::getReference() const
   {
-    return this->reference;
+    return _reference;
   }
 }
 

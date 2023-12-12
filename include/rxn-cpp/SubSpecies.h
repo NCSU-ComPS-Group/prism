@@ -33,11 +33,11 @@ namespace rxn
 
   private:
     /** This will be just the elemental name */
-    const string base;
+    const string _base;
     /** The rest of name after the elemental name that has been removed */
-    const string modifier;
+    const string _modifier;
     /** The subscript of the number ex: Ar2 this is 2 */
-    const unsigned int subscript;
+    const unsigned int _subscript;
     /** method for the setting the element which the species modifies */
     string setBase();
     /**

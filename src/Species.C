@@ -6,7 +6,7 @@ namespace rxn
 
   Species::Species(const string & name)
     : SpeciesBase(name),
-      sub_species(decomposeSpecies())
+      _sub_species(decomposeSpecies())
   {
     setMass();
     setChargeNumber();
@@ -16,7 +16,7 @@ namespace rxn
   vector<SubSpecies>
   Species::decomposeSpecies()
   {
-    vector<string> parts = splitByCapital(this->name);
+    vector<string> parts = splitByCapital(_name);
 
     vector<SubSpecies> sub_sp;
 
@@ -30,18 +30,18 @@ namespace rxn
   Species::setMass()
   {
     float total_mass = 0;
-    for (SubSpecies s : this->sub_species)
+    for (SubSpecies s : _sub_species)
       total_mass += s.getMass();
-    this->mass = total_mass;
+    _mass = total_mass;
   }
 
   void
   Species::setChargeNumber()
   {
     int total_num = 0;
-    for (SubSpecies s : this->sub_species)
+    for (SubSpecies s : _sub_species)
       total_num += s.getChargeNumber();
-    this->charge_num = total_num;
+    _charge_num = total_num;
   }
 
 
@@ -49,15 +49,15 @@ namespace rxn
   Species::setLatexName()
   {
     string total_name = "";
-    for (SubSpecies s : this->sub_species)
+    for (SubSpecies s : _sub_species)
       total_name += s.getLatexName();
-    this->latex_name = total_name;
+    _latex_name = total_name;
   }
 
   string
   Species::getLatexName() const
   {
-    return this->latex_name;
+    return _latex_name;
   }
 
   std::ostream &
@@ -70,21 +70,21 @@ namespace rxn
   bool
   Species::operator==(const Species & other) const
   {
-    if (this->sub_species.size() != other.sub_species.size())
+    if (_sub_species.size() != other._sub_species.size())
       return false;
 
-    if (abs(this->mass - other.mass) > numeric_limits<float>::epsilon())
+    if (abs(_mass - other._mass) > numeric_limits<float>::epsilon())
       return false;
 
-    if (this->charge_num != other.charge_num)
+    if (_charge_num != other._charge_num)
       return false;
 
-    if (this->latex_name != other.latex_name)
+    if (_latex_name != other._latex_name)
       return false;
 
-    for (auto i = 0; i < this->sub_species.size(); ++i)
+    for (auto i = 0; i < _sub_species.size(); ++i)
     {
-      if (this->sub_species[i] != other.sub_species[i])
+      if (_sub_species[i] != other._sub_species[i])
         return false;
     }
     return true;
@@ -100,43 +100,43 @@ namespace rxn
   vector<Reaction>
   Species::getRateBasedBalanced() const
   {
-    return this->rate_balanced;
+    return _rate_balanced;
   }
 
   vector<Reaction>
   Species::getXSecBasedBalanced() const
   {
-    return this->xsec_balanced;
+    return _xsec_balanced;
   }
 
   vector<Reaction>
   Species::getRateBasedSources() const
   {
-    return this->rate_sources;
+    return _rate_sources;
   }
 
   vector<Reaction>
   Species::getXSecBasedSources() const
   {
-    return this->xsec_sources;
+    return _xsec_sources;
   }
 
   vector<Reaction>
   Species::getRateBasedSinks() const
   {
-    return this->rate_sinks;
+    return _rate_sinks;
   }
 
   vector<Reaction>
   Species::getXSecBasedSinks() const
   {
-    return this->xsec_sinks;
+    return _xsec_sinks;
   }
 
   vector<SubSpecies>
   Species::getSubSpecies() const
   {
-    return this->sub_species;
+    return _sub_species;
   }
 }
 

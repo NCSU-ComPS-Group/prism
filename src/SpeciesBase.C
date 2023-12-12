@@ -3,7 +3,7 @@
 namespace rxn
 {
   SpeciesBase::SpeciesBase(const string & name) :
-    name(checkName(name))
+    _name(checkName(name))
   {
   }
 
@@ -12,7 +12,7 @@ namespace rxn
   std::ostream &
   operator<<(std::ostream & os, const SpeciesBase & s)
   {
-    os << s.name;
+    os << s.getName();
     return os;
   }
 
@@ -37,7 +37,7 @@ namespace rxn
   bool
   SpeciesBase::operator==(const SpeciesBase & other) const
   {
-    return this->name == other.name;
+    return _name == other.getName();
   }
 
 
@@ -50,31 +50,31 @@ namespace rxn
   string
   SpeciesBase::getName() const
   {
-    return this->name;
+    return _name;
   }
 
   float
   SpeciesBase::getMass() const
   {
-    return this->mass;
+    return _mass;
   }
 
   int
   SpeciesBase::getChargeNumber() const
   {
-    return this->charge_num;
+    return _charge_num;
   }
 
   float
   SpeciesBase::getCharge() const
   {
-    return static_cast<float>(this->charge_num) * e;
+    return static_cast<float>(_charge_num) * e;
   }
 
   string
   SpeciesBase::getLatexName() const
   {
-    return this->latex_name;
+    return _latex_name;
   }
 } // namespace RXN
 

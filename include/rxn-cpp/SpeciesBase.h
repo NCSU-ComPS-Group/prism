@@ -37,13 +37,13 @@ namespace rxn
     string getLatexName() const;
   protected:
     /** The full string of the species base */
-    string name;
+    string _name;
     /** The molar mass of the species */
-    float mass;
+    float _mass;
     /** The level of ionization ex: Ar-4 this is -4 */
-    int charge_num;
+    int _charge_num;
     /** The name of the spcies formatted for printing in a latex_table */
-    string latex_name;
+    string _latex_name;
 
   private:
 

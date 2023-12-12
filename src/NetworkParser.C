@@ -151,19 +151,19 @@ namespace rxn
         Reaction r = Reaction(rxn_input, _rxn_count, _data_paths[filename]);
         // products can have either sources or balanced but an
         // element that purely a product cannot have a sink reaction
-        for (auto it : r.products)
+        for (auto it : r._products)
         {
           // add all of the reactions that produce this species
           if (r.getStoicCoeffByName(it->getName()) > 0)
           {
             if (rate_based)
             {
-              it->rate_sources.push_back(r);
+              it->_rate_sources.push_back(r);
               continue;
             }
             else
             {
-              it->xsec_sources.push_back(r);
+              it->_xsec_sources.push_back(r);
               continue;
             }
           }
@@ -173,18 +173,18 @@ namespace rxn
           {
             if (rate_based)
             {
-              it->rate_balanced.push_back(r);
+              it->_rate_balanced.push_back(r);
               continue;
             }
             else
             {
-              it->xsec_balanced.push_back(r);
+              it->_xsec_balanced.push_back(r);
               continue;
             }
           }
         }
         // only need to check for sinks with reactants
-        for (auto it : r.reactants)
+        for (auto it : r._reactants)
         {
           // only adding these reactions if they are truly sinks
           // and not actually neutral
@@ -192,12 +192,12 @@ namespace rxn
           {
             if (rate_based)
             {
-              it->rate_sinks.push_back(r);
+              it->_rate_sinks.push_back(r);
               continue;
             }
             else
             {
-              it->xsec_sinks.push_back(r);
+              it->_xsec_sinks.push_back(r);
               continue;
             }
           }
@@ -207,13 +207,13 @@ namespace rxn
         // add the valid reaction to the list
         valid.push_back(r);
 
-        if (r.eqn_type == FROM_FILE_STR)
+        if (r._eqn_type == FROM_FILE_STR)
         {
           from_file.push_back(r);
           continue;
         }
 
-        if (r.eqn_type == ARRHENIUS_STR)
+        if (r._eqn_type == ARRHENIUS_STR)
         {
           arrhenius.push_back(r);
           continue;
@@ -282,7 +282,7 @@ namespace rxn
   NetworkParser::getSingleSpeciesSummary(const shared_ptr<Species> s, const bool yaml_file)
   {
     string summary = "\n\n";
-    if (s->rate_sources.size() + s->xsec_sources.size() == 0)
+    if (s->_rate_sources.size() + s->_xsec_sources.size() == 0)
     {
       if (yaml_file)
         summary += "# ";
@@ -293,7 +293,7 @@ namespace rxn
       if (!yaml_file)
         summary += "\033[0m";
     }
-    if (s->rate_sinks.size() + s->xsec_sinks.size() == 0)
+    if (s->_rate_sinks.size() + s->_xsec_sinks.size() == 0)
     {
       if (yaml_file)
         summary += "# ";
@@ -308,41 +308,41 @@ namespace rxn
     summary += s->getName();
     summary += "\n";
     // rate based summary
-    int rate_rxn_count = s->rate_balanced.size() + s->rate_sources.size() + s->rate_sinks.size();
+    int rate_rxn_count = s->_rate_balanced.size() + s->_rate_sources.size() + s->_rate_sinks.size();
     summary += fmt::format("  - Rate-Based: {:d}\n", rate_rxn_count);
-    summary += fmt::format("    Balanced: {}\n", s->rate_balanced.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_balanced, s->getName(), false);
+    summary += fmt::format("    Balanced: {}\n", s->_rate_balanced.size());
+    summary += getSpeciesDependantReactionSummary(s->_rate_balanced, s->getName(), false);
 
     if (!yaml_file)
       summary += "\033[32m";
-    summary += fmt::format("\n    Sources: {}\n", s->rate_sources.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_sources, s->getName(), yaml_file);
+    summary += fmt::format("\n    Sources: {}\n", s->_rate_sources.size());
+    summary += getSpeciesDependantReactionSummary(s->_rate_sources, s->getName(), yaml_file);
 
 
     if (!yaml_file)
       summary += "\033[31m";
-    summary += fmt::format("\n    Sinks: {}\n", s->rate_sinks.size());
-    summary += getSpeciesDependantReactionSummary(s->rate_sinks, s->getName(), yaml_file);
+    summary += fmt::format("\n    Sinks: {}\n", s->_rate_sinks.size());
+    summary += getSpeciesDependantReactionSummary(s->_rate_sinks, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[0m";
 
     summary += "\n";
     // xsec based summary
-    int xsec_rxn_count = s->xsec_balanced.size() + s->xsec_sources.size() + s->xsec_sinks.size();
+    int xsec_rxn_count = s->_xsec_balanced.size() + s->_xsec_sources.size() + s->_xsec_sinks.size();
     summary += fmt::format("  - Cross-Section-Based: {:d}\n", xsec_rxn_count);
-    summary += fmt::format("    Balanced: {}\n", s->xsec_balanced.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_balanced, s->getName(), false);
+    summary += fmt::format("    Balanced: {}\n", s->_xsec_balanced.size());
+    summary += getSpeciesDependantReactionSummary(s->_xsec_balanced, s->getName(), false);
 
     if (!yaml_file)
       summary += "\033[32m";
-    summary += fmt::format("\n    Sources: {}\n", s->xsec_sources.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_sources, s->getName(), yaml_file);
+    summary += fmt::format("\n    Sources: {}\n", s->_xsec_sources.size());
+    summary += getSpeciesDependantReactionSummary(s->_xsec_sources, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[31m";
-    summary += fmt::format("\n    Sinks: {}\n", s->xsec_sinks.size());
-    summary += getSpeciesDependantReactionSummary(s->xsec_sinks, s->getName(), yaml_file);
+    summary += fmt::format("\n    Sinks: {}\n", s->_xsec_sinks.size());
+    summary += getSpeciesDependantReactionSummary(s->_xsec_sinks, s->getName(), yaml_file);
 
     if (!yaml_file)
       summary += "\033[0m\n";
