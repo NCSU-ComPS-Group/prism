@@ -22,6 +22,7 @@ namespace rxn
   #define LATEX_OVERRIDE_KEY "latex-overrides"
   #define SPECIES_KEY "species"
   #define LATEX_KEY "latex"
+  #define BIB_KEY "bibliography"
   #define MASS_EPS 1e-5;
   /**
    * Storing the mass of all elements in the periodic table

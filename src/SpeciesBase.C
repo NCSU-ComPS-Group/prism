@@ -72,7 +72,7 @@ namespace rxn
   }
 
   string
-  SpeciesBase::getLatexName() const
+  SpeciesBase::getLatexRepresentation() const
   {
     return _latex_name;
   }

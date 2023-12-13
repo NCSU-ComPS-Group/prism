@@ -23,7 +23,7 @@ namespace rxn
   class NetworkParser
   {
   public:
-    NetworkParser();
+    NetworkParser(const bool check_bib=true);
     /**
      * Method goes through all of the reactions in this network
      * constructs Reaction objects and then puts the reactions
@@ -77,7 +77,12 @@ namespace rxn
      */
     YAML::Node getYamlByFileName(const string & filename);
 
+    string getLatexRepresentation() const;
+
   private:
+
+    void setLatexRepresentation();
+    const bool _check_bib;
     void parseReactions(const YAML::Node network,
                         const string & filename,
                         vector<Reaction> & valid,
@@ -114,6 +119,8 @@ namespace rxn
     vector<string> _invalid_xsec_reason;
     /** The total number of reactions parsed both valid and invalid */
     int _rxn_count;
+
+    string _latex;
     /**
      * Helper method which checks to make sure that a file exists before reading it
      * @param file a string holding the path to the file
@@ -171,5 +178,7 @@ namespace rxn
      *                  if false color changing escape characters will be used
      */
     string getByTypeReactionSummary(const vector<Reaction> valid_rxn, const vector<string> invalid_rxn, const vector<string> invalid_reason, const bool yaml_file=true);
+
+    void addArrheniusTable(const vector<Reaction> eedf_rxn, const vector<Reaction> arr_rxn);
   };
 }

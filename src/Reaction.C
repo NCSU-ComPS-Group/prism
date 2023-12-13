@@ -4,7 +4,9 @@ namespace rxn
 {
   Reaction::Reaction(const YAML::Node rxn_input,
                     const int rxn_number,
-                    const string & data_path) :
+                    const string & data_path,
+                    const bool check_bib) :
+  _check_bib(check_bib),
   _rxn_number(rxn_number),
   _delta_eps_e(0.0),
   _delta_eps_g(0.0)
@@ -14,9 +16,9 @@ namespace rxn
       string rxn_str = rxn_input[REACTION_KEY].as<string>();
       _name = checkReactionString(rxn_str);
     } catch (YAML::BadConversion) {
-      throw invalid_argument(makeRed("- reaction: input must be a string"));
+      throw invalid_argument("- reaction: input must be a string");
     } catch (YAML::InvalidNode) {
-      throw invalid_argument(makeRed("Reaction string must be provided"));
+      throw invalid_argument("Reaction formula must be provided");
     }
     // setting up the reactants and products
     setSides();
@@ -25,10 +27,16 @@ namespace rxn
 
     try{
       _reference = rxn_input[REFERENCE_KEY].as<string>();
+      if (_check_bib)
+      {
+        auto it = refs.find(_reference);
+        if (it == refs.end())
+          throw invalid_argument(makeRed(fmt::format("citekey: '{}' is not present in your bibliography", _reference)));
+      }
     } catch (YAML::BadConversion) {
-      throw invalid_argument(makeRed("References must be provided in string form"));
+      throw invalid_argument("References must be provided in string form");
     } catch(YAML::InvalidNode) {
-      throw invalid_argument(makeRed("All reactions must have an associated reference"));
+      throw invalid_argument("All reactions must have an associated reference");
     }
 
     // getting the changes in energy
@@ -59,7 +67,7 @@ namespace rxn
       try
       {
         auto param_test = rxn_input[PARAM_KEY].as<vector<float>>();
-        throw invalid_argument(makeRed("Providing a file location and params for the same reaction is invalid"));
+        throw invalid_argument("Providing a file location and params for the same reaction is invalid");
         // if there is no params with a file this is what we want so
         // well do nothing here
       }
@@ -70,8 +78,8 @@ namespace rxn
       try
       {
         string eqn_type_test = rxn_input[EQN_TYPE_KEY].as<string>();
-        throw invalid_argument(makeRed(
-            "Providing a file location and an equation type for the same reaction is invalid"));
+        throw invalid_argument(
+            "Providing a file location and an equation type for the same reaction is invalid");
       }
       // we'll do nothing here since this is what we want
       catch(YAML::BadConversion) {}
@@ -84,19 +92,26 @@ namespace rxn
 
       struct stat buffer;
       if (stat(_filepath.c_str(), &buffer) != 0)
-        throw invalid_argument(makeRed("File: '" + _filepath + "' does not exist"));
+        throw invalid_argument("File: '" + _filepath + "' does not exist");
       _eqn_type = FROM_FILE_STR;
 
       // now that we have checked that a file exists lets also make sure that the data base
       // that was used to generate this is included in the input
       try
       {
-        string data_base = rxn_input[DATA_BASE_KEY].as<string>();
+        _database = rxn_input[DATA_BASE_KEY].as<string>();
+        if (_check_bib)
+        {
+          auto it = refs.find(_database);
+          if (it == refs.end())
+            throw invalid_argument(
+              fmt::format("citekey: '{}' is not present in your bibliography", _database));
+        }
       }
       // lets throw an exception if this isn't provided. The data has to have come from somwhere
       catch (YAML::InvalidNode)
       {
-        throw invalid_argument(makeRed("Data from file provided but 'database' field is empty"));
+        throw invalid_argument("Data from file provided but 'database' field is empty");
       }
     }
     catch (YAML::BadConversion)
@@ -121,22 +136,18 @@ namespace rxn
         try
         {
           temp_param = rxn_input[PARAM_KEY].as<float>();
-          _params = {temp_param, 0, 0, 0, 0};
+          temp_params = {temp_param, 0, 0, 0, 0};
         }
         catch (YAML::InvalidNode)
         {
           throw invalid_argument(
-              makeRed("Since no file is provided params must be included"));
+              "Since no file is provided params must be included");
         }
       }
       // now that we have the parameters lets add the equation type
       try {
         // if its a custom equation we won't put limits on the
         // params vector
-
-        // cout << rxn_input[EQN_TYPE_KEY] << endl;
-        // auto test = rxn_input[EQN_TYPE_KEY].as<string>();
-        // cout << "Here" << endl;
         _eqn_type = rxn_input[EQN_TYPE_KEY].as<string>();
         _params = temp_params;
       }
@@ -146,7 +157,7 @@ namespace rxn
         _eqn_type = ARRHENIUS_STR;
         if (temp_params.size() > 5)
           throw invalid_argument(
-              makeRed("For the default equation type you must provide at most 5 parameters"));
+              "For the default equation type you must provide at most 5 parameters");
         // lets allow the user to provide less than 5 parameters
         // anytime they provide less than the maximum amount of parameters the
         // remaining ones will be assumed to 0
@@ -164,7 +175,7 @@ namespace rxn
   {
     if (rxn.find(" -> ") == string::npos)
       throw invalid_argument(
-          makeRed("'" + rxn + "'" + " is invalid!\n" + "Reactions must contain '->'"));
+          "'" + rxn + "'" + " is invalid! Reactions must contain '->'");
 
     return rxn;
   }
@@ -379,7 +390,7 @@ namespace rxn
       if (count_it->second != 1)
         _latex_name += fmt::format("{:d}", count_it->second);
 
-      _latex_name += _reactants[i]->getLatexName();
+      _latex_name += _reactants[i]->getLatexRepresentation();
       if (unique_check.size() != _reactant_count.size())
         _latex_name += " + ";
     }
@@ -402,14 +413,14 @@ namespace rxn
       if (count_it->second != 1)
         _latex_name += fmt::format("{:d}", count_it->second);
 
-      _latex_name += _products[i]->getLatexName();
+      _latex_name += _products[i]->getLatexRepresentation();
       if (unique_check.size() != _product_count.size())
         _latex_name += " + ";
     }
   }
 
   string
-  Reaction::getLatexName() const
+  Reaction::getLatexRepresentation() const
   {
     return _latex_name;
   }
@@ -478,7 +489,13 @@ namespace rxn
   string
   Reaction::getReference() const
   {
-    return _reference;
+    return "\\cite{" + _reference + "}";
+  }
+
+  string
+  Reaction::getDatabase() const
+  {
+    return "\\cite{" + _database + "}";
   }
 }
 
@@ -491,7 +508,7 @@ size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const
 
   val += hash_factor * hash<string>()(obj.getName());
   val += hash_factor * hash<int>()(obj.getReactionNumber());
-  val += hash_factor * hash<string>()(obj.getLatexName());
+  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
   // not including the reactants and products in the hash
   // this is becuase these may change if there are lumped species
   // or if i want to add a map of reactions to species while I am

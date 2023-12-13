@@ -3,10 +3,11 @@
 #include <fstream>
 #include <sys/stat.h>
 #include <unordered_set>
-#include "GlobalData.h"
 #include "Species.h"
-#include "StringHelper.h"
 #include "Printer.h"
+#include "GlobalData.h"
+#include "StringHelper.h"
+#include "BibTexHelper.h"
 #include "yaml-cpp/yaml.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ namespace rxn
   class Reaction
   {
   public:
-    Reaction(const YAML::Node rxn_input, const int rxn_number, const string & data_path);
+    Reaction(const YAML::Node rxn_input, const int rxn_number, const string & data_path, const bool check_bib);
     /**
      * equality operator override and compares the reaction name
      * the latex name of the reaction and the reaction number is the same
@@ -33,11 +34,11 @@ namespace rxn
     */
     int getStoicCoeffByName(const string s);
 
-    void setLatexName();
+
     /**
      * Method to get the LaTeX string for the reaction
      */
-    string getLatexName() const;
+    string getLatexRepresentation() const;
 
     /**
      * Getter method for the reaction number member variable
@@ -62,6 +63,7 @@ namespace rxn
     float getDeltaEnergyElectron() const;
     float getDeltaEnergyGas() const;
     string getReference() const;
+    string getDatabase() const;
 
   protected:
     friend class NetworkParser;
@@ -70,9 +72,11 @@ namespace rxn
     string _filepath;
     float _delta_eps_e;
     float _delta_eps_g;
-    string _reference;
 
   private:
+    void setLatexName();
+
+    bool _check_bib;
     /** The string representation of the reaction */
     string _name;
     /** The number of reaction this one is in the network file */
@@ -89,6 +93,10 @@ namespace rxn
      * The LaTeX representation of the species name
      */
     string _latex_name;
+    /** The citekey for the reference for the reaction */
+    string _reference;
+    /** The citekey for the database for the reaction, not always applicable */
+    string _database;
 
     /**
      * A map which stores the stoiciometric coefficents for each species

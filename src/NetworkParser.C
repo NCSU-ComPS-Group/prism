@@ -2,7 +2,7 @@
 
 namespace rxn
 {
-  NetworkParser::NetworkParser() {}
+  NetworkParser::NetworkParser(const bool check_bib): _check_bib(check_bib) {}
 
   void
   NetworkParser::checkFile(const string & file)
@@ -57,7 +57,7 @@ namespace rxn
     setLatexOverrides(network);
     _yaml_map[file] = network;
 
-    // check to see if the use provides a location for their reaction files
+    // check to see if the user provides a location for their reaction files
     try {
       string data_path = network[PATH_KEY].as<string>();
       _data_paths[file] = data_path;
@@ -65,6 +65,18 @@ namespace rxn
     catch (YAML::InvalidNode)
     {
       _data_paths[file] = "data/";
+    }
+
+    if (_check_bib)
+    {
+      try {
+        string bib_path = network[BIB_KEY].as<string>();
+      }
+      // were going to make sure that there is a bibliography
+      catch (YAML::InvalidNode)
+      {
+        throw invalid_argument("A bibliography must be provided unless you explicity choose not to check it");
+      }
     }
 
     _rxn_count = 0;
@@ -92,7 +104,6 @@ namespace rxn
       throw invalid_argument(
           makeRed("\n\nFile: '" + file + "' does not contain any reactions\n"));
 
-    // string rxn_str;
     if (num_rate_based > 0)
       parseReactions(network, file,
                      _rate_rxn,
@@ -133,7 +144,6 @@ namespace rxn
                                 const bool rate_based)
   {
     YAML::Node reactions;
-    string rxn_str;
     string rxn_file;
     // getting the reactions based on whether or not it is rate based or xsec
     if (rate_based)
@@ -148,7 +158,8 @@ namespace rxn
         // get the reaction and add to the total count
         _rxn_count++;
         // try to create the actual reaction
-        Reaction r = Reaction(rxn_input, _rxn_count, _data_paths[filename]);
+        Reaction r = Reaction(rxn_input, _rxn_count, _data_paths[filename], _check_bib);
+
         // products can have either sources or balanced but an
         // element that purely a product cannot have a sink reaction
         for (auto it : r._products)
@@ -226,14 +237,39 @@ namespace rxn
       }
       catch (invalid_argument & e)
       {
-        invalid.push_back(rxn_input[REACTION_KEY].as<string>());
-        invalid_reason.push_back(e.what());
-        printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", _rxn_count, rxn_str));
-        printRed(e.what());
-        cout << "\n\n";
-        continue;
+        // when we are printing this error message we need to make sure that we can parse this reaction as a string
+        string rxn_str = "";
+        try {
+          rxn_str = rxn_input[REACTION_KEY].as<string>();
+          invalid.push_back(rxn_str);
+          invalid_reason.push_back(e.what());
+          printRed(fmt::format("\nFailure! Reaction {:4d}: {}\n  ", _rxn_count, rxn_str));
+          printRed(e.what());
+          cout << "\n\n";
+          continue;
+        }
+        // if we can't parse it as a string tell the user.
+        catch (YAML::BadConversion)
+        {
+          cout << "Here" << endl;
+          invalid.push_back(fmt::format("Reaction number {:d} was not able to be parsed as a string", _rxn_count));
+          invalid_reason.push_back(
+              fmt::format("Reaction number {:d} was not able to be parsed as a string", _rxn_count));
+              printRed(fmt::format("\nFailure! Reaction {:4d}: Unable to parse input as string",
+                                   _rxn_count));
+        }
       }
     }
+    // if there are invalid reactions we can't make the table for the network
+    // so lets just set the string to an empty string for some error handling later
+    if (_invalid_rate_reason.size() != 0 || _invalid_xsec_reason.size() != 0)
+    {
+      _latex = "";
+      return;
+    }
+
+    setLatexRepresentation();
+
   }
 
   void
@@ -463,5 +499,72 @@ namespace rxn
       throw invalid_argument(makeRed("\n\nFile: '" + filename + "' has not been parsed\n"));
 
     return _yaml_map[filename];
+  }
+
+
+  void
+  NetworkParser::setLatexRepresentation()
+  {
+    _latex = "\\usepackage{tabu}\n";
+    _latex += "\\tabulinesep = 1.5mm\n\n";
+
+    if (_from_file_rate_rxn.size() + _arr_rate_rxn.size() > 0)
+    {
+      addArrheniusTable(_from_file_rate_rxn, _arr_rate_rxn);
+      _latex += "\n\n";
+    }
+
+    if (_from_file_xsec_rxn.size() + _arr_xsec_rxn.size() > 0)
+      addArrheniusTable(_from_file_xsec_rxn, _arr_xsec_rxn);
+
+    cout << _latex << endl;
+  }
+
+  void
+  NetworkParser::addArrheniusTable(const vector<Reaction> eedf_rxn,
+                                      const vector<Reaction> arr_rxn)
+  {
+    _latex += "\\begin{table}\n";
+    _latex += "  \\centering\n";
+    _latex += "  \\resizebox{\\columnwidth}{!}{\n";
+    _latex += "    \\begin{tabu}{lcccccccc}\n";
+    _latex += "      Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta E_e$ & $\\Delta E_g$ & "
+              "References\\\\\n";
+    _latex += "      \\hline\n";
+    _latex += "      \\hline\n";
+    for (auto r : eedf_rxn)
+    {
+      _latex += "      ";
+      _latex += r.getLatexRepresentation() + " & ";
+      _latex += " - & - & EEDF & - & - & ";
+      _latex += fmt::format("{:0.2f}", r.getDeltaEnergyElectron()) + " & ";
+      _latex += fmt::format("{:0.2f}", r.getDeltaEnergyGas()) + " & ";
+      _latex += r.getReference() + " ";
+      _latex += r.getDatabase() + " ";
+      _latex += "\\\\\n";
+    }
+
+    for (auto r : arr_rxn)
+    {
+      _latex += "      ";
+      _latex += r.getLatexRepresentation() + " & ";
+      for (auto param : r.getParams())
+        _latex += fmt::format("{:0.2E} & ", param);
+      _latex += fmt::format("{:0.2f}", r.getDeltaEnergyElectron()) + " & ";
+      _latex += fmt::format("{:0.2f}", r.getDeltaEnergyGas()) + " & ";
+      _latex += r.getReference() + " ";
+      _latex += "\\\\\n";
+    }
+
+    _latex += "    \\end{tabu}\n";
+    _latex += "  }\n";
+    _latex += "  \\caption{your caption}\n";
+    _latex += "  \\label{tab:your-label}\n";
+    _latex += "\\end{table}";
+  }
+
+  string NetworkParser::getLatexRepresentation() const
+  {
+    return _latex;
   }
 }

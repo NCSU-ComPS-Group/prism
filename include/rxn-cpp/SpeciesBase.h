@@ -34,7 +34,7 @@ namespace rxn
     /** Getter method for the charge of the species */
     float  getCharge() const;
     /** Getter method for the latex name of the species */
-    string getLatexName() const;
+    string getLatexRepresentation() const;
   protected:
     /** The full string of the species base */
     string _name;

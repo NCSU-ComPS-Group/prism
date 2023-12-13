@@ -4,14 +4,14 @@
 
 using namespace rxn;
 
-TEST(ReactionTest, TestBasicReactionFromFile)
+TEST(ReactionTest, TestBasicReactionFromNode)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
   rxn_input[DATA_BASE_KEY] = "test";
-  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/", false);
 
   Species s1 = Species("Ar");
   Species s2 = Species("e");
@@ -42,7 +42,7 @@ TEST(ReactionTest, TestBasicReactionArrhenius)
   rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
   rxn_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "");
+  Reaction r = Reaction(rxn_input, 0, "", false);
 
   Species s1 = Species("Ar");
   Species s2 = Species("e");
@@ -76,7 +76,7 @@ TEST(ReactionTest, TestBasicCustomEquation)
   rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
   rxn_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "");
+  Reaction r = Reaction(rxn_input, 0, "", false);
 
   Species s1 = Species("Ar");
   Species s2 = Species("e");
@@ -110,8 +110,7 @@ TEST(ReactionTest, TestSpeciesWithCoeffReaction)
   rxn_input[REFERENCE_KEY] = "test";
   rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
-
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/", false);
 
   Species s1 = Species("Ar");
   Species s2 = Species("e");
@@ -143,7 +142,7 @@ TEST(ReactionTest, TestUnbalanced)
   rxn_input[REFERENCE_KEY] = "test";
   rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/", false);
 
   Species s1 = Species("Ar*");
   Species s2 = Species("e");
@@ -177,7 +176,7 @@ TEST(ReactionTest, TestMolecularBreakDown)
   rxn_input[REFERENCE_KEY] = "test";
   rxn_input[DATA_BASE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data/");
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/", false);
 
   Species s1 = Species("e");
   Species s2 = Species("CF4");

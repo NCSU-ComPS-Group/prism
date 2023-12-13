@@ -332,7 +332,7 @@ hash<rxn::SubSpecies>::operator()(const rxn::SubSpecies & obj) const
   val += hash_factor * hash<int>()(obj.getChargeNumber());
   val += hash_factor * hash<float>()(obj.getMass());
   val += hash_factor * hash<float>()(obj.getCharge());
-  val += hash_factor * hash<string>()(obj.getLatexName());
+  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
   // hash based on the name
   return val;
 }

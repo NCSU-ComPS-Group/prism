@@ -50,14 +50,8 @@ namespace rxn
   {
     string total_name = "";
     for (SubSpecies s : _sub_species)
-      total_name += s.getLatexName();
+      total_name += s.getLatexRepresentation();
     _latex_name = total_name;
-  }
-
-  string
-  Species::getLatexName() const
-  {
-    return _latex_name;
   }
 
   std::ostream &
@@ -153,7 +147,7 @@ hash<rxn::Species>::operator()(const rxn::Species & obj) const
 
   val += hash_factor * hash<float>()(obj.getMass());
   val += hash_factor * hash<int>()(obj.getChargeNumber());
-  val += hash_factor * hash<string>()(obj.getLatexName());
+  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
   // not including the sources and sinks in the hash since those
   // can change as reactions are added to the network
   return val;

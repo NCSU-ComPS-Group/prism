@@ -1,4 +1,5 @@
 data-path: test/inputs/data/
+bibliography: test/inputs/works.bib
 
 latex-overrides:
   - species: Ar_r

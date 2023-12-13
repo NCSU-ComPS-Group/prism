@@ -33,8 +33,6 @@ namespace rxn
     vector<Reaction> getXSecBasedSinks() const;
     /** Getter method for the subspecies list */
     vector<SubSpecies> getSubSpecies() const;
-    /** Getter method for the latex string representation of the species */
-    string getLatexName() const;
 
   protected:
     friend class NetworkParser;
