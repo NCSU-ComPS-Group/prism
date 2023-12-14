@@ -5,3 +5,4 @@
 #include "Reaction.h"
 #include "NetworkParser.h"
 #include "BibTexHelper.h"
+#include "StringHelper.h"

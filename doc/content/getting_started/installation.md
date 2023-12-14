@@ -39,6 +39,7 @@ To ensure no conflicts with other projects you can create a new environment to w
 ```
 
 # Build The Docs
+
 Since this system relies on the MOOSE documentation system you will need MOOSE installed to build and host the documentation site locally. We expect you to have MOOSE installed  at `~/projects/moose` if you would like to do this.
 
 ```bash

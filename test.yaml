@@ -16,9 +16,10 @@ latex-overrides:
 
 custom-equation:
   # string
-  - eqn: A + B + C
+  - eqntype: sting
+    eqn: A + B + C
     # string
-    coeffs: [A, B, C]
+    params: [A, B, C]
     # string
     latex_form:
 

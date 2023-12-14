@@ -3,7 +3,9 @@
 #include <string>
 #include <cctype>
 #include <iostream>
+#include "fmt/core.h"
 using namespace std;
+
 
 namespace rxn {
   /**
@@ -100,4 +102,6 @@ namespace rxn {
    *          if no capitals are found it will be a vector with one element
    */
   vector<string> splitByCapital(const string & s);
+
+  string format_scientific(const float val);
 }

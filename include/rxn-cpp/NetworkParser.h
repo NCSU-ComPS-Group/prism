@@ -15,6 +15,7 @@
 #include "Species.h"
 #include "Constants.h"
 #include "GlobalData.h"
+#include "StringHelper.h"
 
 using namespace std;
 

@@ -14,7 +14,6 @@ namespace rxn
     {
       string line;
       vector<string> parts;
-      int at_idx;
       unsigned int line_count = 0;
       while (std::getline(stream, line))
       {

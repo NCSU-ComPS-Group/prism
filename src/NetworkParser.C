@@ -3,9 +3,9 @@
 namespace rxn
 {
   NetworkParser::NetworkParser(const bool check_bib):
-   _check_bib(check_bib),
    _note_counter(0),
-   _rxn_table_counter(0)
+   _rxn_table_counter(0),
+   _check_bib(check_bib)
   {}
 
   void
@@ -541,28 +541,32 @@ namespace rxn
     _latex += "  \\resizebox{\\columnwidth}{!}{\n";
     _latex += "    \\begin{tabu}{clcccccccc}\n";
 
-    _latex += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta E_e$ & $\\Delta E_g$ & "
+    _latex += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
+              "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
               "Ref.\\\\\n";
     _latex += "      \\hline\n";
     _latex += "      \\hline\n";
+
+    string note;
     for (auto r : eedf_rxn)
     {
       _rxn_table_counter++;
       _latex += fmt::format("      {:d}", _rxn_table_counter) + " & ";
       _latex += r.getLatexRepresentation();
-      string note = r.getNotes();
-      if (note.length() > 0)
-      {
-        _note_counter++;
-        _latex += fmt::format("\\footnotemark[{:d}]",  _note_counter);
-        note_collector.push_back(note);
-      }
+      note = r.getNotes();
+
       _latex += " & ";
       _latex += " - & - & EEDF & - & - & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyElectron()) + " & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyGas()) + " & ";
       _latex += r.getReference() + " ";
       string ref = r.getDatabase();
+      if (note.length() > 0)
+      {
+        _note_counter++;
+        _latex += fmt::format("\\footnotemark[{:d}]", _note_counter);
+        note_collector.push_back(note);
+      }
       if (ref.length() != 0)
         _latex += ref + " ";
 
@@ -575,10 +579,16 @@ namespace rxn
       _latex += fmt::format("      {:d}", _rxn_table_counter) + " & ";
       _latex += r.getLatexRepresentation() + " & ";
       for (auto param : r.getParams())
-        _latex += fmt::format("{:0.2E} & ", param);
+        _latex += format_scientific(param) + " & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyElectron()) + " & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyGas()) + " & ";
       _latex += r.getReference() + " ";
+      if (note.length() > 0)
+      {
+        _note_counter++;
+        _latex += fmt::format("\\footnotemark[{:d}]", _note_counter);
+        note_collector.push_back(note);
+      }
       _latex += "\\\\\n";
     }
 

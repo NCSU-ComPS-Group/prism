@@ -6,10 +6,10 @@ namespace rxn
                     const int rxn_number,
                     const string & data_path,
                     const bool check_bib) :
-  _check_bib(check_bib),
-  _rxn_number(rxn_number),
   _delta_eps_e(0.0),
-  _delta_eps_g(0.0)
+  _delta_eps_g(0.0),
+  _check_bib(check_bib),
+  _rxn_number(rxn_number)
   {
     // lets try and get the name
     try {

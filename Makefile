@@ -1,5 +1,3 @@
-# Makefile for compiling eduPIC.cpp
-
 # Compiler settings
 CXX = g++
 CXXFLAGS = -std=c++20 -g -Wall -Wextra

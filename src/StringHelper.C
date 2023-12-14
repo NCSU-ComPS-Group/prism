@@ -169,4 +169,24 @@ namespace rxn
 
     return parts;
   }
+
+  string
+  format_scientific(const float val)
+  {
+    int exponent = 0;
+
+    if (val == 0)
+    {
+      return "0.00";
+    }
+
+    exponent = static_cast<int>(std::floor(std::log10(std::abs(val))));
+
+    float mantissa = val / std::pow(10, exponent);
+
+
+    return fmt::format( "{:.2f}", mantissa) + "$\\times 10^{" + fmt::format("{:d}", exponent) + "}$";
+    // std::cout << std::fixed << std::setprecision(2) << mantissa << " x 10^" << exponent
+    //           << std::endl;
+  }
 }

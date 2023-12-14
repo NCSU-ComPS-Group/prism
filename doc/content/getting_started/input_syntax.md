@@ -125,8 +125,8 @@ The rxn-cpp project supports two main types of reactions. The first is reactions
 | file | The file where the tabulated data is stored | string | yes, if params is not provided | "" |
 | eqn-type | The name of the type of analytic express the rates or cross sections take | string | no | arrhenius |
 | params | The parameters required for evaluation of the analytic expression | A float or a list of floats | yes, if eqn-type is provided | [] |
-| database | The database where you got the cross sections from | string | always | N/A |
-| reference | The reference for where the reaction came from | string | always | N/A |
+| database | The database where you got the cross sections from | string | no | N/A |
+| reference | The reference for where the reaction came from | string or a list of strings | always | N/A |
 
 
 ## Reaction With Data File
@@ -154,7 +154,7 @@ The rxn-cpp project supports two main types of reactions. The first is reactions
 If no other equation type is defined we assume that any reaction which uses an analytic form for its cross section data or rate data take the following form.
 
 \begin{equation}
-  A \:\: T_e^{\:n}\:\exp\left(-\frac{E_e}{k_b T_e}\right) T_g^{\:m} \exp\left(-\frac{E_g}{k_b T_g}\right)
+  A \:\: T_e^{\:n_e}\:\exp\left(-\frac{E_e}{k_b T_e}\right) T_g^{\:n_e} \exp\left(-\frac{E_g}{k_b T_g}\right)
 \end{equation}
 
 This form required at most 5 input parameters with the index of the `params` input corrisponding to the following variables.
@@ -162,9 +162,9 @@ This form required at most 5 input parameters with the index of the `params` inp
 | Index | Parameter |
 | - | - |
 | 0 | $A$ |
-| 1 | $n$ |
+| 1 | $n_e$ |
 | 2 | $E_e$ |
-| 3 | $m$ |
+| 3 | $n_g$ |
 | 4 | $E_g$ |
 
 If less than 5 parameters are supplied when using the default arrhenius form the remaining parameters which are not supplied will be set to 0. Constant rates are also supported by default. When you would like to use a constant rate equation simply provide a single float that is not in list form.
@@ -179,4 +179,4 @@ If less than 5 parameters are supplied when using the default arrhenius form the
    reference: source
 ```
 
-A note for developers interested in using this proejct. When a single float is supplied here we still treat this an an arrhenius rate will return a vector of 5 floats where the first is the value of interest and the rest are simply zeros.
+A note for developers interested in using this project. When a single float is supplied here we still treat this an an arrhenius rate will return a vector of 5 floats where the first is the value of interest and the rest are simply zeros.
