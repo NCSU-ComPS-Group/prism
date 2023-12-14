@@ -80,7 +80,8 @@ namespace rxn
     string getLatexRepresentation() const;
 
   private:
-
+    unsigned int _note_counter;
+    unsigned int _rxn_table_counter;
     void setLatexRepresentation();
     const bool _check_bib;
     void parseReactions(const YAML::Node network,

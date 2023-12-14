@@ -17,12 +17,13 @@ namespace rxn
   #define PARAM_KEY "params"
   #define EQN_TYPE_KEY "equation-type"
   #define REACTION_KEY "reaction"
-  #define REFERENCE_KEY "reference"
+  #define REFERENCE_KEY "references"
   #define DATA_BASE_KEY "database"
   #define LATEX_OVERRIDE_KEY "latex-overrides"
   #define SPECIES_KEY "species"
   #define LATEX_KEY "latex"
   #define BIB_KEY "bibliography"
+  #define NOTE_KEY "note"
   #define MASS_EPS 1e-5;
   /**
    * Storing the mass of all elements in the periodic table

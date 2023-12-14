@@ -2,7 +2,11 @@
 
 namespace rxn
 {
-  NetworkParser::NetworkParser(const bool check_bib): _check_bib(check_bib) {}
+  NetworkParser::NetworkParser(const bool check_bib):
+   _check_bib(check_bib),
+   _note_counter(0),
+   _rxn_table_counter(0)
+  {}
 
   void
   NetworkParser::checkFile(const string & file)
@@ -506,6 +510,9 @@ namespace rxn
   NetworkParser::setLatexRepresentation()
   {
     _latex = "\\usepackage{tabu}\n";
+    _latex += "\\usepackage{float}\n";
+    _latex += "\\usepackage{graphix}\n";
+
     _latex += "\\tabulinesep = 1.5mm\n\n";
 
     if (_from_file_rate_rxn.size() + _arr_rate_rxn.size() > 0)
@@ -524,29 +531,45 @@ namespace rxn
   NetworkParser::addArrheniusTable(const vector<Reaction> eedf_rxn,
                                       const vector<Reaction> arr_rxn)
   {
-    _latex += "\\begin{table}\n";
+    vector<string> note_collector;
+
+    _latex += "\\begin{table}[H]\n";
     _latex += "  \\centering\n";
     _latex += "  \\resizebox{\\columnwidth}{!}{\n";
-    _latex += "    \\begin{tabu}{lcccccccc}\n";
-    _latex += "      Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta E_e$ & $\\Delta E_g$ & "
-              "References\\\\\n";
+    _latex += "    \\begin{tabu}{clcccccccc}\n";
+
+    _latex += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta E_e$ & $\\Delta E_g$ & "
+              "Ref.\\\\\n";
     _latex += "      \\hline\n";
     _latex += "      \\hline\n";
     for (auto r : eedf_rxn)
     {
-      _latex += "      ";
-      _latex += r.getLatexRepresentation() + " & ";
+      _rxn_table_counter++;
+      _latex += fmt::format("      {:d}", _rxn_table_counter) + " & ";
+      _latex += r.getLatexRepresentation();
+      string note = r.getNotes();
+      if (note.length() > 0)
+      {
+        _note_counter++;
+        _latex += fmt::format("\\footnotemark[{:d}]",  _note_counter);
+        note_collector.push_back(note);
+      }
+      _latex += " & ";
       _latex += " - & - & EEDF & - & - & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyElectron()) + " & ";
       _latex += fmt::format("{:0.2f}", r.getDeltaEnergyGas()) + " & ";
       _latex += r.getReference() + " ";
-      _latex += r.getDatabase() + " ";
+      string ref = r.getDatabase();
+      if (ref.length() != 0)
+        _latex += ref + " ";
+
       _latex += "\\\\\n";
     }
 
     for (auto r : arr_rxn)
     {
-      _latex += "      ";
+      _rxn_table_counter++;
+      _latex += fmt::format("      {:d}", _rxn_table_counter) + " & ";
       _latex += r.getLatexRepresentation() + " & ";
       for (auto param : r.getParams())
         _latex += fmt::format("{:0.2E} & ", param);
@@ -560,7 +583,10 @@ namespace rxn
     _latex += "  }\n";
     _latex += "  \\caption{your caption}\n";
     _latex += "  \\label{tab:your-label}\n";
-    _latex += "\\end{table}";
+    _latex += "\\end{table}\n\n";
+
+    for (int i = 0; i < note_collector.size(); ++i)
+      _latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + note_collector[i] + "}\n";
   }
 
   string NetworkParser::getLatexRepresentation() const

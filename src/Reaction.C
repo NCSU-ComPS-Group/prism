@@ -26,19 +26,30 @@ namespace rxn
     validateReaction();
 
     try{
-      _reference = rxn_input[REFERENCE_KEY].as<string>();
-      if (_check_bib)
-      {
-        auto it = refs.find(_reference);
-        if (it == refs.end())
-          throw invalid_argument(makeRed(fmt::format("citekey: '{}' is not present in your bibliography", _reference)));
-      }
+      string temp_ref = rxn_input[REFERENCE_KEY].as<string>();
+      _reference.push_back(temp_ref);
     } catch (YAML::BadConversion) {
-      throw invalid_argument("References must be provided in string form");
+      // since we can't get this as a single string lets try and get it as a vector of strings
+      try {
+        _reference = rxn_input[REFERENCE_KEY].as<vector<string>>();
+      } catch (YAML::BadConversion)
+      {
+        throw invalid_argument("Your reference(s) were unable to be parsed as a string and as a list of strings");
+      }
+      // throw invalid_argument("References must be provided in string form");
     } catch(YAML::InvalidNode) {
       throw invalid_argument("All reactions must have an associated reference");
     }
-
+    // now that we have our strings lets see if they are in the bib
+    if (_check_bib)
+      {
+        for (auto ref : _reference)
+        {
+          auto it = refs.find(ref);
+          if (it == refs.end())
+          throw invalid_argument(makeRed(fmt::format("citekey: '{}' is not present in your bibliography", ref)));
+        }
+      }
     // getting the changes in energy
     // lets check to see if the user has provided values for delta-eps-e
     try {
@@ -95,7 +106,7 @@ namespace rxn
         throw invalid_argument("File: '" + _filepath + "' does not exist");
       _eqn_type = FROM_FILE_STR;
 
-      // now that we have checked that a file exists lets also make sure that the data base
+      // now that we have checked that a file exists lets also check to see if the data base
       // that was used to generate this is included in the input
       try
       {
@@ -108,10 +119,25 @@ namespace rxn
               fmt::format("citekey: '{}' is not present in your bibliography", _database));
         }
       }
-      // lets throw an exception if this isn't provided. The data has to have come from somwhere
+      // if there is no database that's okay we'll just set this to be an empty string and
+      // then we won't use it later in table generation
       catch (YAML::InvalidNode)
       {
-        throw invalid_argument("Data from file provided but 'database' field is empty");
+        _database = "";
+      }
+      // now we are going to check if the user has provided any kind of notes on a reaction
+      try
+      {
+        _notes = rxn_input[NOTE_KEY].as<string>();
+      }
+      // if this isn't povided then we don't care we'll just make the notes an empty
+      // string
+      catch (YAML::InvalidNode) {
+        _notes = "";
+      }
+      catch (YAML::BadConversion)
+      {
+        throw invalid_argument("Unable to parse note as a string\n");
       }
     }
     catch (YAML::BadConversion)
@@ -489,13 +515,25 @@ namespace rxn
   string
   Reaction::getReference() const
   {
-    return "\\cite{" + _reference + "}";
+    string temp_refs = "";
+    for (auto r : _reference)
+      temp_refs += "\\cite{" + r + "}";
+    return temp_refs;
   }
 
   string
   Reaction::getDatabase() const
   {
+    if (_database.length() == 0)
+      return _database;
+
     return "\\cite{" + _database + "}";
+  }
+
+  string
+  Reaction::getNotes() const
+  {
+    return _notes;
   }
 }
 

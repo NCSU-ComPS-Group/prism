@@ -64,6 +64,7 @@ namespace rxn
     float getDeltaEnergyGas() const;
     string getReference() const;
     string getDatabase() const;
+    string getNotes() const;
 
   protected:
     friend class NetworkParser;
@@ -73,7 +74,10 @@ namespace rxn
     float _delta_eps_e;
     float _delta_eps_g;
 
+
   private:
+    string _notes;
+
     void setLatexName();
 
     bool _check_bib;
@@ -94,7 +98,7 @@ namespace rxn
      */
     string _latex_name;
     /** The citekey for the reference for the reaction */
-    string _reference;
+    vector<string> _reference;
     /** The citekey for the database for the reaction, not always applicable */
     string _database;
 

@@ -4,7 +4,7 @@
 
 using namespace rxn;
 
-TEST(ReactionTest, TestBasicReactionFromNode)
+TEST(Reaction, TestBasicReactionFromNode)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
@@ -20,7 +20,7 @@ TEST(ReactionTest, TestBasicReactionFromNode)
   vector<Species> products = {s1, s2};
 
   EXPECT_EQ(r.getReactionNumber(), 0);
-  EXPECT_EQ(r.getReference(), "test");
+  EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
   EXPECT_EQ(r.getParams().size(), 0);
@@ -35,7 +35,7 @@ TEST(ReactionTest, TestBasicReactionFromNode)
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 }
 
-TEST(ReactionTest, TestBasicReactionArrhenius)
+TEST(Reaction, TestBasicReactionArrhenius)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
@@ -52,7 +52,7 @@ TEST(ReactionTest, TestBasicReactionArrhenius)
   vector<float> params = {1, 2, 3, 0, 0};
 
   EXPECT_EQ(r.getReactionNumber(), 0);
-  EXPECT_EQ(r.getReference(), "test");
+  EXPECT_EQ(r.getReference(),"\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), ARRHENIUS_STR);
   EXPECT_EQ(r.getParams().size(), 5);
@@ -68,7 +68,7 @@ TEST(ReactionTest, TestBasicReactionArrhenius)
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 }
 
-TEST(ReactionTest, TestBasicCustomEquation)
+TEST(Reaction, TestBasicCustomEquation)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
@@ -86,7 +86,7 @@ TEST(ReactionTest, TestBasicCustomEquation)
   vector<float> params = {1, 2, 3};
 
   EXPECT_EQ(r.getReactionNumber(), 0);
-  EXPECT_EQ(r.getReference(), "test");
+  EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), "custom1");
   EXPECT_EQ(r.getParams().size(), 3);
@@ -102,7 +102,7 @@ TEST(ReactionTest, TestBasicCustomEquation)
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 }
 
-TEST(ReactionTest, TestSpeciesWithCoeffReaction)
+TEST(Reaction, TestSpeciesWithCoeffReaction)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
@@ -119,7 +119,7 @@ TEST(ReactionTest, TestSpeciesWithCoeffReaction)
   vector<Species> products = {s1, s1, s1, s1, s2, s2, s2};
 
   EXPECT_EQ(r.getReactionNumber(), 0);
-  EXPECT_EQ(r.getReference(), "test");
+  EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
   EXPECT_EQ(r.getParams().size(), 0);
@@ -134,7 +134,7 @@ TEST(ReactionTest, TestSpeciesWithCoeffReaction)
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 }
 
-TEST(ReactionTest, TestUnbalanced)
+TEST(Reaction, TestUnbalanced)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "e + Ar* -> 2e + Ar+";
@@ -152,7 +152,7 @@ TEST(ReactionTest, TestUnbalanced)
   vector<Species> products = {s2, s2, s3};
 
   EXPECT_EQ(r.getReactionNumber(), 0);
-  EXPECT_EQ(r.getReference(), "test");
+  EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
   EXPECT_EQ(r.getParams().size(), 0);
@@ -168,7 +168,7 @@ TEST(ReactionTest, TestUnbalanced)
   EXPECT_EQ(r.getStoicCoeffByName("Ar+"), 1);
 }
 
-TEST(ReactionTest, TestMolecularBreakDown)
+TEST(Reaction, TestMolecularBreakDown)
 {
   YAML::Node rxn_input;
   rxn_input[REACTION_KEY] = "e + CF4 -> CF2+ + 2F + 2e";
