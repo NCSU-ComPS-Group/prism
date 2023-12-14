@@ -35,6 +35,8 @@ namespace rxn
     vector<SubSpecies> getSubSpecies() const;
 
   protected:
+    // we are making these classes friends so they can make changes
+    // to the member variables which hold the Reaction information
     friend class NetworkParser;
     friend class Reaction;
     /** the list of the sub_species in the the class */

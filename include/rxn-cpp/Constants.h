@@ -6,6 +6,7 @@ using namespace std;
 
 namespace rxn
 {
+  // all of the macros that control the input options
   #define RATE_BASED_KEY "rate-based"
   #define XSEC_BASED_KEY "xsec-based"
   #define ARRHENIUS_STR "arrhenius"

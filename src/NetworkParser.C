@@ -509,6 +509,9 @@ namespace rxn
   void
   NetworkParser::setLatexRepresentation()
   {
+    _rxn_table_counter = 0;
+    _note_counter = 0;
+
     _latex = "\\usepackage{tabu}\n";
     _latex += "\\usepackage{float}\n";
     _latex += "\\usepackage{graphix}\n";

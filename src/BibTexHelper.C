@@ -52,4 +52,4 @@ namespace rxn
       throw invalid_argument(fmt::format("Cite key '{}' was not found in your references.", citekey));
     }
   }
-} // namespace rxn
+}
