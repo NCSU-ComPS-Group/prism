@@ -197,13 +197,13 @@ namespace rxn
       _latex_name = it->second;
       return;
     }
-
+    // case if we have a photon
     if (_name == "hnu")
     {
       _latex_name = "$h\\nu$";
       return;
     }
-
+    // if there is no modifier we just return element
     if (_modifier.length() == 0)
     {
       _latex_name = _name;
@@ -213,30 +213,34 @@ namespace rxn
     string s = _base;
     // variable used for cutting up the end of the modifier
     string partial_name = _base;
-
+    // if the subscript is there we need to add it in the math environment
     if (_subscript > 1)
     {
       s += "$_{" + to_string(_subscript) + "}$";
       partial_name += to_string(_subscript);
     }
-
+    // now we need to add the charge superscript if it is there
     if (_charge_num != 0)
     {
+      // the start of the math environment for the superscript
       s += "$^{";
+      // if we have a negative charge then we need to add the minus sign
       if (_charge_num < 0)
       {
         s += "-";
         partial_name += "-";
       }
+      // if we have a negative charge then we need to add the plus sign
       else
       {
         s += "+";
         partial_name += "+";
       }
 
+      // if charge is either -1 or +1 then we only need the + or - not the number
       if (abs(_charge_num) == 1)
         s += "}$";
-
+      // if the charge is something either lets add the number as well
       if (abs(_charge_num) > 1)
       {
         s += to_string(abs(_charge_num)) + "}$";
