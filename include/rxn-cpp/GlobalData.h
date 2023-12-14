@@ -1,8 +1,9 @@
+#pragma once
 #include <unordered_map>
 #include <string>
 
 #include "Species.h"
-#include "Reaction.h"
+
 using namespace std;
 
 namespace rxn

@@ -301,7 +301,7 @@ namespace rxn
       // this reaction is a sink
       r_mass += r->getMass();
       r_charge_num += r->getChargeNumber();
-      for (auto sub_r : r->_sub_species)
+      for (auto sub_r : r->getSubSpecies())
       {
         // we can't keep track of the electrons and photons in the same way
         // as heavy species so we'll ignore them for this check
@@ -328,7 +328,7 @@ namespace rxn
       // lets check to make sure that all of the elements that make up
       // the product also exist on the reactant side
       // no nuclear reactions here
-      for (auto sub_p : p->_sub_species)
+      for (auto sub_p : p->getSubSpecies())
       {
         // we are not checking to make sure electrons and photons are on both sides
         // can be produced without it being on both sides

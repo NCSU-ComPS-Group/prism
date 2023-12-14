@@ -4,6 +4,7 @@ using namespace rxn;
 
 TEST(SubSpecies, Equal)
 {
+  std::cout << "Here" << std::endl;
   SubSpecies s1 = SubSpecies("e");
   SubSpecies s2 = SubSpecies("e");
 

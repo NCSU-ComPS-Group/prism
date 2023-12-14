@@ -1,8 +1,10 @@
 *.dSYM
-build
-test/build
+*/build
 *.yaml
-main
-test/run_tests
+*/main
+*/run_tests
 doc/animations/media
 doc/animations/__pycache__
+*/coverage_report
+*/coverage.info
+*/.DS_Store

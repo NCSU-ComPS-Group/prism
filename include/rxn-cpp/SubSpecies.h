@@ -1,11 +1,7 @@
 #pragma once
-#include <string>
-#include <iostream>
+
 #include <limits>
 
-#include "Printer.h"
-#include "StringHelper.h"
-#include "Constants.h"
 #include "SpeciesBase.h"
 
 using namespace std;

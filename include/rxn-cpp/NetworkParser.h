@@ -9,13 +9,8 @@
 #include <unordered_set>
 
 #include "fmt/core.h"
-#include "yaml-cpp/yaml.h"
-#include "Printer.h"
+
 #include "Reaction.h"
-#include "Species.h"
-#include "Constants.h"
-#include "GlobalData.h"
-#include "StringHelper.h"
 
 using namespace std;
 

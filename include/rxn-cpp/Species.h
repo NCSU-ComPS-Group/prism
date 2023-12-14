@@ -1,8 +1,5 @@
 #pragma once
-#include <string>
-#include <iostream>
-#include "Printer.h"
-#include "StringHelper.h"
+
 #include "SubSpecies.h"
 
 using namespace std;
@@ -10,6 +7,7 @@ using namespace std;
 namespace rxn
 {
   class Reaction;
+
   class Species : public SpeciesBase
   {
   public:
@@ -38,7 +36,6 @@ namespace rxn
     // we are making these classes friends so they can make changes
     // to the member variables which hold the Reaction information
     friend class NetworkParser;
-    friend class Reaction;
     /** the list of the sub_species in the the class */
     vector<SubSpecies> _sub_species;
     /** Rate based reactions where the stoiciometric coeff is greater than 1 */
