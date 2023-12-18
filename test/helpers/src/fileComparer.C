@@ -20,3 +20,15 @@ compareFiles(const string & gold_file, const string & test_file)
   return gold_content == test_content;
 }
 
+
+void
+EXPECT_FILES_EQ(const string & file1, const string & file2)
+{
+  EXPECT_TRUE(compareFiles(file1, file2));
+}
+
+void
+EXPECT_FILES_NEQ(const string & file1, const string & file2)
+{
+  EXPECT_FALSE(compareFiles(file1, file2));
+}

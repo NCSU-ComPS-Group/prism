@@ -37,9 +37,9 @@ TEST(NetworkParser, SimpleArgonXSecWithoutBibCheck)
   np.writeSpeciesSummary(species_summary);
   np.writeLatexRepresentation(latex_table);
 
-  EXPECT_TRUE(compareFiles(rxn_summary, gold_rxn_summary));
-  EXPECT_TRUE(compareFiles(species_summary, gold_species_summary));
-  EXPECT_TRUE(compareFiles(latex_table, gold_latex_table));
+  EXPECT_FILES_EQ(rxn_summary, gold_rxn_summary);
+  EXPECT_FILES_EQ(species_summary, gold_species_summary);
+  EXPECT_FILES_EQ(latex_table, gold_latex_table);
 }
 
 TEST(NetworkParser, SimpleArgonRateWithoutBibCheck)
@@ -62,9 +62,9 @@ TEST(NetworkParser, SimpleArgonRateWithoutBibCheck)
   np.writeSpeciesSummary(species_summary);
   np.writeLatexRepresentation(latex_table);
 
-  EXPECT_TRUE(compareFiles(rxn_summary, gold_rxn_summary));
-  EXPECT_TRUE(compareFiles(species_summary, gold_species_summary));
-  EXPECT_TRUE(compareFiles(latex_table, gold_latex_table));
+  EXPECT_FILES_EQ(rxn_summary, gold_rxn_summary);
+  EXPECT_FILES_EQ(species_summary, gold_species_summary);
+  EXPECT_FILES_EQ(latex_table, gold_latex_table);
 }
 
 
