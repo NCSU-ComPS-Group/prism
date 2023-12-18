@@ -95,7 +95,7 @@ namespace rxn
      * returns the reaction network formatted in a LaTeX table
      * @returns a string which is the reaction network in a LaTeX table
      */
-    string getLatexRepresentation() const;
+    void writeLatexRepresentation(const string & filepath);
 
   private:
     /**

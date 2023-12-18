@@ -9,3 +9,5 @@ doc/animations/__pycache__
 */coverage.info
 */.DS_Store
 .DS_Store
+*/output
+*.txt

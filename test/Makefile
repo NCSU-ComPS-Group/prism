@@ -6,6 +6,9 @@ PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
 PROJECT_INCLUDE_DIR = ../include/$(PROJECT_NAME)
 
+HELPER_SRC_DIR = helpers/src
+HELPER_INCLUDE_DIR = helpers/include
+
 TEST_SRC_DIR = tests
 TEST_BUILD_DIR = build
 TEST_EXECUTABLE = run_tests
@@ -24,21 +27,33 @@ TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
 PROJECT_SOURCES := $(wildcard $(PROJECT_SRC_DIR)/*.C)
 PROJECT_OBJECTS := $(patsubst $(PROJECT_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(PROJECT_SOURCES))
 
+HELPER_SOURCES := $(wildcard $(HELPER_SRC_DIR)/*.C)
+HELPER_OBJECTS := $(patsubst $(HELPER_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(HELPER_SOURCES))
+
 TEST_SOURCES := $(wildcard $(TEST_SRC_DIR)/*.C)
 TEST_OBJECTS := $(patsubst $(TEST_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(TEST_SOURCES))
+
+HELPER_INCLUDE := helpers/include
+PROJECT_INCLUDE := ../include
+
 
 $(TEST_BUILD_DIR)/%.o: $(PROJECT_SRC_DIR)/%.C
 	@mkdir -p build
 	@echo $@
 	@$(CXX) $(CXXFLAGS) -I$(CONDA_INCLUDE_DIR) -I$(PROJECT_INCLUDE_DIR) -c $< -o $@
 
+$(TEST_BUILD_DIR)/%.o: $(HELPER_SRC_DIR)/%.C
+	@mkdir -p build
+	@echo $@
+	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -I$(PROJECT_INCLUDE_DIR) -c $< -o $@
+
 $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 	@mkdir -p build
 	@echo $@
-	@$(CXX) $(CXXFLAGS) -I../include -I$(CONDA_INCLUDE_DIR) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
 
-$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS)
-	@$(CXX) $(CXXFLAGS) -I../include -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
+	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
 
 .PHONY: all clean coverage clean-coverage
 
@@ -51,6 +66,7 @@ clean:
 	@rm -rf coverage_report
 	@rm -rf build/*.g*
 	@rm -rf *.dSYM
+	@rm -f *.out
 
 
 coverage: all

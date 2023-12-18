@@ -1,0 +1,29 @@
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphix}
+\tabulinesep = 1.5mm
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      1 & Ar + e $\rightarrow$ Ar* + e &  - & - & EEDF & - & - & -11.56 & 0.00 & \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      2 & Ar + e $\rightarrow$ Ar$^{+}$ + 2e &  - & - & EEDF & - & - & -15.70 & 0.00 & \cite{lymberopoulos1993fluid} \\
+      3 & Ar* + e $\rightarrow$ Ar$^{+}$ + 2e &  - & - & EEDF & - & - & 11.56 & 0.00 & \cite{lymberopoulos1993fluid} \\
+      4 & Ar* + e $\rightarrow$ Ar + e &  - & - & EEDF & - & - & -4.14 & 0.00 & \cite{lymberopoulos1993fluid} \\
+      5 & Ar* + e $\rightarrow$ Ar$^r$ + e & 2.00$\times 10^{-7}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{lymberopoulos1993fluid} \\
+      6 & 2Ar* $\rightarrow$ Ar$^{+}$ + Ar + e & 6.20$\times 10^{-10}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{nothing real} \\
+      7 & Ar* + Ar $\rightarrow$ 2Ar & 3.00$\times 10^{-15}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{nothing real} \\
+      8 & Ar* + 2Ar $\rightarrow$ Ar$_{2}$ + Ar & 1.10$\times 10^{-31}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{nothing real} \\
+    \end{tabu}
+  }
+  \caption{your caption}
+  \label{tab:your-label}
+\end{table}
+
+\footnotemark[1]{This is a test}
+
+

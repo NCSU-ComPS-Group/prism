@@ -526,8 +526,6 @@ namespace rxn
 
     if (_from_file_xsec_rxn.size() + _arr_xsec_rxn.size() > 0)
       addArrheniusTable(_from_file_xsec_rxn, _arr_xsec_rxn);
-
-    cout << _latex << endl;
   }
 
   void
@@ -602,8 +600,14 @@ namespace rxn
       _latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + note_collector[i] + "}\n";
   }
 
-  string NetworkParser::getLatexRepresentation() const
+  void
+  NetworkParser::writeLatexRepresentation(const string & filepath)
   {
-    return _latex;
+    // lets reset this since the users could add mutliple networks
+    setLatexRepresentation();
+
+    ofstream out(filepath);
+    out << _latex;
+    out.close();
   }
 }
