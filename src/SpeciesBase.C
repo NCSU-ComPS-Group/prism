@@ -20,15 +20,13 @@ namespace rxn
   SpeciesBase::checkName(const string & s)
   {
     if (s.length() == 0)
-      throw invalid_argument(
-          makeRed("\n\n'" + s + "'" + " is invalid! Species cannot be an empty string\n"));
+      throw invalid_argument("Species cannot be an empty string!");
 
     if (s[0] == 'e' || s[0] == 'E')
     {
       if (s.length() > 1)
       {
-        throw invalid_argument(
-            makeRed("\n\n'" + s + "'" + " is invalid! Electrons cannot have modifiers\n"));
+        throw invalid_argument("'" + s + "'" + " is invalid, electrons cannot have modifiers.");
       }
     }
     return s;

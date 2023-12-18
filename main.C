@@ -5,7 +5,7 @@
 using namespace std;
 
 int
-main(int argc, char const * argv[])
+main()
 {
 
   // cout << rxn::format_scientific(1238.239, 2) << endl;

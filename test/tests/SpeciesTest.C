@@ -385,3 +385,27 @@ TEST(Species, ComplexPositiveMolecule)
   EXPECT_FLOAT_EQ(s.getSubSpecies()[3].getCharge(), s_charge);
   EXPECT_EQ(s.getSubSpecies()[3].getLatexRepresentation(), "H$_{3}$$^{+4}$(test)");
 }
+
+TEST(Species, CustomLongSpecies)
+{
+  base_masses["Polypeptide"] = 1000;
+  Species s = Species("Polypeptide2-100(test)");
+
+  float s_mass = 2 * base_masses["Polypeptide"] + 100 * base_masses["e"];
+  float s_charge = -100 * e;
+
+  EXPECT_EQ(s.getName(), "Polypeptide2-100(test)");
+  EXPECT_FLOAT_EQ(s.getMass(), s_mass);
+  EXPECT_EQ(s.getChargeNumber(), -100);
+  EXPECT_FLOAT_EQ(s.getCharge(), s_charge);
+  EXPECT_EQ(s.getLatexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");
+  // lets check the individual species too
+  EXPECT_EQ(s.getSubSpecies()[0].getName(), "Polypeptide2-100(test)");
+  EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Polypeptide");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), 2);
+  EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), 2 * 1000 + 100 * base_masses["e"]);
+  EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
+  EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), -100 * e);
+  EXPECT_EQ(s.getSubSpecies()[0].getLatexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");
+}

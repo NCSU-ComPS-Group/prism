@@ -15,7 +15,13 @@ To ensure no conflicts with other projects you can create a new environment to w
   conda install -c conda-forge cmake
   conda install -c conda-forge fmt
   conda install -c conda-forge yaml-cpp
+```
+
+If you want to run the test suite you will need to install the following packages as well
+
+```bash
   conda install -c conda-forge gtest
+  conda install -c conda-forge lcov
 ```
 
 # Installation

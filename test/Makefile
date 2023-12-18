@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -g -fprofile-arcs -ftest-coverage
+CXXFLAGS = -std=c++20 -Wall -Werror -g -fprofile-arcs -ftest-coverage
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
@@ -40,7 +40,7 @@ $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS)
 	@$(CXX) $(CXXFLAGS) -I../include -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
 
-.PHONY: all clean coverage
+.PHONY: all clean coverage clean-coverage
 
 all: $(TEST_EXECUTABLE)
 
@@ -63,3 +63,6 @@ coverage: all
 	lcov --remove coverage.info "*/fmt/*" -o coverage.info
 	genhtml coverage.info --output-directory coverage_report
 	open coverage_report/index.html
+
+clean-coverage:
+	@rm -rf coverage.info

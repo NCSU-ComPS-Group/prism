@@ -72,14 +72,6 @@ namespace rxn {
   int findFirstLetter(const string & s);
 
   /**
-   * Find the first number in a string
-   * @param s the string to search
-   * @returns the index of the number if
-   *          no number is found -1 is returned
-   */
-  int findFirstNum(const string & s);
-
-  /**
    * Find the first non number in a string
    * @param s the string to search
    * @returns the index of the non number if

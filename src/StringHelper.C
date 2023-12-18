@@ -97,17 +97,6 @@ namespace rxn
   }
 
   int
-  findFirstNum(const string & s)
-  {
-    for (size_t i = 0; i < s.length(); ++i)
-    {
-      if (isdigit(s[i]))
-        return i;
-    }
-    return -1;
-  }
-
-  int
   findFirstNonNumber(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)

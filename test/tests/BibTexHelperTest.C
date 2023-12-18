@@ -4,6 +4,17 @@
 
 using namespace rxn;
 
+TEST(BibTexHelper, NoBibFile)
+{
+  try {
+    collectReferences("not_a_file.txt");
+  }
+  catch (invalid_argument & e )
+  {
+    EXPECT_STREQ(e.what(), "File: 'not_a_file.txt' not found");
+  }
+}
+
 TEST(BibTexHelper, TestNoWorks)
 {
   EXPECT_THROW(checkCiteKey("lymberopoulos1993fluid"), invalid_argument);

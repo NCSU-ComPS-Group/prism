@@ -63,8 +63,7 @@ namespace rxn
     // lets check to see if the user has provided values for delta-eps-g
     try {
       float delta_eps_g = rxn_input[DELTA_EPS_G_KEY].as<float>();
-      _delta_eps_e = delta_eps_g;
-
+      _delta_eps_g = delta_eps_g;
     }
     // lets do nothing since we provide default values
     catch (YAML::BadConversion) {}
@@ -201,7 +200,7 @@ namespace rxn
   {
     if (rxn.find(" -> ") == string::npos)
       throw invalid_argument(
-          "'" + rxn + "'" + " is invalid! Reactions must contain '->'");
+          "'" + rxn + "' is invalid! Reactions must contain '->'");
 
     return rxn;
   }

@@ -2,9 +2,29 @@
 #include "rxn-cpp/rxn-cpp.h"
 using namespace rxn;
 
+TEST(SubSpecies, EmptyString)
+{
+  try {
+    SubSpecies s = SubSpecies("");
+  }
+  catch (invalid_argument & e)
+  {
+    EXPECT_STREQ(e.what(), "Species cannot be an empty string!");
+  }
+}
+
+TEST(SubSpecies, ModifiedElectron)
+{
+  try {
+    SubSpecies s = SubSpecies("e+");
+  }
+  catch( invalid_argument & e )
+  {
+    EXPECT_STREQ(e.what(), "'e+' is invalid, electrons cannot have modifiers.");
+  }
+}
 TEST(SubSpecies, Equal)
 {
-  std::cout << "Here" << std::endl;
   SubSpecies s1 = SubSpecies("e");
   SubSpecies s2 = SubSpecies("e");
 
@@ -249,3 +269,20 @@ TEST(SubSpecies, MassOverride)
   EXPECT_FLOAT_EQ(s.getCharge(), -100 * e);
   EXPECT_EQ(s.getLatexRepresentation(), "Ar$_{2}$$^{-100}$(test)");
 }
+
+TEST(SubSpecies, LongCustomSpecies)
+{
+  base_masses["Polypeptide"] = 1000;
+  SubSpecies s = SubSpecies("Polypeptide2-100(test)");
+
+  EXPECT_EQ(s.getName(), "Polypeptide2-100(test)");
+  EXPECT_EQ(s.getBase(), "Polypeptide");
+  EXPECT_EQ(s.getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubscript(), 2);
+  EXPECT_FLOAT_EQ(s.getMass(), 2 * 1000 + 100 * base_masses["e"]);
+  EXPECT_EQ(s.getChargeNumber(), -100);
+  EXPECT_FLOAT_EQ(s.getCharge(), -100 * e);
+  EXPECT_EQ(s.getLatexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");
+}
+
+

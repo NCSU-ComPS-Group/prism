@@ -27,7 +27,7 @@ namespace rxn
 
     if (base_start == -1 && _name[0] != 'e')
       throw invalid_argument("\n\n'" + _name + "'" +
-                            " is invalid! Species must contain a capital be an electron (e) \n");
+                            " is invalid! Species must contain a capital or be an electron (e) \n");
 
     if (base_start != 0 && _name[0] != 'e')
       throw invalid_argument("\n\n'" + _name + "'" +
@@ -43,9 +43,6 @@ namespace rxn
 
     auto base = _name.substr(0, base_end);
 
-    if (base.length() > 2)
-      throw invalid_argument("\n\n'" + _name + "'" +
-                            +" is invalid! Species based can be at most 2 characters long\n");
     return base;
   }
 
