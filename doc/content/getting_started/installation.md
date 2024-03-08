@@ -12,16 +12,10 @@ To ensure no conflicts with other projects you can create a new environment to w
 ```bash
   conda create --name rxn-cpp
   conda activate rxn-cpp
-  conda install -c conda-forge cmake
   conda install -c conda-forge fmt
   conda install -c conda-forge yaml-cpp
-```
-
-If you want to run the test suite you will need to install the following packages as well
-
-```bash
-  conda install -c conda-forge gtest
   conda install -c conda-forge lcov
+  conda install -c conda-forge gtest
 ```
 
 # Installation
@@ -38,10 +32,7 @@ If you want to run the test suite you will need to install the following package
 
 
 ```bash
-  mkdir build
-  cd build
-  cmake ..
-  make install
+  make 
 ```
 
 # Build The Docs

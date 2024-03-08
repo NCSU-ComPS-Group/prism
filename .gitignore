@@ -1,13 +1,7 @@
 *.dSYM
 */build
-*.yaml
 */main
 */run_tests
-doc/animations/media
-doc/animations/__pycache__
-*/coverage_report
-*/coverage.info
-*/.DS_Store
 .DS_Store
 */output
 *.txt
