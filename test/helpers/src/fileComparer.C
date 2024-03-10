@@ -1,21 +1,33 @@
 #include "fileComparer.h"
 
-bool
-compareFiles(const string & gold_file, const string & test_file)
-{
-  ifstream stream1(gold_file);
-  ifstream stream2(test_file);
+std::string normalizeContent(const std::string& content) {
+    // Replace all carriage return ('\r') characters with newline ('\n')
+    std::string normalized_content = content;
+    std::replace(normalized_content.begin(), normalized_content.end(), '\r', '\n');
+    return normalized_content;
+}
 
-  if (!stream1.is_open())
-      throw invalid_argument("Unable to open " + gold_file);
+// Function to compare files after normalizing their contents
+bool compareFiles(const std::string& file1, const std::string& file2) {
+    std::ifstream stream1(file1);
+    std::ifstream stream2(file2);
 
-  if (!stream2.is_open())
-      throw invalid_argument("Unable to open " + test_file);
+    if (!stream1.is_open())
+        throw std::invalid_argument("Unable to open " + file1);
 
-  // Read the entire contents of both files into strings
-  return std::equal(std::istreambuf_iterator<char>(stream1.rdbuf()),
-                    std::istreambuf_iterator<char>(),
-                    std::istreambuf_iterator<char>(stream2.rdbuf()));
+    if (!stream2.is_open())
+        throw std::invalid_argument("Unable to open " + file2);
+
+    // Read the entire contents of both files into strings
+    std::string content1((std::istreambuf_iterator<char>(stream1)), std::istreambuf_iterator<char>());
+    std::string content2((std::istreambuf_iterator<char>(stream2)), std::istreambuf_iterator<char>());
+
+    // Normalize file contents by removing or replacing special characters
+    std::string normalized_content1 = normalizeContent(content1);
+    std::string normalized_content2 = normalizeContent(content2);
+
+    // Compare the normalized strings
+    return normalized_content1 == normalized_content2;
 }
 
 

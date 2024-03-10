@@ -2,6 +2,10 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <cstdlib>
+#include <cstdio>
+#include <string>
+
 #include "gtest/gtest.h"
 
 using namespace std;
