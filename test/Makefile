@@ -20,7 +20,6 @@ GTEST_LIBS = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
 
-LIBRARY_LINKS =  $(YAML_LINK) $(FMT_LINK)
 TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
 
 PROJECT_SOURCES := $(wildcard $(PROJECT_SRC_DIR)/*.C)

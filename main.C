@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include <stdlib.h>
 #include "rxn-cpp/rxn-cpp.h"
 
 using namespace std;
@@ -8,9 +7,10 @@ int
 main()
 {
 
+  SpeciesFactory& test = SpeciesFactory::getInstance();
   // cout << rxn::format_scientific(1238.239, 2) << endl;
-  rxn::NetworkParser test = rxn::NetworkParser(false);
-  test.parseNetwork("test/inputs/simple_argon.yaml");
+  // rxn::NetworkParser test = rxn::NetworkParser(false);
+  // test.parseNetwork("test/inputs/simple_argon.yaml");
   // // // test.printReactionSummary();
   // // // test.printSpeciesSummary();
 
