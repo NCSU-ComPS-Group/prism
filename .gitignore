@@ -1,6 +1,6 @@
 *.dSYM
-*/build
-*/main
+build
+/main
 */run_tests
 .DS_Store
 */output
