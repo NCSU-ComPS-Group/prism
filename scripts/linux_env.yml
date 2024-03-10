@@ -3,5 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - gcc
+  - fmt
+  - yaml-cpp
   - gtest
   - lcov
