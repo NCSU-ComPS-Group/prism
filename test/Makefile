@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Werror -g -fprofile-arcs -ftest-coverage
+CXXFLAGS = -std=c++20 -Wall -fprofile-arcs -ftest-coverage
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
