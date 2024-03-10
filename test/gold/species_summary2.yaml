@@ -1,126 +1,60 @@
 Unique-Species: 6
-  - 1: Ar2
-  - 2: Ar^r
+  - 1: Ar
+  - 2: Ar*
   - 3: Ar+
-  - 4: e
-  - 5: Ar*
-  - 6: Ar
+  - 4: Ar2
+  - 5: Ar^r
+  - 6: e
 
 
 
 
-# Warning! Species has no sinks
-Species: Ar2
-  - Rate-Based: 1
-    Balanced: 0
-
-    Sources: 1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: 1
-
-    Sinks: 0
-
-  - Cross-Section-Based: 1
-    Balanced: 0
-
-    Sources: 1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: 1
-
-    Sinks: 0
-
-
-# Warning! Species has no sinks
-Species: Ar^r
-  - Rate-Based: 1
-    Balanced: 0
-
-    Sources: 1
-      - reaction: Ar* + e -> Ar^r + e
-        stoic_coeff: 1
-
-    Sinks: 0
-
-  - Cross-Section-Based: 1
-    Balanced: 0
-
-    Sources: 1
-      - reaction: Ar* + e -> Ar^r + e
-        stoic_coeff: 1
-
-    Sinks: 0
-
-
-# Warning! Species has no sinks
-Species: Ar+
-  - Rate-Based: 3
-    Balanced: 0
-
-    Sources: 3
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: 2Ar* -> Ar+ + Ar + e
-        stoic_coeff: 1
-
-    Sinks: 0
-
-  - Cross-Section-Based: 3
-    Balanced: 0
-
-    Sources: 3
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: 2Ar* -> Ar+ + Ar + e
-        stoic_coeff: 1
-
-    Sinks: 0
-
-
-# Warning! Species has no sinks
-Species: e
+Species: Ar
   - Rate-Based: 8
-    Balanced: 3
-      - reaction: Ar + e -> Ar* + e
-      - reaction: Ar* + e -> Ar + e
-      - reaction: Ar* + e -> Ar^r + e
+    Balanced: 0
 
-    Sources: 5
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
+    Sources: 4
+      - reaction: Ar* + e -> Ar + e
         stoic_coeff: 1
       - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
+      - reaction: Ar* + Ar -> 2Ar
+        stoic_coeff: 1
+      - reaction: Ar* + Ar -> 2Ar
+        stoic_coeff: 1
 
-    Sinks: 0
+    Sinks: 4
+      - reaction: Ar + e -> Ar* + e
+        stoic_coeff: -1
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: -1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: -1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: -1
 
   - Cross-Section-Based: 8
-    Balanced: 3
-      - reaction: Ar + e -> Ar* + e
-      - reaction: Ar* + e -> Ar + e
-      - reaction: Ar* + e -> Ar^r + e
+    Balanced: 0
 
-    Sources: 5
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
-        stoic_coeff: 1
-      - reaction: Ar* + e -> Ar+ + 2e
+    Sources: 4
+      - reaction: Ar* + e -> Ar + e
         stoic_coeff: 1
       - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
+      - reaction: Ar* + Ar -> 2Ar
+        stoic_coeff: 1
+      - reaction: Ar* + Ar -> 2Ar
+        stoic_coeff: 1
 
-    Sinks: 0
+    Sinks: 4
+      - reaction: Ar + e -> Ar* + e
+        stoic_coeff: -1
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: -1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: -1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: -1
 
 
 Species: Ar*
@@ -171,49 +105,115 @@ Species: Ar*
         stoic_coeff: -1
 
 
-Species: Ar
-  - Rate-Based: 8
+# Warning! Species has no sinks
+Species: Ar+
+  - Rate-Based: 3
     Balanced: 0
 
-    Sources: 4
-      - reaction: Ar* + e -> Ar + e
+    Sources: 3
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar* + e -> Ar+ + 2e
         stoic_coeff: 1
       - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
-      - reaction: Ar* + Ar -> 2Ar
+
+    Sinks: 0
+
+  - Cross-Section-Based: 3
+    Balanced: 0
+
+    Sources: 3
+      - reaction: Ar + e -> Ar+ + 2e
         stoic_coeff: 1
-      - reaction: Ar* + Ar -> 2Ar
+      - reaction: Ar* + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
 
-    Sinks: 4
+    Sinks: 0
+
+
+# Warning! Species has no sinks
+Species: Ar2
+  - Rate-Based: 1
+    Balanced: 0
+
+    Sources: 1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: 1
+
+    Sinks: 0
+
+  - Cross-Section-Based: 1
+    Balanced: 0
+
+    Sources: 1
+      - reaction: Ar* + 2Ar -> Ar2 + Ar
+        stoic_coeff: 1
+
+    Sinks: 0
+
+
+# Warning! Species has no sinks
+Species: Ar^r
+  - Rate-Based: 1
+    Balanced: 0
+
+    Sources: 1
+      - reaction: Ar* + e -> Ar^r + e
+        stoic_coeff: 1
+
+    Sinks: 0
+
+  - Cross-Section-Based: 1
+    Balanced: 0
+
+    Sources: 1
+      - reaction: Ar* + e -> Ar^r + e
+        stoic_coeff: 1
+
+    Sinks: 0
+
+
+# Warning! Species has no sinks
+Species: e
+  - Rate-Based: 8
+    Balanced: 3
       - reaction: Ar + e -> Ar* + e
-        stoic_coeff: -1
+      - reaction: Ar* + e -> Ar + e
+      - reaction: Ar* + e -> Ar^r + e
+
+    Sources: 5
       - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: -1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: -1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: -1
+        stoic_coeff: 1
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar* + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar* + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: 2Ar* -> Ar+ + Ar + e
+        stoic_coeff: 1
+
+    Sinks: 0
 
   - Cross-Section-Based: 8
-    Balanced: 0
-
-    Sources: 4
+    Balanced: 3
+      - reaction: Ar + e -> Ar* + e
       - reaction: Ar* + e -> Ar + e
+      - reaction: Ar* + e -> Ar^r + e
+
+    Sources: 5
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar* + e -> Ar+ + 2e
+        stoic_coeff: 1
+      - reaction: Ar* + e -> Ar+ + 2e
         stoic_coeff: 1
       - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
-      - reaction: Ar* + Ar -> 2Ar
-        stoic_coeff: 1
-      - reaction: Ar* + Ar -> 2Ar
-        stoic_coeff: 1
 
-    Sinks: 4
-      - reaction: Ar + e -> Ar* + e
-        stoic_coeff: -1
-      - reaction: Ar + e -> Ar+ + 2e
-        stoic_coeff: -1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: -1
-      - reaction: Ar* + 2Ar -> Ar2 + Ar
-        stoic_coeff: -1
+    Sinks: 0
