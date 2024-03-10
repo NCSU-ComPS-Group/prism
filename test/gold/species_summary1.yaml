@@ -64,7 +64,7 @@ Species: Ar+
         stoic_coeff: 1
       - reaction: Ar* + e -> Ar+ + 2e
         stoic_coeff: 1
-      - reaction: Ar* + Ar* -> Ar+ + Ar + e
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
 
     Sinks: 0
@@ -94,7 +94,7 @@ Species: e
         stoic_coeff: 1
       - reaction: Ar* + e -> Ar+ + 2e
         stoic_coeff: 1
-      - reaction: Ar* + Ar* -> Ar+ + Ar + e
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
 
     Sinks: 0
@@ -122,9 +122,9 @@ Species: Ar*
         stoic_coeff: -1
       - reaction: Ar* + e -> Ar^r + e
         stoic_coeff: -1
-      - reaction: Ar* + Ar* -> Ar+ + Ar + e
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: -2
-      - reaction: Ar* + Ar* -> Ar+ + Ar + e
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: -2
       - reaction: Ar* + Ar -> 2Ar
         stoic_coeff: -1
@@ -146,7 +146,7 @@ Species: Ar
     Sources: 4
       - reaction: Ar* + e -> Ar + e
         stoic_coeff: 1
-      - reaction: Ar* + Ar* -> Ar+ + Ar + e
+      - reaction: 2Ar* -> Ar+ + Ar + e
         stoic_coeff: 1
       - reaction: Ar* + Ar -> 2Ar
         stoic_coeff: 1

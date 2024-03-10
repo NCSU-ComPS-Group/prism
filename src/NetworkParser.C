@@ -174,11 +174,13 @@ namespace rxn
             if (rate_based)
             {
               it->_rate_sources.push_back(r);
+              it->_rate_based.push_back(r);
               continue;
             }
             else
             {
               it->_xsec_sources.push_back(r);
+              it->_xsec_based.push_back(r);
               continue;
             }
           }
@@ -189,11 +191,13 @@ namespace rxn
             if (rate_based)
             {
               it->_rate_balanced.push_back(r);
+              it->_rate_based.push_back(r);
               continue;
             }
             else
             {
               it->_xsec_balanced.push_back(r);
+              it->_xsec_based.push_back(r);
               continue;
             }
           }
@@ -208,11 +212,13 @@ namespace rxn
             if (rate_based)
             {
               it->_rate_sinks.push_back(r);
+              it->_rate_based.push_back(r);
               continue;
             }
             else
             {
               it->_xsec_sinks.push_back(r);
+              it->_xsec_based.push_back(r);
               continue;
             }
           }

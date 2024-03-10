@@ -90,6 +90,17 @@ namespace rxn
     return !(*this == other);
   }
 
+  vector<Reaction>
+  Species::getAllRateBased() const
+  {
+    return _rate_based;
+  }
+
+  vector<Reaction>
+  Species::getAllXsecBased() const
+  {
+    return _xsec_based;
+  }
 
   vector<Reaction>
   Species::getRateBasedBalanced() const

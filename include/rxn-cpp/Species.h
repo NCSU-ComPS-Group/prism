@@ -17,6 +17,10 @@ namespace rxn
     bool operator==(const Species & other) const;
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const Species & other) const;
+    /** Getter method for all rate based reactions */
+    vector<Reaction> getAllRateBased() const;
+    /** Getter method for all xsec based reactions */
+    vector<Reaction> getAllXsecBased() const;
     /** Getter method for the rate based reactions with a stoiciometric coefficient of 0 */
     vector<Reaction> getRateBasedBalanced() const;
     /** Getter method for the cross section based reactions with a stoiciometric coefficient of 0 */
@@ -38,6 +42,10 @@ namespace rxn
     friend class NetworkParser;
     /** the list of the sub_species in the the class */
     vector<SubSpecies> _sub_species;
+    /** All rate based reactions */
+    vector<Reaction> _rate_based;
+    /** All xsec based reactions */
+    vector<Reaction> _xsec_based;
     /** Rate based reactions where the stoiciometric coeff is greater than 1 */
     vector<Reaction> _rate_sources;
     /** Cross section based reactions where the stoiciometric coeff is greater than 1 */

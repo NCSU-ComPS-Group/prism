@@ -7,7 +7,7 @@ int
 main()
 {
 
-  SpeciesFactory& test = SpeciesFactory::getInstance();
+  // SpeciesFactory& test = SpeciesFactory::getInstance();
   // cout << rxn::format_scientific(1238.239, 2) << endl;
   // rxn::NetworkParser test = rxn::NetworkParser(false);
   // test.parseNetwork("test/inputs/simple_argon.yaml");

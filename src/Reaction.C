@@ -70,7 +70,6 @@ namespace rxn
     catch (YAML::InvalidNode) {}
 
     // lets check to see if the user has provided a file for data to be provided
-
     try {
       string rxn_file = rxn_input[FILE_KEY].as<string>();
       // lets make sure no one provides a file and params

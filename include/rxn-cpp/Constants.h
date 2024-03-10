@@ -24,7 +24,7 @@ namespace rxn
   #define SPECIES_KEY "species"
   #define LATEX_KEY "latex"
   #define BIB_KEY "bibliography"
-  #define NOTE_KEY "note"
+  #define NOTE_KEY "notes"
   #define MASS_EPS 1e-5;
   /**
    * Storing the mass of all elements in the periodic table

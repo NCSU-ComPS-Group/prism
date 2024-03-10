@@ -8,4 +8,3 @@
 #include "Reaction.h"
 #include "GlobalData.h"
 #include "NetworkParser.h"
-#include "SpeciesFactory.h"
