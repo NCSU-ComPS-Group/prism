@@ -23,7 +23,7 @@ TEST(NetworkParser, SimpleArgonXSecWithoutBibCheck)
   np.parseNetwork("inputs/simple_argon_xsec.yaml");
 
   auto rxns = np.getXSecBasedReactions();
-  EXPECT_EQ(rxns.size(), 8);
+  EXPECT_EQ(rxns.size(), (unsigned int) 8);
 
 
   const std::string rxn_summary = "output/rxn_summary1.yaml";
@@ -48,7 +48,7 @@ TEST(NetworkParser, SimpleArgonRateWithoutBibCheck)
   np.parseNetwork("inputs/simple_argon_rate.yaml");
 
   auto rxns = np.getRateBasedReactions();
-  EXPECT_EQ(rxns.size(), 8);
+  EXPECT_EQ(rxns.size(), (unsigned int) 8);
 
 
   const std::string rxn_summary = "output/rxn_summary2.yaml";

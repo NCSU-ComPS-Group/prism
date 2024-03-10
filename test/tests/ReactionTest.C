@@ -58,7 +58,7 @@ TEST(Reaction, TestBasicReactionFromNode)
   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
-  EXPECT_EQ(r.getParams().size(), 0);
+  EXPECT_EQ(r.getParams().size(), (unsigned int) 0);
   EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -92,7 +92,7 @@ TEST(Reaction, TestBasicReactionNoDataPath)
   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
-  EXPECT_EQ(r.getParams().size(), 0);
+  EXPECT_EQ(r.getParams().size(), (unsigned int) 0);
   EXPECT_EQ(r.getPathToData(), "reaction1.txt");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -127,7 +127,7 @@ TEST(Reaction, TestBasicReactionArrhenius)
   EXPECT_EQ(r.getReference(),"\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), ARRHENIUS_STR);
-  EXPECT_EQ(r.getParams().size(), 5);
+  EXPECT_EQ(r.getParams().size(),(unsigned int)  5);
   EXPECT_EQ(r.getParams(), params);
   EXPECT_EQ(r.getPathToData(), "");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
@@ -163,7 +163,7 @@ TEST(Reaction, TestBasicCustomEquation)
   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), "custom1");
-  EXPECT_EQ(r.getParams().size(), 3);
+  EXPECT_EQ(r.getParams().size(), (unsigned int)  3);
   EXPECT_EQ(r.getParams(), params);
   EXPECT_EQ(r.getPathToData(), "");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
@@ -198,7 +198,7 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
-  EXPECT_EQ(r.getParams().size(), 0);
+  EXPECT_EQ(r.getParams().size(), (unsigned int)  0);
   EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -253,7 +253,7 @@ TEST(Reaction, TestMolecularBreakDown)
   EXPECT_EQ(r.getReactionNumber(), 0);
 
   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
-  EXPECT_EQ(r.getParams().size(), 0);
+  EXPECT_EQ(r.getParams().size(), (unsigned int) 0);
   EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -312,7 +312,7 @@ TEST(Reaction, ReactionWithDeltaEpsilons)
   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
   EXPECT_EQ(r.getEquationType(), ARRHENIUS_STR);
-  EXPECT_EQ(r.getParams().size(), 5);
+  EXPECT_EQ(r.getParams().size(), (unsigned int) 5);
   EXPECT_EQ(r.getParams(), params);
   EXPECT_EQ(r.getPathToData(), "");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 20);

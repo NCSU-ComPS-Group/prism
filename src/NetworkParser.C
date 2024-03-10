@@ -460,7 +460,7 @@ namespace rxn
       summary += "\033[31m";
     summary += fmt::format("  Invalid: {:d}\n", invalid_rxn.size());
 
-    for (auto i = 0; i < invalid_rxn.size(); ++i)
+    for (unsigned int i = 0; i < invalid_rxn.size(); ++i)
     {
       if (!yaml_file)
         summary += "\033[31m";
@@ -602,7 +602,7 @@ namespace rxn
     _latex += "  \\label{tab:your-label}\n";
     _latex += "\\end{table}\n\n";
 
-    for (int i = 0; i < note_collector.size(); ++i)
+    for (unsigned int i = 0; i < note_collector.size(); ++i)
       _latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + note_collector[i] + "}\n";
   }
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <iostream>
+#include <vector>
 #include "fmt/core.h"
 using namespace std;
 
