@@ -1,0 +1,65 @@
+#pragma once
+#include <string>
+#include <iostream>
+#include "Constants.h"
+
+using namespace std;
+
+namespace rxn
+{
+
+  class SpeciesBase
+  {
+  public:
+    SpeciesBase(const string & name);
+    virtual ~SpeciesBase() {}
+
+    /** override to print the species name as is */
+    friend std::ostream & operator<<(std::ostream & os, const SpeciesBase & s);
+    /** Comparison operator checks if the two base species have the same name */
+    const bool operator==(const SpeciesBase & other) const;
+    /** Comparison for checking whether or not the two are not equal  */
+    const bool operator!=(const SpeciesBase & other) const;
+
+    /** Getter method for the name of species */
+    const string getName() const;
+    /** Getter method for the mass of the species */
+    const float getMass() const;
+    /** Getter method for the charge number of the species */
+    const int getChargeNumber() const;
+
+    /** Getter method for the charge of the species */
+    const float  getCharge() const;
+    /** Getter method for the latex name of the species */
+    string getLatexRepresentation() const;
+  protected:
+    /** The full string of the species base */
+    const string _name;
+    /** The molar mass of the species */
+    const float _mass;
+    /** The level of ionization ex: Ar-4 this is -4 */
+    const int _charge_num;
+    /** The name of the spcies formatted for printing in a latex_table */
+    const string _latex_name;
+
+  private:
+
+    /**
+     * Method checks to make sure that the name is not an empty string
+     * also checks to make sure e and E are reserved for electrons only
+     * @param name the string representation of the name
+    */
+    string checkName(const string & name);
+
+  };
+}
+
+template <>
+struct std::hash<rxn::SpeciesBase>
+{
+  /**
+   * Custom hash function based only on the name of the species
+   * @param obj the SpeciesBase to be hashed
+   */
+  size_t operator()(const rxn::SpeciesBase & obj) const;
+};

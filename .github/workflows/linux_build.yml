@@ -1,0 +1,37 @@
+name: linux-build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    # Set up a default shell for all steps
+    # See: https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Set up Mambaforge3 and conda environment
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        activate-environment: bpp
+        environment-file: scripts/linux_env.yml
+    # GitHub-hosted runners are currently limited to 2 cores
+    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+    - name: Build and run tests
+      run: |
+        conda activate bpp
+        export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+        cd test
+        make -j 2
+        ./run_tests
+

@@ -4,19 +4,22 @@
 using namespace std;
 
 int
-main()
+main(int argc, char** argv)
 {
+  if (argc != 4)
+  {
+    rxn::printRed("\nYou must supply the path to a reaction network file!\n");
+    rxn::printRed("Proper usage: ./main <network-file> <species-summary> <reaction-summary>\n\n");
+    return EXIT_FAILURE;
+  }
+  rxn::NetworkParser test = rxn::NetworkParser(false);
+  test.parseNetwork(argv[1]);
 
-  // SpeciesFactory& test = SpeciesFactory::getInstance();
-  // cout << rxn::format_scientific(1238.239, 2) << endl;
-  // rxn::NetworkParser test = rxn::NetworkParser(false);
-  // test.parseNetwork("test/inputs/simple_argon.yaml");
-  // // // test.printReactionSummary();
-  // // // test.printSpeciesSummary();
+  test.printReactionSummary();
+  test.printSpeciesSummary();
 
-  // // // test.writeSpeciesSummary("test2.yaml");
-  // // // test.writeReactionSummary("test3.yaml");
-  // rxn::collectReferences("test/inputs/works.bib");
-  // // rxn::checkCiteKey("test");
+  test.writeSpeciesSummary(argv[2]);
+  test.writeReactionSummary(argv[3]);
+
   return EXIT_SUCCESS;
 }
