@@ -15,9 +15,9 @@ namespace rxn
     try {
       string rxn_str = rxn_input[REACTION_KEY].as<string>();
       _name = checkReactionString(rxn_str);
-    } catch (YAML::BadConversion) {
+    } catch (const YAML::BadConversion& e) {
       throw invalid_argument("- reaction: input must be a string");
-    } catch (YAML::InvalidNode) {
+    } catch (const YAML::InvalidNode& e) {
       throw invalid_argument("Reaction formula must be provided");
     }
     // setting up the reactants and products
@@ -28,16 +28,16 @@ namespace rxn
     try{
       string temp_ref = rxn_input[REFERENCE_KEY].as<string>();
       _reference.push_back(temp_ref);
-    } catch (YAML::BadConversion) {
+    } catch (const YAML::BadConversion& e) {
       // since we can't get this as a single string lets try and get it as a vector of strings
       try {
         _reference = rxn_input[REFERENCE_KEY].as<vector<string>>();
-      } catch (YAML::BadConversion)
+      } catch (const YAML::BadConversion& e)
       {
         throw invalid_argument("Your reference(s) were unable to be parsed as a string and as a list of strings");
       }
       // throw invalid_argument("References must be provided in string form");
-    } catch(YAML::InvalidNode) {
+    } catch(const YAML::InvalidNode& e) {
       throw invalid_argument("All reactions must have an associated reference");
     }
     // now that we have our strings lets see if they are in the bib
@@ -57,8 +57,8 @@ namespace rxn
       _delta_eps_e = delta_eps_e;
     }
     // lets do nothing since we provide default values
-    catch (YAML::BadConversion) {}
-    catch (YAML::InvalidNode) {}
+    catch (const YAML::BadConversion& e) {}
+    catch (const YAML::InvalidNode& e) {}
 
     // lets check to see if the user has provided values for delta-eps-g
     try {
@@ -66,8 +66,8 @@ namespace rxn
       _delta_eps_g = delta_eps_g;
     }
     // lets do nothing since we provide default values
-    catch (YAML::BadConversion) {}
-    catch (YAML::InvalidNode) {}
+    catch (const YAML::BadConversion& e) {}
+    catch (const YAML::InvalidNode& e) {}
 
     // lets check to see if the user has provided a file for data to be provided
     try {
@@ -80,8 +80,8 @@ namespace rxn
         // if there is no params with a file this is what we want so
         // well do nothing here
       }
-      catch(YAML::BadConversion) {}
-      catch(YAML::InvalidNode) {}
+      catch(const YAML::BadConversion& e) {}
+      catch(const YAML::InvalidNode& e) {}
       // lets make sure that no equation type is provided with a
       // reaction that gives a file
       try
@@ -91,8 +91,8 @@ namespace rxn
             "Providing a file location and an equation type for the same reaction is invalid");
       }
       // we'll do nothing here since this is what we want
-      catch(YAML::BadConversion) {}
-      catch(YAML::InvalidNode) {}
+      catch(const YAML::BadConversion& e) {}
+      catch(const YAML::InvalidNode& e) {}
 
       if (data_path.length() == 0)
         _filepath = rxn_file;
@@ -119,7 +119,7 @@ namespace rxn
       }
       // if there is no database that's okay we'll just set this to be an empty string and
       // then we won't use it later in table generation
-      catch (YAML::InvalidNode)
+      catch (const YAML::InvalidNode& e)
       {
         _database = "";
       }
@@ -130,19 +130,19 @@ namespace rxn
       }
       // if this isn't povided then we don't care we'll just make the notes an empty
       // string
-      catch (YAML::InvalidNode) {
+      catch (const YAML::InvalidNode& e) {
         _notes = "";
       }
-      catch (YAML::BadConversion)
+      catch (const YAML::BadConversion& e)
       {
         throw invalid_argument("Unable to parse note as a string\n");
       }
     }
-    catch (YAML::BadConversion)
+    catch (const YAML::BadConversion& e)
     {
       _filepath = "";
     }
-    catch(YAML::InvalidNode) {
+    catch(const YAML::InvalidNode& e) {
       _filepath = "";
     }
 
@@ -154,7 +154,7 @@ namespace rxn
     {
       try {
         temp_params = rxn_input[PARAM_KEY].as<vector<float>>();
-      } catch (YAML::BadConversion) {
+      } catch (const YAML::BadConversion& e) {
         // if they didn't provide a list of parameters we can check if
         // they provided it as a single param
         try
@@ -162,7 +162,7 @@ namespace rxn
           temp_param = rxn_input[PARAM_KEY].as<float>();
           temp_params = {temp_param, 0, 0, 0, 0};
         }
-        catch (YAML::InvalidNode)
+        catch (const YAML::InvalidNode& e)
         {
           throw invalid_argument(
               "Since no file is provided params must be included");
@@ -177,7 +177,7 @@ namespace rxn
       }
       // if there is not equation type lets assume its
       // arrhenius
-      catch (YAML::InvalidNode) {
+      catch (const YAML::InvalidNode& e) {
         _eqn_type = ARRHENIUS_STR;
         if (temp_params.size() > 5)
           throw invalid_argument(

@@ -40,7 +40,7 @@ namespace rxn
                                   SPECIES_KEY,
                                   LATEX_KEY)));
         }
-        catch (YAML::BadConversion)
+        catch (const YAML::BadConversion& e)
         {
           invalid_argument(makeRed(fmt::format(
               "'{}' and '{}' must both be provided as strings", SPECIES_KEY, LATEX_KEY)));
@@ -259,7 +259,7 @@ namespace rxn
           continue;
         }
         // if we can't parse it as a string tell the user.
-        catch (YAML::BadConversion)
+        catch (const YAML::BadConversion& e)
         {
           cout << "Here" << endl;
           invalid.push_back(fmt::format("Reaction number {:d} was not able to be parsed as a string", _rxn_count));

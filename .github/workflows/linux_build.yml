@@ -23,13 +23,13 @@ jobs:
       with:
         miniforge-variant: Mambaforge
         use-mamba: true
-        activate-environment: bpp
+        activate-environment: rxn-cpp
         environment-file: scripts/linux_env.yml
-    # GitHub-hosted runners are currently limited to 2 cores
+    # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build and run tests
       run: |
-        conda activate bpp
+        conda activate rxn-cpp
         export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
         cd test
         make -j 2
