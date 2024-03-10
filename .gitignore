@@ -1,7 +1,9 @@
 *.dSYM
 build
-/main
-*/run_tests
+main
+test/run_tests
 .DS_Store
-*/output
-*.txt
+test/output
+test/coverage_report
+test/converage.info
+
