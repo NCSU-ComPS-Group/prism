@@ -33,7 +33,7 @@ namespace rxn
           string latex = override[LATEX_KEY].as<string>();
           latex_overrides.emplace(species, latex);
         }
-        catch (YAML::InvalidNode)
+        catch (const YAML::InvalidNode& e)
         {
           invalid_argument(
               makeRed(fmt::format("You must provide '{}' and '{}' when defining a LaTeX override",
@@ -48,7 +48,7 @@ namespace rxn
       }
     }
     // if there is no latex overrides that's okay
-    catch (YAML::InvalidNode)
+    catch (const YAML::InvalidNode& e)
     {
     }
   }
@@ -66,7 +66,7 @@ namespace rxn
       string data_path = network[PATH_KEY].as<string>();
       _data_paths[file] = data_path;
     }
-    catch (YAML::InvalidNode)
+    catch (const YAML::InvalidNode& e)
     {
       _data_paths[file] = "data/";
     }
@@ -77,7 +77,7 @@ namespace rxn
         string bib_path = network[BIB_KEY].as<string>();
       }
       // were going to make sure that there is a bibliography
-      catch (YAML::InvalidNode)
+      catch (const YAML::InvalidNode& e)
       {
         throw invalid_argument("A bibliography must be provided unless you explicity choose not to check it");
       }
@@ -90,7 +90,7 @@ namespace rxn
     {
       num_rate_based = network[RATE_BASED_KEY].size();
     }
-    catch (YAML::InvalidNode)
+    catch (const YAML::InvalidNode& e)
     {
       num_rate_based = 0;
     }
@@ -99,7 +99,7 @@ namespace rxn
     {
       num_xsec_based = network[XSEC_BASED_KEY].size();
     }
-    catch (YAML::InvalidNode)
+    catch (const YAML::InvalidNode& e)
     {
       num_xsec_based = 0;
     }

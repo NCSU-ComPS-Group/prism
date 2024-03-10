@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cctype>
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include "fmt/core.h"
