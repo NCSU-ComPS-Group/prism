@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -fprofile-arcs -ftest-coverage
+CXXFLAGS = -std=c++20 -DTESTING -Wall -Wextra -Wpedantic -Werror -fprofile-arcs -ftest-coverage
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
@@ -20,7 +20,7 @@ GTEST_LIBS = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
 
-TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
+TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS) -L/usr/bin/
 
 PROJECT_SOURCES := $(wildcard $(PROJECT_SRC_DIR)/*.C)
 PROJECT_OBJECTS := $(patsubst $(PROJECT_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(PROJECT_SOURCES))

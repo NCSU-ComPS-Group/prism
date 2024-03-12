@@ -1,9 +1,0 @@
-# See .github/workflows/generate_website.yml
-channels:
-  - conda-forge
-dependencies:
-  - gcc
-  - fmt
-  - yaml-cpp
-  - gtest
-  - lcov

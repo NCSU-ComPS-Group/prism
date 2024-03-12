@@ -160,7 +160,7 @@ namespace rxn
   }
 
   string
-  format_scientific(const float val)
+  formatScientific(const float val)
   {
     int exponent = 0;
 
@@ -177,5 +177,41 @@ namespace rxn
     return fmt::format( "{:.2f}", mantissa) + "$\\times 10^{" + fmt::format("{:d}", exponent) + "}$";
     // std::cout << std::fixed << std::setprecision(2) << mantissa << " x 10^" << exponent
     //           << std::endl;
+  }
+
+  string
+  makeGreen(const string & s)
+  {
+    return "\033[32m" + s + "\033[0m";
+  }
+
+  string
+  makeYellow(const string & s)
+  {
+    return "\033[33m" + s + "\033[0m";
+  }
+
+  string
+  makeRed(const string & s)
+  {
+    return "\033[31m" + s + "\033[0m";
+  }
+
+  void
+  printGreen(const string & s)
+  {
+    cout << makeGreen(s);
+  }
+
+  void
+  printRed(const string & s)
+  {
+    cout << makeRed(s);
+  }
+
+  void
+  printYellow(const string & s)
+  {
+    cout << makeYellow(s);
   }
 }

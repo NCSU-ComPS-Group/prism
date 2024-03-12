@@ -1,10 +1,6 @@
 #pragma once
-#include "Printer.h"
-#include "SubSpecies.h"
-#include "Constants.h"
-#include "Species.h"
-#include "BibTexHelper.h"
+#include "YamlHelper.h"
+#include "InvalidInput.h"
 #include "StringHelper.h"
-#include "Reaction.h"
-#include "GlobalData.h"
+#include "Constants.h"
 #include "NetworkParser.h"
