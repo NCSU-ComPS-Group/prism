@@ -27,13 +27,12 @@ namespace rxn
     */
     void setSides();
 
-    const string _name;
-    const string _data_path;
     const unsigned int _number;
+    const string _data_path;
+    const string _name;
     const double _delta_eps_e;
     const double _delta_eps_g;
     const vector<string> _references;
-
     vector<string> _notes;
   };
 }

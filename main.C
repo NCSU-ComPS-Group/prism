@@ -4,7 +4,7 @@
 using namespace std;
 
 int
-main(int argc, char** argv)
+main()
 {
 
   rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
