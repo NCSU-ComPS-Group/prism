@@ -15,7 +15,7 @@ std::string getTypeName<double>() {
 // Specialization for double
 template<>
 double defaultValue<double>() {
-    return -1;
+    return 0;
 }
 
 // Specialization for string

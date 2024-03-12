@@ -22,7 +22,7 @@ NetworkParser::resetParser()
   _bibs.clear();
   _data_paths.clear();
   _lumped_map.clear();
-  _latex_overrides.clear();
+    _latex_overrides.clear();
 }
 
 void NetworkParser::checkRefs()
@@ -56,7 +56,7 @@ NetworkParser::checkBibFile(const string & file) const
 }
 
 void
-NetworkParser::collectCustomSpecies(const YAML::Node network) const
+NetworkParser::collectCustomSpecies(const YAML::Node & network) const
 {
   if (!validParam(CUSTOM_SPECIES, network, OPTIONAL))
     return;
@@ -103,7 +103,7 @@ NetworkParser::collectCustomSpecies(const YAML::Node network) const
 }
 
 void
-NetworkParser::collectLumpedSpecies(const YAML::Node network)
+NetworkParser::collectLumpedSpecies(const YAML::Node & network)
 {
   if (!validParam(LUMPED_SPECIES, network, OPTIONAL))
     return;
@@ -149,7 +149,7 @@ NetworkParser::collectLumpedSpecies(const YAML::Node network)
 }
 
 void
-NetworkParser::collectLatexOverrides(const YAML::Node network)
+NetworkParser::collectLatexOverrides(const YAML::Node & network)
 {
   if (!validParam(LATEX_OVERRIDES, network, OPTIONAL))
     return;
@@ -201,10 +201,29 @@ NetworkParser::collectLatexOverrides(const YAML::Node network)
 }
 
 void
+NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<const Reaction>> * rxn_list, const string & type, const string & data_path)
+{
+  if (!validParam(type, network, OPTIONAL))
+  {
+    return;
+  }
+
+  if (network[type].size() == 0)
+  {
+    InvalidInputExit("'" + type + "' block declared but is empty");
+  }
+
+  for (auto input : network[type])
+  {
+    rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path));
+  }
+}
+
+void
 NetworkParser::parseNetwork(const string & file)
 {
   checkFile(file);
-  YAML::Node network = YAML::LoadFile(file);
+  const YAML::Node network = YAML::LoadFile(file);
   _networks[file] = network;
 
   // _check refs will determine if we error or not
@@ -227,7 +246,14 @@ NetworkParser::parseNetwork(const string & file)
                      RATE_BASED + "', '" + XSEC_BASED + "'");
   }
 
+  parseReactions(network, &_rate_based, RATE_BASED, _data_paths[file]);
+  parseReactions(network, &_xsec_based, XSEC_BASED, _data_paths[file]);
+}
 
+const unordered_map<string, string> &
+NetworkParser::getLumpedMap()
+{
+  return _lumped_map;
 }
 
 }

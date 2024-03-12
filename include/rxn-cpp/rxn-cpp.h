@@ -4,3 +4,4 @@
 #include "StringHelper.h"
 #include "Constants.h"
 #include "NetworkParser.h"
+#include "Reaction.h"
