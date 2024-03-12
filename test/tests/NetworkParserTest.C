@@ -26,9 +26,7 @@ TEST_F(NetworkParserTest, NoFileFound)
 {
   rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
 
-  ASSERT_EXIT(np.parseNetwork("not-a-file.txt");,
-              testing::ExitedWithCode(EXIT_FAILURE),
-              ".*");
+  EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
 }
 
 TEST_F(NetworkParserTest, RepeatFile)
@@ -36,7 +34,5 @@ TEST_F(NetworkParserTest, RepeatFile)
   rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
   np.parseNetwork("inputs/simple_argon_rate.yaml");
 
-  ASSERT_EXIT(np.parseNetwork("inputs/simple_argon_rate.yaml");,
-              testing::ExitedWithCode(EXIT_FAILURE),
-              ".*");
+  EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
 }

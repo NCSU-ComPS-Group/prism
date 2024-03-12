@@ -46,11 +46,7 @@ namespace rxn
   const float MASS_EPS  = 1e-5;
   const bool REQUIRED = true;
   const bool OPTIONAL = false;
-  /**
-   * Storing the mass of all elements in the periodic table
-   * this will be able
-   */
-  extern unordered_map<string, double> base_masses;
+
   /** Avagadros number in 1 / mol */
   const float N_A = 6.02214179E+23;
   /** Fundamental charge in C */

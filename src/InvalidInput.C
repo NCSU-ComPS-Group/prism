@@ -9,7 +9,11 @@ namespace rxn {
   void InvalidInputExit(const string& message)
   {
     printRed("\nInvalid Input:\n\n" + message + "\n\n");
-    exit(EXIT_FAILURE);
+    #ifdef TESTING
+      throw exception();
+    #else
+      exit(EXIT_FAILURE);
+    #endif
   }
 
   void InvalidInputExit(const YAML::Node node, const string& message)
@@ -18,7 +22,11 @@ namespace rxn {
     oss << node;
 
     printRed("\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
-    exit(EXIT_FAILURE);
+    #ifdef TESTING
+      throw exception();
+    #else
+      exit(EXIT_FAILURE);
+    #endif
   }
 
 
@@ -28,7 +36,11 @@ namespace rxn {
     oss << node;
 
     printRed("\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n");
-    exit(EXIT_FAILURE);
+    #ifdef TESTING
+      throw exception();
+    #else
+      exit(EXIT_FAILURE);
+    #endif
   }
 
 }

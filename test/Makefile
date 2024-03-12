@@ -1,10 +1,11 @@
 # Compiler and flags
 CXX = g++
+TESTING_FLAG = -DTESTING
 # flags for code coverage testing
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 # flags for memory leakage testing
-ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS)
+ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer	
+CXXFLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src

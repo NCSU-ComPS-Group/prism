@@ -9,6 +9,7 @@
 #include "YamlHelper.h"
 #include "Constants.h"
 #include "Reaction.h"
+#include "SpeciesFactory.h"
 
 using namespace std;
 
@@ -37,16 +38,13 @@ class NetworkParser {
     /** Mapping the reaction network files to the bibliographies */
     unordered_map<string, string> _bibs;
     unordered_map<string, string> _data_paths;
-    unordered_map<string, string> _lumped_map;
-    unordered_map<string, string> _latex_overrides;
+
 
     // Private constructor to prevent instantiation
     NetworkParser() {}
     void checkFile(const string & file) const;
     void checkBibFile(const string & file) const;
-    void collectCustomSpecies(const YAML::Node & network) const;
-    void collectLumpedSpecies(const YAML::Node & network);
-    void collectLatexOverrides(const YAML::Node & network);
+
     void parseReactions(const YAML::Node & inputs, vector<shared_ptr<const Reaction>>* rxns, const string & type, const string & data_path);
 
     // Private copy constructor and assignment operator to prevent cloning
