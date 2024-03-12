@@ -15,7 +15,7 @@ NetworkParser& NetworkParser::getInstance()
 }
 
 void
-NetworkParser::resetParser()
+NetworkParser::clear()
 {
   _check_refs = false;
   _networks.clear();

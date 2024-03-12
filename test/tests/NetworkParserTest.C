@@ -17,7 +17,7 @@ class NetworkParserTest : public testing::Test {
       // When done redirect cout to its old self
       std::cout.rdbuf(sbuf);
       sbuf = nullptr;
-      NetworkParser::getInstance().resetParser();
+      NetworkParser::getInstance().clear();
     }
 
     std::stringstream buffer{};

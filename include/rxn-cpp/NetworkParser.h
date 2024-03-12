@@ -19,7 +19,7 @@ class NetworkParser {
     // Static function to get the instance of the singleton
     static NetworkParser& getInstance();
 
-    void resetParser();
+    void clear();
     /**
      * Method goes through all of the reactions in this network
      * constructs Reaction objects and then puts the reactions
