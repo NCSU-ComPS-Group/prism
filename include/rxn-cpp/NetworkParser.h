@@ -6,6 +6,8 @@
 #include "yaml-cpp/yaml.h"
 
 #include "InvalidInput.h"
+#include "YamlHelper.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -25,12 +27,25 @@ class NetworkParser {
     */
     void parseNetwork(const string & file);
 
+    void checkRefs();
   private:
+    bool _check_refs = false;
     /** Map of YAML::Node's from all of the files which networks have been parsed */
     unordered_map<string, YAML::Node> _networks;
+    /** Mapping the reaction network files to the bibliographies */
+    unordered_map<string, string> _bibs;
+    unordered_map<string, string> _data_paths;
+    unordered_map<string, string> _lumped_map;
+    unordered_map<string, string> _latex_overrides;
+
     // Private constructor to prevent instantiation
     NetworkParser() {}
     void checkFile(const string & file) const;
+    void checkBibFile(const string & file) const;
+    void collectCustomSpecies(const YAML::Node network) const;
+    void collectLumpedSpecies(const YAML::Node network);
+    void collectLatexOverrides(const YAML::Node network);
+
     // Private copy constructor and assignment operator to prevent cloning
     NetworkParser(const NetworkParser&) = delete;
     NetworkParser& operator=(const NetworkParser&) = delete;

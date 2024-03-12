@@ -3,7 +3,7 @@
 
 namespace rxn
 {
-  unordered_map<string, float> base_masses = {{"hnu", 0.0},
+  unordered_map<string, double> base_masses = {{"hnu", 0.0},
    {"M", 1},
    {"e", 5.4857990943E-4},
    {"E", 5.4857990943E-4},
@@ -124,7 +124,7 @@ namespace rxn
    {"No", 259.10103},
    {"Lr", 262.10961}};
 
-  
+
 
   // unordered_map<string, string> references = {
   //     {"chart_of_nuclides",

@@ -6,9 +6,23 @@ using namespace std;
 
 namespace rxn
 {
-  // all of the macros that control the input options
-  const string RATE_BASED_KEY = "rate-based";
-  const string XSEC_BASED_KEY = "xsec-based";
+  /// input keys for the custom species block
+  const string CUSTOM_SPECIES = "custom-species";
+  const string NAME_KEY = "name";
+  const string MASS_KEY = "mass";
+  /// input keys for lumping
+  const string LUMPED_SPECIES = "lumped-species";
+  const string LUMPED_KEY  = "lumped";
+  const string ACTUAL_KEY = "actual";
+  /// inputs keys for latex overrides
+  const string LATEX_OVERRIDES = "latex-overrides";
+  const string SPECIES_KEY = "species";
+  const string LATEX_KEY =  "latex";
+  /// the various different types of reaction inputs
+  const string RATE_BASED = "rate-based";
+  const string XSEC_BASED = "xsec-based";
+
+
   const string ARRHENIUS = "arrhenius";
   const string TABULATED =  "tabulated";
   const string PATH_KEY = "data-path";
@@ -20,13 +34,9 @@ namespace rxn
   const string REACTION_KEY = "reaction";
   const string REFERENCE_KEY = "references";
   const string DATA_BASE_KEY = "database";
-  const string LATEX_OVERRIDE_KEY = "latex-overrides";
-  const string SPECIES_KEY = "species";
-  const string LATEX_KEY = "latex";
+
   const string BIB_KEY = "bibliography";
-  const string SUBSTITUTION_OPTION_KEY = "substitute-species";
-  const string ACTUAL_KEY = "actual";
-  const string SUBSITUTE_KEY  = "substitute";
+
   const string NOTE_KEY  = "notes";
   const float MASS_EPS  = 1e-5;
   const bool REQUIRED = true;
@@ -35,7 +45,7 @@ namespace rxn
    * Storing the mass of all elements in the periodic table
    * this will be able
    */
-  extern unordered_map<string, float> base_masses;
+  extern unordered_map<string, double> base_masses;
   /** Avagadros number in 1 / mol */
   const float N_A = 6.02214179E+23;
   /** Fundamental charge in C */

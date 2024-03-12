@@ -2,6 +2,10 @@
 
 namespace rxn {
 
+  void InvalidInputWarning(const string & message)
+  {
+    printYellow("\nWarning!\n\n" + message + "\n\n");
+  }
   void InvalidInputExit(const string& message)
   {
     printRed("\nInvalid Input:\n\n" + message + "\n\n");
@@ -13,7 +17,17 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    printRed("\nInvalid Input in Block:\n\n" + oss.str() + "\n\n" + message + "\n\n");
+    printRed("\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+    exit(EXIT_FAILURE);
+  }
+
+
+  void InvalidInputExit(const YAML::Node node, const string & block, const string& message)
+  {
+    ostringstream oss;
+    oss << node;
+
+    printRed("\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n");
     exit(EXIT_FAILURE);
   }
 

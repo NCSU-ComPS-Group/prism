@@ -8,6 +8,7 @@ main(int argc, char** argv)
 {
 
   rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
+  // np.checkRefs();
   np.parseNetwork("test/inputs/simple_argon_rate.yaml");
   // np.parseNetwork("test/inputs/simple_argon_rate.yaml");
   // YAML::Node file = YAML::LoadFile("test/inputs/simple_argon_rate.yaml");
