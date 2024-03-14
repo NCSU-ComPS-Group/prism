@@ -31,7 +31,7 @@ bool validParam(const string & param, const YAML::Node node, const bool required
   {
     if (required)
     {
-      InvalidInputExit(node, "Parameter '" + param + "' must be provided!");
+      throw InvalidInput(node, "Parameter '" + param + "' must be provided!");
     }
     return false;
   }
@@ -66,7 +66,7 @@ vector<T> getParams(const string & param, const YAML::Node node, bool required)
     catch (const YAML::BadConversion& e){}
 
 
-    InvalidInputExit(node, "Unable to parse parameter '" + param + "' as type: std::vector<" + getTypeName<T>() + ">");
+    throw InvalidInput(node, "Unable to parse parameter '" + param + "' as type: std::vector<" + getTypeName<T>() + ">");
   }
 
   return values;
@@ -92,7 +92,7 @@ T getParam(const string & param, const YAML::Node node, bool required)
   }
   // nothing in here so we let the error execute
   catch (const YAML::BadConversion& e){
-    InvalidInputExit(node, "Unable to parse parameter '" + param + "' as type: " + getTypeName<T>());
+    throw InvalidInput(node, "Unable to parse parameter '" + param + "' as type: " + getTypeName<T>());
   }
 
   return value;

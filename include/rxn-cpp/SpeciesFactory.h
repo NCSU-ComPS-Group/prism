@@ -8,7 +8,6 @@
 #include "InvalidInput.h"
 #include "YamlHelper.h"
 #include "Constants.h"
-#include "Reaction.h"
 
 using namespace std;
 

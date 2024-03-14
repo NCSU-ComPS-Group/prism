@@ -95,14 +95,24 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
       InvalidInputExit("When providing the " + LUMPED_SPECIES + " block you must also provide the '" + ACTUAL_KEY + "' parameter");
     }
 
-    temp_lumped = getParam<string>(LUMPED_KEY, network[LUMPED_SPECIES][i], REQUIRED);
+    try {
+      temp_lumped = getParam<string>(LUMPED_KEY, network[LUMPED_SPECIES][i], REQUIRED);
+    } catch (const InvalidInput & e) {
+      cout << e.what();
+      exit(EXIT_FAILURE);
+    }
 
     if (temp_lumped == "null")
     {
       InvalidInputExit(network[LUMPED_SPECIES][i], LUMPED_SPECIES, "'" + LUMPED_KEY + "' parameter was parsed as 'null'");
     }
 
-    temp_actuals = getParams<string>(ACTUAL_KEY, network[LUMPED_SPECIES][i], REQUIRED);
+    try {
+      temp_actuals = getParams<string>(ACTUAL_KEY, network[LUMPED_SPECIES][i], REQUIRED);
+    } catch (const InvalidInput & e) {
+      cout << e.what();
+      exit(EXIT_FAILURE);
+    }
 
     if (temp_actuals[0] == "null")
     {
@@ -144,8 +154,17 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
                      "If you want to define multiple custom species please do so with lists\n" +
                      "Ex: " + SPECIES_KEY + ": [A, B, C]\n    " + LATEX_KEY + ": [1, 2, 3]");
   }
-  vector<string> species = getParams<string>(SPECIES_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
-  vector<string> overrides = getParams<string>(LATEX_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
+
+  vector<string> species;
+  vector<string> overrides;
+
+  try {
+    species = getParams<string>(SPECIES_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
+    overrides = getParams<string>(LATEX_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
+  } catch(const InvalidInput & e) {
+    cout << e.what();
+    exit(EXIT_FAILURE);
+  }
 
   if (species.size() != overrides.size())
   {
@@ -167,6 +186,5 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
     _latex_overrides[species[i]] = overrides[i];
   }
 }
-
 
 }

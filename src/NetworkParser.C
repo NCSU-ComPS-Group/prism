@@ -80,13 +80,25 @@ NetworkParser::parseNetwork(const string & file)
   _networks[file] = network;
 
   // _check refs will determine if we error or not
-  _bibs[file] = getParam<string>(BIB_KEY, network, _check_refs);
+  try {
+    _bibs[file] = getParam<string>(BIB_KEY, network, _check_refs);
+  } catch (const InvalidInput & e) {
+    cout << e.what();
+    exit(EXIT_FAILURE);
+  }
+
   if (_check_refs)
   {
     checkBibFile(_bibs[file]);
   }
 
-  _data_paths[file] = getParam<string>(PATH_KEY, network, OPTIONAL);
+  try {
+    _data_paths[file] = getParam<string>(PATH_KEY, network, OPTIONAL);
+  } catch (const InvalidInput & e )
+  {
+    cout << e.what();
+    exit(EXIT_FAILURE);
+  }
 
   SpeciesFactory::getInstance().collectCustomSpecies(network);
   SpeciesFactory::getInstance().collectLumpedSpecies(network);
