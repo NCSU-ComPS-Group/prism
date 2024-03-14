@@ -8,6 +8,7 @@
 #include "InvalidInput.h"
 #include "YamlHelper.h"
 #include "Constants.h"
+#include "Species.h"
 
 using namespace std;
 
@@ -20,15 +21,33 @@ class SpeciesFactory {
 
     void clear();
 
+    double getMass(const string & name) const;
+    const string getLatexOverride(const string & name) const;
+
+    weak_ptr<Species> getSpecies(const string & name);
+    // if we are in testing mode we'll give other people access to these
+    // otherwise we want them to be private
+    #ifdef TESTING
+      void collectCustomSpecies(const YAML::Node & network);
+      void collectLumpedSpecies(const YAML::Node & network);
+      void collectLatexOverrides(const YAML::Node & network);
+    #endif
+
   private:
+
+
+    map<string, shared_ptr<Species>> _species;
     friend class NetworkParser;
 
     unordered_map<string, string> _lumped_map;
     unordered_map<string, string> _latex_overrides;
 
-    void collectCustomSpecies(const YAML::Node & network);
-    void collectLumpedSpecies(const YAML::Node & network);
-    void collectLatexOverrides(const YAML::Node & network);
+
+    #ifndef TESTING
+      void collectCustomSpecies(const YAML::Node & network);
+      void collectLumpedSpecies(const YAML::Node & network);
+      void collectLatexOverrides(const YAML::Node & network);
+    #endif
 
     SpeciesFactory() {}
     // Private copy constructor and assignment operator to prevent cloning
@@ -37,7 +56,7 @@ class SpeciesFactory {
     // Private instance of the singleton
     static SpeciesFactory* _instance;
 
-    unordered_map<string, double> _base_masses = {{"hnu", 0.0},
+    unordered_map<string, double> _default_masses = {{"hnu", 0.0},
                                                   {"M", 1},
                                                   {"e", 5.4857990943E-4},
                                                   {"E", 5.4857990943E-4},
@@ -157,6 +176,8 @@ class SpeciesFactory {
                                                   {"Md", 28.0984315},
                                                   {"No", 259.10103},
                                                   {"Lr", 262.10961}};
+    // copy the defaults into the bases
+    unordered_map<string, double> _base_masses = _default_masses;
 };
 
 }

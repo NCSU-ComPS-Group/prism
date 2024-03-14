@@ -35,12 +35,12 @@ namespace rxn
     double getCharge() const;
     /** Getter method for the latex name of the species */
     string getLatexRepresentation() const;
-    
+
   protected:
     /** The full string of the species base */
     string _name;
     /** The molar mass of the species */
-    float _mass;
+    double _mass;
     /** The level of ionization ex: Ar-4 this is -4 */
     int _charge_num;
     /** The name of the spcies formatted for printing in a latex_table */
@@ -57,13 +57,13 @@ namespace rxn
     /**
      * Method for setting the mass of the species
     */
-    virtual double setMass() = 0;
+    virtual void setMass() = 0;
     /**
      * Method for the setting the charge number of the species
     */
-    virtual int setChargeNumber() = 0;
+    virtual void setChargeNumber() = 0;
     /** methods for setting the latex name of each species */
-    virtual string setLatexName() = 0;
+    virtual void setLatexName() = 0;
   };
 }
 

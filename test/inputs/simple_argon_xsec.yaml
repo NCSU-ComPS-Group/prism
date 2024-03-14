@@ -1,6 +1,10 @@
 data-path: inputs/data/
 bibliography: inputs/argon_works.bib
 
+custom-species:
+  - name: A
+    mass: 10
+
 xsec-based:
   - reaction: Ar + e -> Ar* + e
     delta-eps-e: 11.56

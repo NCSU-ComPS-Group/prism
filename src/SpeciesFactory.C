@@ -17,8 +17,11 @@ SpeciesFactory& SpeciesFactory::getInstance()
 
 void
 SpeciesFactory::clear(){
+  _species.clear();
   _lumped_map.clear();
+  _base_masses.clear();
   _latex_overrides.clear();
+  _base_masses = _default_masses;
 }
 
 
@@ -185,6 +188,49 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
   {
     _latex_overrides[species[i]] = overrides[i];
   }
+}
+
+double
+SpeciesFactory::getMass(const string & name) const
+{
+  auto it = _base_masses.find(name);
+
+  if (it == _base_masses.end())
+  {
+    throw InvalidSpecies(name, "No mass is defined for this Species");
+  }
+
+  return it->second;
+}
+
+const string
+SpeciesFactory::getLatexOverride(const string & name) const
+{
+  auto it = _latex_overrides.find(name);
+
+  if (it == _latex_overrides.end())
+  {
+    return "";
+  }
+
+  return it->second;
+}
+
+weak_ptr<Species>
+SpeciesFactory::getSpecies(const string & name)
+{
+  weak_ptr<Species> wp;
+
+  auto it = _species.find(name);
+
+  if (it == _species.end())
+  {
+    _species[name] = make_shared<Species>(name);
+  }
+
+  wp = _species[name];
+
+  return weak_ptr<Species>(wp);
 }
 
 }
