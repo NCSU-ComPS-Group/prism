@@ -15,6 +15,11 @@ namespace rxn
       return *_instance;
   }
 
+  void
+  BibTexHelper::clear()
+  {
+    _refs.clear();
+  }
 
   void
   BibTexHelper::collectReferences(const string & file)

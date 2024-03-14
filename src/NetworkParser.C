@@ -21,6 +21,8 @@ NetworkParser::clear()
   _networks.clear();
   _bibs.clear();
   _data_paths.clear();
+  SpeciesFactory::getInstance().clear();
+  BibTexHelper::getInstance().clear();
 }
 
 void NetworkParser::checkRefs()
