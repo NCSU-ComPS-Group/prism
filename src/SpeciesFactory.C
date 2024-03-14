@@ -123,7 +123,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
     }
 
     for (unsigned int j = 0; j < temp_actuals.size(); ++j) {
-      _lumped_map[temp_actuals[j]] = temp_lumped;
+      _lumped_map[temp_actuals[j]] = getSpecies(temp_lumped).lock();
     }
   }
 }
@@ -231,6 +231,22 @@ SpeciesFactory::getSpecies(const string & name)
   wp = _species[name];
 
   return weak_ptr<Species>(wp);
+}
+
+string
+SpeciesFactory::getLumpedSpecies(weak_ptr<Species> & s)
+{
+  auto sp = s.lock();
+  const string s_name = sp->getName();
+  auto it = _lumped_map.find(s_name);
+
+  if (it == _lumped_map.end())
+  {
+    return "";
+  }
+
+  s = it->second;
+  return s_name;
 }
 
 }

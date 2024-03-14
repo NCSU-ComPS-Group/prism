@@ -25,6 +25,13 @@ class SpeciesFactory {
     const string getLatexOverride(const string & name) const;
 
     weak_ptr<Species> getSpecies(const string & name);
+    /**
+     * Method checks for lumped states of a species
+     * if there is one it will return the pointer to the species the name is lumped into
+     * if there is not a lumped species it will simply return a pointer to the same species
+     * @param s the weak pointer to the species object held by the reaction
+    */
+    string getLumpedSpecies(weak_ptr<Species> & s);
     // if we are in testing mode we'll give other people access to these
     // otherwise we want them to be private
     #ifdef TESTING
@@ -39,7 +46,7 @@ class SpeciesFactory {
     map<string, shared_ptr<Species>> _species;
     friend class NetworkParser;
 
-    unordered_map<string, string> _lumped_map;
+    unordered_map<string, shared_ptr<Species>> _lumped_map;
     unordered_map<string, string> _latex_overrides;
 
 

@@ -4,7 +4,7 @@ namespace rxn {
 
   InvalidSpecies::InvalidSpecies(const string & name, const string & message)
   {
-    _error = makeRed("\n\nInvalid Species: " + name + "\n  Reason: " + message + "\n\n");
+    _error = "\n\nInvalid Species: " + name + "\n  Reason: " + message + "\n\n";
   }
 
   const char*
@@ -15,7 +15,7 @@ namespace rxn {
 
   InvalidReaction::InvalidReaction(const string & name, const string & message)
   {
-    _error = makeRed("\n\nInvalid Reaction: " + name + "\n  Reason: " + message + "\n\n");
+    _error = "\n\nInvalid Reaction: " + name + "\n  Reason: " + message + "\n\n";
   }
 
   const char*
@@ -26,7 +26,7 @@ namespace rxn {
 
   InvalidInput::InvalidInput(const string & message)
   {
-    _error = makeRed("\n\nInvalid Input:\n\n" + message + "\n\n");
+    _error = "\n\nInvalid Input:\n\n" + message + "\n\n";
   }
 
   InvalidInput::InvalidInput(const YAML::Node & node, const string & message)
@@ -34,7 +34,7 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    _error = makeRed("\n\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+    _error = "\n\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n";
   }
 
   InvalidInput::InvalidInput(const YAML::Node & node, const string & block, const string & message)
@@ -42,7 +42,7 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    _error = makeRed("\n\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+    _error = "\n\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n";
   }
 
   const char*

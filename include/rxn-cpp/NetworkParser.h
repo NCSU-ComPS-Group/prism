@@ -10,6 +10,7 @@
 #include "Constants.h"
 #include "Reaction.h"
 #include "SpeciesFactory.h"
+#include "BibTexHelper.h"
 
 using namespace std;
 
@@ -38,18 +39,22 @@ class NetworkParser {
     /** Mapping the reaction network files to the bibliographies */
     unordered_map<string, string> _bibs;
     unordered_map<string, string> _data_paths;
+    map<string, string> _reaction_errors;
+    bool _bib_errors;
 
 
     // Private constructor to prevent instantiation
     NetworkParser() {}
-    void checkFile(const string & file) const;
-    void checkBibFile(const string & file) const;
-
-    void parseReactions(const YAML::Node & inputs, vector<shared_ptr<const Reaction>>* rxns, const string & type, const string & data_path);
-
     // Private copy constructor and assignment operator to prevent cloning
     NetworkParser(const NetworkParser&) = delete;
     NetworkParser& operator=(const NetworkParser&) = delete;
+
+    void checkFile(const string & file) const;
+    void checkBibFile(const string & file);
+
+    void parseReactions(const YAML::Node & inputs, vector<shared_ptr<const Reaction>>* rxns, const string & type, const string & data_path, const string & bib_file);
+
+
 
     vector<shared_ptr<const Reaction>> _rate_based;
     vector<shared_ptr<const Reaction>> _xsec_based;

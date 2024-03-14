@@ -44,17 +44,25 @@ NetworkParser::checkFile(const string & file) const
 }
 
 void
-NetworkParser::checkBibFile(const string & file) const
+NetworkParser::checkBibFile(const string & file)
 {
-  struct stat buffer;
-  if (stat(file.c_str(), &buffer) != 0)
+  BibTexHelper & bth = BibTexHelper::getInstance();
+  _bib_errors = false;
+
+  try {
+    bth.collectReferences(file);
+  } catch (const invalid_argument & e) {
+    printRed("\n\n" + string(e.what()) + "\n\n");
+  }
+
+  if (_check_refs && _bib_errors)
   {
-    InvalidInputExit("File: '" + file + "' does not exist");
+    InvalidInputExit("Errors in BibTex file: '" + file + "'");
   }
 }
 
 void
-NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<const Reaction>> * rxn_list, const string & type, const string & data_path)
+NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<const Reaction>> * rxn_list, const string & type, const string & data_path, const string & bib_file)
 {
   if (!validParam(type, network, OPTIONAL))
   {
@@ -66,9 +74,16 @@ NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<cons
     InvalidInputExit("'" + type + "' block declared but is empty");
   }
 
+  cout << endl << "Starting to parse '" + type + "' reaction block" << endl << endl;
+
   for (auto input : network[type])
   {
-    rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path));
+    try {
+      rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path, bib_file, _check_refs));
+      printGreen("Reaction Validated: " + rxn_list->back()->getName() + "\n");
+    } catch (const InvalidReaction & e) {
+      printRed(e.what());
+    }
   }
 }
 
@@ -111,8 +126,8 @@ NetworkParser::parseNetwork(const string & file)
                      RATE_BASED + "', '" + XSEC_BASED + "'");
   }
 
-  parseReactions(network, &_rate_based, RATE_BASED, _data_paths[file]);
-  parseReactions(network, &_xsec_based, XSEC_BASED, _data_paths[file]);
+  parseReactions(network, &_rate_based, RATE_BASED, _data_paths[file], _bibs[file]);
+  parseReactions(network, &_xsec_based, XSEC_BASED, _data_paths[file], _bibs[file]);
 }
 
 }

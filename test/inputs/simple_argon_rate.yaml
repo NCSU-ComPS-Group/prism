@@ -1,5 +1,5 @@
 data-path: inputs/data/
-bibliography: inputs/argon_works.bib
+bibliography: test/inputs/argon_works.bib
 
 rate-based:
   - reaction: Ar + e -> Ar* + e

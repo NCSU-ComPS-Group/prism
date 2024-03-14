@@ -1,19 +1,32 @@
 #include "Reaction.h"
-#include "NetworkParser.h"
+
 namespace rxn
 {
   Reaction::Reaction(const YAML::Node & rxn_input,
                     const int rxn_number,
-                    const string & data_path) :
+                    const string & data_path,
+                    const string & bib_file,
+                    const bool check_refs) :
   _number(rxn_number),
   _data_path(data_path),
   _name(checkName(rxn_input)),
   _delta_eps_e(getParam<double>(DELTA_EPS_E_KEY, rxn_input, OPTIONAL)),
   _delta_eps_g(getParam<double>(DELTA_EPS_G_KEY, rxn_input, OPTIONAL)),
+  _bib_file(bib_file),
+  _check_refs(check_refs),
   _references(getParams<string>(REFERENCE_KEY, rxn_input, OPTIONAL)),
   _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL))
   {
+    setSides();
+    validateReaction();
+    setLatexName();
+    substituteLumped();
+    validateReaction();
 
+    if (_check_refs)
+    {
+      checkReferences();
+    }
   }
 
   string
@@ -24,7 +37,7 @@ namespace rxn
 
     if (rxn_str.find(" -> ") == string::npos)
     {
-      InvalidInputExit(rxn_input, "Error in Reaction #" + to_string(_number) + "\n\n'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
+      InvalidReaction(_name, "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
     }
 
     return rxn_str;
@@ -38,5 +51,331 @@ namespace rxn
     vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
     vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
 
+    SpeciesFactory & sf = SpeciesFactory::getInstance();
+    set<string> unique_check;
+
+    weak_ptr<Species> s_wp;
+
+    unsigned int coeff;
+    for (string s : lhs_str)
+    {
+      coeff = getCoeff(s);
+      auto stoic_it = _stoic_coeffs.find(s);
+
+      if ( stoic_it == _stoic_coeffs.end())
+      {
+        _stoic_coeffs.emplace(s, -coeff);
+        _reactant_count.emplace(s, coeff);
+      }
+      else
+      {
+        _stoic_coeffs[s] -= coeff;
+        _reactant_count[s] += coeff;
+      }
+
+      try {
+        s_wp = sf.getSpecies(s);
+      } catch (const exception & e ) {
+        throw InvalidReaction(_name, e.what());
+      }
+      // only add the species to the list once
+      if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+        _reactants.push_back(s_wp);
+
+    }
+
+    unique_check.clear();
+    for (string s : rhs_str)
+    {
+      coeff = getCoeff(s);
+      auto stoic_it = _stoic_coeffs.find(s);
+
+      if ( stoic_it == _stoic_coeffs.end())
+      {
+        _stoic_coeffs.emplace(s, coeff);
+        _product_count.emplace(s, coeff);
+      }
+      else
+      {
+        _stoic_coeffs[s] += coeff;
+        _product_count[s] += coeff;
+      }
+
+      try {
+        s_wp = sf.getSpecies(s);
+      } catch (const exception & e ) {
+        throw InvalidReaction(_name, e.what());
+      }
+
+      if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+        _products.push_back(s_wp);
+    }
   }
+
+  unsigned int
+  Reaction::getCoeff(string & s)
+  {
+    unsigned int coeff = 0;
+
+    int coeff_idx = findFirstLetter(s);
+    if (coeff_idx == 0)
+    {
+      coeff = 1;
+    }
+    else
+    {
+      coeff = stoi(s.substr(0, coeff_idx));
+      s = s.substr(coeff_idx, s.length());
+    }
+    return coeff;
+  }
+
+  void
+  Reaction::validateReaction()
+  {
+    // reactant mass
+    float r_mass = 0;
+    // reactant charge
+    int r_charge_num = 0;
+    // all of the elements that exist in the reactants
+    // unordered_set<string> r_elements;
+    unordered_map<string, int> r_elements;
+    unsigned int s_count;
+    for (auto weak_r : _reactants)
+    {
+      auto r = weak_r.lock();
+      // this reaction is a sink
+      s_count = _reactant_count[r->getName()];
+      r_mass += r->getMass() * s_count;
+      r_charge_num += r->getChargeNumber() * s_count;
+      for (auto sub_r : r->getSubSpecies())
+      {
+        // we can't keep track of the electrons and photons in the same way
+        // as heavy species so we'll ignore them for this check
+        if (sub_r.getBase() == "e" || sub_r.getBase() == "E" || sub_r.getBase() == "hnu")
+          continue;
+        // lets check to see if it the element is already known
+        if (r_elements.count(sub_r.getBase()) == 0)
+        {
+          r_elements[sub_r.getBase()] = sub_r.getSubscript() * s_count;
+          continue;
+        }
+        // if the element is known increase the count
+        r_elements[sub_r.getBase()] += sub_r.getSubscript() * s_count;
+      }
+    }
+    // product mass
+    float p_mass = 0;
+    // product charge
+    int p_charge_num = 0;
+    unordered_map<string, int> p_elements;
+    for (auto weak_p : _products)
+    {
+      auto p = weak_p.lock();
+      s_count = _product_count[p->getName()];
+      // lets check to make sure that all of the elements that make up
+      // the product also exist on the reactant side
+      // no nuclear reactions here
+      for (auto sub_p : p->getSubSpecies())
+      {
+        // we are not checking to make sure electrons and photons are on both sides
+        // can be produced without it being on both sides
+        if (sub_p.getBase() == "e" || sub_p.getBase() == "E" || sub_p.getBase() == "hnu")
+          continue;
+        auto it = r_elements.find(sub_p.getBase());
+
+        if ( it == r_elements.end())
+        {
+          throw InvalidReaction(_name, sub_p.getBase() + "does not appear as a reactant");
+        }
+        // we'll keep track of the element count on both sides
+        if (p_elements.count(sub_p.getBase()) == 0)
+        {
+          p_elements[sub_p.getBase()] = sub_p.getSubscript() * s_count;
+          continue;
+        }
+        // if the element is known increase the count
+        p_elements[sub_p.getBase()] += sub_p.getSubscript() * s_count;
+      }
+      // add this reaction as a source
+      p_mass += p->getMass() * s_count;
+      p_charge_num += p->getChargeNumber() * s_count;
+    }
+
+    // check here to make sure the reaction is properly balanced
+    for (auto it : r_elements)
+      if (p_elements[it.first] != it.second)
+      {
+        throw InvalidReaction(_name, fmt::format("Element {} appears {:d} times as a reactant and {:d} times as a product.",
+                        it.first,
+                        p_elements[it.first], it.second));
+      }
+
+    bool mass_conservation = abs(r_mass - p_mass) < MASS_EPS;
+    bool charge_conservation = r_charge_num == p_charge_num;
+
+    if (!mass_conservation && !charge_conservation)
+      throw InvalidReaction(_name, "Neither mass nor charge is conserved");
+
+    if (!mass_conservation)
+      throw InvalidReaction(_name, "Mass is not conserved");
+
+    if (!charge_conservation)
+      throw InvalidReaction(_name, "Charge is not conserved");
+  }
+
+  void
+  Reaction::substituteLumped()
+  {
+    SpeciesFactory & sf = SpeciesFactory::getInstance();
+    string temp_s_string;
+    // string of species that have been lumped into a different state
+    // I want to make sure to not add the same note several times
+    set<string> lumped;
+
+    for (unsigned int i = 0; i < _reactants.size(); ++i)
+    {
+      temp_s_string = sf.getLumpedSpecies(_reactants[i]);
+      if (temp_s_string.length() == 0)
+      {
+        continue;
+      }
+      auto it = lumped.find(temp_s_string);
+      if (it == lumped.end())
+      {
+        lumped.insert(temp_s_string);
+        _notes.push_back("Species '" + temp_s_string + "' has been lumped into '" + _reactants[i].lock()->getName() + "'");
+      }
+    }
+
+    for (unsigned int i = 0; i < _products.size(); ++i)
+    {
+      temp_s_string = sf.getLumpedSpecies(_products[i]);
+      if (temp_s_string.length() == 0)
+      {
+        continue;
+      }
+      auto it = lumped.find(temp_s_string);
+      if (it == lumped.end())
+      {
+        lumped.insert(temp_s_string);
+        _notes.push_back("Species '" + temp_s_string + "' has been lumped into '" + _products[i].lock()->getName() + "'");
+      }
+    }
+  }
+
+  void
+  Reaction::setLatexName()
+  {
+    // we are going to use this to make sure we don't duplicate species in the
+    // latex string
+    set<string> unique_check;
+    for (auto weak_r : _reactants)
+    {
+      auto r = weak_r.lock();
+      auto name = r->getName();
+      // lets check to see if we have added this reactant
+      auto it = unique_check.find(name);
+      // if its already in the equation no need to add it again
+      if (it != unique_check.end())
+        continue;
+      // add it to the set if its not in already
+      unique_check.emplace(name);
+
+      auto count_it = _reactant_count.find(name);
+      if (count_it->second != 1)
+        _latex_name += fmt::format("{:d}", count_it->second);
+
+      _latex_name += r->getLatexRepresentation();
+
+      if (unique_check.size() != _reactant_count.size())
+        _latex_name += " + ";
+    }
+
+    _latex_name += " $\\rightarrow$ ";
+
+    for (auto weak_p : _products)
+    {
+      auto p = weak_p.lock();
+      auto name = p->getName();
+      // lets check to see if we have added this reactant
+      auto it = unique_check.find(name);
+      // if its already in the equation no need to add it again
+      if (it != unique_check.end())
+        continue;
+      // add it to the set if its not in already
+      unique_check.emplace(name);
+
+      auto count_it = _product_count.find(name);
+      if (count_it->second != 1)
+        _latex_name += fmt::format("{:d}", count_it->second);
+
+      _latex_name += p->getLatexRepresentation();
+
+      if (unique_check.size() != _product_count.size())
+        _latex_name += " + ";
+    }
+  }
+
+  void
+  Reaction::checkReferences()
+  {
+    BibTexHelper & bth = BibTexHelper::getInstance();
+    for (auto ref : _references)
+    {
+      try {
+        bth.checkCiteKey(_bib_file, ref);
+      } catch (const invalid_argument & e) {
+        throw InvalidReaction(_name, e.what());
+      }
+    }
+  }
+
+  const string
+  Reaction::getName() const
+  {
+    return _name;
+  }
+
+  const string
+  Reaction::getLatexRepresentation() const
+  {
+    return _latex_name;
+  }
+
+  unsigned int
+  Reaction::getReactionNumber() const
+  {
+    return _number;
+  }
+
+  const vector<string> &
+  Reaction::getReferences() const
+  {
+    return _references;
+  }
+
+  const vector<string> &
+  Reaction::getNotes() const
+  {
+    return _notes;
+  }
+
 }
+
+size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const
+  {
+    constexpr size_t hash_factor = 37;
+
+    size_t val = 17; // Start with a prime number
+
+    val += hash_factor * hash<string>()(obj.getName());
+    val += hash_factor * hash<int>()(obj.getReactionNumber());
+    val += hash_factor * hash<string>()(obj.getLatexRepresentation());
+    // not including the reactants and products in the hash
+    // this is becuase these may change if there are lumped species
+    // or if i want to add a map of reactions to species while I am
+    // still parsing reaction
+    return val;
+  }
+

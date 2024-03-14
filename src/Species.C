@@ -120,3 +120,4 @@ hash<rxn::Species>::operator()(const rxn::Species & obj) const
   // can change as reactions are added to the network
   return val;
 }
+
