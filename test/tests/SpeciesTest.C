@@ -420,3 +420,15 @@ TEST(Species, CustomLongSpecies)
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), -100 * e);
   EXPECT_EQ(s.getSubSpecies()[0].getLatexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");
 }
+
+TEST(Species, CapitalLetterInModifier)
+{
+  Species s = Species("Ar(S)");
+
+  EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(S)");
+
+  s = Species("Ar(asdfaS)");
+  EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(asdfaS)");
+}

@@ -68,6 +68,10 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
 
   for (unsigned int i = 0; i < names.size(); ++i)
   {
+    if (findFirstNonLetter(names[i]) != -1)
+    {
+      InvalidInputExit(network[CUSTOM_SPECIES], CUSTOM_SPECIES, "'" + names[i] + "' contains characters other than letters");
+    }
     _base_masses[names[i]] = masses[i];
   }
 }

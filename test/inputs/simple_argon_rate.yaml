@@ -2,7 +2,7 @@ data-path: inputs/data/
 bibliography: test/inputs/argon_works.bib
 
 rate-based:
-  - reaction: Ar + e -> Ar* + e
+  - reaction: Ar + e -> Ar(aS) + e
     delta-eps-e: 11.56
     file: reaction1.txt
     references: lymberopoulos1993fluid
