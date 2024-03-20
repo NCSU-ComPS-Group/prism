@@ -361,6 +361,27 @@ namespace rxn
     return _notes;
   }
 
+  bool
+  Reaction::operator==(const Reaction & other) const
+  {
+    if (_name != other._name)
+      return false;
+
+    if (_number != other._number)
+      return false;
+
+    if (_latex_name != other._latex_name)
+      return false;
+
+    return true;
+  }
+
+  bool
+  Reaction::operator!=(const Reaction & other) const
+  {
+    return !(*this == other);
+  }
+
 }
 
 size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const

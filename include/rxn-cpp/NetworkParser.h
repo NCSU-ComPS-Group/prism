@@ -39,7 +39,6 @@ class NetworkParser {
     /** Mapping the reaction network files to the bibliographies */
     unordered_map<string, string> _bibs;
     unordered_map<string, string> _data_paths;
-    map<string, string> _reaction_errors;
     bool _bib_errors;
 
 

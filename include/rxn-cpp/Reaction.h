@@ -29,6 +29,14 @@ namespace rxn
     const vector<string> & getReferences() const;
     const vector<string> & getNotes() const;
 
+    /**
+     * equality operator override and compares the reaction name
+     * the latex name of the reaction and the reaction number is the same
+    */
+    bool operator==(const Reaction & other) const;
+    /** returns not == operator overload */
+    bool operator!=(const Reaction & other) const;
+
   private:
     string checkName(const YAML::Node & rxn_input);
     unsigned int getCoeff(string & s);

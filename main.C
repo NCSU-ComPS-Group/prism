@@ -5,12 +5,19 @@
 using namespace std;
 
 int
-main()
+main(int argc, char** argv)
 {
 
   rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
   np.checkRefs();
-  np.parseNetwork("test/inputs/simple_argon_rate.yaml");
+  if (argc != 2)
+  {
+    rxn::printRed("\nYou must provide an input file\n");
+    rxn::printRed("Proper usage: ./main <reaction-network-file>\n\n");
+    return EXIT_FAILURE;
+  }
+  np.parseNetwork(argv[1]);
+  // np.parseNetwork("test/inputs/simple_argon_rate.yaml");
   // np.parseNetwork("test/inputs/simple_argon_rate.yaml");
   // YAML::Node file = YAML::LoadFile("test/inputs/simple_argon_rate.yaml");
 
