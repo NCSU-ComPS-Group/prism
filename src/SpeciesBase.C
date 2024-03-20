@@ -28,6 +28,11 @@ namespace rxn
       {
         throw InvalidSpecies(s, "Electrons cannot have modifiers");
       }
+    } else {
+      if (s != "hnu" && findFirstCapital(s) == -1)
+      {
+        throw InvalidSpecies(s, "Any non-electron, non-photon species must start with a captial letter");
+      }
     }
     return s;
   }

@@ -49,7 +49,6 @@ namespace rxn
 
     for (auto part : parts)
     {
-      cout << part << endl;
       sub_sp.push_back(SubSpecies(part));
     }
 
