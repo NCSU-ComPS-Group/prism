@@ -53,6 +53,7 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
                      "If you want to define multiple custom species please do so with lists\n" +
                      "Ex: " + NAME_KEY + ": [A, B, C]\n    " + MASS_KEY + ": [1, 2, 3]");
   }
+
   vector<string> names = getParams<string>(NAME_KEY, network[CUSTOM_SPECIES][0], REQUIRED);
   vector<double> masses = getParams<double>(MASS_KEY, network[CUSTOM_SPECIES][0], REQUIRED);
 
@@ -139,7 +140,7 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
   if (!validParam(LATEX_OVERRIDES, network, OPTIONAL))
     return;
 
-  if (network[CUSTOM_SPECIES].size() == 0)
+  if (network[LATEX_OVERRIDES].size() == 0)
   {
     InvalidInputExit("Both '" + SPECIES_KEY + "' and '" + LATEX_KEY + "' inputs are missing in '" + LATEX_OVERRIDES + "' block");
   }

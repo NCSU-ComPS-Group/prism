@@ -24,15 +24,15 @@ To ensure no conflicts with other projects you can create a new environment to w
   conda activate rxn-cpp
   mkdir -p ~/projects
   cd ~/projects
-  git clone https://github.ncsu.edu/NCSU-ComPS-Group/rxn-cpp
-  cd rxn-cpp
+  git clone https://github.com/gsgall/rxn-cpp
+  cd ~/projects/rxn-cpp
 ```
 
 # Build
 
 
 ```bash
-  make 
+  make -j 4
 ```
 
 # Build The Docs
@@ -40,6 +40,8 @@ To ensure no conflicts with other projects you can create a new environment to w
 Since this system relies on the MOOSE documentation system you will need MOOSE installed to build and host the documentation site locally. We expect you to have MOOSE installed  at `~/projects/moose` if you would like to do this.
 
 ```bash
+conda activate moose
+cd ~/projects/rxn-cpp/doc
 MOOSE_DIR=~/projects/moose ROOT_DIR=~/projects/rxn-cpp/doc ./moosedocs.py build --serve
 ```
 
@@ -48,7 +50,7 @@ MOOSE_DIR=~/projects/moose ROOT_DIR=~/projects/rxn-cpp/doc ./moosedocs.py build 
 ```bash
   cd test
   make
-  ./run_tests
+  ./run_tests -j 4
 ```
 
 # Remove Environment
@@ -72,6 +74,9 @@ If you are getting the error when running main where it is looking for the libra
   echo 'export DYLD_LIBRARY_PATH="$CONDA_PREFIX/lib:$DYLD_LIBRARY_PATH"' > ./etc/conda/activate.d/env_vars.sh
   touch ./etc/conda/deactivate.d/env_vars.sh
   echo 'unset DYLD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
+  cd -
+  conda deactivate rxn-cpp
+  conda activate rxn-cpp
 ```
 
 The following commands are the same but for a linux system.
@@ -84,4 +89,7 @@ The following commands are the same but for a linux system.
   echo 'export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"' > ./etc/conda/activate.d/env_vars.sh
   touch ./etc/conda/deactivate.d/env_vars.sh
   echo 'unset LD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
+  cd -
+  conda deactivate rxn-cpp
+  conda activate rxn-cpp
 ```

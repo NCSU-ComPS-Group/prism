@@ -35,6 +35,8 @@ namespace rxn
   const string REFERENCE_KEY = "references";
   const string FILE_KEY = "file";
   const string PARAM_KEY = "params";
+  const vector<const string> allowed_reaction_params = {REACTION_KEY, DELTA_EPS_E_KEY, DELTA_EPS_G_KEY, NOTE_KEY, REFERENCE_KEY, FILE_KEY, PARAM_KEY};
+
 
   const string ARRHENIUS = "arrhenius";
   const string TABULATED =  "tabulated";
@@ -48,5 +50,4 @@ namespace rxn
   /** Fundamental charge in C */
   const float e = 1.602176487E-19;
 
-  const vector<const string> allowed_reaction_params = {REACTION_KEY, DELTA_EPS_E_KEY, DELTA_EPS_G_KEY, NOTE_KEY, REFERENCE_KEY, FILE_KEY, PARAM_KEY};
 }
