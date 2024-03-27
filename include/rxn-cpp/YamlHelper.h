@@ -18,9 +18,10 @@ template<typename T> T defaultValue();
 
 template<typename T> std::string getTypeName();
 
-bool validParam(const string & param, const YAML::Node node, const bool required);
+bool validParam(const string & param, const YAML::Node & node, const bool required);
 
-template <typename T> vector<T> getParams(const string & param, const YAML::Node node, bool required);
-template <typename T> T getParam(const string & param, const YAML::Node node, bool required);
+template <typename T> vector<T> getParams(const string & param, const YAML::Node & node, const bool required);
+template <typename T> T getParam(const string & param, const YAML::Node & node, const bool required);
 
+const vector<const string> getExtraParams(const YAML::Node & node, const vector<const string> & allowed);
 }

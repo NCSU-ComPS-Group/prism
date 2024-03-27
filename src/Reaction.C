@@ -17,6 +17,41 @@ namespace rxn
   _references(getParams<string>(REFERENCE_KEY, rxn_input, OPTIONAL)),
   _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL))
   {
+
+    const bool file_key = validParam(FILE_KEY, rxn_input, OPTIONAL);
+    const bool params_key = validParam(PARAM_KEY, rxn_input, OPTIONAL);
+
+    if (file_key && params_key)
+    {
+      throw InvalidReaction(_name, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
+    }
+
+    if (!file_key && !params_key)
+    {
+      throw InvalidReaction(_name, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
+    }
+
+    const vector<const string> extra_params = getExtraParams(rxn_input, allowed_reaction_params);
+
+    if (extra_params.size() != 0)
+    {
+      string error_string;
+
+      if (extra_params.size() == 1)
+      {
+        error_string = "Extra parameter found\n";
+      } else {
+        error_string = "Extra parameters found\n";
+      }
+
+      for (const string & ep: extra_params)
+      {
+        error_string += "          '" + ep + "'\n";
+      }
+
+      throw InvalidReaction(_name, error_string);
+    }
+
     setSides();
     validateReaction();
     setLatexName();

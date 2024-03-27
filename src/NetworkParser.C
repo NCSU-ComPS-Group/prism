@@ -94,6 +94,28 @@ NetworkParser::parseNetwork(const string & file)
 {
   checkFile(file);
   const YAML::Node network = YAML::LoadFile(file);
+
+  const vector<const string> extra_params = getExtraParams(network, allowed_network_inputs);
+
+  if (extra_params.size() != 0)
+  {
+    string error_string;
+
+    if (extra_params.size() == 1)
+    {
+      error_string = "Extra block found\n";
+    } else {
+      error_string = "Extra blocks found\n";
+    }
+
+    for (const string & ep: extra_params)
+    {
+      error_string += "'" + ep + "'\n";
+    }
+
+    InvalidInputExit(error_string);
+  }
+
   _networks[file] = network;
 
   // _check refs will determine if we error or not

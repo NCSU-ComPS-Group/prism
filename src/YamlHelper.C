@@ -25,7 +25,7 @@ string defaultValue<string>() {
 }
 
 
-bool validParam(const string & param, const YAML::Node node, const bool required)
+bool validParam(const string & param, const YAML::Node & node, const bool required)
 {
   if (!node[param])
   {
@@ -39,7 +39,7 @@ bool validParam(const string & param, const YAML::Node node, const bool required
 }
 
 template <typename T>
-vector<T> getParams(const string & param, const YAML::Node node, bool required)
+vector<T> getParams(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!validParam(param, node, required))
@@ -72,13 +72,13 @@ vector<T> getParams(const string & param, const YAML::Node node, bool required)
   return values;
 }
 
-template vector<string> getParams<string>(const string & param, const YAML::Node node, bool required);
-template vector<double> getParams<double>(const string & param, const YAML::Node node, bool required);
+template vector<string> getParams<string>(const string & param, const YAML::Node & node, const bool required);
+template vector<double> getParams<double>(const string & param, const YAML::Node & node, const bool required);
 
 
 
 template <typename T>
-T getParam(const string & param, const YAML::Node node, bool required)
+T getParam(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!validParam(param, node, required))
@@ -98,9 +98,36 @@ T getParam(const string & param, const YAML::Node node, bool required)
   return value;
 }
 
-template string getParam<string>(const string & param, const YAML::Node node, bool required);
-template double getParam<double>(const string & param, const YAML::Node node, bool required);
+template string getParam<string>(const string & param, const YAML::Node & node, const bool required);
+template double getParam<double>(const string & param, const YAML::Node & node, const bool required);
 
 
+const vector<const string>
+getExtraParams(const YAML::Node & node, const vector<const string> & allowed)
+{
+  string temp_param;
+  bool extra_param;
+  vector<const string> extra_params;
 
+  for (auto it = node.begin(); it != node.end(); ++it)
+  {
+    extra_param = true;
+    temp_param = it->first.as<std::string>();
+
+    for (const string & param : allowed)
+    {
+      if (temp_param == param)
+      {
+        extra_param = false;
+        break;
+      }
+    }
+
+    if (extra_param)
+    {
+      extra_params.push_back(temp_param);
+    }
+  }
+  return extra_params;
+}
 }
