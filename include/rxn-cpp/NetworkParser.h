@@ -35,6 +35,7 @@ class NetworkParser {
 
     void writeLatexTable(const string & file);
   private:
+    bool _errors = false;
     bool _check_refs = false;
     /** Map of YAML::Node's from all of the files which networks have been parsed */
     unordered_map<string, YAML::Node> _networks;

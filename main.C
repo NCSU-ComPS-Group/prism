@@ -18,6 +18,6 @@ main(int argc, char** argv)
   }
   np.parseNetwork(argv[1]);
 
-  np.writeLatexTable("text.tex");
+  np.writeLatexTable("test.tex");
   return EXIT_SUCCESS;
 }

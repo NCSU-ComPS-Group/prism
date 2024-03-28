@@ -84,6 +84,7 @@ NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<cons
       rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path, bib_file, _check_refs));
       printGreen("Reaction Validated: " + rxn_list->back()->getName() + "\n");
     } catch (const InvalidReaction & e) {
+      _errors = true;
       printRed(e.what());
     }
   }
@@ -157,16 +158,48 @@ NetworkParser::parseNetwork(const string & file)
 void
 NetworkParser::writeLatexTable(const string & file)
 {
+
+  const unsigned int max_rows = 34;
+
+  if (_errors)
+  {
+    InvalidInputExit("A LaTeX table cannot be generated\n  There are errors in your reaction network that must be corrected");
+  }
+
   unsigned int rxn_counter = 0;
+  unsigned int note_counter = 0;
+
+  map<string, unsigned int> note_numbers;
+  map<unsigned int, string> inverse_note_numbers;
+
+  vector<string> all_notes;
+
+  string table_header = "\\begin{table}[H]\n";
+  table_header += "  \\centering\n";
+  table_header += "  \\resizebox{\\columnwidth}{!}{\n";
+  table_header += "    \\begin{tabu}{clcccccccc}\n";
+  table_header += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
+            "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
+            "Ref.\\\\\n";
+  table_header += "      \\hline\n";
+  table_header += "      \\hline\n";
+
+  string table_closer = "    \\end{tabu}\n";
+  table_closer += "  }\n";
+  table_closer += "  \\caption{Your Caption}\n";
+  table_closer += "  \\label{tab:rxns}\n";
+  table_closer += "\\end{table}\n\n";
+
 
   string latex = "\\documentclass{article}\n";
   latex += "\\usepackage{tabu}\n";
   latex += "\\usepackage{float}\n";
   latex += "\\usepackage{graphicx}\n";
-  latex += "\\usepackage{amsmath}\n\n";
+  latex += "\\usepackage{amsmath}\n";
+  latex += "\\usepackage[top=1cm]{geometry}\n";
   latex += "\\tabulinesep = 1.5mm\n";
   // adding the bibtex
-  latex += "\\usepackage[\n";
+  latex += "\n\\usepackage[\n";
   latex += "  backend=biber,\n";
   latex += "  style=numeric,\n";
   latex += "  sorting=nty,\n";
@@ -175,19 +208,19 @@ NetworkParser::writeLatexTable(const string & file)
   // actual document
   latex += "\\begin{document}\n\n";
 
-  latex += "\\begin{table}[H]\n";
-  latex += "  \\centering\n";
-  latex += "  \\resizebox{\\columnwidth}{!}{\n";
-  latex += "    \\begin{tabu}{clcccccccc}\n";
-  latex += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
-            "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
-            "Ref.\\\\\n";
-  latex += "      \\hline\n";
-  latex += "      \\hline\n";
-
   for (auto r : _rate_based)
   {
+
+    if (rxn_counter % max_rows == 0)
+    {
+      if (rxn_counter != 0 && rxn_counter != _rate_based.size())
+      {
+        latex += table_closer;
+      }
+      latex += table_header;
+    }
     rxn_counter++;
+
     latex += fmt::format("      {:d}", rxn_counter) + " & ";
     latex += r->getLatexRepresentation() + " & ";
     for (auto param : r->getReactionParams())
@@ -197,22 +230,47 @@ NetworkParser::writeLatexTable(const string & file)
     latex += formatScientific(r->getDeltaEnergyElectron()) + " & ";
     latex += formatScientific(r->getDeltaEnergyGas()) + " & ";
     latex += r->getReferencesAsString() + " ";
-    // if (note.length() > 0)
-    // {
-    //   _note_counter++;
-    //   _latex += fmt::format("\\footnotemark[{:d}]", _note_counter);
-    //   note_collector.push_back(note);
-    // }
+
+    string notes_string;
+    vector<unsigned int> numbers;
+
+    for (auto note : r->getNotes())
+    {
+      auto it = note_numbers.find(note);
+      if (it == note_numbers.end())
+      {
+        note_counter++;
+        note_numbers[note] = note_counter;
+        inverse_note_numbers[note_counter] = note;
+        all_notes.push_back(note);
+      }
+
+      numbers.push_back(note_numbers[note]);
+    }
+
+    sort(numbers.begin(), numbers.end());
+
+    for (auto it = numbers.begin(); it != numbers.end(); ++it) {
+      // Check if this is not the last note
+      if (next(it) != numbers.end()) {
+        latex += fmt::format("\\footnotemark[{:d}]", *it) + "$^{,}$";
+        continue;
+      }
+      latex += fmt::format("\\footnotemark[{:d}]", *it);
+    }
+
     latex += "\\\\\n";
   }
 
-  latex += "    \\end{tabu}\n";
-  latex += "  }\n";
+  if (rxn_counter % max_rows != 0)
+  {
+    latex += table_closer;
+  }
 
-  latex += "  \\caption{Your Caption}\n";
-  latex += "  \\label{tab:rxns}\n";
-
-  latex += "\\end{table}\n\n";
+  for (unsigned int i = 0; i < all_notes.size(); ++i)
+  {
+    latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + all_notes[i] + "}\\\\ \n";
+  }
 
   // adding the bibliography
   latex += "\\newpage\n";
@@ -223,8 +281,5 @@ NetworkParser::writeLatexTable(const string & file)
   ofstream out(file);
   out << latex;
   out.close();
-
-  // for (unsigned int i = 0; i < note_collector.size(); ++i)
-  //   latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + note_collector[i] + "}\n";
 }
 }

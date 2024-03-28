@@ -270,6 +270,7 @@ namespace rxn
     SpeciesFactory & sf = SpeciesFactory::getInstance();
     string unlumped_name;
     string lumped_name;
+    string lump_string;
     // string of species that have been lumped into a different state
     // I want to make sure to not add the same note several times
     set<string> lumped;
@@ -287,7 +288,7 @@ namespace rxn
       if (it == lumped.end())
       {
         lumped.insert(unlumped_name);
-        _notes.push_back("Species '" + unlumped_name + "' has been lumped into '" + lumped_name + "'");
+        _notes.push_back("Species \\lq " + unlumped_name + "\\rq{}  has been lumped into \\lq " + lumped_name + "\\rq");
       }
 
       // update the reactant count for the lumped species
@@ -313,7 +314,7 @@ namespace rxn
       if (it == lumped.end())
       {
         lumped.insert(unlumped_name);
-        _notes.push_back("Species '" + unlumped_name + "' has been lumped into '" + lumped_name + "'");
+        _notes.push_back("Species \\lq " + unlumped_name + "\\rq{} has been lumped into \\lq " + lumped_name + "\\rq");
       }
 
       // update the reactant count for the lumped species

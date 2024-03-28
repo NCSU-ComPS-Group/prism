@@ -1,8 +1,0 @@
-xsec-based:
-  - reaction: E + Ar -> E + Ar
-    params: 6.0e-14
-    reference:
-    notes:
-
-
-
