@@ -9,7 +9,7 @@ Add the main rxn-cpp repository as an "upstream" git remote, so that you can
 [git fetch](https://git-scm.org/docs/git-fetch) updates from the main repository:
 
 ```bash
-cd ~/projects/fenix
+cd ~/projects/rxn-cpp
 git remote add upstream https://github.com/gsgall/rxn-cpp
 ```
 
@@ -34,3 +34,5 @@ git rebase upstream
 ```bash
 git push -f
 ```
+
+## Rebuilding the 

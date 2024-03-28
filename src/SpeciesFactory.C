@@ -217,7 +217,6 @@ SpeciesFactory::getLatexOverride(const string & name) const
   {
     return "";
   }
-
   return it->second;
 }
 

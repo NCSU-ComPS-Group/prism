@@ -122,7 +122,7 @@ NetworkParser::parseNetwork(const string & file)
   try {
     _bibs[file] = getParam<string>(BIB_KEY, network, _check_refs);
   } catch (const InvalidInput & e) {
-    cout << e.what();
+    InvalidInputExit(e.what());
     exit(EXIT_FAILURE);
   }
 
@@ -135,7 +135,7 @@ NetworkParser::parseNetwork(const string & file)
     _data_paths[file] = getParam<string>(PATH_KEY, network, OPTIONAL);
   } catch (const InvalidInput & e )
   {
-    cout << e.what();
+    InvalidInputExit(e.what());
     exit(EXIT_FAILURE);
   }
 
@@ -154,4 +154,77 @@ NetworkParser::parseNetwork(const string & file)
   parseReactions(network, &_xsec_based, XSEC_BASED, _data_paths[file], _bibs[file]);
 }
 
+void
+NetworkParser::writeLatexTable(const string & file)
+{
+  unsigned int rxn_counter = 0;
+
+  string latex = "\\documentclass{article}\n";
+  latex += "\\usepackage{tabu}\n";
+  latex += "\\usepackage{float}\n";
+  latex += "\\usepackage{graphicx}\n";
+  latex += "\\usepackage{amsmath}\n\n";
+  latex += "\\tabulinesep = 1.5mm\n";
+  // adding the bibtex
+  latex += "\\usepackage[\n";
+  latex += "  backend=biber,\n";
+  latex += "  style=numeric,\n";
+  latex += "  sorting=nty,\n";
+  latex += "]{biblatex}\n\n";
+  latex += "\\addbibresource{works.bib}\n\n";
+  // actual document
+  latex += "\\begin{document}\n\n";
+
+  latex += "\\begin{table}[H]\n";
+  latex += "  \\centering\n";
+  latex += "  \\resizebox{\\columnwidth}{!}{\n";
+  latex += "    \\begin{tabu}{clcccccccc}\n";
+  latex += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
+            "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
+            "Ref.\\\\\n";
+  latex += "      \\hline\n";
+  latex += "      \\hline\n";
+
+  for (auto r : _rate_based)
+  {
+    rxn_counter++;
+    latex += fmt::format("      {:d}", rxn_counter) + " & ";
+    latex += r->getLatexRepresentation() + " & ";
+    for (auto param : r->getReactionParams())
+    {
+      latex += formatScientific(param) + " & ";
+    }
+    latex += formatScientific(r->getDeltaEnergyElectron()) + " & ";
+    latex += formatScientific(r->getDeltaEnergyGas()) + " & ";
+    latex += r->getReferencesAsString() + " ";
+    // if (note.length() > 0)
+    // {
+    //   _note_counter++;
+    //   _latex += fmt::format("\\footnotemark[{:d}]", _note_counter);
+    //   note_collector.push_back(note);
+    // }
+    latex += "\\\\\n";
+  }
+
+  latex += "    \\end{tabu}\n";
+  latex += "  }\n";
+
+  latex += "  \\caption{Your Caption}\n";
+  latex += "  \\label{tab:rxns}\n";
+
+  latex += "\\end{table}\n\n";
+
+  // adding the bibliography
+  latex += "\\newpage\n";
+  latex += "\\printbibliography\n\n";
+
+  latex += "\\end{document}\n";
+
+  ofstream out(file);
+  out << latex;
+  out.close();
+
+  // for (unsigned int i = 0; i < note_collector.size(); ++i)
+  //   latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + note_collector[i] + "}\n";
+}
 }

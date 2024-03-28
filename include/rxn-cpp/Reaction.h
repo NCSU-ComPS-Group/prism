@@ -26,8 +26,13 @@ namespace rxn
     const string getName() const;
     const string getLatexRepresentation() const;
     unsigned int getReactionNumber() const;
+    const vector<double> & getReactionParams() const;
     const vector<string> & getReferences() const;
     const vector<string> & getNotes() const;
+
+    double getDeltaEnergyElectron() const;
+    double getDeltaEnergyGas() const;
+    string getReferencesAsString() const;
 
     /**
      * equality operator override and compares the reaction name
@@ -61,6 +66,7 @@ namespace rxn
     const bool _check_refs;
     const vector<string> _references;
     vector<string> _notes;
+    vector<double> _params;
 
     vector<weak_ptr<Species>> _reactants;
     vector<weak_ptr<Species>> _products;

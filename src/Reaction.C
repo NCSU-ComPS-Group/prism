@@ -15,21 +15,22 @@ namespace rxn
   _bib_file(bib_file),
   _check_refs(check_refs),
   _references(getParams<string>(REFERENCE_KEY, rxn_input, OPTIONAL)),
-  _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL))
+  _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL)),
+  _params({0,0,0,0,0})
   {
 
-    const bool file_key = validParam(FILE_KEY, rxn_input, OPTIONAL);
-    const bool params_key = validParam(PARAM_KEY, rxn_input, OPTIONAL);
+    // const bool file_key = validParam(FILE_KEY, rxn_input, OPTIONAL);
+    // const bool params_key = validParam(PARAM_KEY, rxn_input, OPTIONAL);
 
-    if (file_key && params_key)
-    {
-      throw InvalidReaction(_name, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
-    }
+    // if (file_key && params_key)
+    // {
+    //   throw InvalidReaction(_name, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
+    // }
 
-    if (!file_key && !params_key)
-    {
-      throw InvalidReaction(_name, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
-    }
+    // if (!file_key && !params_key)
+    // {
+    //   throw InvalidReaction(_name, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
+    // }
 
     const vector<const string> extra_params = getExtraParams(rxn_input, allowed_reaction_params);
 
@@ -115,8 +116,10 @@ namespace rxn
       }
       // only add the species to the list once
       if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+      {
         _reactants.push_back(s_wp);
-
+        unique_check.insert(s_wp.lock()->getName());
+      }
     }
 
     unique_check.clear();
@@ -143,7 +146,11 @@ namespace rxn
       }
 
       if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+      {
         _products.push_back(s_wp);
+        unique_check.insert(s_wp.lock()->getName());
+      }
+
     }
   }
 
@@ -179,7 +186,6 @@ namespace rxn
     for (auto weak_r : _reactants)
     {
       auto r = weak_r.lock();
-      // this reaction is a sink
       s_count = _reactant_count[r->getName()];
       r_mass += r->getMass() * s_count;
       r_charge_num += r->getChargeNumber() * s_count;
@@ -208,6 +214,8 @@ namespace rxn
     {
       auto p = weak_p.lock();
       s_count = _product_count[p->getName()];
+      p_mass += p->getMass() * s_count;
+      p_charge_num += p->getChargeNumber() * s_count;
       // lets check to make sure that all of the elements that make up
       // the product also exist on the reactant side
       // no nuclear reactions here
@@ -232,9 +240,6 @@ namespace rxn
         // if the element is known increase the count
         p_elements[sub_p.getBase()] += sub_p.getSubscript() * s_count;
       }
-      // add this reaction as a source
-      p_mass += p->getMass() * s_count;
-      p_charge_num += p->getChargeNumber() * s_count;
     }
 
     // check here to make sure the reaction is properly balanced
@@ -263,38 +268,61 @@ namespace rxn
   Reaction::substituteLumped()
   {
     SpeciesFactory & sf = SpeciesFactory::getInstance();
-    string temp_s_string;
+    string unlumped_name;
+    string lumped_name;
     // string of species that have been lumped into a different state
     // I want to make sure to not add the same note several times
     set<string> lumped;
 
     for (unsigned int i = 0; i < _reactants.size(); ++i)
     {
-      temp_s_string = sf.getLumpedSpecies(_reactants[i]);
-      if (temp_s_string.length() == 0)
+      // exchange the pointers and get the previous unlumped name in temp_s_string
+      unlumped_name = sf.getLumpedSpecies(_reactants[i]);
+      lumped_name =  _reactants[i].lock()->getName();
+      if (unlumped_name.length() == 0)
       {
         continue;
       }
-      auto it = lumped.find(temp_s_string);
+      auto it = lumped.find(unlumped_name);
       if (it == lumped.end())
       {
-        lumped.insert(temp_s_string);
-        _notes.push_back("Species '" + temp_s_string + "' has been lumped into '" + _reactants[i].lock()->getName() + "'");
+        lumped.insert(unlumped_name);
+        _notes.push_back("Species '" + unlumped_name + "' has been lumped into '" + lumped_name + "'");
+      }
+
+      // update the reactant count for the lumped species
+      auto it2 = _reactant_count.find(lumped_name);
+      if (it2 == _reactant_count.end())
+      {
+        _reactant_count[lumped_name] = _reactant_count[unlumped_name];
+      } else {
+        _reactant_count[lumped_name] += _reactant_count[unlumped_name];
       }
     }
 
     for (unsigned int i = 0; i < _products.size(); ++i)
     {
-      temp_s_string = sf.getLumpedSpecies(_products[i]);
-      if (temp_s_string.length() == 0)
+      unlumped_name = sf.getLumpedSpecies(_products[i]);
+      lumped_name =  _products[i].lock()->getName();
+
+      if (unlumped_name.length() == 0)
       {
         continue;
       }
-      auto it = lumped.find(temp_s_string);
+      auto it = lumped.find(unlumped_name);
       if (it == lumped.end())
       {
-        lumped.insert(temp_s_string);
-        _notes.push_back("Species '" + temp_s_string + "' has been lumped into '" + _products[i].lock()->getName() + "'");
+        lumped.insert(unlumped_name);
+        _notes.push_back("Species '" + unlumped_name + "' has been lumped into '" + lumped_name + "'");
+      }
+
+      // update the reactant count for the lumped species
+      auto it2 = _product_count.find(lumped_name);
+      if (it2 == _product_count.end())
+      {
+        _product_count[lumped_name] = _product_count[unlumped_name];
+      } else {
+        _product_count[lumped_name] += _product_count[unlumped_name];
       }
     }
   }
@@ -329,6 +357,7 @@ namespace rxn
 
     _latex_name += " $\\rightarrow$ ";
 
+    unique_check.clear();
     for (auto weak_p : _products)
     {
       auto p = weak_p.lock();
@@ -396,6 +425,24 @@ namespace rxn
     return _notes;
   }
 
+  const vector<double> &
+  Reaction::getReactionParams() const
+  {
+    return _params;
+  }
+
+  double
+  Reaction::getDeltaEnergyElectron() const
+  {
+    return _delta_eps_e;
+  }
+
+  double
+  Reaction::getDeltaEnergyGas() const
+  {
+    return _delta_eps_g;
+  }
+
   bool
   Reaction::operator==(const Reaction & other) const
   {
@@ -417,6 +464,14 @@ namespace rxn
     return !(*this == other);
   }
 
+  string
+  Reaction::getReferencesAsString() const
+  {
+    string temp_refs = "";
+    for (auto r : _references)
+      temp_refs += "\\cite{" + r + "}";
+    return temp_refs;
+  }
 }
 
 size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const

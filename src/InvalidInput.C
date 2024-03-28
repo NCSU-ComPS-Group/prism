@@ -34,7 +34,7 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    _error = "\n\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n";
+    _error = message + "\n\nInvalid Input in Block:\n\n" + oss.str() + "\n\n";
   }
 
   InvalidInput::InvalidInput(const YAML::Node & node, const string & block, const string & message)
@@ -42,7 +42,7 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    _error = "\n\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n";
+    _error =  message + "\n\nInvalid Input in Block:\n\n" + block + "\n\n" + oss.str() + "\n\n";
   }
 
   const char*

@@ -27,10 +27,7 @@ namespace rxn
     int base_start = findFirstCapital(_name);
 
     if (base_start == -1 && _name[0] != 'e')
-      throw InvalidSpecies(_name, "Species must contain a capital or be an electron (e) \n");
-
-    // if (base_start != 0 && _name[0] != 'e')
-    //   throw InvalidSpecies(_name, "Species which are not electrons (e) must start with a capital letter\n");
+      throw InvalidSpecies(_name, "Species must start with a capital or be an electron (e) \n");
 
     // find where the base ends
     // the base will end when a number or special character starts
@@ -188,10 +185,10 @@ namespace rxn
   SubSpecies::setLatexName()
   {
     const string potential_override = SpeciesFactory::getInstance().getLatexOverride(_name);
-
     if (potential_override.length() > 0)
     {
       _latex_name = potential_override;
+      return;
     }
     // case if we have a photon
     if (_name == "hnu")

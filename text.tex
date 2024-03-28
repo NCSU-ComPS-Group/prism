@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\tabulinesep = 1.5mm
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+]{biblatex}
+
+\addbibresource{works.bib}
+
+\begin{document}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      1 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(rotation) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      2 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(vibration) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      3 & e + N$_{2}$ $\rightarrow$ 2e + N$_{2}$$^{+}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      4 & e + N$_{2}$ $\rightarrow$ e + 2N & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      5 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(electronic) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      6 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(a) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      7 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(a2) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      8 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(b) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      9 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(c) & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      10 & e + He $\rightarrow$ 2e + He$^{+}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      11 & e + He $\rightarrow$ e + He^m & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      12 & e + O$_{2}$ $\rightarrow$ 2e + O$_{2}$$^{+}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      13 & e + O$_{2}$ $\rightarrow$ e + 2O & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+      14 & e + O$_{2}$ $\rightarrow$ e + O + O^m & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 &  \\
+    \end{tabu}
+  }
+  \caption{Your Caption}
+  \label{tab:rxns}
+\end{table}
+
+\newpage
+\printbibliography
+
+\end{document}

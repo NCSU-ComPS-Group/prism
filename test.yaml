@@ -6,22 +6,13 @@ custom-species:
 lumped-species:
   - lumped: N2*
     # lets give a warning if one of these is not used
-    actual: [N2(rotation), N2(vibration), N2(not_used)]
+    actual: [N2(rotation), N2(vibration)]
 
 
 latex-overrides:
   # lets give a warning if the species you are overriding is not in the reaction network
   - species: N2*
     latex: N_{2}(\text{something})
-
-custom-equation:
-  # string
-  - eqntype: sting
-    eqn: A + B + C
-    # string
-    params: [A, B, C]
-    # string
-    latex_form:
 
 # for reactions lets give an error is no coefficients and no file is provided
 # lets give an error if more than 5 coefficients are provided and a custom reaction type
@@ -34,19 +25,14 @@ custom-equation:
 rate-based:
   - reaction: e + N2 -> e + N2(rotation)
     # these are optinional if they are not provided they will be assumed to be 0
-    delta-eps-e: number
-    delta-eps-g: number
-    # not all 5 coeffs are required if less than 5 are provided assume others are 0
-    params: [A, B, C, D, E]
-    # optional assume arrhenius form if not provided
-    type: reaction_type
+    # delta-eps-e: number
+    # delta-eps-g: number
+    # # not all 5 coeffs are required if less than 5 are provided assume others are 0
+    # params: [A, B, C, D, E]
+    # # optional assume arrhenius form if not provided
+    # type: reaction_type
 
   - reaction: e + N2 -> e + N2(vibration)
-    delta-eps-e: number
-    delta-eps-g: number
-    # path to the file which stores the xsec/rate file
-    file: path
-
   - reaction: e + N2 -> e + e + N2+
   - reaction: e + N2 -> e + N + N
   - reaction: e + N2 -> e + N2(electronic)
@@ -59,129 +45,129 @@ rate-based:
   - reaction: e + O2 -> e + e + O2+
   - reaction: e + O2 -> e + O + O
   - reaction: e + O2 -> e + O + O^m
-  - reaction: e + O2 -> O + O-
-  - reaction: e + O2 -> e + O2(rotational)
-  - reaction: e + O2 -> e + O2
-  - reaction: e + O2 -> e + O2(h)
-  - reaction: e + O2 -> e + O2(a1)
-  - reaction: e + O2 -> e + O2(b1)
-  - reaction: e + O2 -> e + O2(vibrational)
-  - reaction: e + O2(al) -> e + O2(b1)
-  - reaction: e + O2(al) -> e + O + O^m
-  - reaction: e + O2(al) -> O + O-
-  - reaction: e + O2(b1) -> O + O-
-  - reaction: e + NO -> e + e + NO+
-  - reaction: e + O -> e + O^m
-  - reaction: e + O -> e + O+
-  - reaction: e + He^m -> e + e + He+
-  - reaction: He^m + He^m -> e + He + He+
-  - reaction: e + He^m -> e + He
-  - reaction: e + He2^m -> e + e + He2+
-  - reaction: e + He2+ -> He^m + He
-  - reaction: He^m + He + He -> He2^m + He
-  - reaction: He+ + He + He -> He2+ + He
-  - reaction: e + He+ -> He^m
-  - reaction: e + e + He+ -> e + He^m
-  - reaction: He^m + N2 -> e + He + N2+
-  - reaction: He2^m + N2 -> e + He + He + N2+
-  - reaction: He+ + N2 -> N2+ + He
-  - reaction: He2+ + N2 -> N2+ + He + He
-  - reaction: He^m + O2 -> e + He + O2+
-  - reaction: He^m + O3 -> e + O + He + O2+
-  - reaction: He^m + O2(b1) -> e + He + O2+
-  - reaction: He^m + O -> e + He + O+
-  - reaction: He^m + O^m -> e + He + O+
-  - reaction: He+ + O2 -> O + He + O+
-  - reaction: He+ + O3 -> He + O2 + O+
-  - reaction: He+ + O2 -> O2+ + He
-  - reaction: He+ + O2(a1) -> He + O + O+
-  - reaction: He+ + O2(a1) -> He + O2+
-  - reaction: He+ + O -> He + O+
-  - reaction: He+ + O^m -> He + O+
-  - reaction: N2+ + N2 + M -> N4+ + M
-  - reaction: N4+ + O2 -> O2+ + N2 + N2
-  - reaction: N2+ + O2 -> O2+ + N2
-  - reaction: O2+ + N2 + N2 -> O2 + N2 + N2
-  - reaction: O2 + N2 + N2 -> O2+ + N2 + N2
-  - reaction: O2 + N2 + O2 -> O4+ + N2
-  - reaction: O2+ + O2 + M -> O4+ + M
-  - reaction: e + O4+ -> O2 + O2
-  - reaction: e + O2+ -> O + O
-  - reaction: e + O2 + O2 -> O2- + O2
-  - reaction: O2- + O4+ -> O2 + O2 + O2
-  - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-  - reaction: O2+ + O2 + M -> O4+ + M
-  - reaction: O2- + O2+ + M -> O2 + O2 + M
-  - reaction: O- + O2+ -> O + O2
-  - reaction: N2(a) + O2 -> N2 + O + O
-  - reaction: N2(a) + O2 -> N2 + O2(b1)
-  - reaction: N2(a) + N2(a) -> N2 + N2(b)
-  - reaction: N2(a) + N2(a) -> N2 + N2(c)
-  - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-  - reaction: N2(a) + O -> N2 + O
-  - reaction: N2(b) + O2 -> N2 + O + O
-  - reaction: N2(b) + N2 -> N2(a) + N2
-  - reaction: N2(a) + O2 -> N2 + O + O
-  - reaction: N2(a) + N2 -> N2 + N2
-  - reaction: N2(c) + O2 -> N2 + O + O
-  - reaction: N2(c) + N2 -> N2(a1) + N2
-  - reaction: N2(c) -> N2(b) + hnu
-  - reaction: O2(h) + O2 -> O2(a1) + O2
-  - reaction: O2(h) + O2 -> O2(b1) + O2
-  - reaction: O2(h) + O2 -> O2 + O2
-  - reaction: O2(h) + O -> O2 + O
-  - reaction: O2(h) + O -> O2(a1) + O
-  - reaction: O2(h) + O -> O2(b1) + O
-  - reaction: O- + O2(a1) -> e + O3
-  - reaction: O- + O2 -> e + O3
-  - reaction: O2- + O -> e + O3
-  - reaction: O- + O2 -> e + O3
-  - reaction: O + O2 + N2 -> N2 + O3
-  - reaction: O + O2 + O2 -> O2 + O3
-  - reaction: O4+ + O -> O2+ + O3
-  - reaction: O- + O2+ + N2 -> O3 + N2
-  - reaction: O- + O2+ + O2 -> O3 + O2
-  - reaction: O + O + O2 -> O3 + O
-  - reaction: O3- + O2+ -> O3 + O2
-  - reaction: O3- + O+ -> O3 + O
-  - reaction: O3- + He+ -> O3 + He
-  - reaction: O- + O3 -> O3- + O
-  - reaction: O2- + O3 -> O3- + O2
-  - reaction: O3- + O -> O2- + O2
-  - reaction: e + NO+ -> N + O
-  - reaction: e + NO+ -> N + O^m
-  - reaction: He^m + NO -> He + NO+ + e
-  - reaction: He+ + NO -> He + NO+
-  - reaction: He+ + NO -> He + N + O+
-  - reaction: O+ + NO -> O + NO+
-  - reaction: O2+ + NO -> O2 + NO+
-  - reaction: O2+ + N -> NO+ + O
-  - reaction: NO+ + O- -> NO + O
-  - reaction: NO+ + O2- -> NO + O2
-  - reaction: N + O + N2 -> NO + N2
-  - reaction: NO + O2(a1) -> NO + O2
-  - reaction: NO + O^m -> N + O2
-  - reaction: NO + O^m -> NO + O
-  - reaction: N + O2 -> NO + O
-  - reaction: N + O + N2 -> NO + N2
-  - reaction: N + O + O2 -> NO + O2
-  - reaction: N + O + He -> NO + He
-  - reaction: N + O + O2(a1) -> NO + O2(a1)
-  - reaction: N + O + O -> NO + O
-  - reaction: N + O + O3 -> NO + O3
-  - reaction: O- + NO -> NO2 + e
-  - reaction: O2- + N -> NO2 + e
-  - reaction: NO + O3 -> NO2 + O2
-  - reaction: NO + O + He -> NO2 + He
-  - reaction: NO + O + O2 -> NO2 + O2
-  - reaction: NO + O + N2 -> NO2 + N2
-  - reaction: NO2 + O -> NO + O2
-  - reaction: NO2 + O^m -> NO2 + O
-  - reaction: NO2 + O^m -> NO + O2
-  - reaction: N + NO2 -> NO + NO
-  - reaction: N + NO2 -> N2 + O + O
-  - reaction: N + NO2 -> N2 + O2
-  - reaction: 2N + e -> 3N + e
+  # - reaction: e + O2 -> O + O-
+  # - reaction: e + O2 -> e + O2(rotational)
+  # - reaction: e + O2 -> e + O2
+  # - reaction: e + O2 -> e + O2(h)
+  # - reaction: e + O2 -> e + O2(a1)
+  # - reaction: e + O2 -> e + O2(b1)
+  # - reaction: e + O2 -> e + O2(vibrational)
+  # - reaction: e + O2(al) -> e + O2(b1)
+  # - reaction: e + O2(al) -> e + O + O^m
+  # - reaction: e + O2(al) -> O + O-
+  # - reaction: e + O2(b1) -> O + O-
+  # - reaction: e + NO -> e + e + NO+
+  # - reaction: e + O -> e + O^m
+  # - reaction: e + O -> e + O+
+  # - reaction: e + He^m -> e + e + He+
+  # - reaction: He^m + He^m -> e + He + He+
+  # - reaction: e + He^m -> e + He
+  # - reaction: e + He2^m -> e + e + He2+
+  # - reaction: e + He2+ -> He^m + He
+  # - reaction: He^m + He + He -> He2^m + He
+  # - reaction: He+ + He + He -> He2+ + He
+  # - reaction: e + He+ -> He^m
+  # - reaction: e + e + He+ -> e + He^m
+  # - reaction: He^m + N2 -> e + He + N2+
+  # - reaction: He2^m + N2 -> e + He + He + N2+
+  # - reaction: He+ + N2 -> N2+ + He
+  # - reaction: He2+ + N2 -> N2+ + He + He
+  # - reaction: He^m + O2 -> e + He + O2+
+  # - reaction: He^m + O3 -> e + O + He + O2+
+  # - reaction: He^m + O2(b1) -> e + He + O2+
+  # - reaction: He^m + O -> e + He + O+
+  # - reaction: He^m + O^m -> e + He + O+
+  # - reaction: He+ + O2 -> O + He + O+
+  # - reaction: He+ + O3 -> He + O2 + O+
+  # - reaction: He+ + O2 -> O2+ + He
+  # - reaction: He+ + O2(a1) -> He + O + O+
+  # - reaction: He+ + O2(a1) -> He + O2+
+  # - reaction: He+ + O -> He + O+
+  # - reaction: He+ + O^m -> He + O+
+  # - reaction: N2+ + N2 + M -> N4+ + M
+  # - reaction: N4+ + O2 -> O2+ + N2 + N2
+  # - reaction: N2+ + O2 -> O2+ + N2
+  # - reaction: O2+ + N2 + N2 -> O2 + N2 + N2
+  # - reaction: O2 + N2 + N2 -> O2+ + N2 + N2
+  # - reaction: O2 + N2 + O2 -> O4+ + N2
+  # - reaction: O2+ + O2 + M -> O4+ + M
+  # - reaction: e + O4+ -> O2 + O2
+  # - reaction: e + O2+ -> O + O
+  # - reaction: e + O2 + O2 -> O2- + O2
+  # - reaction: O2- + O4+ -> O2 + O2 + O2
+  # - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
+  # - reaction: O2+ + O2 + M -> O4+ + M
+  # - reaction: O2- + O2+ + M -> O2 + O2 + M
+  # - reaction: O- + O2+ -> O + O2
+  # - reaction: N2(a) + O2 -> N2 + O + O
+  # - reaction: N2(a) + O2 -> N2 + O2(b1)
+  # - reaction: N2(a) + N2(a) -> N2 + N2(b)
+  # - reaction: N2(a) + N2(a) -> N2 + N2(c)
+  # - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+  # - reaction: N2(a) + O -> N2 + O
+  # - reaction: N2(b) + O2 -> N2 + O + O
+  # - reaction: N2(b) + N2 -> N2(a) + N2
+  # - reaction: N2(a) + O2 -> N2 + O + O
+  # - reaction: N2(a) + N2 -> N2 + N2
+  # - reaction: N2(c) + O2 -> N2 + O + O
+  # - reaction: N2(c) + N2 -> N2(a1) + N2
+  # - reaction: N2(c) -> N2(b) + hnu
+  # - reaction: O2(h) + O2 -> O2(a1) + O2
+  # - reaction: O2(h) + O2 -> O2(b1) + O2
+  # - reaction: O2(h) + O2 -> O2 + O2
+  # - reaction: O2(h) + O -> O2 + O
+  # - reaction: O2(h) + O -> O2(a1) + O
+  # - reaction: O2(h) + O -> O2(b1) + O
+  # - reaction: O- + O2(a1) -> e + O3
+  # - reaction: O- + O2 -> e + O3
+  # - reaction: O2- + O -> e + O3
+  # - reaction: O- + O2 -> e + O3
+  # - reaction: O + O2 + N2 -> N2 + O3
+  # - reaction: O + O2 + O2 -> O2 + O3
+  # - reaction: O4+ + O -> O2+ + O3
+  # - reaction: O- + O2+ + N2 -> O3 + N2
+  # - reaction: O- + O2+ + O2 -> O3 + O2
+  # - reaction: O + O + O2 -> O3 + O
+  # - reaction: O3- + O2+ -> O3 + O2
+  # - reaction: O3- + O+ -> O3 + O
+  # - reaction: O3- + He+ -> O3 + He
+  # - reaction: O- + O3 -> O3- + O
+  # - reaction: O2- + O3 -> O3- + O2
+  # - reaction: O3- + O -> O2- + O2
+  # - reaction: e + NO+ -> N + O
+  # - reaction: e + NO+ -> N + O^m
+  # - reaction: He^m + NO -> He + NO+ + e
+  # - reaction: He+ + NO -> He + NO+
+  # - reaction: He+ + NO -> He + N + O+
+  # - reaction: O+ + NO -> O + NO+
+  # - reaction: O2+ + NO -> O2 + NO+
+  # - reaction: O2+ + N -> NO+ + O
+  # - reaction: NO+ + O- -> NO + O
+  # - reaction: NO+ + O2- -> NO + O2
+  # - reaction: N + O + N2 -> NO + N2
+  # - reaction: NO + O2(a1) -> NO + O2
+  # - reaction: NO + O^m -> N + O2
+  # - reaction: NO + O^m -> NO + O
+  # - reaction: N + O2 -> NO + O
+  # - reaction: N + O + N2 -> NO + N2
+  # - reaction: N + O + O2 -> NO + O2
+  # - reaction: N + O + He -> NO + He
+  # - reaction: N + O + O2(a1) -> NO + O2(a1)
+  # - reaction: N + O + O -> NO + O
+  # - reaction: N + O + O3 -> NO + O3
+  # - reaction: O- + NO -> NO2 + e
+  # - reaction: O2- + N -> NO2 + e
+  # - reaction: NO + O3 -> NO2 + O2
+  # - reaction: NO + O + He -> NO2 + He
+  # - reaction: NO + O + O2 -> NO2 + O2
+  # - reaction: NO + O + N2 -> NO2 + N2
+  # - reaction: NO2 + O -> NO + O2
+  # - reaction: NO2 + O^m -> NO2 + O
+  # - reaction: NO2 + O^m -> NO + O2
+  # - reaction: N + NO2 -> NO + NO
+  # - reaction: N + NO2 -> N2 + O + O
+  # - reaction: N + NO2 -> N2 + O2
+  # - reaction: 2N + e -> 3N + e
 
 
 

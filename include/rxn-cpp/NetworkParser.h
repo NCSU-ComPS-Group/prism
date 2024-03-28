@@ -32,6 +32,8 @@ class NetworkParser {
 
     void checkRefs();
     const unordered_map<string, string> & getLumpedMap();
+
+    void writeLatexTable(const string & file);
   private:
     bool _check_refs = false;
     /** Map of YAML::Node's from all of the files which networks have been parsed */
