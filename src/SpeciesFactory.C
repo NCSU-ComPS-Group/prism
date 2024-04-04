@@ -253,4 +253,194 @@ SpeciesFactory::getLumpedSpecies(weak_ptr<Species> & s)
   return s_name;
 }
 
+void
+SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
+{
+  auto s_vec = r->getSpecies();
+  for (auto s_wp : s_vec)
+  {
+    auto s = s_wp.lock();
+    s->_rate_based.push_back(weak_ptr<const Reaction>(r));
+  }
+}
+
+void
+SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
+{
+  auto s_vec = r->getSpecies();
+  for (auto s_wp : s_vec)
+  {
+    auto s = s_wp.lock();
+    s->_xsec_based.push_back(weak_ptr<const Reaction>(r));
+  }
+}
+
+string
+SpeciesFactory::getSpeciesSummary() const
+{
+  unsigned int lumped_count = _lumped_map.size();
+  unsigned int species_count = 0.0;
+
+  string summary = "";
+
+  unordered_map<string, vector<string>> lumped_string;
+  for (auto it : _lumped_map)
+  {
+    if (lumped_string.find(it.second->getName()) == lumped_string.end())
+    {
+      lumped_string[it.second->getName()] = {it.first};
+      continue;
+    }
+    lumped_string[it.second->getName()].push_back(it.first);
+  }
+
+  summary += "# " + to_string(lumped_count) + " species are lumped into " +
+             to_string(lumped_string.size()) + " species\n";
+  summary += "lumped-species:\n";
+
+  for (auto it : lumped_string)
+  {
+    summary += "  - lumped: " + it.first + "\n";
+    summary += "    actual: [";
+    for (auto actual_s_it = it.second.begin(); actual_s_it != it.second.end(); ++actual_s_it)
+    {
+      string actual_s = *actual_s_it;
+
+      summary += actual_s;
+      if (next(actual_s_it) != it.second.end())
+      {
+        summary += ", ";
+      }
+    }
+    summary += "]\n\n";
+  }
+
+  // summary += "species:\n";
+  string species_list = "";
+  string reaction_summary = "";
+  // map to keep track of sources sinks and balanced reactions
+  // for each species
+  map<string, vector<string>> ssb;
+
+  const string BALANCED_KEY = "blanaced";
+  const string SOURCE_KEY = "sources";
+  const string SINK_KEY = "sinks";
+
+  for (auto it : _species)
+  {
+    // don't print the species which are being lumped they aren't really being used
+    if (_lumped_map.find(it.first) == _lumped_map.end())
+    {
+      species_count++;
+      species_list += "  - " + it.first + ":\n";
+
+      auto rate_based = it.second->getRateBasedReactions();
+      species_list += "      - rate-based-reactions: " + to_string(rate_based.size()) + "\n\n";
+      ssb.clear();
+      reaction_summary = "";
+      for (auto r : rate_based)
+      {
+        auto stoic_coeff = r->getStoicCoeffByName(it.first);
+        if (stoic_coeff > 0)
+        {
+          if (ssb.find(SOURCE_KEY) == ssb.end())
+          {
+            ssb.emplace(SOURCE_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[SOURCE_KEY].push_back(r->getName());
+        }
+
+        if (stoic_coeff == 0) {
+          if (ssb.find(BALANCED_KEY) == ssb.end())
+          {
+            ssb.emplace(BALANCED_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[BALANCED_KEY].push_back(r->getName());
+        }
+
+        if (stoic_coeff < 0)
+        {
+          if (ssb.find(SINK_KEY) == ssb.end())
+          {
+            ssb.emplace(SINK_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[SINK_KEY].push_back(r->getName());
+        }
+      }
+
+      for (auto it : ssb)
+      {
+        reaction_summary += "        " + it.first + ":\n";
+        reaction_summary += "          - count: " + to_string(it.second.size()) + "\n";
+        for (auto r : it.second)
+        {
+          reaction_summary += "          - " + r + "\n";
+        }
+        reaction_summary += "\n";
+      }
+      species_list += "\n\n" + reaction_summary;
+
+      auto xsec_based = it.second->getXSecBasedReactions();
+      species_list += "      - xsec-based-reactions: " + to_string(xsec_based.size()) + "\n\n";
+
+      ssb.clear();
+      reaction_summary = "";
+      for (auto r : xsec_based)
+      {
+        auto stoic_coeff = r->getStoicCoeffByName(it.first);
+        if (stoic_coeff > 0)
+        {
+          if (ssb.find(SOURCE_KEY) == ssb.end())
+          {
+            ssb.emplace(SOURCE_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[SOURCE_KEY].push_back(r->getName());
+        }
+
+        if (stoic_coeff == 0)
+        {
+          if (ssb.find(BALANCED_KEY) == ssb.end())
+          {
+            ssb.emplace(BALANCED_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[BALANCED_KEY].push_back(r->getName());
+        }
+
+        if (stoic_coeff < 0)
+        {
+          if (ssb.find(SINK_KEY) == ssb.end())
+          {
+            ssb.emplace(SINK_KEY, vector<string>{r->getName()});
+            continue;
+          }
+          ssb[SINK_KEY].push_back(r->getName());
+        }
+      }
+
+      for (auto it : ssb)
+      {
+        reaction_summary += "        " + it.first + ": "  + to_string(it.second.size()) + "\n";
+        for (auto r : it.second)
+        {
+          reaction_summary += "          - " + r + "\n";
+        }
+        reaction_summary += "\n";
+      }
+      species_list += reaction_summary + "\n\n";
+    }
+  }
+
+  summary += "species:\n";
+  summary += "  - count : " + to_string(species_count) + " unique species\n";
+  summary += species_list;
+
+  // cout << summary << endl;
+  return summary;
+}
+
 }

@@ -58,11 +58,18 @@ namespace rxn
     setLatexName();
     substituteLumped();
     validateReaction();
+    collectUniqueSpecies();
 
     if (_check_refs)
     {
       checkReferences();
     }
+
+    // clearning all of the data that duplicates what
+    _reactant_count.clear();
+    _product_count.clear();
+    _reactants.clear();
+    _products.clear();
   }
 
   string
@@ -150,7 +157,6 @@ namespace rxn
         _products.push_back(s_wp);
         unique_check.insert(s_wp.lock()->getName());
       }
-
     }
   }
 
@@ -296,6 +302,7 @@ namespace rxn
       if (it2 == _reactant_count.end())
       {
         _reactant_count[lumped_name] = _reactant_count[unlumped_name];
+        _stoic_coeffs[lumped_name] = _stoic_coeffs[unlumped_name];
       } else {
         _reactant_count[lumped_name] += _reactant_count[unlumped_name];
       }
@@ -322,6 +329,7 @@ namespace rxn
       if (it2 == _product_count.end())
       {
         _product_count[lumped_name] = _product_count[unlumped_name];
+        _stoic_coeffs[lumped_name] = _stoic_coeffs[unlumped_name];
       } else {
         _product_count[lumped_name] += _product_count[unlumped_name];
       }
@@ -472,6 +480,51 @@ namespace rxn
     for (auto r : _references)
       temp_refs += "\\cite{" + r + "}";
     return temp_refs;
+  }
+
+  vector<weak_ptr<Species>>
+  Reaction::getSpecies() const
+  {
+    return _species;
+  }
+
+  int
+  Reaction::getStoicCoeffByName(const string & s_name) const
+  {
+    auto it = _stoic_coeffs.find(s_name);
+    if (it == _stoic_coeffs.end())
+    {
+      throw invalid_argument("Species " + s_name + " is not in reaction " + _name);
+    }
+
+    return it->second;
+
+  }
+
+  void
+  Reaction::collectUniqueSpecies()
+  {
+    // storing a vector of all unqiue species in the reaction
+    set<string> unique_check;
+    unique_check.clear();
+
+    for (auto s_wp : _reactants)
+    {
+      auto s = s_wp.lock();
+      if (unique_check.find(s->getName()) == unique_check.end())
+      {
+        _species.push_back(s_wp);
+      }
+    }
+
+    for (auto s_wp : _products)
+    {
+      auto s = s_wp.lock();
+      if (unique_check.find(s->getName()) == unique_check.end())
+      {
+        _species.push_back(s_wp);
+      }
+    }
   }
 }
 

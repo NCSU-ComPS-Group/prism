@@ -12,6 +12,7 @@
 
 using namespace std;
 
+class Reaction;
 namespace rxn{
 
 class SpeciesFactory {
@@ -40,8 +41,13 @@ class SpeciesFactory {
       void collectLatexOverrides(const YAML::Node & network);
     #endif
 
+    void addRateBasedReaction(shared_ptr<const Reaction> r);
+    void addXSecBasedReaction(shared_ptr<const Reaction> r);
+
+
   private:
 
+    string getSpeciesSummary() const;
 
     map<string, shared_ptr<Species>> _species;
     friend class NetworkParser;

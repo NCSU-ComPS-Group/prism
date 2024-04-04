@@ -83,6 +83,16 @@ NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<cons
     try {
       rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path, bib_file, _check_refs));
       printGreen("Reaction Validated: " + rxn_list->back()->getName() + "\n");
+      if (type == RATE_BASED)
+      {
+        SpeciesFactory::getInstance().addRateBasedReaction(rxn_list->back());
+      }
+
+      if (type == XSEC_BASED)
+      {
+        SpeciesFactory::getInstance().addXSecBasedReaction(rxn_list->back());
+      }
+
     } catch (const InvalidReaction & e) {
       _errors = true;
       printRed(e.what());
@@ -186,8 +196,6 @@ NetworkParser::writeLatexTable(const string & file)
 
   string table_closer = "    \\end{tabu}\n";
   table_closer += "  }\n";
-  table_closer += "  \\caption{Your Caption}\n";
-  table_closer += "  \\label{tab:rxns}\n";
   table_closer += "\\end{table}\n\n";
 
 
@@ -280,6 +288,14 @@ NetworkParser::writeLatexTable(const string & file)
 
   ofstream out(file);
   out << latex;
+  out.close();
+}
+
+void
+NetworkParser::writeSpeciesSummary(const string & file)
+{
+  ofstream out(file);
+  out << SpeciesFactory::getInstance().getSpeciesSummary();
   out.close();
 }
 }

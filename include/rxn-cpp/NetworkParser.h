@@ -34,6 +34,7 @@ class NetworkParser {
     const unordered_map<string, string> & getLumpedMap();
 
     void writeLatexTable(const string & file);
+    void writeSpeciesSummary(const string & file);
   private:
     bool _errors = false;
     bool _check_refs = false;

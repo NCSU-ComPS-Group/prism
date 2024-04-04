@@ -112,16 +112,28 @@ namespace rxn
     return !(*this == other);
   }
 
-  vector<weak_ptr<Reaction>>
-  Species::getRateBased() const
+  vector<shared_ptr<const Reaction>>
+  Species::getRateBasedReactions() const
   {
-    return _rate_based;
+    vector<shared_ptr<const Reaction>> temp_list;
+
+    for (auto r_wp : _rate_based)
+    {
+      temp_list.push_back(r_wp.lock());
+    }
+    return temp_list;
   }
 
-  vector<weak_ptr<Reaction>>
-  Species::getXsecBased() const
+  vector<shared_ptr<const Reaction>>
+  Species::getXSecBasedReactions() const
   {
-    return _xsec_based;
+    vector<shared_ptr<const Reaction>> temp_list;
+
+    for (auto r_wp : _xsec_based)
+    {
+      temp_list.push_back(r_wp.lock());
+    }
+    return temp_list;
   }
 
   vector<SubSpecies>

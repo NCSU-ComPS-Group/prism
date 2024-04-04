@@ -1,0 +1,1103 @@
+# 7 species are lumped into 1 species
+lumped-species:
+  - lumped: N2*
+    actual: [N2(c), N2(b), N2(rotation), N2(a2), N2(a), N2(electronic), N2(vibration)]
+
+species:
+  - count : 34 unique species
+  - He:
+      - rate-based-reactions: 33
+
+
+
+        blanaced:
+          - count: 4
+          - N + O + He -> NO + He
+          - N + O + He -> NO + He
+          - NO + O + He -> NO2 + He
+          - NO + O + He -> NO2 + He
+
+        sinks:
+          - count: 6
+          - e + He -> e + e + He+
+          - e + He -> e + He^m
+          - He^m + He + He -> He2^m + He
+          - He^m + He + He -> He2^m + He
+          - He+ + He + He -> He2+ + He
+          - He+ + He + He -> He2+ + He
+
+        sources:
+          - count: 23
+          - He^m + He^m -> e + He + He+
+          - e + He^m -> e + He
+          - e + He2+ -> He^m + He
+          - He^m + N2 -> e + He + N2+
+          - He2^m + N2 -> e + He + He + N2+
+          - He+ + N2 -> N2+ + He
+          - He2+ + N2 -> N2+ + He + He
+          - He^m + O2 -> e + He + O2+
+          - He^m + O3 -> e + O + He + O2+
+          - He^m + O2(b1) -> e + He + O2+
+          - He^m + O -> e + He + O+
+          - He^m + O^m -> e + He + O+
+          - He+ + O2 -> O + He + O+
+          - He+ + O3 -> He + O2 + O+
+          - He+ + O2 -> O2+ + He
+          - He+ + O2(a1) -> He + O + O+
+          - He+ + O2(a1) -> He + O2+
+          - He+ + O -> He + O+
+          - He+ + O^m -> He + O+
+          - O3- + He+ -> O3 + He
+          - He^m + NO -> He + NO+ + e
+          - He+ + NO -> He + NO+
+          - He+ + NO -> He + N + O+
+
+      - xsec-based-reactions: 0
+
+
+
+  - He+:
+      - rate-based-reactions: 17
+
+
+
+        sinks:
+          - count: 14
+          - He+ + He + He -> He2+ + He
+          - e + He+ -> He^m
+          - e + e + He+ -> e + He^m
+          - He+ + N2 -> N2+ + He
+          - He+ + O2 -> O + He + O+
+          - He+ + O3 -> He + O2 + O+
+          - He+ + O2 -> O2+ + He
+          - He+ + O2(a1) -> He + O + O+
+          - He+ + O2(a1) -> He + O2+
+          - He+ + O -> He + O+
+          - He+ + O^m -> He + O+
+          - O3- + He+ -> O3 + He
+          - He+ + NO -> He + NO+
+          - He+ + NO -> He + N + O+
+
+        sources:
+          - count: 3
+          - e + He -> e + e + He+
+          - e + He^m -> e + e + He+
+          - He^m + He^m -> e + He + He+
+
+      - xsec-based-reactions: 0
+
+
+
+  - He2+:
+      - rate-based-reactions: 4
+
+
+
+        sinks:
+          - count: 2
+          - e + He2+ -> He^m + He
+          - He2+ + N2 -> N2+ + He + He
+
+        sources:
+          - count: 2
+          - e + He2^m -> e + e + He2+
+          - He+ + He + He -> He2+ + He
+
+      - xsec-based-reactions: 0
+
+
+
+  - He2^m:
+      - rate-based-reactions: 3
+
+
+
+        sinks:
+          - count: 2
+          - e + He2^m -> e + e + He2+
+          - He2^m + N2 -> e + He + He + N2+
+
+        sources:
+          - count: 1
+          - He^m + He + He -> He2^m + He
+
+      - xsec-based-reactions: 0
+
+
+
+  - He^m:
+      - rate-based-reactions: 15
+
+
+
+        sinks:
+          - count: 11
+          - e + He^m -> e + e + He+
+          - He^m + He^m -> e + He + He+
+          - e + He^m -> e + He
+          - He^m + He + He -> He2^m + He
+          - He^m + N2 -> e + He + N2+
+          - He^m + O2 -> e + He + O2+
+          - He^m + O3 -> e + O + He + O2+
+          - He^m + O2(b1) -> e + He + O2+
+          - He^m + O -> e + He + O+
+          - He^m + O^m -> e + He + O+
+          - He^m + NO -> He + NO+ + e
+
+        sources:
+          - count: 4
+          - e + He -> e + He^m
+          - e + He2+ -> He^m + He
+          - e + He+ -> He^m
+          - e + e + He+ -> e + He^m
+
+      - xsec-based-reactions: 0
+
+
+
+  - M:
+      - rate-based-reactions: 10
+
+
+
+        blanaced:
+          - count: 10
+          - N2+ + N2 + M -> N4+ + M
+          - N2+ + N2 + M -> N4+ + M
+          - O2+ + O2 + M -> O4+ + M
+          - O2+ + O2 + M -> O4+ + M
+          - O2- + O4+ + M -> O2 + O2 + O2 + M
+          - O2- + O4+ + M -> O2 + O2 + O2 + M
+          - O2+ + O2 + M -> O4+ + M
+          - O2+ + O2 + M -> O4+ + M
+          - O2- + O2+ + M -> O2 + O2 + M
+          - O2- + O2+ + M -> O2 + O2 + M
+
+      - xsec-based-reactions: 0
+
+
+
+  - N:
+      - rate-based-reactions: 20
+
+
+
+        blanaced:
+          - count: 2
+          - 3N + e -> 3N + e
+          - 3N + e -> 3N + e
+
+        sinks:
+          - count: 13
+          - O2+ + N -> NO+ + O
+          - N + O + N2 -> NO + N2
+          - N + O2 -> NO + O
+          - N + O + N2 -> NO + N2
+          - N + O + O2 -> NO + O2
+          - N + O + He -> NO + He
+          - N + O + O2(a1) -> NO + O2(a1)
+          - N + O + O -> NO + O
+          - N + O + O3 -> NO + O3
+          - O2- + N -> NO2 + e
+          - N + NO2 -> NO + NO
+          - N + NO2 -> N2 + O + O
+          - N + NO2 -> N2 + O2
+
+        sources:
+          - count: 5
+          - e + N2 -> e + N + N
+          - e + NO+ -> N + O
+          - e + NO+ -> N + O^m
+          - He+ + NO -> He + N + O+
+          - NO + O^m -> N + O2
+
+      - xsec-based-reactions: 0
+
+
+
+  - N2:
+      - rate-based-reactions: 49
+
+
+
+        blanaced:
+          - count: 20
+          - O2+ + N2 + N2 -> O2+ + N2 + N2
+          - O2+ + N2 + N2 -> O2+ + N2 + N2
+          - O2 + N2 + N2 -> O2 + N2 + N2
+          - O2 + N2 + N2 -> O2 + N2 + N2
+          - O2 + N2 + O2+ -> O4+ + N2
+          - O2 + N2 + O2+ -> O4+ + N2
+          - N2(b) + N2 -> N2(a) + N2
+          - N2(b) + N2 -> N2(a) + N2
+          - N2(c) + N2 -> N2(a1) + N2
+          - N2(c) + N2 -> N2(a1) + N2
+          - O + O2 + N2 -> N2 + O3
+          - O + O2 + N2 -> N2 + O3
+          - O- + O2+ + N2 -> O3 + N2
+          - O- + O2+ + N2 -> O3 + N2
+          - N + O + N2 -> NO + N2
+          - N + O + N2 -> NO + N2
+          - N + O + N2 -> NO + N2
+          - N + O + N2 -> NO + N2
+          - NO + O + N2 -> NO2 + N2
+          - NO + O + N2 -> NO2 + N2
+
+        sinks:
+          - count: 14
+          - e + N2 -> e + N2(rotation)
+          - e + N2 -> e + N2(vibration)
+          - e + N2 -> e + e + N2+
+          - e + N2 -> e + N + N
+          - e + N2 -> e + N2(electronic)
+          - e + N2 -> e + N2(a)
+          - e + N2 -> e + N2(a2)
+          - e + N2 -> e + N2(b)
+          - e + N2 -> e + N2(c)
+          - He^m + N2 -> e + He + N2+
+          - He2^m + N2 -> e + He + He + N2+
+          - He+ + N2 -> N2+ + He
+          - He2+ + N2 -> N2+ + He + He
+          - N2+ + N2 + M -> N4+ + M
+
+        sources:
+          - count: 15
+          - N4+ + O2 -> O2+ + N2 + N2
+          - N2+ + O2 -> O2+ + N2
+          - N2(a) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O2(b1)
+          - N2(a) + N2(a) -> N2 + N2(b)
+          - N2(a) + N2(a) -> N2 + N2(c)
+          - N2(a) + N2(vib) -> N2 + N2(b)
+          - N2(a) + O -> N2 + O
+          - N2(b) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O + O
+          - N2(a) + N2 -> N2 + N2
+          - N2(a) + N2 -> N2 + N2
+          - N2(c) + O2 -> N2 + O + O
+          - N + NO2 -> N2 + O + O
+          - N + NO2 -> N2 + O2
+
+      - xsec-based-reactions: 0
+
+
+
+  - N2(a1):
+      - rate-based-reactions: 1
+
+
+
+        sources:
+          - count: 1
+          - N2(c) + N2 -> N2(a1) + N2
+
+      - xsec-based-reactions: 0
+
+
+
+  - N2(vib):
+      - rate-based-reactions: 1
+
+
+
+        sinks:
+          - count: 1
+          - N2(a) + N2(vib) -> N2 + N2(b)
+
+      - xsec-based-reactions: 0
+
+
+
+  - N2*:
+      - rate-based-reactions: 25
+
+
+
+        sinks:
+          - count: 8
+          - N2(a) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O2(b1)
+          - N2(a) + O -> N2 + O
+          - N2(b) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O + O
+          - N2(a) + N2 -> N2 + N2
+          - N2(c) + O2 -> N2 + O + O
+          - N2(c) + N2 -> N2(a1) + N2
+
+        sources:
+          - count: 17
+          - e + N2 -> e + N2(rotation)
+          - e + N2 -> e + N2(vibration)
+          - e + N2 -> e + N2(electronic)
+          - e + N2 -> e + N2(a)
+          - e + N2 -> e + N2(a2)
+          - e + N2 -> e + N2(b)
+          - e + N2 -> e + N2(c)
+          - N2(a) + N2(a) -> N2 + N2(b)
+          - N2(a) + N2(a) -> N2 + N2(b)
+          - N2(a) + N2(a) -> N2 + N2(c)
+          - N2(a) + N2(a) -> N2 + N2(c)
+          - N2(a) + N2(vib) -> N2 + N2(b)
+          - N2(a) + N2(vib) -> N2 + N2(b)
+          - N2(b) + N2 -> N2(a) + N2
+          - N2(b) + N2 -> N2(a) + N2
+          - N2(c) -> N2(b) + hnu
+          - N2(c) -> N2(b) + hnu
+
+      - xsec-based-reactions: 0
+
+
+
+  - N2+:
+      - rate-based-reactions: 7
+
+
+
+        sinks:
+          - count: 2
+          - N2+ + N2 + M -> N4+ + M
+          - N2+ + O2 -> O2+ + N2
+
+        sources:
+          - count: 5
+          - e + N2 -> e + e + N2+
+          - He^m + N2 -> e + He + N2+
+          - He2^m + N2 -> e + He + He + N2+
+          - He+ + N2 -> N2+ + He
+          - He2+ + N2 -> N2+ + He + He
+
+      - xsec-based-reactions: 0
+
+
+
+  - N4+:
+      - rate-based-reactions: 2
+
+
+
+        sinks:
+          - count: 1
+          - N4+ + O2 -> O2+ + N2 + N2
+
+        sources:
+          - count: 1
+          - N2+ + N2 + M -> N4+ + M
+
+      - xsec-based-reactions: 0
+
+
+
+  - NO:
+      - rate-based-reactions: 29
+
+
+
+        blanaced:
+          - count: 4
+          - NO + O2(a1) -> NO + O2
+          - NO + O2(a1) -> NO + O2
+          - NO + O^m -> NO + O
+          - NO + O^m -> NO + O
+
+        sinks:
+          - count: 12
+          - e + NO -> e + e + NO+
+          - He^m + NO -> He + NO+ + e
+          - He+ + NO -> He + NO+
+          - He+ + NO -> He + N + O+
+          - O+ + NO -> O + NO+
+          - O2+ + NO -> O2 + NO+
+          - NO + O^m -> N + O2
+          - O- + NO -> NO2 + e
+          - NO + O3 -> NO2 + O2
+          - NO + O + He -> NO2 + He
+          - NO + O + O2 -> NO2 + O2
+          - NO + O + N2 -> NO2 + N2
+
+        sources:
+          - count: 13
+          - NO+ + O- -> NO + O
+          - NO+ + O2- -> NO + O2
+          - N + O + N2 -> NO + N2
+          - N + O2 -> NO + O
+          - N + O + N2 -> NO + N2
+          - N + O + O2 -> NO + O2
+          - N + O + He -> NO + He
+          - N + O + O2(a1) -> NO + O2(a1)
+          - N + O + O -> NO + O
+          - N + O + O3 -> NO + O3
+          - NO2 + O -> NO + O2
+          - NO2 + O^m -> NO + O2
+          - N + NO2 -> NO + NO
+
+      - xsec-based-reactions: 0
+
+
+
+  - NO+:
+      - rate-based-reactions: 10
+
+
+
+        sinks:
+          - count: 4
+          - e + NO+ -> N + O
+          - e + NO+ -> N + O^m
+          - NO+ + O- -> NO + O
+          - NO+ + O2- -> NO + O2
+
+        sources:
+          - count: 6
+          - e + NO -> e + e + NO+
+          - He^m + NO -> He + NO+ + e
+          - He+ + NO -> He + NO+
+          - O+ + NO -> O + NO+
+          - O2+ + NO -> O2 + NO+
+          - O2+ + N -> NO+ + O
+
+      - xsec-based-reactions: 0
+
+
+
+  - NO2:
+      - rate-based-reactions: 13
+
+
+
+        blanaced:
+          - count: 2
+          - NO2 + O^m -> NO2 + O
+          - NO2 + O^m -> NO2 + O
+
+        sinks:
+          - count: 5
+          - NO2 + O -> NO + O2
+          - NO2 + O^m -> NO + O2
+          - N + NO2 -> NO + NO
+          - N + NO2 -> N2 + O + O
+          - N + NO2 -> N2 + O2
+
+        sources:
+          - count: 6
+          - O- + NO -> NO2 + e
+          - O2- + N -> NO2 + e
+          - NO + O3 -> NO2 + O2
+          - NO + O + He -> NO2 + He
+          - NO + O + O2 -> NO2 + O2
+          - NO + O + N2 -> NO2 + N2
+
+      - xsec-based-reactions: 0
+
+
+
+  - O:
+      - rate-based-reactions: 55
+
+
+
+        blanaced:
+          - count: 8
+          - N2(a) + O -> N2 + O
+          - N2(a) + O -> N2 + O
+          - O2(h) + O -> O2 + O
+          - O2(h) + O -> O2 + O
+          - O2(h) + O -> O2(a1) + O
+          - O2(h) + O -> O2(a1) + O
+          - O2(h) + O -> O2(b1) + O
+          - O2(h) + O -> O2(b1) + O
+
+        sinks:
+          - count: 22
+          - e + O -> e + O^m
+          - He^m + O -> e + He + O+
+          - He+ + O -> He + O+
+          - O2- + O -> e + O3
+          - O + O2 + N2 -> N2 + O3
+          - O + O2 + O2 -> O2 + O3
+          - O4+ + O -> O2+ + O3
+          - O + O + O2 -> O3 + O
+          - O + O + O2 -> O3 + O
+          - O3- + O -> O2- + O2
+          - N + O + N2 -> NO + N2
+          - N + O + N2 -> NO + N2
+          - N + O + O2 -> NO + O2
+          - N + O + He -> NO + He
+          - N + O + O2(a1) -> NO + O2(a1)
+          - N + O + O -> NO + O
+          - N + O + O -> NO + O
+          - N + O + O3 -> NO + O3
+          - NO + O + He -> NO2 + He
+          - NO + O + O2 -> NO2 + O2
+          - NO + O + N2 -> NO2 + N2
+          - NO2 + O -> NO + O2
+
+        sources:
+          - count: 25
+          - e + O2 -> e + O + O
+          - e + O2 -> e + O + O^m
+          - e + O2 -> O + O-
+          - e + O2(al) -> e + O + O^m
+          - e + O2(al) -> O + O-
+          - e + O2(b1) -> O + O-
+          - He^m + O3 -> e + O + He + O2+
+          - He+ + O2 -> O + He + O+
+          - He+ + O2(a1) -> He + O + O+
+          - e + O2+ -> O + O
+          - O- + O2+ -> O + O2
+          - N2(a) + O2 -> N2 + O + O
+          - N2(b) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O + O
+          - N2(c) + O2 -> N2 + O + O
+          - O3- + O+ -> O3 + O
+          - O- + O3 -> O3- + O
+          - e + NO+ -> N + O
+          - O+ + NO -> O + NO+
+          - O2+ + N -> NO+ + O
+          - NO+ + O- -> NO + O
+          - NO + O^m -> NO + O
+          - N + O2 -> NO + O
+          - NO2 + O^m -> NO2 + O
+          - N + NO2 -> N2 + O + O
+
+      - xsec-based-reactions: 0
+
+
+
+  - O+:
+      - rate-based-reactions: 12
+
+
+
+        blanaced:
+          - count: 2
+          - e + O+ -> e + O+
+          - e + O+ -> e + O+
+
+        sinks:
+          - count: 2
+          - O3- + O+ -> O3 + O
+          - O+ + NO -> O + NO+
+
+        sources:
+          - count: 8
+          - He^m + O -> e + He + O+
+          - He^m + O^m -> e + He + O+
+          - He+ + O2 -> O + He + O+
+          - He+ + O3 -> He + O2 + O+
+          - He+ + O2(a1) -> He + O + O+
+          - He+ + O -> He + O+
+          - He+ + O^m -> He + O+
+          - He+ + NO -> He + N + O+
+
+      - xsec-based-reactions: 0
+
+
+
+  - O-:
+      - rate-based-reactions: 12
+
+
+
+        sinks:
+          - count: 9
+          - O- + O2+ -> O + O2
+          - O- + O2(a1) -> e + O3
+          - O- + O2 -> e + O3
+          - O- + O2 -> e + O3
+          - O- + O2+ + N2 -> O3 + N2
+          - O- + O2+ + O2 -> O3 + O2
+          - O- + O3 -> O3- + O
+          - NO+ + O- -> NO + O
+          - O- + NO -> NO2 + e
+
+        sources:
+          - count: 3
+          - e + O2 -> O + O-
+          - e + O2(al) -> O + O-
+          - e + O2(b1) -> O + O-
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2:
+      - rate-based-reactions: 65
+
+
+
+        blanaced:
+          - count: 14
+          - e + O2 -> e + O2
+          - e + O2 -> e + O2
+          - O2 + N2 + N2 -> O2 + N2 + N2
+          - O2 + N2 + N2 -> O2 + N2 + N2
+          - O2(h) + O2 -> O2(a1) + O2
+          - O2(h) + O2 -> O2(a1) + O2
+          - O2(h) + O2 -> O2(b1) + O2
+          - O2(h) + O2 -> O2(b1) + O2
+          - O- + O2+ + O2 -> O3 + O2
+          - O- + O2+ + O2 -> O3 + O2
+          - N + O + O2 -> NO + O2
+          - N + O + O2 -> NO + O2
+          - NO + O + O2 -> NO2 + O2
+          - NO + O + O2 -> NO2 + O2
+
+        sinks:
+          - count: 31
+          - e + O2 -> e + e + O2+
+          - e + O2 -> e + O + O
+          - e + O2 -> e + O + O^m
+          - e + O2 -> O + O-
+          - e + O2 -> e + O2(rotational)
+          - e + O2 -> e + O2(h)
+          - e + O2 -> e + O2(a1)
+          - e + O2 -> e + O2(b1)
+          - e + O2 -> e + O2(vibrational)
+          - He^m + O2 -> e + He + O2+
+          - He+ + O2 -> O + He + O+
+          - He+ + O2 -> O2+ + He
+          - N4+ + O2 -> O2+ + N2 + N2
+          - N2+ + O2 -> O2+ + N2
+          - O2 + N2 + O2+ -> O4+ + N2
+          - O2+ + O2 + M -> O4+ + M
+          - e + O2 + O2 -> O2- + O2
+          - e + O2 + O2 -> O2- + O2
+          - O2+ + O2 + M -> O4+ + M
+          - N2(a) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O2(b1)
+          - N2(b) + O2 -> N2 + O + O
+          - N2(a) + O2 -> N2 + O + O
+          - N2(c) + O2 -> N2 + O + O
+          - O- + O2 -> e + O3
+          - O- + O2 -> e + O3
+          - O + O2 + N2 -> N2 + O3
+          - O + O2 + O2 -> O2 + O3
+          - O + O2 + O2 -> O2 + O3
+          - O + O + O2 -> O3 + O
+          - N + O2 -> NO + O
+
+        sources:
+          - count: 20
+          - He+ + O3 -> He + O2 + O+
+          - e + O4+ -> O2 + O2
+          - O2- + O4+ -> O2 + O2 + O2
+          - O2- + O4+ + M -> O2 + O2 + O2 + M
+          - O2- + O2+ + M -> O2 + O2 + M
+          - O- + O2+ -> O + O2
+          - O2(h) + O2 -> O2 + O2
+          - O2(h) + O2 -> O2 + O2
+          - O2(h) + O -> O2 + O
+          - O3- + O2+ -> O3 + O2
+          - O2- + O3 -> O3- + O2
+          - O3- + O -> O2- + O2
+          - O2+ + NO -> O2 + NO+
+          - NO+ + O2- -> NO + O2
+          - NO + O2(a1) -> NO + O2
+          - NO + O^m -> N + O2
+          - NO + O3 -> NO2 + O2
+          - NO2 + O -> NO + O2
+          - NO2 + O^m -> NO + O2
+          - N + NO2 -> N2 + O2
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(a1):
+      - rate-based-reactions: 9
+
+
+
+        blanaced:
+          - count: 2
+          - N + O + O2(a1) -> NO + O2(a1)
+          - N + O + O2(a1) -> NO + O2(a1)
+
+        sinks:
+          - count: 4
+          - He+ + O2(a1) -> He + O + O+
+          - He+ + O2(a1) -> He + O2+
+          - O- + O2(a1) -> e + O3
+          - NO + O2(a1) -> NO + O2
+
+        sources:
+          - count: 3
+          - e + O2 -> e + O2(a1)
+          - O2(h) + O2 -> O2(a1) + O2
+          - O2(h) + O -> O2(a1) + O
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(al):
+      - rate-based-reactions: 3
+
+
+
+        sinks:
+          - count: 3
+          - e + O2(al) -> e + O2(b1)
+          - e + O2(al) -> e + O + O^m
+          - e + O2(al) -> O + O-
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(b1):
+      - rate-based-reactions: 7
+
+
+
+        sinks:
+          - count: 2
+          - e + O2(b1) -> O + O-
+          - He^m + O2(b1) -> e + He + O2+
+
+        sources:
+          - count: 5
+          - e + O2 -> e + O2(b1)
+          - e + O2(al) -> e + O2(b1)
+          - N2(a) + O2 -> N2 + O2(b1)
+          - O2(h) + O2 -> O2(b1) + O2
+          - O2(h) + O -> O2(b1) + O
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(h):
+      - rate-based-reactions: 7
+
+
+
+        sinks:
+          - count: 6
+          - O2(h) + O2 -> O2(a1) + O2
+          - O2(h) + O2 -> O2(b1) + O2
+          - O2(h) + O2 -> O2 + O2
+          - O2(h) + O -> O2 + O
+          - O2(h) + O -> O2(a1) + O
+          - O2(h) + O -> O2(b1) + O
+
+        sources:
+          - count: 1
+          - e + O2 -> e + O2(h)
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(rotational):
+      - rate-based-reactions: 1
+
+
+
+        sources:
+          - count: 1
+          - e + O2 -> e + O2(rotational)
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2(vibrational):
+      - rate-based-reactions: 1
+
+
+
+        sources:
+          - count: 1
+          - e + O2 -> e + O2(vibrational)
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2+:
+      - rate-based-reactions: 22
+
+
+
+        blanaced:
+          - count: 2
+          - O2+ + N2 + N2 -> O2+ + N2 + N2
+          - O2+ + N2 + N2 -> O2+ + N2 + N2
+
+        sinks:
+          - count: 11
+          - O2 + N2 + O2+ -> O4+ + N2
+          - O2+ + O2 + M -> O4+ + M
+          - e + O2+ -> O + O
+          - O2+ + O2 + M -> O4+ + M
+          - O2- + O2+ + M -> O2 + O2 + M
+          - O- + O2+ -> O + O2
+          - O- + O2+ + N2 -> O3 + N2
+          - O- + O2+ + O2 -> O3 + O2
+          - O3- + O2+ -> O3 + O2
+          - O2+ + NO -> O2 + NO+
+          - O2+ + N -> NO+ + O
+
+        sources:
+          - count: 9
+          - e + O2 -> e + e + O2+
+          - He^m + O2 -> e + He + O2+
+          - He^m + O3 -> e + O + He + O2+
+          - He^m + O2(b1) -> e + He + O2+
+          - He+ + O2 -> O2+ + He
+          - He+ + O2(a1) -> He + O2+
+          - N4+ + O2 -> O2+ + N2 + N2
+          - N2+ + O2 -> O2+ + N2
+          - O4+ + O -> O2+ + O3
+
+      - xsec-based-reactions: 0
+
+
+
+  - O2-:
+      - rate-based-reactions: 9
+
+
+
+        sinks:
+          - count: 7
+          - O2- + O4+ -> O2 + O2 + O2
+          - O2- + O4+ + M -> O2 + O2 + O2 + M
+          - O2- + O2+ + M -> O2 + O2 + M
+          - O2- + O -> e + O3
+          - O2- + O3 -> O3- + O2
+          - NO+ + O2- -> NO + O2
+          - O2- + N -> NO2 + e
+
+        sources:
+          - count: 2
+          - e + O2 + O2 -> O2- + O2
+          - O3- + O -> O2- + O2
+
+      - xsec-based-reactions: 0
+
+
+
+  - O3:
+      - rate-based-reactions: 20
+
+
+
+        blanaced:
+          - count: 2
+          - N + O + O3 -> NO + O3
+          - N + O + O3 -> NO + O3
+
+        sinks:
+          - count: 5
+          - He^m + O3 -> e + O + He + O2+
+          - He+ + O3 -> He + O2 + O+
+          - O- + O3 -> O3- + O
+          - O2- + O3 -> O3- + O2
+          - NO + O3 -> NO2 + O2
+
+        sources:
+          - count: 13
+          - O- + O2(a1) -> e + O3
+          - O- + O2 -> e + O3
+          - O2- + O -> e + O3
+          - O- + O2 -> e + O3
+          - O + O2 + N2 -> N2 + O3
+          - O + O2 + O2 -> O2 + O3
+          - O4+ + O -> O2+ + O3
+          - O- + O2+ + N2 -> O3 + N2
+          - O- + O2+ + O2 -> O3 + O2
+          - O + O + O2 -> O3 + O
+          - O3- + O2+ -> O3 + O2
+          - O3- + O+ -> O3 + O
+          - O3- + He+ -> O3 + He
+
+      - xsec-based-reactions: 0
+
+
+
+  - O3-:
+      - rate-based-reactions: 6
+
+
+
+        sinks:
+          - count: 4
+          - O3- + O2+ -> O3 + O2
+          - O3- + O+ -> O3 + O
+          - O3- + He+ -> O3 + He
+          - O3- + O -> O2- + O2
+
+        sources:
+          - count: 2
+          - O- + O3 -> O3- + O
+          - O2- + O3 -> O3- + O2
+
+      - xsec-based-reactions: 0
+
+
+
+  - O4+:
+      - rate-based-reactions: 7
+
+
+
+        sinks:
+          - count: 4
+          - e + O4+ -> O2 + O2
+          - O2- + O4+ -> O2 + O2 + O2
+          - O2- + O4+ + M -> O2 + O2 + O2 + M
+          - O4+ + O -> O2+ + O3
+
+        sources:
+          - count: 3
+          - O2 + N2 + O2+ -> O4+ + N2
+          - O2+ + O2 + M -> O4+ + M
+          - O2+ + O2 + M -> O4+ + M
+
+      - xsec-based-reactions: 0
+
+
+
+  - O^m:
+      - rate-based-reactions: 10
+
+
+
+        sinks:
+          - count: 6
+          - He^m + O^m -> e + He + O+
+          - He+ + O^m -> He + O+
+          - NO + O^m -> N + O2
+          - NO + O^m -> NO + O
+          - NO2 + O^m -> NO2 + O
+          - NO2 + O^m -> NO + O2
+
+        sources:
+          - count: 4
+          - e + O2 -> e + O + O^m
+          - e + O2(al) -> e + O + O^m
+          - e + O -> e + O^m
+          - e + NO+ -> N + O^m
+
+      - xsec-based-reactions: 0
+
+
+
+  - e:
+      - rate-based-reactions: 85
+
+
+
+        blanaced:
+          - count: 46
+          - e + N2 -> e + N2(rotation)
+          - e + N2 -> e + N2(rotation)
+          - e + N2 -> e + N2(vibration)
+          - e + N2 -> e + N2(vibration)
+          - e + N2 -> e + N + N
+          - e + N2 -> e + N + N
+          - e + N2 -> e + N2(electronic)
+          - e + N2 -> e + N2(electronic)
+          - e + N2 -> e + N2(a)
+          - e + N2 -> e + N2(a)
+          - e + N2 -> e + N2(a2)
+          - e + N2 -> e + N2(a2)
+          - e + N2 -> e + N2(b)
+          - e + N2 -> e + N2(b)
+          - e + N2 -> e + N2(c)
+          - e + N2 -> e + N2(c)
+          - e + He -> e + He^m
+          - e + He -> e + He^m
+          - e + O2 -> e + O + O
+          - e + O2 -> e + O + O
+          - e + O2 -> e + O + O^m
+          - e + O2 -> e + O + O^m
+          - e + O2 -> e + O2(rotational)
+          - e + O2 -> e + O2(rotational)
+          - e + O2 -> e + O2
+          - e + O2 -> e + O2
+          - e + O2 -> e + O2(h)
+          - e + O2 -> e + O2(h)
+          - e + O2 -> e + O2(a1)
+          - e + O2 -> e + O2(a1)
+          - e + O2 -> e + O2(b1)
+          - e + O2 -> e + O2(b1)
+          - e + O2 -> e + O2(vibrational)
+          - e + O2 -> e + O2(vibrational)
+          - e + O2(al) -> e + O2(b1)
+          - e + O2(al) -> e + O2(b1)
+          - e + O2(al) -> e + O + O^m
+          - e + O2(al) -> e + O + O^m
+          - e + O -> e + O^m
+          - e + O -> e + O^m
+          - e + O+ -> e + O+
+          - e + O+ -> e + O+
+          - e + He^m -> e + He
+          - e + He^m -> e + He
+          - 3N + e -> 3N + e
+          - 3N + e -> 3N + e
+
+        sinks:
+          - count: 12
+          - e + O2 -> O + O-
+          - e + O2(al) -> O + O-
+          - e + O2(b1) -> O + O-
+          - e + He2+ -> He^m + He
+          - e + He+ -> He^m
+          - e + e + He+ -> e + He^m
+          - e + e + He+ -> e + He^m
+          - e + O4+ -> O2 + O2
+          - e + O2+ -> O + O
+          - e + O2 + O2 -> O2- + O2
+          - e + NO+ -> N + O
+          - e + NO+ -> N + O^m
+
+        sources:
+          - count: 27
+          - e + N2 -> e + e + N2+
+          - e + N2 -> e + e + N2+
+          - e + He -> e + e + He+
+          - e + He -> e + e + He+
+          - e + O2 -> e + e + O2+
+          - e + O2 -> e + e + O2+
+          - e + NO -> e + e + NO+
+          - e + NO -> e + e + NO+
+          - e + He^m -> e + e + He+
+          - e + He^m -> e + e + He+
+          - He^m + He^m -> e + He + He+
+          - e + He2^m -> e + e + He2+
+          - e + He2^m -> e + e + He2+
+          - He^m + N2 -> e + He + N2+
+          - He2^m + N2 -> e + He + He + N2+
+          - He^m + O2 -> e + He + O2+
+          - He^m + O3 -> e + O + He + O2+
+          - He^m + O2(b1) -> e + He + O2+
+          - He^m + O -> e + He + O+
+          - He^m + O^m -> e + He + O+
+          - O- + O2(a1) -> e + O3
+          - O- + O2 -> e + O3
+          - O2- + O -> e + O3
+          - O- + O2 -> e + O3
+          - He^m + NO -> He + NO+ + e
+          - O- + NO -> NO2 + e
+          - O2- + N -> NO2 + e
+
+      - xsec-based-reactions: 0
+
+
+
+  - hnu:
+      - rate-based-reactions: 1
+
+
+
+        sources:
+          - count: 1
+          - N2(c) -> N2(b) + hnu
+
+      - xsec-based-reactions: 0
+
+
+

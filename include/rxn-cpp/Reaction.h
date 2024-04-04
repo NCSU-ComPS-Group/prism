@@ -34,6 +34,8 @@ namespace rxn
     double getDeltaEnergyGas() const;
     string getReferencesAsString() const;
 
+    vector<weak_ptr<Species>> getSpecies() const;
+    int getStoicCoeffByName(const string & s_name) const;
     /**
      * equality operator override and compares the reaction name
      * the latex name of the reaction and the reaction number is the same
@@ -55,6 +57,7 @@ namespace rxn
     void setLatexName();
     void substituteLumped();
     void checkReferences();
+    void collectUniqueSpecies();
 
 
     const unsigned int _number;
@@ -68,13 +71,18 @@ namespace rxn
     vector<string> _notes;
     vector<double> _params;
 
+    vector<weak_ptr<Species>> _species;
+    unordered_map<string, int> _stoic_coeffs;
+
+    string _latex_name;
+    /// all of these are relatively temporary member variables and
+    /// will be cleared once we are done with them to avoid
+    // storing the same data multiple times on the reaction object.
     vector<weak_ptr<Species>> _reactants;
     vector<weak_ptr<Species>> _products;
-    unordered_map<string, int> _stoic_coeffs;
     unordered_map<string, unsigned int> _reactant_count;
     unordered_map<string, unsigned int> _product_count;
 
-    string _latex_name;
   };
 
 }
