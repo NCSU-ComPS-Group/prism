@@ -27,6 +27,8 @@ namespace rxn
     /** getter method for the subscript on the subspecies */
     unsigned int getSubscript() const;
 
+    string getNeutralGroundState() const;
+
   private:
     /** This will be just the elemental name */
     const string _base;
@@ -34,6 +36,7 @@ namespace rxn
     const string _modifier;
     /** The subscript of the number ex: Ar2 this is 2 */
     const unsigned int _subscript;
+    const string _neutral_ground_state;
     /** method for the setting the element which the species modifies */
     string setBase();
     /**
@@ -56,6 +59,8 @@ namespace rxn
     void setChargeNumber() override;
     /** Method for setting the latex name of the species */
     void setLatexName() override;
+
+    string setNeutralGroundState() const;
   };
 } // namespace RXN
 

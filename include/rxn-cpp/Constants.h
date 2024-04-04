@@ -50,4 +50,18 @@ namespace rxn
   /** Fundamental charge in C */
   const float e = 1.602176487E-19;
 
+
+  // reaction types enumerations
+
+  // enum ReactionType {
+  //   elastic,
+  //   ionization,
+  //   excitation,
+  //   dissociation,
+  //   dissociation_ionization,
+  //   attachment,
+  //   dissociative_attachment,
+  //   superelastic
+  // };
+
 }

@@ -1,19 +1,19 @@
 #include "Species.h"
-#include "Reaction.h"
 
 namespace rxn
 {
 
   Species::Species(const string & name)
-    : SpeciesBase(name),
-      _sub_species(decomposeSpecies())
+  : SpeciesBase(name),
+    _sub_species(decomposeSpecies()),
+    _neutral_ground_state(setNeutralGroundState())
   {
-    setMass();
-    setChargeNumber();
-    setLatexName();
+  setMass();
+  setChargeNumber();
+  setLatexName();
   }
 
-  vector<SubSpecies>
+  const vector<const SubSpecies>
   Species::decomposeSpecies()
   {
     vector<string> temp_parts = splitByCapital(_name);
@@ -45,7 +45,7 @@ namespace rxn
       parts.push_back(part);
     }
 
-    vector<SubSpecies> sub_sp;
+    vector<const SubSpecies> sub_sp;
 
     for (auto part : parts)
     {
@@ -136,10 +136,22 @@ namespace rxn
     return temp_list;
   }
 
-  vector<SubSpecies>
+  const vector<const SubSpecies>
   Species::getSubSpecies() const
   {
     return _sub_species;
+  }
+
+  string
+  Species::setNeutralGroundState() const
+  {
+    // string temp = "";
+    // for (auto sub : _sub_species)
+    // {
+    //   // temp += sub.getNeutralGroundState();
+    // }
+
+    return "test";
   }
 }
 

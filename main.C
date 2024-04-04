@@ -23,6 +23,6 @@ main(int argc, char** argv)
   np.writeSpeciesSummary("summary.yaml");
 
   const YAML::Node network = YAML::LoadFile("summary.yaml");
-  cout << network << endl;
+  // cout << network << endl;
   return EXIT_SUCCESS;
 }

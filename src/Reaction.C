@@ -65,11 +65,11 @@ namespace rxn
       checkReferences();
     }
 
-    // clearning all of the data that duplicates what
-    _reactant_count.clear();
-    _product_count.clear();
-    _reactants.clear();
-    _products.clear();
+    // clearning all of the data that is any more than the minimum we need
+    // _reactant_count.clear();
+    // _product_count.clear();
+    // _reactants.clear();
+    // _products.clear();
   }
 
   string
@@ -388,6 +388,19 @@ namespace rxn
       if (unique_check.size() != _product_count.size())
         _latex_name += " + ";
     }
+  }
+
+  void
+  Reaction::determineReactionType()
+  {
+    // unordered_map<string, Species> ngs_reactants;
+
+    // for (auto r_wp : r)
+    // {
+    //   auto r = r.lock();
+
+    //   ngs_reactants.emplace(r.get)
+    // }
   }
 
   void

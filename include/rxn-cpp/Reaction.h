@@ -57,8 +57,9 @@ namespace rxn
     void setLatexName();
     void substituteLumped();
     void checkReferences();
+    void findReactionType();
     void collectUniqueSpecies();
-
+    void determineReactionType();
 
     const unsigned int _number;
     const string _data_path;
@@ -75,6 +76,8 @@ namespace rxn
     unordered_map<string, int> _stoic_coeffs;
 
     string _latex_name;
+
+    // ReactionType _type;
     /// all of these are relatively temporary member variables and
     /// will be cleared once we are done with them to avoid
     // storing the same data multiple times on the reaction object.

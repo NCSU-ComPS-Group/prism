@@ -8,7 +8,8 @@ namespace rxn
     : SpeciesBase(name),
       _base(setBase()),
       _modifier(setModifier()),
-      _subscript(setSubscript())
+      _subscript(setSubscript()),
+      _neutral_ground_state(setNeutralGroundState())
   {
     setChargeNumber();
     setMass();
@@ -305,6 +306,25 @@ namespace rxn
   SubSpecies::getSubscript() const
   {
     return _subscript;
+  }
+
+  string
+  SubSpecies::setNeutralGroundState() const
+  {
+    string ngs = "";
+
+    ngs += _base;
+    if (_subscript != 1)
+    {
+      ngs += to_string(_subscript);
+    }
+    return ngs;
+  }
+
+  string
+  SubSpecies::getNeutralGroundState() const
+  {
+    return _neutral_ground_state;
   }
 }
 
