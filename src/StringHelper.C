@@ -1,5 +1,10 @@
 #include "StringHelper.h"
 
+#include <cctype>
+#include <cmath>
+#include <iostream>
+#include "fmt/core.h"
+
 namespace rxn
 {
   const string WHITESPACE = " \n\r\t\f\v";

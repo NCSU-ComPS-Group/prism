@@ -1,4 +1,5 @@
 #include "InvalidInput.h"
+#include "StringHelper.h"
 
 namespace rxn {
 

@@ -1,4 +1,6 @@
 #include "Species.h"
+#include "SubSpecies.h"
+#include "StringHelper.h"
 
 namespace rxn
 {
@@ -8,9 +10,9 @@ namespace rxn
     _sub_species(decomposeSpecies()),
     _neutral_ground_state(setNeutralGroundState())
   {
-  setMass();
-  setChargeNumber();
-  setLatexName();
+    setMass();
+    setChargeNumber();
+    setLatexName();
   }
 
   const vector<const SubSpecies>
@@ -145,13 +147,13 @@ namespace rxn
   string
   Species::setNeutralGroundState() const
   {
-    // string temp = "";
-    // for (auto sub : _sub_species)
-    // {
-    //   // temp += sub.getNeutralGroundState();
-    // }
+    string temp = "";
+    for (auto sub : _sub_species)
+    {
+      temp += sub.getNeutralGroundState();
+    }
 
-    return "test";
+    return temp;
   }
 }
 

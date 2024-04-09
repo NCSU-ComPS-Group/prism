@@ -1,5 +1,13 @@
 #include "YamlHelper.h"
 
+#include <iostream>
+#include <stdlib.h>
+#include <typeinfo>
+
+#include "StringHelper.h"
+#include "InvalidInput.h"
+
+
 namespace rxn {
 
 template<>

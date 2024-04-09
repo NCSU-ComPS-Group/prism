@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "rxn-cpp/Constants.h"
 #include "rxn-cpp/SubSpecies.h"
 #include "rxn-cpp/SpeciesFactory.h"
 #include "rxn-cpp/InvalidInput.h"

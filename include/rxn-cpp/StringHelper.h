@@ -1,11 +1,8 @@
 #pragma once
 
 #include <string>
-#include <cctype>
-#include <cmath>
-#include <iostream>
 #include <vector>
-#include "fmt/core.h"
+
 using namespace std;
 
 

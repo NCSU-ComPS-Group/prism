@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-
+#include "rxn-cpp/Constants.h"
 #include "rxn-cpp/Species.h"
 #include "rxn-cpp/SubSpecies.h"
 #include "rxn-cpp/SpeciesFactory.h"
@@ -428,7 +428,7 @@ TEST(Species, CapitalLetterInModifier)
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(S)");
 
-  s = Species("Ar(asdfaS)");
-  EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(asdfaS)");
+  Species s2 = Species("Ar(asdfaS)");
+  EXPECT_EQ(s2.getSubSpecies()[0].getBase(), "Ar");
+  EXPECT_EQ(s2.getSubSpecies()[0].getModifier(), "(asdfaS)");
 }

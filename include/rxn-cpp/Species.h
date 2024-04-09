@@ -1,12 +1,13 @@
 #pragma once
 
-#include "SubSpecies.h"
+#include "SpeciesBase.h"
 
 using namespace std;
 
 namespace rxn
 {
   class Reaction;
+  class SubSpecies;
 
   class Species : public SpeciesBase
   {

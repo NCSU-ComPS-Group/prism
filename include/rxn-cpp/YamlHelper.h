@@ -1,12 +1,7 @@
 #pragma once
+#include <string>
 #include <vector>
-#include <iostream>
-#include <stdlib.h>
-#include <typeinfo>
-
 #include "yaml-cpp/yaml.h"
-#include "StringHelper.h"
-#include "InvalidInput.h"
 
 using namespace std;
 

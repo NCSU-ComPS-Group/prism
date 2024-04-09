@@ -1,13 +1,10 @@
 #pragma once
+#include <map>
 #include <string>
 #include <unordered_map>
-#include <sys/stat.h>
 
 #include "yaml-cpp/yaml.h"
 
-#include "InvalidInput.h"
-#include "YamlHelper.h"
-#include "Constants.h"
 #include "Species.h"
 
 using namespace std;

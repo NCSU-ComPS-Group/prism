@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -53,15 +53,15 @@ namespace rxn
 
   // reaction types enumerations
 
-  // enum ReactionType {
-  //   elastic,
-  //   ionization,
-  //   excitation,
-  //   dissociation,
-  //   dissociation_ionization,
-  //   attachment,
-  //   dissociative_attachment,
-  //   superelastic
-  // };
+  enum ReactionType {
+    elastic,
+    ionization,
+    excitation,
+    dissociation,
+    dissociation_ionization,
+    attachment,
+    dissociative_attachment,
+    superelastic
+  };
 
 }

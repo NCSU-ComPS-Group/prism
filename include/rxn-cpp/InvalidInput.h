@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdexcept>
-#include "StringHelper.h"
 #include "yaml-cpp/yaml.h"
 
 

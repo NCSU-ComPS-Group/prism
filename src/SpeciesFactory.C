@@ -1,6 +1,12 @@
+#include <sys/stat.h>
+
 #include "SpeciesFactory.h"
 #include "NetworkParser.h"
-
+#include "SubSpecies.h"
+#include "InvalidInput.h"
+#include "YamlHelper.h"
+#include "Constants.h"
+#include "StringHelper.h"
 namespace rxn
 {
 

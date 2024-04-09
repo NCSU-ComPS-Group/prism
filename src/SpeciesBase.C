@@ -1,4 +1,7 @@
 #include "SpeciesBase.h"
+#include "StringHelper.h"
+#include "Constants.h"
+#include "InvalidInput.h"
 
 namespace rxn
 {

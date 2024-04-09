@@ -1,5 +1,11 @@
-#include "BibTexHelper.h"
+#include <vector>
+#include "fmt/core.h"
+#include <sys/stat.h>
+#include <fstream>
+#include <iostream>
 
+#include "BibTexHelper.h"
+#include "StringHelper.h"
 
 namespace rxn
 {

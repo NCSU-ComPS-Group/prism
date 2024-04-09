@@ -1,16 +1,10 @@
 #pragma once
+#include <vector>
 #include <string>
 #include <unordered_map>
-#include <sys/stat.h>
-
 #include "yaml-cpp/yaml.h"
-
-#include "InvalidInput.h"
-#include "YamlHelper.h"
-#include "Constants.h"
 #include "Reaction.h"
-#include "SpeciesFactory.h"
-#include "BibTexHelper.h"
+
 
 using namespace std;
 

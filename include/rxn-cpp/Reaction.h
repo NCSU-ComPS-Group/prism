@@ -1,17 +1,11 @@
 #pragma once
 
 #include <string>
-
+#include <vector>
+#include <unordered_map>
 #include "yaml-cpp/yaml.h"
-
-#include "Constants.h"
-#include "YamlHelper.h"
-#include "InvalidInput.h"
-#include "StringHelper.h"
 #include "Species.h"
-#include "SpeciesFactory.h"
-#include "BibTexHelper.h"
-
+#include "Constants.h"
 class NetworkParser;
 
 using namespace std;
@@ -77,7 +71,7 @@ namespace rxn
 
     string _latex_name;
 
-    // ReactionType _type;
+    ReactionType _type;
     /// all of these are relatively temporary member variables and
     /// will be cleared once we are done with them to avoid
     // storing the same data multiple times on the reaction object.

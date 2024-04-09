@@ -1,5 +1,13 @@
 #include "Reaction.h"
 
+#include "fmt/core.h"
+#include "YamlHelper.h"
+#include "InvalidInput.h"
+#include "StringHelper.h"
+#include "SpeciesFactory.h"
+#include "BibTexHelper.h"
+#include "SubSpecies.h"
+
 namespace rxn
 {
   Reaction::Reaction(const YAML::Node & rxn_input,
