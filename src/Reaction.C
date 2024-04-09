@@ -7,6 +7,7 @@
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
 #include "SubSpecies.h"
+#include "NetworkParser.h"
 
 namespace rxn
 {

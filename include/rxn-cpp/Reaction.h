@@ -6,7 +6,6 @@
 #include "yaml-cpp/yaml.h"
 #include "Species.h"
 #include "Constants.h"
-class NetworkParser;
 
 using namespace std;
 
