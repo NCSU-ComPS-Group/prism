@@ -20,9 +20,9 @@ main(int argc, char** argv)
   np.parseNetwork(argv[1]);
 
   // np.writeLatexTable("test.tex");
-  np.writeSpeciesSummary("summary.yaml");
+  // np.writeSpeciesSummary("summary.yaml");
 
-  const YAML::Node network = YAML::LoadFile("summary.yaml");
+  // const YAML::Node network = YAML::LoadFile("summary.yaml");
   // cout << network << endl;
   return EXIT_SUCCESS;
 }

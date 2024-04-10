@@ -1,10 +1,12 @@
 # 7 species are lumped into 1 species
 lumped-species:
+  - count: 7
   - lumped: N2*
     actual: [N2(c), N2(b), N2(rotation), N2(a2), N2(a), N2(electronic), N2(vibration)]
 
 species:
-  - count : 34 unique species
+  # Number of unique species
+  - count : 34
   - He:
       - rate-based-reactions: 33
 

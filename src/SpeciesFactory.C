@@ -289,6 +289,7 @@ SpeciesFactory::getSpeciesSummary() const
 
   string summary = "";
 
+
   unordered_map<string, vector<string>> lumped_string;
   for (auto it : _lumped_map)
   {
@@ -300,26 +301,38 @@ SpeciesFactory::getSpeciesSummary() const
     lumped_string[it.second->getName()].push_back(it.first);
   }
 
-  summary += "# " + to_string(lumped_count) + " species are lumped into " +
-             to_string(lumped_string.size()) + " species\n";
-  summary += "lumped-species:\n";
-
-  for (auto it : lumped_string)
+  if (lumped_count > 0)
   {
-    summary += "  - lumped: " + it.first + "\n";
-    summary += "    actual: [";
-    for (auto actual_s_it = it.second.begin(); actual_s_it != it.second.end(); ++actual_s_it)
-    {
-      string actual_s = *actual_s_it;
+    summary += "# " + to_string(lumped_count) + " species are lumped into " +
+              to_string(lumped_string.size()) + " species\n";
+    summary += "lumped-species:\n";
+    summary += "  - count: " + to_string(lumped_count) + "\n";
 
-      summary += actual_s;
-      if (next(actual_s_it) != it.second.end())
+    for (auto it : lumped_string)
+    {
+      summary += "  - lumped: " + it.first + "\n";
+      summary += "    actual: [";
+      for (auto actual_s_it = it.second.begin(); actual_s_it != it.second.end(); ++actual_s_it)
       {
-        summary += ", ";
+        string actual_s = *actual_s_it;
+
+        summary += actual_s;
+        if (next(actual_s_it) != it.second.end())
+        {
+          summary += ", ";
+        }
       }
+      summary += "]";
     }
-    summary += "]\n\n";
   }
+  else
+  {
+    summary += "# No lumped states in this network\n";
+    summary += "lumped-species:\n";
+    summary += "  - count: 0";
+  }
+
+  summary += "\n\n";
 
   // summary += "species:\n";
   string species_list = "";
@@ -442,7 +455,8 @@ SpeciesFactory::getSpeciesSummary() const
   }
 
   summary += "species:\n";
-  summary += "  - count : " + to_string(species_count) + " unique species\n";
+  summary += "  # Number of unique species\n";
+  summary += "  - count : " + to_string(species_count) + "\n";
   summary += species_list;
 
   // cout << summary << endl;

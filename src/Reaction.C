@@ -67,7 +67,7 @@ namespace rxn
     substituteLumped();
     validateReaction();
     collectUniqueSpecies();
-    determineReactionType();
+    // determineReactionType();
 
     if (_check_refs)
     {
