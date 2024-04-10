@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SpeciesBase.h"
-
+#include <vector>
 using namespace std;
 
 namespace rxn
