@@ -33,7 +33,7 @@ namespace rxn
     /** This will be just the elemental name */
     const string _base;
     /** The rest of name after the elemental name that has been removed */
-    const string _modifier;
+    string _modifier;
     /** The subscript of the number ex: Ar2 this is 2 */
     const unsigned int _subscript;
     const string _neutral_ground_state;

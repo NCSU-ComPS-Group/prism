@@ -18,6 +18,35 @@ namespace rxn
     setChargeNumber();
     setMass();
     setLatexName();
+    // lets remove all of the leading numbers in the modifier
+    int first_special = findFirstSpecial(_modifier);
+    // case for a ground state molecule
+    if (first_special == -1)
+    {
+      _modifier = "";
+      return;
+    }
+
+    _modifier = _modifier.substr(first_special, _modifier.length());
+
+    if (_modifier.length() == 0 || (_modifier[0] != '-' && _modifier[0] != '+'))
+      return;
+
+    // remove the ionization sign and then well find the true
+    // start of the modifier
+    _modifier = _modifier.substr(1, _modifier.length());
+    if (_modifier.length() == 0)
+      return;
+
+    first_special = findFirstSpecial(_modifier);
+
+    if (first_special == -1)
+    {
+      _modifier = "";
+      return;
+    }
+
+    _modifier = _modifier.substr(first_special, _modifier.length());
   }
 
   string

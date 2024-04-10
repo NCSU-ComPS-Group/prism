@@ -7,8 +7,7 @@
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
 #include "SubSpecies.h"
-#include "NetworkParser.h"
-
+#include "ReactionTypeHelper.h"
 namespace rxn
 {
   Reaction::Reaction(const YAML::Node & rxn_input,
@@ -68,17 +67,19 @@ namespace rxn
     substituteLumped();
     validateReaction();
     collectUniqueSpecies();
+    determineReactionType();
 
     if (_check_refs)
     {
       checkReferences();
     }
 
+
     // clearning all of the data that is any more than the minimum we need
-    // _reactant_count.clear();
-    // _product_count.clear();
-    // _reactants.clear();
-    // _products.clear();
+    _reactant_count.clear();
+    _product_count.clear();
+    _reactants.clear();
+    _products.clear();
   }
 
   string
@@ -402,14 +403,23 @@ namespace rxn
   void
   Reaction::determineReactionType()
   {
-    // unordered_map<string, Species> ngs_reactants;
+    if (isElastic(_reactants, _products))
+    {
+      cout << "Elastic!" << endl;
+      return;
+    }
 
-    // for (auto r_wp : r)
-    // {
-    //   auto r = r.lock();
+    if (isIonization(_reactants, _products, _stoic_coeffs))
+    {
+      cout << "Ionization!" << endl;
+      return;
+    }
 
-    //   ngs_reactants.emplace(r.get)
-    // }
+    if (isExcitation(_reactants, _products, _stoic_coeffs))
+    {
+      cout << "Excitation" << endl;
+      return;
+    }
   }
 
   void

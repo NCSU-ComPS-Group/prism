@@ -30,7 +30,9 @@ LINKS = $(YAML_LINK) $(FMT_LINK)
 
 # build just the reaction parser
 $(EXE): $(OBJECTS)
+	@echo "Building $(EXE)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) $(OBJECTS) $(SRC) -o $(EXE) $(LINKS)
+	@echo "$(EXE) built successfully!"
 
 # build both reaction parser and yaml library
 all: $(EXE)
@@ -39,7 +41,7 @@ all: $(EXE)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.C
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
-
+	@echo "Building $<"
 # clean up the parser
 clean:
 	@rm -rf *.dSYM

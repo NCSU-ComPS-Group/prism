@@ -155,6 +155,12 @@ namespace rxn
 
     return temp;
   }
+
+  const string &
+  Species::getNeutralGroundState() const
+  {
+    return _neutral_ground_state;
+  }
 }
 
 

@@ -24,7 +24,7 @@ namespace rxn
     vector<shared_ptr<const Reaction>> getXSecBasedReactions() const;
     /** Getter method for the subspecies list */
     const vector<const SubSpecies> getSubSpecies() const;
-    // string getNeutralGroundState() const;
+    const string & getNeutralGroundState() const;
 
   private:
     // we are making these classes friends so they can make changes
