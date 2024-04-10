@@ -267,7 +267,10 @@ namespace rxn
                         p_elements[it.first], it.second));
       }
 
-    bool mass_conservation = abs(r_mass - p_mass) < MASS_EPS;
+    // we'll consider that mass is conserved if the difference is less than an electron
+    // this is because we don't have perfect precision with mass data
+    bool mass_conservation = abs(r_mass - p_mass) < SpeciesFactory::getInstance().getMass("e");
+
     bool charge_conservation = r_charge_num == p_charge_num;
 
     if (!mass_conservation && !charge_conservation)
