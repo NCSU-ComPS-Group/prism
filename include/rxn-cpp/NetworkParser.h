@@ -51,7 +51,13 @@ class NetworkParser {
 
     void parseReactions(const YAML::Node & inputs, vector<shared_ptr<const Reaction>>* rxns, const string & type, const string & data_path, const string & bib_file);
 
-
+    void tableHelper(string & latex,
+                       const vector<shared_ptr<const Reaction>> & reactions,
+                       unsigned int & rxn_counter,
+                       unsigned int & note_counter,
+                       map<string, unsigned int> & note_numbers,
+                       map<unsigned int, string> & inverse_note_numbers,
+                       vector<string> & all_notes);
 
     vector<shared_ptr<const Reaction>> _rate_based;
     vector<shared_ptr<const Reaction>> _xsec_based;

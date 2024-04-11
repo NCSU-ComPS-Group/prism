@@ -126,7 +126,7 @@ TEST(Species, GroundStateSinglePositiveIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "+");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 1);
@@ -147,7 +147,7 @@ TEST(Species, GroundStateMultiplePositiveIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+4");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "+4");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 4);
@@ -169,7 +169,7 @@ TEST(Species, GroundStateSingleNegativeIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar-");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "-");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -1);
@@ -191,7 +191,7 @@ TEST(Species, GroundStateMultipleNegativeIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar-100");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "-100");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
@@ -212,7 +212,7 @@ TEST(Species, GroundStateMolecular)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
@@ -232,7 +232,7 @@ TEST(Species, GroundStateLargeMolecule)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar188");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "188");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 188);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
@@ -255,7 +255,7 @@ TEST(Species, MolecularNegativeIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2-100");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2-100");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
@@ -277,7 +277,7 @@ TEST(Species, MolecularPositiveIon)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar120+39");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "120+39");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 120);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 39);
@@ -299,7 +299,7 @@ TEST(Species, MolecularPositiveIonWithModifier)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar120+39(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "120+39(test)");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 120);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 39);
@@ -321,7 +321,7 @@ TEST(Species, MolecularNegativeIonWithModifier)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2-100(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
@@ -354,7 +354,7 @@ TEST(Species, ComplexPositiveMolecule)
   // checking to make sure Ar worked
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), ar_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
@@ -372,7 +372,7 @@ TEST(Species, ComplexPositiveMolecule)
   // checking to make sure that F works
   EXPECT_EQ(s.getSubSpecies()[2].getName(), "F4");
   EXPECT_EQ(s.getSubSpecies()[2].getBase(), "F");
-  EXPECT_EQ(s.getSubSpecies()[2].getModifier(), "4");
+  EXPECT_EQ(s.getSubSpecies()[2].getModifier(), "");
   EXPECT_EQ(s.getSubSpecies()[2].getSubscript(), (unsigned int) 4);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[2].getMass(), f_mass);
   EXPECT_EQ(s.getSubSpecies()[2].getChargeNumber(), 0);
@@ -381,7 +381,7 @@ TEST(Species, ComplexPositiveMolecule)
   // checking to make sure that H works
   EXPECT_EQ(s.getSubSpecies()[3].getName(), "H3+4(test)");
   EXPECT_EQ(s.getSubSpecies()[3].getBase(), "H");
-  EXPECT_EQ(s.getSubSpecies()[3].getModifier(), "3+4(test)");
+  EXPECT_EQ(s.getSubSpecies()[3].getModifier(), "(test)");
   EXPECT_EQ(s.getSubSpecies()[3].getSubscript(), (unsigned int) 3);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[3].getMass(), h_mass - e_mass);
   EXPECT_EQ(s.getSubSpecies()[3].getChargeNumber(), 4);
@@ -413,7 +413,7 @@ TEST(Species, CustomLongSpecies)
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Polypeptide2-100(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Polypeptide");
-  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "2-100(test)");
+  EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), 2 * 1000 + 100 * rxn::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);

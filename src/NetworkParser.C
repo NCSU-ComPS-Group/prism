@@ -179,8 +179,6 @@ void
 NetworkParser::writeLatexTable(const string & file)
 {
 
-  const unsigned int max_rows = 34;
-
   if (_errors)
   {
     InvalidInputExit("A LaTeX table cannot be generated\n  There are errors in your reaction network that must be corrected");
@@ -194,19 +192,6 @@ NetworkParser::writeLatexTable(const string & file)
 
   vector<string> all_notes;
 
-  string table_header = "\\begin{table}[H]\n";
-  table_header += "  \\centering\n";
-  table_header += "  \\resizebox{\\columnwidth}{!}{\n";
-  table_header += "    \\begin{tabu}{clcccccccc}\n";
-  table_header += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
-            "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
-            "Ref.\\\\\n";
-  table_header += "      \\hline\n";
-  table_header += "      \\hline\n";
-
-  string table_closer = "    \\end{tabu}\n";
-  table_closer += "  }\n";
-  table_closer += "\\end{table}\n\n";
 
 
   string latex = "\\documentclass{article}\n";
@@ -222,21 +207,88 @@ NetworkParser::writeLatexTable(const string & file)
   latex += "  style=numeric,\n";
   latex += "  sorting=nty,\n";
   latex += "]{biblatex}\n\n";
-  latex += "\\addbibresource{works.bib}\n\n";
+  for (auto it : _bibs)
+  {
+    latex += "\\addbibresource{" + it.second + "}\n";
+  }
+  latex += "\n\n";
   // actual document
   latex += "\\begin{document}\n\n";
 
-  for (auto r : _rate_based)
+  if (_rate_based.size() > 0)
+  {
+    latex += "\\section{Rate Based Reactions}\n";
+    tableHelper(latex, _rate_based, rxn_counter, note_counter, note_numbers, inverse_note_numbers, all_notes);
+    latex += "\\newpage\n";
+  }
+
+  if (_xsec_based.size() > 0)
+  {
+    latex += "\\section{Cross Section Reactions}\n";
+    tableHelper(latex, _xsec_based, rxn_counter, note_counter, note_numbers, inverse_note_numbers, all_notes);
+    latex += "\\newpage\n";
+  }
+
+  for (unsigned int i = 0; i < all_notes.size(); ++i)
+  {
+    latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + all_notes[i] + "}\\\\ \n";
+  }
+
+  // adding the bibliography
+  latex += "\\newpage\n";
+
+  if (_bibs.size() > 0)
+  {
+    latex += "\\printbibliography\n\n";
+  }
+
+  latex += "\\end{document}\n";
+
+  ofstream out(file);
+  out << latex;
+  out.close();
+}
+
+void
+NetworkParser::tableHelper(string & latex,
+                           const vector<shared_ptr<const Reaction>> & reactions,
+                           unsigned int & rxn_counter,
+                           unsigned int & note_counter,
+                           map<string, unsigned int> & note_numbers,
+                           map<unsigned int, string> & inverse_note_numbers,
+                           vector<string> & all_notes)
+{
+
+  const unsigned int max_rows = 32;
+
+  string table_header = "\\begin{table}[H]\n";
+  table_header += "  \\centering\n";
+  table_header += "  \\resizebox{\\columnwidth}{!}{\n";
+  table_header += "    \\begin{tabu}{clcccccccc}\n";
+  table_header += "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
+                  "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & "
+                  "Ref.\\\\\n";
+  table_header += "      \\hline\n";
+  table_header += "      \\hline\n";
+
+  string table_closer = "    \\end{tabu}\n";
+  table_closer += "  }\n";
+  table_closer += "\\end{table}\n\n";
+  unsigned int local_rxn_counter = 0;
+  for (auto r : reactions)
   {
 
-    if (rxn_counter % max_rows == 0)
+    if (local_rxn_counter % max_rows == 0)
     {
-      if (rxn_counter != 0 && rxn_counter != _rate_based.size())
+      if (local_rxn_counter != 0 && local_rxn_counter != reactions.size())
       {
         latex += table_closer;
       }
+
       latex += table_header;
     }
+
+    local_rxn_counter++;
     rxn_counter++;
 
     latex += fmt::format("      {:d}", rxn_counter) + " & ";
@@ -268,9 +320,11 @@ NetworkParser::writeLatexTable(const string & file)
 
     sort(numbers.begin(), numbers.end());
 
-    for (auto it = numbers.begin(); it != numbers.end(); ++it) {
+    for (auto it = numbers.begin(); it != numbers.end(); ++it)
+    {
       // Check if this is not the last note
-      if (next(it) != numbers.end()) {
+      if (next(it) != numbers.end())
+      {
         latex += fmt::format("\\footnotemark[{:d}]", *it) + "$^{,}$";
         continue;
       }
@@ -284,21 +338,6 @@ NetworkParser::writeLatexTable(const string & file)
   {
     latex += table_closer;
   }
-
-  for (unsigned int i = 0; i < all_notes.size(); ++i)
-  {
-    latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + all_notes[i] + "}\\\\ \n";
-  }
-
-  // adding the bibliography
-  latex += "\\newpage\n";
-  latex += "\\printbibliography\n\n";
-
-  latex += "\\end{document}\n";
-
-  ofstream out(file);
-  out << latex;
-  out.close();
 }
 
 void
@@ -309,3 +348,4 @@ NetworkParser::writeSpeciesSummary(const string & file)
   out.close();
 }
 }
+

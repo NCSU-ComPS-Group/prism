@@ -129,6 +129,8 @@ rate-based:
   - reaction: He^m + NO -> He + NO+ + e
   - reaction: He+ + NO -> He + NO+
   - reaction: He+ + NO -> He + N + O+
+
+xsec-based:
   - reaction: O+ + NO -> O + NO+
   - reaction: O2+ + NO -> O2 + NO+
   - reaction: O2+ + N -> NO+ + O
