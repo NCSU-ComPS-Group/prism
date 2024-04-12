@@ -4,8 +4,6 @@
 
 #include "SpeciesBase.h"
 
-using namespace std;
-
 class SpeciesFactory;
 
 namespace rxn
@@ -13,7 +11,7 @@ namespace rxn
   class SubSpecies : public SpeciesBase
   {
   public:
-    SubSpecies(const string & name);
+    SubSpecies(const std::string & name);
 
     /** Comparison operator checks if the sub species have the same member variables */
     bool operator==(const SubSpecies & other) const;
@@ -21,29 +19,29 @@ namespace rxn
     bool operator!=(const SubSpecies & other) const;
 
     /** getter method for the elemental base of the species */
-    string getBase() const;
-    /** getter method for the modifier string */
-    string getModifier() const;
+    std::string getBase() const;
+    /** getter method for the modifier std::string */
+    std::string getModifier() const;
     /** getter method for the subscript on the subspecies */
     unsigned int getSubscript() const;
 
-    string getNeutralGroundState() const;
+    std::string getNeutralGroundState() const;
 
   private:
     /** This will be just the elemental name */
-    const string _base;
+    const std::string _base;
     /** The rest of name after the elemental name that has been removed */
-    string _modifier;
+    std::string _modifier;
     /** The subscript of the number ex: Ar2 this is 2 */
     const unsigned int _subscript;
-    const string _neutral_ground_state;
+    const std::string _neutral_ground_state;
     /** method for the setting the element which the species modifies */
-    string setBase();
+    std::string setBase();
     /**
      * Method sets the modifier of the species,
      * anything after the subscript and charge
     */
-    string setModifier();
+    std::string setModifier();
     /**
      * Method for getting the subscript as an integer
     */
@@ -60,7 +58,7 @@ namespace rxn
     /** Method for setting the latex name of the species */
     void setLatexName() override;
 
-    string setNeutralGroundState() const;
+    std::string setNeutralGroundState() const;
   };
 } // namespace RXN
 
@@ -69,7 +67,7 @@ struct std::hash<rxn::SubSpecies>
 {
   /**
    * Custom override for the hash method
-   * Hash is only based on the name string
+   * Hash is only based on the name std::string
   */
   size_t operator()(const rxn::SubSpecies & obj) const;
 };

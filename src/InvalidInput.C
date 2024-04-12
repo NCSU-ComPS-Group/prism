@@ -1,6 +1,8 @@
 #include "InvalidInput.h"
 #include "StringHelper.h"
 
+using namespace std;
+
 namespace rxn {
 
   InvalidSpecies::InvalidSpecies(const string & name, const string & message)

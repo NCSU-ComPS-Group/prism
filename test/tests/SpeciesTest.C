@@ -6,17 +6,20 @@
 #include "rxn-cpp/InvalidInput.h"
 
 using namespace rxn;
+using namespace std;
 
 TEST(Species, Equal)
 {
   Species s1 = Species("e");
   Species s2 = Species("e");
 
-  EXPECT_TRUE(s1 == s1);
-  EXPECT_EQ(s1, s1);
+  std::hash<Species> hasher;
+  size_t hash1 = hasher(s1);
+  size_t hash2 = hasher(s2);
 
-  EXPECT_TRUE(s1 == s2);
+  EXPECT_EQ(s1, s1);
   EXPECT_EQ(s1, s2);
+  EXPECT_EQ(hash1, hash2);
 }
 
 TEST(Species, NotEqual)
@@ -24,8 +27,12 @@ TEST(Species, NotEqual)
   Species s1 = Species("e");
   Species s2 = Species("E");
 
-  EXPECT_FALSE(s1 == s2);
+  std::hash<Species> hasher;
+  size_t hash1 = hasher(s1);
+  size_t hash2 = hasher(s2);
+
   EXPECT_NE(s1, s2);
+  EXPECT_NE(hash1, hash2);
 }
 
 TEST(Species, PhotonTest)
@@ -39,6 +46,7 @@ TEST(Species, PhotonTest)
   EXPECT_EQ(s.getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getCharge(), s_charge);
   EXPECT_EQ(s.getLatexRepresentation(), "$h\\nu$");
+  EXPECT_EQ(s.getNeutralGroundState(), "hnu");
 
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "hnu");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "hnu");
@@ -123,6 +131,7 @@ TEST(Species, GroundStateSinglePositiveIon)
   EXPECT_EQ(s.getChargeNumber(), 1);
   EXPECT_FLOAT_EQ(s.getCharge(), s_charge);
   EXPECT_EQ(s.getLatexRepresentation(), "Ar$^{+}$");
+  EXPECT_EQ(s.getNeutralGroundState(), "Ar");
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
@@ -144,6 +153,8 @@ TEST(Species, GroundStateMultiplePositiveIon)
   EXPECT_EQ(s.getChargeNumber(), 4);
   EXPECT_FLOAT_EQ(s.getCharge(), s_charge);
   EXPECT_EQ(s.getLatexRepresentation(), "Ar$^{+4}$");
+  EXPECT_EQ(s.getXSecBasedReactions().size(), (size_t) 0);
+  EXPECT_EQ(s.getRateBasedReactions().size(), (size_t) 0);
   // lets check the individual species too
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+4");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");

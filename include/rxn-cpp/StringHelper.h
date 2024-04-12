@@ -3,141 +3,123 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
-
 namespace rxn {
   /**
-   * Trim the white space from left end of a string.
+   * Trim the white space from left end of a std::string.
    * This function will modify the value of s
-   * @param s the string that will be modified
+   * @param s the std::string that will be modified
    */
-  void ltrim(string & s);
+  void ltrim(std::string & s);
 
   /**
-   * Trim the white space from right end of a string.
+   * Trim the white space from right end of a std::string.
    * This function will modify the value of s
-   * @param s the string that will be modified
+   * @param s the std::string that will be modified
    */
-  void rtrim(string & s);
+  void rtrim(std::string & s);
 
   /**
-   * Trim the white space from both ends of a string.
+   * Trim the white space from both ends of a std::string.
    * This function will modify the value of s
-   * @param s the string that will be modified
+   * @param s the std::string that will be modified
    */
-  void trim(string & s);
+  void trim(std::string & s);
 
   /**
-   * Break a given string into pieces based on the provided delimieter
-   * This will not modified the value of string s
+   * Break a given std::string into pieces based on the provided delimieter
+   * This will not modified the value of std::string s
    * Ex: "A + B -> C + D" with delimiter " -> " will return {"A + B", "C + D"}
-   * @param s the string that will be split into pieces
-   * @param d the delimiter that will be used to split the string
-   * @returns A vector of strings which are the parts of the strings seperated by the delimiter
+   * @param s the std::string that will be split into pieces
+   * @param d the delimiter that will be used to split the std::string
+   * @returns A std::vector of std::strings which are the parts of the std::strings seperated by the delimiter
    */
-  vector<string> splitByDelimiter(const string & s, const string d);
+  std::vector<std::string> splitByDelimiter(const std::string & s, const std::string d);
 
   /**
-   * Find the first capital letter in a string
-   * @param s the string to search
+   * Find the first capital letter in a std::string
+   * @param s the std::string to search
    * @returns the index of the first capital letter if
    *          no capital letter -1 is returned
    */
-  int findFirstCapital(const string & s);
+  int findFirstCapital(const std::string & s);
 
   /**
-   * Find the first special character in a string
-   * @param s the string to search
+   * Find the first special character in a std::string
+   * @param s the std::string to search
    * @returns the index of the first special character if
    *          no special character is found -1 is returned
    */
-  int findFirstSpecial(const string & s);
+  int findFirstSpecial(const std::string & s);
 
   /**
-   * Find the first non letter in a string
-   * @param s the string to search
+   * Find the first non letter in a std::string
+   * @param s the std::string to search
    * @returns the index of the non letter if
    *          no non letter is found -1 is returned
    */
-  int findFirstNonLetter(const string & s);
+  int findFirstNonLetter(const std::string & s);
 
   /**
-   * Find the first letter in a string
-   * @param s the string to search
+   * Find the first letter in a std::string
+   * @param s the std::string to search
    * @returns the index of the letter if
    *          no letter is found -1 is returned
    */
-  int findFirstLetter(const string & s);
+  int findFirstLetter(const std::string & s);
 
   /**
-   * Find the first non number in a string
-   * @param s the string to search
+   * Find the first non number in a std::string
+   * @param s the std::string to search
    * @returns the index of the non number if
    *          no non number is found -1 is returned
    */
-  int findFirstNonNumber(const string & s);
+  int findFirstNonNumber(const std::string & s);
 
   /**
-   * @param s the string to search
-   * Find the first non special character in a string
+   * @param s the std::string to search
+   * Find the first non special character in a std::string
    * @returns the index of the non special character if
    *          no non special character is found -1 is returned
    */
-  int findFirstNonSpecial(const string & s);
+  int findFirstNonSpecial(const std::string & s);
 
   /**
-   * Split the string by the capital letters
-   * @param s the string to split
-   * @returns a vector of substrings which has been split by captial letters
-   *          if no capitals are found it will be a vector with one element
+   * Split the std::string by the capital letters
+   * @param s the std::string to split
+   * @returns a std::vector of substd::strings which has been split by captial letters
+   *          if no capitals are found it will be a std::vector with one element
    */
-  vector<string> splitByCapital(const string & s);
+  std::vector<std::string> splitByCapital(const std::string & s);
 
-  string formatScientific(const float val);
+  std::string formatScientific(const float val);
 
   /**
-   * Method add the green escape color to the string and prints
+   * Method add the green escape color to the std::string and prints
    * to standard output
-   * @param s the string to print in green
+   * @param s the std::string to print in green
    */
   void printGreen(const std::string & s);
 
   /**
-   * Method add the red escape color to the string and prints
+   * Method add the red escape color to the std::string and prints
    * to standard output
-   * @param s the string to print in red
+   * @param s the std::string to print in red
    */
   void printRed(const std::string & s);
 
   /**
-   * Method add the yellow escape color to the string and prints
-   * to standard output
-   * @param s the string to print in yellow
-   */
-  void printYellow(const std::string & s);
-
-  /**
-   * Adds the green escape color to the front of a string and
+   * Adds the green escape color to the front of a std::string and
    * then adds the default color escape color the end of it so
    * no other text color is changed
-   * @param s the string to add the characters to
+   * @param s the std::string to add the characters to
    */
-  string makeGreen(const string & s);
+  std::string makeGreen(const std::string & s);
 
   /**
-   * Adds the tellow escape color to the front of a string and
+   * Adds the red escape color to the front of a std::string and
    * then adds the default color escape color the end of it so
    * no other text color is changed
-   * @param s the string to add the characters to
+   * @param s the std::string to add the characters to
    */
-  string makeYellow(const string & s);
-
-  /**
-   * Adds the red escape color to the front of a string and
-   * then adds the default color escape color the end of it so
-   * no other text color is changed
-   * @param s the string to add the characters to
-   */
-  string makeRed(const string & s);
+  std::string makeRed(const std::string & s);
 }

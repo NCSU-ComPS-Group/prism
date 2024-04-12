@@ -21,6 +21,8 @@ latex-overrides:
 rate-based:
   - reaction: e + N2 -> e + N2(rotation)
     notes: [something important, something else]
+  - reaction: e + N2* -> e + N2
+
 
   - reaction: e + N2 -> e + N2(vibration)
   - reaction: e + N2 -> e + e + N2+

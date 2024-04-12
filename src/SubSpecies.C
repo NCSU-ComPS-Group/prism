@@ -5,6 +5,9 @@
 #include "StringHelper.h"
 #include "SpeciesFactory.h"
 #include "InvalidInput.h"
+
+using namespace std;
+
 namespace rxn
 {
 
@@ -151,7 +154,7 @@ namespace rxn
     {
       string error_msg = "Species charge must begin with + or - \n  ";
       error_msg += "Or other modifiers must be present\n  ";
-      error_msg += "Other modifiers must start with a special character\n";
+      error_msg += "Other modifiers must start with a non alpha numeric character\n";
       throw InvalidSpecies(_name, error_msg);
     }
     // case of some other modifier but not ionized

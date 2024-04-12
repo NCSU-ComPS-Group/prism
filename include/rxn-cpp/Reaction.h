@@ -7,28 +7,27 @@
 #include "Species.h"
 #include "Constants.h"
 
-using namespace std;
-
 namespace rxn
 {
   class Reaction
   {
   public:
-    Reaction(const YAML::Node & rxn_input, const int rxn_number, const string & data_path, const string & bib_file, const bool check_refs);
+    Reaction(const YAML::Node & rxn_input, const int rxn_number=0, const std::string & data_path="", const std::string & bib_file="", const bool check_refs=false);
 
-    const string getName() const;
-    const string getLatexRepresentation() const;
+    const std::string getName() const;
+    const std::string getLatexRepresentation() const;
     unsigned int getReactionNumber() const;
-    const vector<double> & getReactionParams() const;
-    const vector<string> & getReferences() const;
-    const vector<string> & getNotes() const;
+    const std::vector<double> & getRateParams() const;
+    const std::vector<std::string> & getReferences() const;
+    const std::vector<std::string> & getNotes() const;
+    bool isElastic() const;
 
     double getDeltaEnergyElectron() const;
     double getDeltaEnergyGas() const;
-    string getReferencesAsString() const;
+    std::string getReferencesAsString() const;
 
-    vector<weak_ptr<Species>> getSpecies() const;
-    int getStoicCoeffByName(const string & s_name) const;
+    std::vector<std::weak_ptr<Species>> getSpecies() const;
+    int getStoicCoeffByName(const std::string & s_name) const;
     /**
      * equality operator override and compares the reaction name
      * the latex name of the reaction and the reaction number is the same
@@ -38,8 +37,8 @@ namespace rxn
     bool operator!=(const Reaction & other) const;
 
   private:
-    string checkName(const YAML::Node & rxn_input);
-    unsigned int getCoeff(string & s);
+    std::string checkName(const YAML::Node & rxn_input);
+    unsigned int getCoeff(std::string & s);
 
     /**
      * Sets up the reactants and products for the reaction
@@ -55,29 +54,30 @@ namespace rxn
     void determineReactionType();
 
     const unsigned int _number;
-    const string _data_path;
-    const string _name;
+    const std::string _data_path;
+    const std::string _name;
     const double _delta_eps_e;
     const double _delta_eps_g;
-    const string _bib_file;
+    const bool _is_elastic;
+    const std::string _bib_file;
     const bool _check_refs;
-    const vector<string> _references;
-    vector<string> _notes;
-    vector<double> _params;
+    const std::vector<std::string> _references;
+    std::vector<std::string> _notes;
+    std::vector<double> _params;
 
-    vector<weak_ptr<Species>> _species;
-    unordered_map<string, int> _stoic_coeffs;
+    std::vector<std::weak_ptr<Species>> _species;
+    std::unordered_map<std::string, int> _stoic_coeffs;
 
-    string _latex_name;
+    std::string _latex_name;
 
     ReactionType _type;
     /// all of these are relatively temporary member variables and
     /// will be cleared once we are done with them to avoid
     // storing the same data multiple times on the reaction object.
-    vector<weak_ptr<Species>> _reactants;
-    vector<weak_ptr<Species>> _products;
-    unordered_map<string, unsigned int> _reactant_count;
-    unordered_map<string, unsigned int> _product_count;
+    std::vector<std::weak_ptr<Species>> _reactants;
+    std::vector<std::weak_ptr<Species>> _products;
+    std::unordered_map<std::string, unsigned int> _reactant_count;
+    std::unordered_map<std::string, unsigned int> _product_count;
 
   };
 
@@ -88,7 +88,7 @@ template <>
   {
     /**
      * Override for the hash method hash is based on
-     * string representation of the reaction
+     * std::string representation of the reaction
      * the reaction number
      * the latex representation of the reaction
      * @param obj the reaction object

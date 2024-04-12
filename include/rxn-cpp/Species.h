@@ -2,7 +2,6 @@
 
 #include "SpeciesBase.h"
 #include <vector>
-using namespace std;
 
 namespace rxn
 {
@@ -12,31 +11,31 @@ namespace rxn
   class Species : public SpeciesBase
   {
   public:
-    Species(const string & name);
+    Species(const std::string & name);
 
     /** Comparison operator checks if the sub species have the same member variables */
     bool operator==(const Species & other) const;
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const Species & other) const;
     /** Getter method for all rate based reactions */
-    vector<shared_ptr<const Reaction>> getRateBasedReactions() const;
+    std::vector<std::shared_ptr<const Reaction>> getRateBasedReactions() const;
     /** Getter method for all xsec based reactions */
-    vector<shared_ptr<const Reaction>> getXSecBasedReactions() const;
+    std::vector<std::shared_ptr<const Reaction>> getXSecBasedReactions() const;
     /** Getter method for the subspecies list */
-    const vector<const SubSpecies> getSubSpecies() const;
-    const string & getNeutralGroundState() const;
+    const std::vector<const SubSpecies> getSubSpecies() const;
+    const std::string & getNeutralGroundState() const;
 
   private:
     // we are making these classes friends so they can make changes
     // to the member variables which hold the Reaction information
     friend class SpeciesFactory;
     /** the list of the sub_species in the the class */
-    const vector<const SubSpecies> _sub_species;
-    const string _neutral_ground_state;
+    const std::vector<const SubSpecies> _sub_species;
+    const std::string _neutral_ground_state;
     /** All rate based reactions */
-    vector<weak_ptr<const Reaction>> _rate_based;
+    std::vector<std::weak_ptr<const Reaction>> _rate_based;
     /** All xsec based reactions */
-    vector<weak_ptr<const Reaction>> _xsec_based;
+    std::vector<std::weak_ptr<const Reaction>> _xsec_based;
 
     /** Method for constructing the latex name of the species  */
     void setLatexName() override;
@@ -44,12 +43,12 @@ namespace rxn
      * This method breaks down the species into the various
      * different elements that are in the species
     */
-    const vector<const SubSpecies> decomposeSpecies();
+    const std::vector<const SubSpecies> decomposeSpecies();
     /** Method for getting the total mass based on all of the subspecies */
     void setMass() override;
     /** Method for getting the total charge number based on all of the subspecies */
     void setChargeNumber() override;
-    string setNeutralGroundState() const;
+    std::string setNeutralGroundState() const;
   };
 }
 

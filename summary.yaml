@@ -217,7 +217,7 @@ species:
 
 
   - N2:
-      - rate-based-reactions: 41
+      - rate-based-reactions: 42
 
 
 
@@ -256,7 +256,8 @@ species:
           - N2+ + N2 + M -> N4+ + M
 
         sources:
-          - count: 13
+          - count: 14
+          - e + N2* -> e + N2
           - N4+ + O2 -> O2+ + N2 + N2
           - N2+ + O2 -> O2+ + N2
           - N2(a) + O2 -> N2 + O + O
@@ -314,12 +315,13 @@ species:
 
 
   - N2*:
-      - rate-based-reactions: 25
+      - rate-based-reactions: 26
 
 
 
         sinks:
-          - count: 8
+          - count: 9
+          - e + N2* -> e + N2
           - N2(a) + O2 -> N2 + O + O
           - N2(a) + O2 -> N2 + O2(b1)
           - N2(a) + O -> N2 + O
@@ -1014,14 +1016,16 @@ species:
 
 
   - e:
-      - rate-based-reactions: 81
+      - rate-based-reactions: 83
 
 
 
         blanaced:
-          - count: 44
+          - count: 46
           - e + N2 -> e + N2(rotation)
           - e + N2 -> e + N2(rotation)
+          - e + N2* -> e + N2
+          - e + N2* -> e + N2
           - e + N2 -> e + N2(vibration)
           - e + N2 -> e + N2(vibration)
           - e + N2 -> e + N + N

@@ -2,27 +2,22 @@
 #include <string>
 #include <iostream>
 
-
-using namespace std;
-
 namespace rxn
 {
 
   class SpeciesBase
   {
   public:
-    SpeciesBase(const string & name);
+    SpeciesBase(const std::string & name);
     virtual ~SpeciesBase() {}
 
-    /** override to print the species name as is */
-    friend std::ostream & operator<<(std::ostream & os, const SpeciesBase & s);
     /** Comparison operator checks if the two base species have the same name */
     bool operator==(const SpeciesBase & other) const;
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const SpeciesBase & other) const;
 
     /** Getter method for the name of species */
-    const string getName() const;
+    const std::string getName() const;
     /** Getter method for the mass of the species */
     double getMass() const;
 
@@ -32,26 +27,26 @@ namespace rxn
     /** Getter method for the charge of the species */
     double getCharge() const;
     /** Getter method for the latex name of the species */
-    string getLatexRepresentation() const;
+    std::string getLatexRepresentation() const;
 
   protected:
-    /** The full string of the species base */
-    string _name;
+    /** The full std::string of the species base */
+    std::string _name;
     /** The molar mass of the species */
     double _mass;
     /** The level of ionization ex: Ar-4 this is -4 */
     int _charge_num;
     /** The name of the spcies formatted for printing in a latex_table */
-    string _latex_name;
+    std::string _latex_name;
 
   private:
 
     /**
-     * Method checks to make sure that the name is not an empty string
+     * Method checks to make sure that the name is not an empty std::string
      * also checks to make sure e and E are reserved for electrons only
-     * @param name the string representation of the name
+     * @param name the std::string representation of the name
     */
-    string checkName(const string & name);
+    std::string checkName(const std::string & name);
     /**
      * Method for setting the mass of the species
     */

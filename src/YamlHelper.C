@@ -7,6 +7,7 @@
 #include "StringHelper.h"
 #include "InvalidInput.h"
 
+using namespace std;
 
 namespace rxn {
 
@@ -20,10 +21,15 @@ std::string getTypeName<double>() {
     return "double";
 }
 
+template<>
+std::string getTypeName<bool>() {
+    return "bool";
+}
+
 // Specialization for double
 template<>
 double defaultValue<double>() {
-    return 0;
+    return 0.0;
 }
 
 // Specialization for string
@@ -32,8 +38,14 @@ string defaultValue<string>() {
     return "";
 }
 
+template<>
+bool defaultValue<bool>()
+{
+  return false;
+}
 
-bool validParam(const string & param, const YAML::Node & node, const bool required)
+
+bool paramProvided(const string & param, const YAML::Node & node, const bool required)
 {
   if (!node[param])
   {
@@ -50,7 +62,7 @@ template <typename T>
 vector<T> getParams(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
-  if (!validParam(param, node, required))
+  if (!paramProvided(param, node, required))
   {
     return vector<T>(0);
   }
@@ -89,7 +101,7 @@ template <typename T>
 T getParam(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
-  if (!validParam(param, node, required))
+  if (!paramProvided(param, node, required))
   {
     return defaultValue<T>();
   }
@@ -108,6 +120,7 @@ T getParam(const string & param, const YAML::Node & node, const bool required)
 
 template string getParam<string>(const string & param, const YAML::Node & node, const bool required);
 template double getParam<double>(const string & param, const YAML::Node & node, const bool required);
+template bool getParam<bool>(const string & param, const YAML::Node & node, const bool required);
 
 
 const vector<const string>

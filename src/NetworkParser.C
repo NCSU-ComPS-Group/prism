@@ -10,6 +10,9 @@
 #include "StringHelper.h"
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
+
+using namespace std;
+
 namespace rxn
 {
 
@@ -76,7 +79,7 @@ NetworkParser::checkBibFile(const string & file)
 void
 NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<const Reaction>> * rxn_list, const string & type, const string & data_path, const string & bib_file)
 {
-  if (!validParam(type, network, OPTIONAL))
+  if (!paramProvided(type, network, OPTIONAL))
   {
     return;
   }
@@ -92,6 +95,11 @@ NetworkParser::parseReactions(const YAML::Node & network, vector<shared_ptr<cons
   {
     try {
       rxn_list->push_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path, bib_file, _check_refs));
+
+      if (rxn_list->back()->isElastic() && type != RATE_BASED)
+      {
+        throw InvalidReaction(rxn_list->back()->getName(), "Elastic reactions can only be in the '" + RATE_BASED + "' block");
+      }
       printGreen("Reaction Validated: " + rxn_list->back()->getName() + "\n");
       if (type == RATE_BASED)
       {
@@ -164,7 +172,7 @@ NetworkParser::parseNetwork(const string & file)
   SpeciesFactory::getInstance().collectLumpedSpecies(network);
   SpeciesFactory::getInstance().collectLatexOverrides(network);
 
-  if (!validParam(RATE_BASED, network, OPTIONAL) && !validParam(XSEC_BASED, network, OPTIONAL))
+  if (!paramProvided(RATE_BASED, network, OPTIONAL) && !paramProvided(XSEC_BASED, network, OPTIONAL))
   {
     InvalidInputExit("No reactions were found in file: '" + file + "'\n" +
                      "You must provide reactions in atleast one of the following blocks\n'" +
@@ -293,7 +301,7 @@ NetworkParser::tableHelper(string & latex,
 
     latex += fmt::format("      {:d}", rxn_counter) + " & ";
     latex += r->getLatexRepresentation() + " & ";
-    for (auto param : r->getReactionParams())
+    for (auto param : r->getRateParams())
     {
       latex += formatScientific(param) + " & ";
     }

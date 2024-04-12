@@ -6,7 +6,9 @@
 #     latex: Ar$^\text{r}$
 
 rate-based:
-  - reaction: CF2+ + CF4 -> CF3+ + CF3
+  - reaction: Ar2a + e -> He + e
+    file: test.txt
+  # - reaction: CF2+ + CF4 -> CF3+ + CF3
   #   delta-eps-e: 11.56
   #   file: reaction1.txt
   #   references: lymberopoulos1993fluid

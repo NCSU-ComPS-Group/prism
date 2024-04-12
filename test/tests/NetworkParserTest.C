@@ -2,6 +2,9 @@
 #include "gtest/gtest.h"
 #include "rxn-cpp/rxn-cpp.h"
 
+using namespace rxn;
+using namespace std;
+
 class NetworkParserTest : public testing::Test {
   protected:
     void SetUp() override {

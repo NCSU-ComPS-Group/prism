@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "fileComparer.h"
 
+using namespace std;
 
 TEST(fileComparer, SameContent)
 {

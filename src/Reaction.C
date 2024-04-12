@@ -8,6 +8,9 @@
 #include "BibTexHelper.h"
 #include "SubSpecies.h"
 #include "ReactionTypeHelper.h"
+
+using namespace std;
+
 namespace rxn
 {
   Reaction::Reaction(const YAML::Node & rxn_input,
@@ -20,25 +23,59 @@ namespace rxn
   _name(checkName(rxn_input)),
   _delta_eps_e(getParam<double>(DELTA_EPS_E_KEY, rxn_input, OPTIONAL)),
   _delta_eps_g(getParam<double>(DELTA_EPS_G_KEY, rxn_input, OPTIONAL)),
+  _is_elastic(getParam<bool>(ELASTIC_KEY, rxn_input, OPTIONAL)),
   _bib_file(bib_file),
   _check_refs(check_refs),
   _references(getParams<string>(REFERENCE_KEY, rxn_input, OPTIONAL)),
-  _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL)),
-  _params({0,0,0,0,0})
+  _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL))
   {
+    _params = getParams<double>(PARAM_KEY, rxn_input, OPTIONAL);
 
-    // const bool file_key = validParam(FILE_KEY, rxn_input, OPTIONAL);
-    // const bool params_key = validParam(PARAM_KEY, rxn_input, OPTIONAL);
+    const bool params_key_provided = paramProvided(PARAM_KEY, rxn_input, OPTIONAL);
 
-    // if (file_key && params_key)
-    // {
-    //   throw InvalidReaction(_name, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
-    // }
+    if (params_key_provided)
+    {
+      if (_params[0] <= 0.0)
+      {
+        throw InvalidReaction(_name, "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
+      }
 
-    // if (!file_key && !params_key)
-    // {
-    //   throw InvalidReaction(_name, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
-    // }
+      for (auto p : _params)
+      {
+        if (p < 0.0)
+        {
+          throw InvalidReaction(_name, "'" + PARAM_KEY + "'cannot be contain negative values");
+        }
+      }
+
+
+      if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
+      {
+        for (unsigned int i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
+        {
+          _params.push_back(0.0);
+        }
+      }
+    }
+
+    const bool file_key_provided = paramProvided(FILE_KEY, rxn_input, OPTIONAL);
+    const bool delta_eps_e_provided = paramProvided(DELTA_EPS_E_KEY, rxn_input, OPTIONAL);
+    const bool delta_eps_g_provided = paramProvided(DELTA_EPS_G_KEY, rxn_input, OPTIONAL);
+
+    if (file_key_provided && params_key_provided)
+    {
+      throw InvalidReaction(_name, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
+    }
+
+    if (!file_key_provided && !params_key_provided)
+    {
+      throw InvalidReaction(_name, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
+    }
+
+    if (_is_elastic && (delta_eps_e_provided || delta_eps_g_provided))
+    {
+      throw InvalidReaction(_name, "For an elastic reaction you may not provide '" + DELTA_EPS_E_KEY + "' nor '" + DELTA_EPS_G_KEY + "'");
+    }
 
     const vector<const string> extra_params = getExtraParams(rxn_input, allowed_reaction_params);
 
@@ -74,7 +111,6 @@ namespace rxn
       checkReferences();
     }
 
-
     // clearning all of the data that is any more than the minimum we need
     _reactant_count.clear();
     _product_count.clear();
@@ -87,10 +123,9 @@ namespace rxn
   {
 
     string rxn_str = getParam<string>(REACTION_KEY, rxn_input, REQUIRED);
-
     if (rxn_str.find(" -> ") == string::npos)
     {
-      InvalidReaction(_name, "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
+      throw InvalidReaction(_name, "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
     }
 
     return rxn_str;
@@ -99,7 +134,6 @@ namespace rxn
   void
   Reaction::setSides(){
 
-    // vector<vector<Species>> species_sides;
     vector<string> sides = splitByDelimiter(_name, " -> ");
     vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
     vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
@@ -191,8 +225,6 @@ namespace rxn
   void
   Reaction::validateReaction()
   {
-    // reactant mass
-    float r_mass = 0;
     // reactant charge
     int r_charge_num = 0;
     // all of the elements that exist in the reactants
@@ -203,7 +235,6 @@ namespace rxn
     {
       auto r = weak_r.lock();
       s_count = _reactant_count[r->getName()];
-      r_mass += r->getMass() * s_count;
       r_charge_num += r->getChargeNumber() * s_count;
       for (auto sub_r : r->getSubSpecies())
       {
@@ -221,8 +252,6 @@ namespace rxn
         r_elements[sub_r.getBase()] += sub_r.getSubscript() * s_count;
       }
     }
-    // product mass
-    float p_mass = 0;
     // product charge
     int p_charge_num = 0;
     unordered_map<string, int> p_elements;
@@ -230,7 +259,6 @@ namespace rxn
     {
       auto p = weak_p.lock();
       s_count = _product_count[p->getName()];
-      p_mass += p->getMass() * s_count;
       p_charge_num += p->getChargeNumber() * s_count;
       // lets check to make sure that all of the elements that make up
       // the product also exist on the reactant side
@@ -245,7 +273,7 @@ namespace rxn
 
         if ( it == r_elements.end())
         {
-          throw InvalidReaction(_name, sub_p.getBase() + "does not appear as a reactant");
+          throw InvalidReaction(_name,"'" + sub_p.getBase() + "' does not appear as a reactant");
         }
         // we'll keep track of the element count on both sides
         if (p_elements.count(sub_p.getBase()) == 0)
@@ -259,25 +287,21 @@ namespace rxn
     }
 
     // check here to make sure the reaction is properly balanced
+    // checking to make sure each element appears the same number of
+    // times on each side will ensure heavy species mass conservation
     for (auto it : r_elements)
-      if (p_elements[it.first] != it.second)
+    {
+      auto p_it = p_elements.find(it.first);
+      if (p_it == p_elements.end() || p_it->second != it.second)
       {
-        throw InvalidReaction(_name, fmt::format("Element {} appears {:d} times as a reactant and {:d} times as a product.",
+        throw InvalidReaction(_name, fmt::format("Element or electron '{}' appears {:d} times as a reactant and {:d} times as a product.",
                         it.first,
                         p_elements[it.first], it.second));
       }
+    }
 
-    // we'll consider that mass is conserved if the difference is less than an electron
-    // this is because we don't have perfect precision with mass data
-    bool mass_conservation = abs(r_mass - p_mass) < SpeciesFactory::getInstance().getMass("e");
-
+    // checking for charge conservation will ensure that electrons are properly balanced
     bool charge_conservation = r_charge_num == p_charge_num;
-
-    if (!mass_conservation && !charge_conservation)
-      throw InvalidReaction(_name, "Neither mass nor charge is conserved");
-
-    if (!mass_conservation)
-      throw InvalidReaction(_name, "Mass is not conserved");
 
     if (!charge_conservation)
       throw InvalidReaction(_name, "Charge is not conserved");
@@ -352,45 +376,30 @@ namespace rxn
   void
   Reaction::setLatexName()
   {
-    // we are going to use this to make sure we don't duplicate species in the
-    // latex string
-    set<string> unique_check;
+    unsigned int s_count = 0;
     for (auto weak_r : _reactants)
     {
+      s_count++;
       auto r = weak_r.lock();
       auto name = r->getName();
       // lets check to see if we have added this reactant
-      auto it = unique_check.find(name);
-      // if its already in the equation no need to add it again
-      if (it != unique_check.end())
-        continue;
-      // add it to the set if its not in already
-      unique_check.emplace(name);
-
       auto count_it = _reactant_count.find(name);
       if (count_it->second != 1)
         _latex_name += fmt::format("{:d}", count_it->second);
 
       _latex_name += r->getLatexRepresentation();
 
-      if (unique_check.size() != _reactant_count.size())
+      if (s_count != _reactant_count.size())
         _latex_name += " + ";
     }
 
     _latex_name += " $\\rightarrow$ ";
-
-    unique_check.clear();
+    s_count = 0;
     for (auto weak_p : _products)
     {
+      s_count++;
       auto p = weak_p.lock();
       auto name = p->getName();
-      // lets check to see if we have added this reactant
-      auto it = unique_check.find(name);
-      // if its already in the equation no need to add it again
-      if (it != unique_check.end())
-        continue;
-      // add it to the set if its not in already
-      unique_check.emplace(name);
 
       auto count_it = _product_count.find(name);
       if (count_it->second != 1)
@@ -398,32 +407,32 @@ namespace rxn
 
       _latex_name += p->getLatexRepresentation();
 
-      if (unique_check.size() != _product_count.size())
+      if (s_count != _product_count.size())
         _latex_name += " + ";
     }
   }
 
-  void
-  Reaction::determineReactionType()
-  {
-    if (isElastic(_reactants, _products))
-    {
-      cout << "Elastic!" << endl;
-      return;
-    }
+  // void
+  // Reaction::determineReactionType()
+  // {
+  //   if (isElastic(_reactants, _products))
+  //   {
+  //     cout << "Elastic!" << endl;
+  //     return;
+  //   }
 
-    if (isIonization(_reactants, _products, _stoic_coeffs))
-    {
-      cout << "Ionization!" << endl;
-      return;
-    }
+  //   if (isIonization(_reactants, _products, _stoic_coeffs))
+  //   {
+  //     cout << "Ionization!" << endl;
+  //     return;
+  //   }
 
-    if (isExcitation(_reactants, _products, _stoic_coeffs))
-    {
-      cout << "Excitation" << endl;
-      return;
-    }
-  }
+  //   if (isExcitation(_reactants, _products, _stoic_coeffs))
+  //   {
+  //     cout << "Excitation" << endl;
+  //     return;
+  //   }
+  // }
 
   void
   Reaction::checkReferences()
@@ -470,7 +479,7 @@ namespace rxn
   }
 
   const vector<double> &
-  Reaction::getReactionParams() const
+  Reaction::getRateParams() const
   {
     return _params;
   }
@@ -487,6 +496,11 @@ namespace rxn
     return _delta_eps_g;
   }
 
+  bool
+  Reaction::isElastic() const
+  {
+    return _is_elastic;
+  }
   bool
   Reaction::operator==(const Reaction & other) const
   {

@@ -7,6 +7,9 @@
 #include "YamlHelper.h"
 #include "Constants.h"
 #include "StringHelper.h"
+
+using namespace std;
+
 namespace rxn
 {
 
@@ -34,7 +37,7 @@ SpeciesFactory::clear(){
 void
 SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
 {
-  if (!validParam(CUSTOM_SPECIES, network, OPTIONAL))
+  if (!paramProvided(CUSTOM_SPECIES, network, OPTIONAL))
     return;
 
   if (network[CUSTOM_SPECIES].size() == 0)
@@ -42,12 +45,12 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
     InvalidInputExit("Both '" + NAME_KEY + "' and '" + MASS_KEY + "' inputs are missing in '" + CUSTOM_SPECIES + "' block");
   }
 
-  if (!validParam(NAME_KEY, network[CUSTOM_SPECIES][0], OPTIONAL))
+  if (!paramProvided(NAME_KEY, network[CUSTOM_SPECIES][0], OPTIONAL))
   {
     InvalidInputExit("When providing the " + CUSTOM_SPECIES + " block you must also provide the '" + NAME_KEY + "' parameter");
   }
 
-  if (!validParam(MASS_KEY, network[CUSTOM_SPECIES][0], OPTIONAL))
+  if (!paramProvided(MASS_KEY, network[CUSTOM_SPECIES][0], OPTIONAL))
   {
     InvalidInputExit("When providing the " + CUSTOM_SPECIES + " block you must also provide the '" + MASS_KEY + "' parameter");
   }
@@ -86,7 +89,7 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
 void
 SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
 {
-  if (!validParam(LUMPED_SPECIES, network, OPTIONAL))
+  if (!paramProvided(LUMPED_SPECIES, network, OPTIONAL))
     return;
 
   if (network[LUMPED_SPECIES].size() == 0)
@@ -99,12 +102,12 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
 
   for (unsigned int i = 0; i < network[LUMPED_SPECIES].size(); ++i)
   {
-    if (!validParam(LUMPED_KEY, network[LUMPED_SPECIES][i], OPTIONAL))
+    if (!paramProvided(LUMPED_KEY, network[LUMPED_SPECIES][i], OPTIONAL))
     {
       InvalidInputExit("When providing the " + LUMPED_SPECIES + " block you must also provide the '" + LUMPED_KEY + "' parameter");
     }
 
-    if (!validParam(ACTUAL_KEY, network[LUMPED_SPECIES][i], OPTIONAL))
+    if (!paramProvided(ACTUAL_KEY, network[LUMPED_SPECIES][i], OPTIONAL))
     {
       InvalidInputExit("When providing the " + LUMPED_SPECIES + " block you must also provide the '" + ACTUAL_KEY + "' parameter");
     }
@@ -143,7 +146,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
 void
 SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
 {
-  if (!validParam(LATEX_OVERRIDES, network, OPTIONAL))
+  if (!paramProvided(LATEX_OVERRIDES, network, OPTIONAL))
     return;
 
   if (network[LATEX_OVERRIDES].size() == 0)
@@ -151,12 +154,12 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
     InvalidInputExit("Both '" + SPECIES_KEY + "' and '" + LATEX_KEY + "' inputs are missing in '" + LATEX_OVERRIDES + "' block");
   }
 
-  if (!validParam(SPECIES_KEY, network[LATEX_OVERRIDES][0], OPTIONAL))
+  if (!paramProvided(SPECIES_KEY, network[LATEX_OVERRIDES][0], OPTIONAL))
   {
     InvalidInputExit("When providing the " + LATEX_OVERRIDES + " block you must also provide the '" + SPECIES_KEY + "' parameter");
   }
 
-  if (!validParam(LATEX_KEY, network[LATEX_OVERRIDES][0], OPTIONAL))
+  if (!paramProvided(LATEX_KEY, network[LATEX_OVERRIDES][0], OPTIONAL))
   {
     InvalidInputExit("When providing the " + LATEX_OVERRIDES + " block you must also provide the '" + LATEX_KEY + "' parameter");
   }

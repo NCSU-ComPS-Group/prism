@@ -4,3 +4,4 @@
 #include "Reaction.h"
 #include "Species.h"
 #include "StringHelper.h"
+#include "InvalidInput.h"

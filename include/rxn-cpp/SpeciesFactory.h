@@ -7,8 +7,6 @@
 
 #include "Species.h"
 
-using namespace std;
-
 class Reaction;
 namespace rxn{
 
@@ -19,17 +17,17 @@ class SpeciesFactory {
 
     void clear();
 
-    double getMass(const string & name) const;
-    const string getLatexOverride(const string & name) const;
+    double getMass(const std::string & name) const;
+    const std::string getLatexOverride(const std::string & name) const;
 
-    weak_ptr<Species> getSpecies(const string & name);
+    std::weak_ptr<Species> getSpecies(const std::string & name);
     /**
      * Method checks for lumped states of a species
      * if there is one it will return the pointer to the species the name is lumped into
      * if there is not a lumped species it will simply return a pointer to the same species
-     * @param s the weak pointer to the species object held by the reaction
+     * @param s the std::weak pointer to the species object held by the reaction
     */
-    string getLumpedSpecies(weak_ptr<Species> & s);
+    std::string getLumpedSpecies(std::weak_ptr<Species> & s);
     // if we are in testing mode we'll give other people access to these
     // otherwise we want them to be private
     #ifdef TESTING
@@ -38,19 +36,19 @@ class SpeciesFactory {
       void collectLatexOverrides(const YAML::Node & network);
     #endif
 
-    void addRateBasedReaction(shared_ptr<const Reaction> r);
-    void addXSecBasedReaction(shared_ptr<const Reaction> r);
+    void addRateBasedReaction(std::shared_ptr<const Reaction> r);
+    void addXSecBasedReaction(std::shared_ptr<const Reaction> r);
 
 
   private:
 
-    string getSpeciesSummary() const;
+    std::string getSpeciesSummary() const;
 
-    map<string, shared_ptr<Species>> _species;
+    std::map<std::string, std::shared_ptr<Species>> _species;
     friend class NetworkParser;
 
-    unordered_map<string, shared_ptr<Species>> _lumped_map;
-    unordered_map<string, string> _latex_overrides;
+    std::unordered_map<std::string, std::shared_ptr<Species>> _lumped_map;
+    std::unordered_map<std::string, std::string> _latex_overrides;
 
 
     #ifndef TESTING
@@ -66,7 +64,7 @@ class SpeciesFactory {
     // Private instance of the singleton
     static SpeciesFactory* _instance;
 
-    unordered_map<string, double> _default_masses = {{"hnu", 0.0},
+    std::unordered_map<std::string, double> _default_masses = {{"hnu", 0.0},
                                                   {"M", 1},
                                                   {"e", 5.4857990943E-4},
                                                   {"E", 5.4857990943E-4},
@@ -187,7 +185,7 @@ class SpeciesFactory {
                                                   {"No", 259.10103},
                                                   {"Lr", 262.10961}};
     // copy the defaults into the bases
-    unordered_map<string, double> _base_masses = _default_masses;
+    std::unordered_map<std::string, double> _base_masses = _default_masses;
 };
 
 }

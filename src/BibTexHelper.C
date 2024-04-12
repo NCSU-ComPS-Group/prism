@@ -7,6 +7,7 @@
 #include "BibTexHelper.h"
 #include "StringHelper.h"
 
+using namespace std;
 namespace rxn
 {
 

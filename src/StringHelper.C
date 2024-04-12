@@ -5,6 +5,7 @@
 #include <iostream>
 #include "fmt/core.h"
 
+using namespace std;
 namespace rxn
 {
   const string WHITESPACE = " \n\r\t\f\v";
@@ -191,12 +192,6 @@ namespace rxn
   }
 
   string
-  makeYellow(const string & s)
-  {
-    return "\033[33m" + s + "\033[0m";
-  }
-
-  string
   makeRed(const string & s)
   {
     return "\033[31m" + s + "\033[0m";
@@ -212,11 +207,5 @@ namespace rxn
   printRed(const string & s)
   {
     cout << makeRed(s);
-  }
-
-  void
-  printYellow(const string & s)
-  {
-    cout << makeYellow(s);
   }
 }

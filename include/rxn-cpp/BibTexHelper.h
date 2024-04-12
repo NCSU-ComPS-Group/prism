@@ -4,7 +4,6 @@
 #include <unordered_map>
 
 
-using namespace std;
 
 namespace rxn
 {
@@ -14,8 +13,11 @@ namespace rxn
       static BibTexHelper& getInstance();
 
       void clear();
-      void checkCiteKey(const string & file, const string & citekey);
+      void checkCiteKey(const std::string & file, const std::string & citekey);
 
+      #ifdef TESTING
+        void collectReferences(const std::string & bibfile);
+      #endif
     private:
       // Private constructor to prevent instantiation
       BibTexHelper() {}
@@ -29,7 +31,7 @@ namespace rxn
        * This is where we are going to store all of the citekeys
        * that are available in each bib file
       */
-      unordered_map<string, unordered_set<string>> _refs;
+      std::unordered_map<std::string, std::unordered_set<std::string>> _refs;
       /**
        * Reads the provided bib file and collects all of the cite keys and places
        * them into the refs set
@@ -38,16 +40,8 @@ namespace rxn
        * @throws invalid_argument if a key found in the bibfile has already been added to the set
        * @throws invalid_argument if the provided bib file is not found
        */
-      void collectReferences(const string & bibfile);
+      #ifndef TESTING
+        void collectReferences(const std::string & bibfile);
+      #endif
   };
-
-
-
-
-  /**
-   * Checks to see if the  provided cite key is in the refs set
-   * @param citekey the citekey that you want to find in the refs set
-   * @throws invalid_argument if the cite key is not in the refs set
-   */
-  void checkCiteKey(const string & citekey);
 }

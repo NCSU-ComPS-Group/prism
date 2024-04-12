@@ -3,20 +3,13 @@
 #include "Constants.h"
 #include "InvalidInput.h"
 
+using namespace std;
+
 namespace rxn
 {
   SpeciesBase::SpeciesBase(const string & name) :
     _name(checkName(name))
   {
-  }
-
-
-
-  std::ostream &
-  operator<<(std::ostream & os, const SpeciesBase & s)
-  {
-    os << s.getName();
-    return os;
   }
 
   string
