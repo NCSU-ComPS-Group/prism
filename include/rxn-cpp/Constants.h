@@ -60,11 +60,7 @@ namespace rxn
     elastic,
     ionization,
     excitation,
-    dissociation,
-    dissociation_ionization,
-    attachment,
-    dissociative_attachment,
-    superelastic
+    other
   };
 
 }

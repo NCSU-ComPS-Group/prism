@@ -10,6 +10,7 @@ class Species;
 // Attachment los an electron
 // excitation everything else
 
+// well call these other reactions
 // add three body reactions must be rated based
 // all reactions with no electrons on lhs need to be rate based as well
 

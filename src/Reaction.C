@@ -7,7 +7,6 @@
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
 #include "SubSpecies.h"
-#include "ReactionTypeHelper.h"
 
 using namespace std;
 
@@ -104,7 +103,7 @@ namespace rxn
     substituteLumped();
     validateReaction();
     collectUniqueSpecies();
-    // determineReactionType();
+    determineReactionType();
 
     if (_check_refs)
     {
@@ -412,27 +411,16 @@ namespace rxn
     }
   }
 
-  // void
-  // Reaction::determineReactionType()
-  // {
-  //   if (isElastic(_reactants, _products))
-  //   {
-  //     cout << "Elastic!" << endl;
-  //     return;
-  //   }
+  void
+  Reaction::determineReactionType()
+  {
+    // if (isElastic(_reactants, _products))
+    // {
+    //   cout << "Elastic!" << endl;
+    //   return;
+    // }
 
-  //   if (isIonization(_reactants, _products, _stoic_coeffs))
-  //   {
-  //     cout << "Ionization!" << endl;
-  //     return;
-  //   }
-
-  //   if (isExcitation(_reactants, _products, _stoic_coeffs))
-  //   {
-  //     cout << "Excitation" << endl;
-  //     return;
-  //   }
-  // }
+  }
 
   void
   Reaction::checkReferences()
