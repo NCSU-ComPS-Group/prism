@@ -217,7 +217,14 @@ NetworkParser::writeLatexTable(const string & file)
   latex += "]{biblatex}\n\n";
   for (auto it : _bibs)
   {
-    latex += "\\addbibresource{" + it.second + "}\n";
+    auto bib = it.second;
+    auto slash_pos = it.second.find("/");
+    if (slash_pos == string::npos)
+    {
+      latex += "\\addbibresource{" + it.second + "}\n";
+      continue;
+    }
+    latex += "\\addbibresource{" + it.second.substr(slash_pos + 1) + "}\n";
   }
   latex += "\n\n";
   // actual document
@@ -304,6 +311,15 @@ NetworkParser::tableHelper(string & latex,
     for (auto param : r->getRateParams())
     {
       latex += formatScientific(param) + " & ";
+    }
+    if (r->getRateParams().size() == 0)
+    {
+      latex += " & & EEDF & & & ";
+    }
+    else if (r->getRateParams().size() != 5)
+    {
+      for (size_t i = 0; i < 5 - r->getRateParams().size(); ++i)
+      latex += "0.00 & ";
     }
     latex += formatScientific(r->getDeltaEnergyElectron()) + " & ";
     latex += formatScientific(r->getDeltaEnergyGas()) + " & ";

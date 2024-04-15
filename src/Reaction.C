@@ -39,15 +39,6 @@ namespace rxn
         throw InvalidReaction(_name, "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
       }
 
-      for (auto p : _params)
-      {
-        if (p < 0.0)
-        {
-          throw InvalidReaction(_name, "'" + PARAM_KEY + "'cannot be contain negative values");
-        }
-      }
-
-
       if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
       {
         for (unsigned int i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)

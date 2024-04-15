@@ -1,3 +1,5 @@
+bibliography: demo/works.bib
+
 # this block will also be totall optional
 lumped-species:
   - lumped: N2*
@@ -20,149 +22,515 @@ latex-overrides:
 # lets do a check to make sure that all of the products exist on the reactants side
 rate-based:
   - reaction: e + N2 -> e + N2(rotation)
+    delta-eps-e: 0.02
+    delta-eps-g: -0.02
+    file: data.txt
     notes: [something important, something else]
-  - reaction: e + N2* -> e + N2
-
+    references: ionin2007physics
 
   - reaction: e + N2 -> e + N2(vibration)
-  - reaction: e + N2 -> e + e + N2+
-  - reaction: e + N2 -> e + N + N
-  - reaction: e + N2 -> e + N2(electronic)
-  - reaction: e + N2 -> e + N2(a)
-  - reaction: e + N2 -> e + N2(a2)
-  - reaction: e + N2 -> e + N2(b)
-  - reaction: e + N2 -> e + N2(c)
-  - reaction: e + He -> e + e + He+
-  - reaction: e + He -> e + He^m
-  - reaction: e + O2 -> e + e + O2+
-  - reaction: e + O2 -> e + O + O
-  - reaction: e + O2 -> e + O + O^m
-  - reaction: e + O2 -> O + O-
-  - reaction: e + O2 -> e + O2(rotational)
-  - reaction: e + O2 -> e + O2
-  - reaction: e + O2 -> e + O2(h)
-  - reaction: e + O2 -> e + O2(a1)
-  - reaction: e + O2 -> e + O2(b1)
-  - reaction: e + O2 -> e + O2(vibrational)
-  - reaction: e + O2(al) -> e + O2(b1)
-  - reaction: e + O2(al) -> e + O + O^m
-  - reaction: e + O2(al) -> O + O-
-  - reaction: e + O2(b1) -> O + O-
-  - reaction: e + NO -> e + e + NO+
-  - reaction: e + O -> e + O^m
-  - reaction: e + O+ -> e + O+
-  - reaction: e + He^m -> e + e + He+
-  - reaction: He^m + He^m -> e + He + He+
-  - reaction: e + He^m -> e + He
-  - reaction: e + He2^m -> e + e + He2+
-  - reaction: e + He2+ -> He^m + He
-  - reaction: He^m + He + He -> He2^m + He
-  - reaction: He+ + He + He -> He2+ + He
-  - reaction: e + He+ -> He^m
-  - reaction: e + e + He+ -> e + He^m
-  - reaction: He^m + N2 -> e + He + N2+
-  - reaction: He2^m + N2 -> e + He + He + N2+
-  - reaction: He+ + N2 -> N2+ + He
-  - reaction: He2+ + N2 -> N2+ + He + He
-  - reaction: He^m + O2 -> e + He + O2+
-  - reaction: He^m + O3 -> e + O + He + O2+
-  - reaction: He^m + O2(b1) -> e + He + O2+
-  - reaction: He^m + O -> e + He + O+
-  - reaction: He^m + O^m -> e + He + O+
-  - reaction: He+ + O2 -> O + He + O+
-  - reaction: He+ + O3 -> He + O2 + O+
-  - reaction: He+ + O2 -> O2+ + He
-  - reaction: He+ + O2(a1) -> He + O + O+
-  - reaction: He+ + O2(a1) -> He + O2+
-  - reaction: He+ + O -> He + O+
-  - reaction: He+ + O^m -> He + O+
-  - reaction: N2+ + N2 + M -> N4+ + M
-  - reaction: N4+ + O2 -> O2+ + N2 + N2
-  - reaction: N2+ + O2 -> O2+ + N2
-  - reaction: O2+ + N2 + N2 -> O2+ + N2 + N2
-  - reaction: O2 + N2 + N2 -> O2 + N2 + N2
-  - reaction: O2 + N2 + O2+ -> O4+ + N2
-  - reaction: O2+ + O2 + M -> O4+ + M
-  - reaction: e + O4+ -> O2 + O2
-  - reaction: e + O2+ -> O + O
-  - reaction: e + O2 + O2 -> O2- + O2
-  - reaction: O2- + O4+ -> O2 + O2 + O2
-  - reaction: O2- + O4+ + M -> O2 + O2 + O2 + M
-  - reaction: O2+ + O2 + M -> O4+ + M
-  - reaction: O2- + O2+ + M -> O2 + O2 + M
-  - reaction: O- + O2+ -> O + O2
-  - reaction: N2(a) + O2 -> N2 + O + O
-  - reaction: N2(a) + O2 -> N2 + O2(b1)
-  - reaction: N2(a) + N2(a) -> N2 + N2(b)
-  - reaction: N2(a) + N2(a) -> N2 + N2(c)
-  - reaction: N2(a) + N2(vib) -> N2 + N2(b)
-  - reaction: N2(a) + O -> N2 + O
-  - reaction: N2(b) + O2 -> N2 + O + O
-  - reaction: N2(b) + N2 -> N2(a) + N2
-  - reaction: N2(a) + O2 -> N2 + O + O
-  - reaction: N2(a) + N2 -> N2 + N2
-  - reaction: N2(c) + O2 -> N2 + O + O
-  - reaction: N2(c) + N2 -> N2(a1) + N2
-  - reaction: N2(c) -> N2(b) + hnu
-  - reaction: O2(h) + O2 -> O2(a1) + O2
-  - reaction: O2(h) + O2 -> O2(b1) + O2
-  - reaction: O2(h) + O2 -> O2 + O2
-  - reaction: O2(h) + O -> O2 + O
-  - reaction: O2(h) + O -> O2(a1) + O
-  - reaction: O2(h) + O -> O2(b1) + O
-  - reaction: O- + O2(a1) -> e + O3
-  - reaction: O- + O2 -> e + O3
-  - reaction: O2- + O -> e + O3
-  - reaction: O- + O2 -> e + O3
-  - reaction: O + O2 + N2 -> N2 + O3
-  - reaction: O + O2 + O2 -> O2 + O3
-  - reaction: O4+ + O -> O2+ + O3
-  - reaction: O- + O2+ + N2 -> O3 + N2
-  - reaction: O- + O2+ + O2 -> O3 + O2
-  - reaction: O + O + O2 -> O3 + O
-  - reaction: O3- + O2+ -> O3 + O2
-  - reaction: O3- + O+ -> O3 + O
-  - reaction: O3- + He+ -> O3 + He
-  - reaction: O- + O3 -> O3- + O
-  - reaction: O2- + O3 -> O3- + O2
-  - reaction: O3- + O -> O2- + O2
-  - reaction: e + NO+ -> N + O
-  - reaction: e + NO+ -> N + O^m
-  - reaction: He^m + NO -> He + NO+ + e
-  - reaction: He+ + NO -> He + NO+
-  - reaction: He+ + NO -> He + N + O+
+    delta-eps-e: 1
+    delta-eps-g: -1
+    file: data.txt
+    references: ionin2007physics
 
-xsec-based:
-  - reaction: O+ + NO -> O + NO+
-  - reaction: O2+ + NO -> O2 + NO+
-  - reaction: O2+ + N -> NO+ + O
-  - reaction: NO+ + O- -> NO + O
-  - reaction: NO+ + O2- -> NO + O2
-  - reaction: N + O + N2 -> NO + N2
-  - reaction: NO + O2(a1) -> NO + O2
-  - reaction: NO + O^m -> N + O2
-  - reaction: NO + O^m -> NO + O
-  - reaction: N + O2 -> NO + O
-  - reaction: N + O + N2 -> NO + N2
-  - reaction: N + O + O2 -> NO + O2
-  - reaction: N + O + He -> NO + He
-  - reaction: N + O + O2(a1) -> NO + O2(a1)
-  - reaction: N + O + O -> NO + O
-  - reaction: N + O + O3 -> NO + O3
-  - reaction: O- + NO -> NO2 + e
-  - reaction: O2- + N -> NO2 + e
-  - reaction: NO + O3 -> NO2 + O2
-  - reaction: NO + O + He -> NO2 + He
-  - reaction: NO + O + O2 -> NO2 + O2
-  - reaction: NO + O + N2 -> NO2 + N2
-  - reaction: NO2 + O -> NO + O2
-  - reaction: NO2 + O^m -> NO2 + O
-  - reaction: NO2 + O^m -> NO + O2
-  - reaction: N + NO2 -> NO + NO
-  - reaction: N + NO2 -> N2 + O + O
-  - reaction: N + NO2 -> N2 + O2
-  - reaction: 3N + e -> 3N + e
-  # - reaction: N + e -> N + 2N + e
+  - reaction: e + N2 -> 2e + N2+
+    delta-eps-e: 15.6
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N + N
+    delta-eps-e: 9.76
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N2(electronic)
+    delta-eps-e: 1.0
+    delta-eps-g: -0.3
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N2(A)
+    delta-eps-e: 6.17
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N2(a)
+    delta-eps-e: 1.0
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N2(b)
+    delta-eps-e: 1.0
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + N2 -> e + N2(c)
+    delta-eps-e: 11.03
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + He -> e + e + He+
+    delta-eps-e: 24.6
+    file: data.txt
+    references: lopez2003electron
+
+  - reaction: e + He -> e + He^m
+    delta-eps-e: 19.8
+    file: data.txt
+    references: lopez2003electron
+
+  - reaction: e + O2 -> e + e + O2+
+    delta-eps-e: 12.07
+    file: data.txt
+    references: lopez2003electron
+
+  - reaction: e + O2 -> e + 2O
+    delta-eps-e: 5.58
+    file: data.txt
+    references: lopez2003electron
+
+  - reaction: e + O2 -> e + O + O^m
+    delta-eps-e: 8.4
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> O + O-
+    delta-eps-e: 3.6
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2(rotational)
+    delta-eps-e: 0.02
+    delta-eps-g: -0.02
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2
+    delta-eps-e: 1.0
+    delta-eps-g: -0.3
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2(h)
+    delta-eps-e: 4.5
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2(a1)
+    delta-eps-e: 0.98
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2(b1)
+    delta-eps-e: 1.63
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2 -> e + O2(vibrational)
+    delta-eps-e: 0.193
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2(al) -> e + O2(b1)
+    delta-eps-e: 0.65
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2(al) -> e + O + O^m
+    delta-eps-e: 6.34
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2(al) -> O + O-
+    delta-eps-e: 2.62
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + O2(b1) -> O + O-
+    delta-eps-e: 1.97
+    file: data.txt
+    references: ionin2007physics
+
+  - reaction: e + NO -> e + e + NO+
+    delta-eps-e: 9.26
+    file: data.txt
+    references: kim2002ionization
+
+  - reaction: e + O -> e + O^m
+    delta-eps-e: 6.34
+    file: data.txt
+    references: yuan2003computational
+
+  - reaction: e + O+ -> e + O+
+    delta-eps-e: 13.62
+    file: data.txt
+    references: yuan2003computational
+
+  - reaction: e + He^m -> e + e + He+
+    params: [4.661e-16, 0.6, 5.546e+4]
+    delta-eps-e: 4.78
+    references: ionin2007physics
+
+  - reaction: He^m + He^m -> e + He + He+
+    params: 4.5e-16
+    delta-eps-e: -15
+    references: ionin2007physics
+
+  - reaction: e + He^m -> e + He
+    params: [1.099e-17, 0.31]
+    delta-eps-e: -19.8
+    references: ionin2007physics
+
+  - reaction: e + He2^m -> e + e + He2+
+    params: [1.268e-18, 0.71, 3.945e+4]
+    delta-eps-e: 3.4
+    references: ionin2007physics
+
+  - reaction: e + He2+ -> He^m + He
+    params: [5.386e-13, -0.5]
+    references: ionin2007physics
+
+  - reaction: He^m + He + He -> He2^m + He
+    params: 1.3e-45
+    references: ionin2007physics
+
+  - reaction: He+ + He + He -> He2+ + He
+    params: 1.0e-43
+    references: ionin2007physics
+
+  - reaction: e + He+ -> He^m
+    params: [7.314e-17, -0.5]
+    delta-eps-g: -4.8
+    references: pancheshnyi2005development
+
+  - reaction: e + e + He+ -> e + He^m
+    params: [1.04e-20, -4.5]
+    delta-eps-g: -4.8
+    references: pancheshnyi2005development
+
+  - reaction: He^m + N2 -> e + He + N2+
+    params: 7.0e-17
+    delta-eps-g: -4.2
+    references: ionin2007physics
+
+  - reaction: He2^m + N2 -> e + He + He + N2+
+    params: 7.0e-17
+    references: ionin2007physics
+
+  - reaction: He+ + N2 -> N2+ + He
+    params: 5.0e-16
+    references: ionin2007physics
+
+  - reaction: He2+ + N2 -> N2+ + He + He
+    params: 5.0e-16
+    references: ionin2007physics
+
+  - reaction: He^m + O2 -> e + He + O2+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -7.73
+    references: pancheshnyi2005development
+
+  - reaction: He^m + O3 -> e + O + He + O2+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -2.15
+    references: pancheshnyi2005development
+
+  - reaction: He^m + O2(b1) -> e + He + O2+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -9.36
+    references: pancheshnyi2005development
+
+  - reaction: He^m + O -> e + He + O+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -6.18
+    references: pancheshnyi2005development
+
+  - reaction: He^m + O^m -> e + He + O+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -12.52
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O2 -> O + He + O+
+    params: [6.178e-17, 0.5]
+    delta-eps-g: -5.4
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O3 -> He + O2 + O+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -5.4
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O2 -> O2+ + He
+    params: [1.905e-18, 0.5]
+    delta-eps-g: -12.53
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O2(a1) -> He + O + O+
+    params: [6.1777e-19, 0.5]
+    delta-eps-g: -6.38
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O2(a1) -> He + O2+
+    params: [1.46647e-17, 0.5]
+    delta-eps-g: -13.51
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O -> He + O+
+    params: [2.887e-18, 0.5]
+    delta-eps-g: -10.98
+    references: pancheshnyi2005development
+
+  - reaction: He+ + O^m -> He + O+
+    params: [2.887e-18, 0.5]
+    delta-eps-g: -17.32
+    references: pancheshnyi2005development
+
+  - reaction: N2+ + N2 + M -> N4+ + M
+    params: [5.0e-41, 0.5]
+    references: aleksandrov2009simulation
+
+  - reaction: N4+ + O2 -> O2+ + N2 + N2
+    params: 2.5e-16
+    delta-eps-g: -3.51
+    references: aleksandrov2009simulation
+
+  - reaction: N2+ + O2 -> O2+ + N2
+    params: [1.04e-15, -0.5]
+    delta-eps-g: -3.51
+    references: aleksandrov2009simulation
+
+  - reaction: O2+ + N2 + N2 -> O2+ + N2 + N2
+    params: [8.1e-38, -2.0]
+    delta-eps-g: -2.0
+    references: aleksandrov2009simulation
+
+  - reaction: O2 + N2 + N2 -> O2 + N2 + N2
+    params: [14.8, -5.3, 2357.0]
+    references: aleksandrov2009simulation
+
+  - reaction: O2 + N2 + O2+ -> O4+ + N2
+    params: 1.0e-15
+    references: aleksandrov2009simulation
+
+  - reaction: O2+ + O2 + M -> O4+ + M
+    params: [2.03e-34, -3.2]
+    references: aleksandrov2009simulation
+
+  - reaction: e + O4+ -> O2 + O2
+    params: [2.42e-11, -0.5]
+    delta-eps-g: -12.07
+    references: aleksandrov2009simulation
+
+  - reaction: e + O2+ -> O + O
+    params: [6.0e-11, -1.0]
+    delta-eps-g: -6.91
+    references: aleksandrov2009simulation
+
+  - reaction: e + O2 + O2 -> O2- + O2
+    params: [6.0e-39, -1.0]
+    delta-eps-g: -0.43
+    references: aleksandrov2009simulation
+
+  - reaction: O2- + O4+ -> 3O2
+    params: 1.0e-13
+    delta-eps-g: -11.64
+    references: aleksandrov2009simulation
+
+  - reaction: O2- + O4+ + M -> 3O2 + M
+    params: [3.12e-31, -2.5]
+    delta-eps-g: -11.64
+    references: aleksandrov2009simulation
+
+  - reaction: O2+ + O2 + M -> O4+ + M
+    params: [2.03e-34, -3.2]
+    references: aleksandrov2009simulation
+
+  - reaction: O2- + O2+ + M -> O2 + O2 + M
+    params: [3.12e-31, -2.5]
+    delta-eps-g: -11.64
+    references: aleksandrov2009simulation
+
+  - reaction: O- + O2+ -> O + O2
+    params: [3.464e-12, -0.5]
+    delta-eps-g: -10.61
+    references: aleksandrov2009simulation
+
+  - reaction: N2(a) + O2 -> N2 + O + O
+    params: 1.7e-18
+    delta-eps-g: -1.05
+    references: aleksandrov2009simulation
+
+  - reaction: N2(a) + O2 -> N2 + O2(b1)
+    params: 7.5e-19
+    delta-eps-g: -4.54
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + N2(a) -> N2 + N2(b)
+    params: 7.7e-17
+    delta-eps-g: -4.99
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + N2(a) -> N2 + N2(c)
+    params: 1.6e-16
+    delta-eps-g: -1.31
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + N2(vib) -> N2 + N2(b)
+    params: [1.0e-16, 0, 1500]
+    delta-eps-g: -0.32
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + O -> N2 + O
+    params: 3.0e-17
+    delta-eps-g: -6.17
+    references: kossyi1992kinetic
+
+  - reaction: N2(b) + O2 -> N2 + O + O
+    params: 3.0e-16
+    delta-eps-g: -2.23
+    references: kossyi1992kinetic
+
+  - reaction: N2(b) + N2 -> N2(a) + N2
+    params: 1.0e-17
+    delta-eps-g: -1.18
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + O2 -> N2 + O + O
+    params: 2.8e-17
+    delta-eps-g: -3.28
+    references: kossyi1992kinetic
+
+  - reaction: N2(a) + N2 -> N2 + N2
+    params: 2.0e-19
+    delta-eps-g: -8.4
+    references: kossyi1992kinetic
+
+  - reaction: N2(c) + O2 -> N2 + O + O
+    params: 3.0e-16
+    delta-eps-g: -5.91
+    references: kossyi1992kinetic
+
+  - reaction: N2(c) + N2 -> N2(a1) + N2
+    params: 1.0e-17
+    delta-eps-g: -2.63
+    references: kossyi1992kinetic
+
+  - reaction: N2(c) -> N2(b) + hnu
+    params: 3.0e+7
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O2 -> O2(a1) + O2
+    params: 1.86e-19
+    delta-eps-g: 3.52
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O2 -> O2(b1) + O2
+    params: 8.1e-22
+    delta-eps-g: -2.87
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O2 -> O2 + O2
+    params: 2.3e-22
+    delta-eps-g: -4.5
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O -> O2 + O
+    params: 5.0e-18
+    delta-eps-g: -4.5
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O -> O2(a1) + O
+    params: 2.7e-18
+    delta-eps-g: -3.52
+    references: kossyi1992kinetic
+
+  - reaction: O2(h) + O -> O2(b1) + O
+    params: 1.35e-18
+    delta-eps-g: -2.87
+    references: kossyi1992kinetic
+
+  - reaction: O- + O2(a1) -> e + O3
+    params: 3.0e-16
+    references: arakoni2007o2
+
+  - reaction: O2- + O -> e + O3
+    params: 1.5e-16
+    references: arakoni2007o2
+
+  - reaction: O- + O2 -> e + O3
+    params: 5.0e-21
+    references: arakoni2007o2
+
+  - reaction: O- + O2 -> e + O3
+    params: 5.0e-21
+    references: arakoni2007o2
+
+  - reaction: O + O2 + N2 -> N2 + O3
+    params: [1.86e-41, -2.0]
+    references: arakoni2007o2
+
+  - reaction: O + O2 + O2 -> O2 + O3
+    params:  [8.615e-43, -1.25]
+    references: arakoni2007o2
+
+  - reaction: O4+ + O -> O2+ + O3
+    params:  3.0e-16
+    references: arakoni2007o2
+
+  - reaction: O- + O2+ + N2 -> O3 + N2
+    params:  [3.118e-31, -2.5]
+    references: arakoni2007o2
+
+  - reaction: O- + O2+ + O2 -> O3 + O2
+    params:  [3.118e-31, -2.5]
+    references: arakoni2007o2
+
+  - reaction: O + O + O2 -> O3 + O
+    params:  [3.118e-31, -2.5]
+    references: ionin2007physics
+    
+#   - reaction: O3- + O2+ -> O3 + O2
+#   - reaction: O3- + O+ -> O3 + O
+#   - reaction: O3- + He+ -> O3 + He
+#   - reaction: O- + O3 -> O3- + O
+#   - reaction: O2- + O3 -> O3- + O2
+#   - reaction: O3- + O -> O2- + O2
+#   - reaction: e + NO+ -> N + O
+#   - reaction: e + NO+ -> N + O^m
+#   - reaction: He^m + NO -> He + NO+ + e
+#   - reaction: He+ + NO -> He + NO+
+#   - reaction: He+ + NO -> He + N + O+
+#   - reaction: O+ + NO -> O + NO+
+#   - reaction: O2+ + NO -> O2 + NO+
+#   - reaction: O2+ + N -> NO+ + O
+#   - reaction: NO+ + O- -> NO + O
+#   - reaction: NO+ + O2- -> NO + O2
+#   - reaction: N + O + N2 -> NO + N2
+#   - reaction: NO + O2(a1) -> NO + O2
+#   - reaction: NO + O^m -> N + O2
+#   - reaction: NO + O^m -> NO + O
+#   - reaction: N + O2 -> NO + O
+#   - reaction: N + O + N2 -> NO + N2
+#   - reaction: N + O + O2 -> NO + O2
+#   - reaction: N + O + He -> NO + He
+#   - reaction: N + O + O2(a1) -> NO + O2(a1)
+#   - reaction: N + O + O -> NO + O
+#   - reaction: N + O + O3 -> NO + O3
+#   - reaction: O- + NO -> NO2 + e
+#   - reaction: O2- + N -> NO2 + e
+#   - reaction: NO + O3 -> NO2 + O2
+#   - reaction: NO + O + He -> NO2 + He
+#   - reaction: NO + O + O2 -> NO2 + O2
+#   - reaction: NO + O + N2 -> NO2 + N2
+#   - reaction: NO2 + O -> NO + O2
+#   - reaction: NO2 + O^m -> NO2 + O
+#   - reaction: NO2 + O^m -> NO + O2
+#   - reaction: N + NO2 -> NO + NO
+#   - reaction: N + NO2 -> N2 + O + O
+#   - reaction: N + NO2 -> N2 + O2
+#   - reaction: 3N + e -> 3N + e
+#   # - reaction: N + e -> N + 2N + e
 
 
 
