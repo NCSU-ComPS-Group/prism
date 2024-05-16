@@ -1,5 +1,17 @@
-bibliography: demo/works.bib
+bibliography: inputs/works.bib
 
+# This network is from this file I haven't added all of it or ensured that everything is exactly
+# accurate. it doesn't need to be correct just a large file for testing
+# @article{breden2014computational,
+#   title={Computational study of the interaction of cold atmospheric helium plasma jets with surfaces},
+#   author={Breden, Douglas and Raja, Laxminarayan L},
+#   journal={Plasma Sources Science and Technology},
+#   volume={23},
+#   number={6},
+#   pages={065020},
+#   year={2014},
+#   publisher={IOP Publishing}
+# }
 # this block will also be totall optional
 lumped-species:
   - lumped: N2*

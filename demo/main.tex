@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[top=1cm]{geometry}
+\tabulinesep = 1.5mm
+
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+]{biblatex}
+
+\addbibresource{works.bib}
+
+
+\begin{document}
+
+\section{Rate Based Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      1 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(rotation) &  & & EEDF & & & 2.00$\times 10^{-2}$ & -2.00$\times 10^{-2}$ & \cite{ionin2007physics} \footnotemark[1]$^{,}$\footnotemark[2]$^{,}$\footnotemark[3]\\
+      2 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(vibration) &  & & EEDF & & & 1.00$\times 10^{0}$ & -1.00$\times 10^{0}$ & \cite{ionin2007physics} \footnotemark[4]\\
+      3 & e + N$_{2}$ $\rightarrow$ 2e + N$_{2}$$^{+}$ &  & & EEDF & & & 1.56$\times 10^{1}$ & 0.00 & \cite{ionin2007physics} \\
+      4 & e + N$_{2}$ $\rightarrow$ e + 2N &  & & EEDF & & & 9.76$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      5 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(electronic) &  & & EEDF & & & 1.00$\times 10^{0}$ & -3.00$\times 10^{-1}$ & \cite{ionin2007physics} \footnotemark[5]\\
+      6 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(A) &  & & EEDF & & & 6.17$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      7 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(a) &  & & EEDF & & & 1.00$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \footnotemark[6]\\
+      8 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(b) &  & & EEDF & & & 1.00$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \footnotemark[7]\\
+      9 & e + N$_{2}$ $\rightarrow$ e + N$_{2}$(c) &  & & EEDF & & & 1.10$\times 10^{1}$ & 0.00 & \cite{ionin2007physics} \footnotemark[8]\\
+      10 & e + He $\rightarrow$ 2e + He$^{+}$ &  & & EEDF & & & 2.46$\times 10^{1}$ & 0.00 & \cite{lopez2003electron} \\
+      11 & e + He $\rightarrow$ e + He$^\text{m}$ &  & & EEDF & & & 1.98$\times 10^{1}$ & 0.00 & \cite{lopez2003electron} \\
+      12 & e + O$_{2}$ $\rightarrow$ 2e + O$_{2}$$^{+}$ &  & & EEDF & & & 1.21$\times 10^{1}$ & 0.00 & \cite{lopez2003electron} \\
+      13 & e + O$_{2}$ $\rightarrow$ e + 2O &  & & EEDF & & & 5.58$\times 10^{0}$ & 0.00 & \cite{lopez2003electron} \\
+      14 & e + O$_{2}$ $\rightarrow$ e + O + O$^\text{m}$ &  & & EEDF & & & 8.40$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      15 & e + O$_{2}$ $\rightarrow$ O + O$^{-}$ &  & & EEDF & & & 3.60$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      16 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$(rotational) &  & & EEDF & & & 2.00$\times 10^{-2}$ & -2.00$\times 10^{-2}$ & \cite{ionin2007physics} \\
+      17 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$ &  & & EEDF & & & 1.00$\times 10^{0}$ & -3.00$\times 10^{-1}$ & \cite{ionin2007physics} \\
+      18 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$(h) &  & & EEDF & & & 4.50$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      19 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$(a1) &  & & EEDF & & & 9.80$\times 10^{-1}$ & 0.00 & \cite{ionin2007physics} \\
+      20 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$(b1) &  & & EEDF & & & 1.63$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      21 & e + O$_{2}$ $\rightarrow$ e + O$_{2}$(vibrational) &  & & EEDF & & & 1.93$\times 10^{-1}$ & 0.00 & \cite{ionin2007physics} \\
+      22 & e + O$_{2}$(al) $\rightarrow$ e + O$_{2}$(b1) &  & & EEDF & & & 6.50$\times 10^{-1}$ & 0.00 & \cite{ionin2007physics} \\
+      23 & e + O$_{2}$(al) $\rightarrow$ e + O + O$^\text{m}$ &  & & EEDF & & & 6.34$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      24 & e + O$_{2}$(al) $\rightarrow$ O + O$^{-}$ &  & & EEDF & & & 2.62$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      25 & e + O$_{2}$(b1) $\rightarrow$ O + O$^{-}$ &  & & EEDF & & & 1.97$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      26 & e + NO $\rightarrow$ 2e + NO$^{+}$ &  & & EEDF & & & 9.26$\times 10^{0}$ & 0.00 & \cite{kim2002ionization} \\
+      27 & e + O $\rightarrow$ e + O$^\text{m}$ &  & & EEDF & & & 6.34$\times 10^{0}$ & 0.00 & \cite{yuan2003computational} \\
+      28 & e + O$^{+}$ $\rightarrow$ e + O$^{+}$ &  & & EEDF & & & 1.36$\times 10^{1}$ & 0.00 & \cite{yuan2003computational} \\
+      29 & e + He$^\text{m}$ $\rightarrow$ 2e + He$^{+}$ & 4.66$\times 10^{-16}$ & 6.00$\times 10^{-1}$ & 5.55$\times 10^{4}$ & 0.00 & 0.00 & 4.78$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+      30 & 2He$^\text{m}$ $\rightarrow$ e + He + He$^{+}$ & 4.50$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.50$\times 10^{1}$ & 0.00 & \cite{ionin2007physics} \\
+      31 & e + He$^\text{m}$ $\rightarrow$ e + He & 1.10$\times 10^{-17}$ & 3.10$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & -1.98$\times 10^{1}$ & 0.00 & \cite{ionin2007physics} \\
+      32 & e + He$_2$$^\text{m}$ $\rightarrow$ 2e + He$_{2}$$^{+}$ & 1.27$\times 10^{-18}$ & 7.10$\times 10^{-1}$ & 3.94$\times 10^{4}$ & 0.00 & 0.00 & 3.40$\times 10^{0}$ & 0.00 & \cite{ionin2007physics} \\
+    \end{tabu}
+  }
+  \caption{DNN Schematic}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      33 & e + He$_{2}$$^{+}$ $\rightarrow$ He$^\text{m}$ + He & 5.39$\times 10^{-13}$ & -5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      34 & He$^\text{m}$ + 2He $\rightarrow$ He$_2$$^\text{m}$ + He & 1.40$\times 10^{-45}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      35 & He$^{+}$ + 2He $\rightarrow$ He$_{2}$$^{+}$ + He & 9.95$\times 10^{-44}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      36 & e + He$^{+}$ $\rightarrow$ He$^\text{m}$ & 7.31$\times 10^{-17}$ & -5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -4.80$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      37 & 2e + He$^{+}$ $\rightarrow$ e + He$^\text{m}$ & 1.04$\times 10^{-20}$ & -4.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -4.80$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      38 & He$^\text{m}$ + N$_{2}$ $\rightarrow$ e + He + N$_{2}$$^{+}$ & 7.00$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -4.20$\times 10^{0}$ & \cite{ionin2007physics} \\
+      39 & He$_2$$^\text{m}$ + N$_{2}$ $\rightarrow$ e + 2He + N$_{2}$$^{+}$ & 7.00$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      40 & He$^{+}$ + N$_{2}$ $\rightarrow$ N$_{2}$$^{+}$ + He & 5.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      41 & He$_{2}$$^{+}$ + N$_{2}$ $\rightarrow$ N$_{2}$$^{+}$ + 2He & 5.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+      42 & He$^\text{m}$ + O$_{2}$ $\rightarrow$ e + He + O$_{2}$$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -7.73$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      43 & He$^\text{m}$ + O$_{3}$ $\rightarrow$ e + O + He + O$_{2}$$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -2.15$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      44 & He$^\text{m}$ + O$_{2}$(b1) $\rightarrow$ e + He + O$_{2}$$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -9.36$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      45 & He$^\text{m}$ + O $\rightarrow$ e + He + O$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -6.18$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      46 & He$^\text{m}$ + O$^\text{m}$ $\rightarrow$ e + He + O$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.25$\times 10^{1}$ & \cite{pancheshnyi2005development} \\
+      47 & He$^{+}$ + O$_{2}$ $\rightarrow$ O + He + O$^{+}$ & 6.18$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -5.40$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      48 & He$^{+}$ + O$_{3}$ $\rightarrow$ He + O$_{2}$ + O$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -5.40$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      49 & He$^{+}$ + O$_{2}$ $\rightarrow$ O$_{2}$$^{+}$ + He & 1.91$\times 10^{-18}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.25$\times 10^{1}$ & \cite{pancheshnyi2005development} \\
+      50 & He$^{+}$ + O$_{2}$(a1) $\rightarrow$ He + O + O$^{+}$ & 6.18$\times 10^{-19}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -6.38$\times 10^{0}$ & \cite{pancheshnyi2005development} \\
+      51 & He$^{+}$ + O$_{2}$(a1) $\rightarrow$ He + O$_{2}$$^{+}$ & 1.47$\times 10^{-17}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.35$\times 10^{1}$ & \cite{pancheshnyi2005development} \\
+      52 & He$^{+}$ + O $\rightarrow$ He + O$^{+}$ & 2.89$\times 10^{-18}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.10$\times 10^{1}$ & \cite{pancheshnyi2005development} \\
+      53 & He$^{+}$ + O$^\text{m}$ $\rightarrow$ He + O$^{+}$ & 2.89$\times 10^{-18}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.73$\times 10^{1}$ & \cite{pancheshnyi2005development} \\
+      54 & N$_{2}$$^{+}$ + N$_{2}$ + M $\rightarrow$ N$_{4}$$^{+}$ + M & 5.00$\times 10^{-41}$ & 5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{aleksandrov2009simulation} \\
+      55 & N$_{4}$$^{+}$ + O$_{2}$ $\rightarrow$ O$_{2}$$^{+}$ + 2N$_{2}$ & 2.50$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -3.51$\times 10^{0}$ & \cite{aleksandrov2009simulation} \\
+      56 & N$_{2}$$^{+}$ + O$_{2}$ $\rightarrow$ O$_{2}$$^{+}$ + N$_{2}$ & 1.04$\times 10^{-15}$ & -5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -3.51$\times 10^{0}$ & \cite{aleksandrov2009simulation} \\
+      57 & O$_{2}$$^{+}$ + 2N$_{2}$ $\rightarrow$ O$_{2}$$^{+}$ + 2N$_{2}$ & 8.10$\times 10^{-38}$ & -2.00$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -2.00$\times 10^{0}$ & \cite{aleksandrov2009simulation} \\
+      58 & O$_{2}$ + 2N$_{2}$ $\rightarrow$ O$_{2}$ + 2N$_{2}$ & 1.48$\times 10^{1}$ & -5.30$\times 10^{0}$ & 2.36$\times 10^{3}$ & 0.00 & 0.00 & 0.00 & 0.00 & \cite{aleksandrov2009simulation} \\
+      59 & O$_{2}$ + N$_{2}$ + O$_{2}$$^{+}$ $\rightarrow$ O$_{4}$$^{+}$ + N$_{2}$ & 1.00$\times 10^{-15}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{aleksandrov2009simulation} \\
+      60 & O$_{2}$$^{+}$ + O$_{2}$ + M $\rightarrow$ O$_{4}$$^{+}$ + M & 2.03$\times 10^{-34}$ & -3.20$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{aleksandrov2009simulation} \\
+      61 & e + O$_{4}$$^{+}$ $\rightarrow$ 2O$_{2}$ & 2.42$\times 10^{-11}$ & -5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.21$\times 10^{1}$ & \cite{aleksandrov2009simulation} \\
+      62 & e + O$_{2}$$^{+}$ $\rightarrow$ 2O & 6.00$\times 10^{-11}$ & -1.00$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -6.91$\times 10^{0}$ & \cite{aleksandrov2009simulation} \\
+      63 & e + 2O$_{2}$ $\rightarrow$ O$_{2}$$^{-}$ + O$_{2}$ & 6.00$\times 10^{-39}$ & -1.00$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -4.30$\times 10^{-1}$ & \cite{aleksandrov2009simulation} \\
+      64 & O$_{2}$$^{-}$ + O$_{4}$$^{+}$ $\rightarrow$ 3O$_{2}$ & 1.00$\times 10^{-13}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -1.16$\times 10^{1}$ & \cite{aleksandrov2009simulation} \\
+    \end{tabu}
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      65 & O$_{2}$$^{-}$ + O$_{4}$$^{+}$ + M $\rightarrow$ 3O$_{2}$ + M & 3.12$\times 10^{-31}$ & -2.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.16$\times 10^{1}$ & \cite{aleksandrov2009simulation} \\
+      66 & O$_{2}$$^{+}$ + O$_{2}$ + M $\rightarrow$ O$_{4}$$^{+}$ + M & 2.03$\times 10^{-34}$ & -3.20$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{aleksandrov2009simulation} \\
+      67 & O$_{2}$$^{-}$ + O$_{2}$$^{+}$ + M $\rightarrow$ 2O$_{2}$ + M & 3.12$\times 10^{-31}$ & -2.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.16$\times 10^{1}$ & \cite{aleksandrov2009simulation} \\
+      68 & O$^{-}$ + O$_{2}$$^{+}$ $\rightarrow$ O + O$_{2}$ & 3.46$\times 10^{-12}$ & -5.00$\times 10^{-1}$ & 0.00 & 0.00 & 0.00 & 0.00 & -1.06$\times 10^{1}$ & \cite{aleksandrov2009simulation} \\
+      69 & N$_{2}$(a) + O$_{2}$ $\rightarrow$ N$_{2}$ + 2O & 1.70$\times 10^{-18}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -1.05$\times 10^{0}$ & \cite{aleksandrov2009simulation} \footnotemark[9]\\
+      70 & N$_{2}$(a) + O$_{2}$ $\rightarrow$ N$_{2}$ + O$_{2}$(b1) & 7.50$\times 10^{-19}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -4.54$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[9]\\
+      71 & 2N$_{2}$(a) $\rightarrow$ N$_{2}$ + N$_{2}$(b) & 7.70$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -4.99$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[7]$^{,}$\footnotemark[9]\\
+      72 & 2N$_{2}$(a) $\rightarrow$ N$_{2}$ + N$_{2}$(c) & 1.60$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -1.31$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[8]$^{,}$\footnotemark[9]\\
+      73 & N$_{2}$(a) + N$_{2}$(vib) $\rightarrow$ N$_{2}$ + N$_{2}$(b) & 1.00$\times 10^{-16}$ & 0.00 & 1.50$\times 10^{3}$ & 0.00 & 0.00 & 0.00 & -3.20$\times 10^{-1}$ & \cite{kossyi1992kinetic} \footnotemark[7]$^{,}$\footnotemark[9]\\
+      74 & N$_{2}$(a) + O $\rightarrow$ N$_{2}$ + O & 3.00$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -6.17$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[9]\\
+      75 & N$_{2}$(b) + O$_{2}$ $\rightarrow$ N$_{2}$ + 2O & 3.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -2.23$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[10]\\
+      76 & N$_{2}$(b) + N$_{2}$ $\rightarrow$ N$_{2}$(a) + N$_{2}$ & 1.00$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -1.18$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[6]$^{,}$\footnotemark[10]\\
+      77 & N$_{2}$(a) + O$_{2}$ $\rightarrow$ N$_{2}$ + 2O & 2.80$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -3.28$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[9]\\
+      78 & N$_{2}$(a) + N$_{2}$ $\rightarrow$ 2N$_{2}$ & 2.00$\times 10^{-19}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -8.40$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[9]\\
+      79 & N$_{2}$(c) + O$_{2}$ $\rightarrow$ N$_{2}$ + 2O & 3.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -5.91$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[11]\\
+      80 & N$_{2}$(c) + N$_{2}$ $\rightarrow$ N$_{2}$(a1) + N$_{2}$ & 1.00$\times 10^{-17}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -2.63$\times 10^{0}$ & \cite{kossyi1992kinetic} \footnotemark[11]\\
+      81 & N$_{2}$(c) $\rightarrow$ N$_{2}$(b) + $h\nu$ & 3.00$\times 10^{7}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{kossyi1992kinetic} \footnotemark[7]$^{,}$\footnotemark[11]\\
+      82 & O$_{2}$(h) + O$_{2}$ $\rightarrow$ O$_{2}$(a1) + O$_{2}$ & 1.86$\times 10^{-19}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 3.52$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      83 & O$_{2}$(h) + O$_{2}$ $\rightarrow$ O$_{2}$(b1) + O$_{2}$ & 8.10$\times 10^{-22}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -2.87$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      84 & O$_{2}$(h) + O$_{2}$ $\rightarrow$ 2O$_{2}$ & 2.30$\times 10^{-22}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -4.50$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      85 & O$_{2}$(h) + O $\rightarrow$ O$_{2}$ + O & 5.00$\times 10^{-18}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -4.50$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      86 & O$_{2}$(h) + O $\rightarrow$ O$_{2}$(a1) + O & 2.70$\times 10^{-18}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -3.52$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      87 & O$_{2}$(h) + O $\rightarrow$ O$_{2}$(b1) + O & 1.35$\times 10^{-18}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & -2.87$\times 10^{0}$ & \cite{kossyi1992kinetic} \\
+      88 & O$^{-}$ + O$_{2}$(a1) $\rightarrow$ e + O$_{3}$ & 3.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      89 & O$_{2}$$^{-}$ + O $\rightarrow$ e + O$_{3}$ & 1.50$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      90 & O$^{-}$ + O$_{2}$ $\rightarrow$ e + O$_{3}$ & 5.00$\times 10^{-21}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      91 & O$^{-}$ + O$_{2}$ $\rightarrow$ e + O$_{3}$ & 5.00$\times 10^{-21}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      92 & O + O$_{2}$ + N$_{2}$ $\rightarrow$ N$_{2}$ + O$_{3}$ & 1.86$\times 10^{-41}$ & -2.00$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      93 & O + 2O$_{2}$ $\rightarrow$ O$_{2}$ + O$_{3}$ & 8.62$\times 10^{-43}$ & -1.25$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      94 & O$_{4}$$^{+}$ + O $\rightarrow$ O$_{2}$$^{+}$ + O$_{3}$ & 3.00$\times 10^{-16}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      95 & O$^{-}$ + O$_{2}$$^{+}$ + N$_{2}$ $\rightarrow$ O$_{3}$ + N$_{2}$ & 3.12$\times 10^{-31}$ & -2.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+      96 & O$^{-}$ + O$_{2}$$^{+}$ + O$_{2}$ $\rightarrow$ O$_{3}$ + O$_{2}$ & 3.12$\times 10^{-31}$ & -2.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{arakoni2007o2} \\
+    \end{tabu}
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      97 & 2O + O$_{2}$ $\rightarrow$ O$_{3}$ + O & 3.12$\times 10^{-31}$ & -2.50$\times 10^{0}$ & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & \cite{ionin2007physics} \\
+    \end{tabu}
+  }
+\end{table}
+
+\newpage
+\footnotemark[1]{something important}\\
+\footnotemark[2]{something else}\\
+\footnotemark[3]{Species \lq N2(rotation)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[4]{Species \lq N2(vibration)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[5]{Species \lq N2(electronic)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[6]{Species \lq N2(a)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[7]{Species \lq N2(b)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[8]{Species \lq N2(c)\rq{} has been lumped into \lq N2*\rq}\\
+\footnotemark[9]{Species \lq N2(a)\rq{}  has been lumped into \lq N2*\rq}\\
+\footnotemark[10]{Species \lq N2(b)\rq{}  has been lumped into \lq N2*\rq}\\
+\footnotemark[11]{Species \lq N2(c)\rq{}  has been lumped into \lq N2*\rq}\\
+\newpage
+\printbibliography
+
+\end{document}

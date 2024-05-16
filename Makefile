@@ -1,7 +1,7 @@
 # Compiler settings
 CXX = g++
-CXXFLAGS = -std=c++20 -g -Wall -Wextra -Wpedantic -Werror -O3
-
+CXXFLAGS = -std=c++17 -g  -O3
+# -Wall -Wextra -Wpedantic -Werror
 # Source file and executable name
 SRC = main.C
 EXE = main

@@ -8,6 +8,7 @@ using namespace std;
 class NetworkParserTest : public testing::Test {
   protected:
     void SetUp() override {
+      rxn::NetworkParser::getInstance().clear();
       // Save cout's buffer...
       sbuf = std::cout.rdbuf();
       // Redirect cout to our stringstream buffer or any other ostream
@@ -38,4 +39,14 @@ TEST_F(NetworkParserTest, RepeatFile)
   np.parseNetwork("inputs/simple_argon_rate.yaml");
 
   EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
+}
+
+TEST_F(NetworkParserTest, LongFileWithRefs)
+{
+  rxn::NetworkParser::getInstance().clear();
+  rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
+  np.checkRefs();
+  EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
+  // np.writeLatexTable("output/test.tex");
+  // np.writeSpeciesSummary("output/summary.yaml");
 }

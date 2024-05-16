@@ -1,0 +1,955 @@
+
+
+xsec-based:
+
+    - reaction: E + Ar -> E + Ar
+      file: "xsec_reaction_1_file.txt"
+      delta-eps-e: 0
+            #m_m: 0.0000136 m_m->Ratio of mass of electron/mass of argon (delete)
+
+    - reaction: E + Ar -> E + Ar(1S5)
+      file: "xsec_reaction_2_file.txt"
+      delta-eps-e: 11.548
+
+    - reaction: E + Ar -> E + Ar(1S4)
+      file: "xsec_reaction_3_file.txt"
+      delta-eps-e: 11.624
+
+    - reaction: E + Ar -> E + Ar(1S3)
+      file: "xsec_reaction_4_file.txt"
+      delta-eps-e: 11.723
+
+    - reaction: E + Ar -> E + Ar(1S2)
+      file: "xsec_reaction_5_file.txt"
+      delta-eps-e: 11.828
+
+    - reaction: E + Ar -> E + Ar(2P10)
+      file: "xsec_reaction_6_file.txt"
+      delta-eps-e: 12.907
+
+    - reaction: E + Ar -> E + Ar(2P9)
+      file: "xsec_reaction_7_file.txt"
+      param:
+      delta-eps-e: 13.076
+
+    - reaction: E + Ar -> E + Ar(2P8)
+      file: "xsec_reaction_8_file.txt"
+      param:
+      delta-eps-e: 13.095
+
+    - reaction: E + Ar -> E + Ar(2P7)
+      file: "xsec_reaction_9_file.txt"
+      param:
+      delta-eps-e: 13.153
+
+    - reaction: E + Ar -> E + Ar(2P6)
+      file: "xsec_reaction_10_file.txt"
+      param:
+      delta-eps-e: 13.172
+
+    - reaction: E + Ar -> E + Ar(2P5)
+      file: "xsec_reaction_11_file.txt"
+      param:
+      delta-eps-e: 13.273
+
+    - reaction: E + Ar -> E + Ar(2P4)
+      file: "xsec_reaction_12_file.txt"
+      param:
+      delta-eps-e: 13.283
+
+    - reaction: E + Ar -> E + Ar(2P3)
+      file: "xsec_reaction_13_file.txt"
+      param:
+      delta-eps-e: 13.302
+
+    - reaction: E + Ar -> E + Ar(2P2)
+      file: "xsec_reaction_14_file.txt"
+      param:
+      delta-eps-e: 13.328
+
+    - reaction: E + Ar -> E + Ar(2P1)
+      file: "xsec_reaction_15_file.txt"
+      param:
+      delta-eps-e: 13.48
+
+    - reaction: E + Ar -> E + Ar(3D6)
+      file: "xsec_reaction_16_file.txt"
+      param:
+      delta-eps-e: 13.845
+
+    - reaction: E + Ar -> E + Ar(3D5)
+      file: "xsec_reaction_17_file.txt"
+      param:
+      delta-eps-e: 13.864
+
+    - reaction: E + Ar -> E + Ar(3D3)
+      file: "xsec_reaction_18_file.txt"
+      param:
+      delta-eps-e: 13.903
+
+    - reaction: E + Ar -> E + Ar(3D4!)
+      file: "xsec_reaction_19_file.txt"
+      param:
+      delta-eps-e: 13.979
+
+    - reaction: E + Ar -> E + Ar(3D4)
+      file: "xsec_reaction_20_file.txt"
+      param:
+      delta-eps-e: 14.013
+
+    - reaction: E + Ar -> E + Ar(3D1!!)
+      file: "xsec_reaction_21_file.txt"
+      param:
+      delta-eps-e: 14.063
+
+    - reaction: E + Ar -> E + Ar(2S5)
+      file: "xsec_reaction_22_file.txt"
+      param:
+      delta-eps-e: 14.068
+
+    - reaction: E + Ar -> E + Ar(2S4)
+      file: "xsec_reaction_23_file.txt"
+      param:
+      delta-eps-e: 14.09
+
+    - reaction: E + Ar -> E + Ar(3D1!)
+      file: "xsec_reaction_24_file.txt"
+      param:
+      delta-eps-e: 14.099
+
+    - reaction: E + Ar -> E + Ar(3D2)
+      file: "xsec_reaction_25_file.txt"
+      param:
+      delta-eps-e: 14.153
+
+    - reaction: E + Ar -> E + Ar(3S1!!!!)
+      file: "xsec_reaction_26_file.txt"
+      param:
+      delta-eps-e: 14.214
+
+    - reaction: E + Ar -> E + Ar(3S1!!)
+      file: "xsec_reaction_27_file.txt"
+      param:
+      delta-eps-e: 14.234
+
+    - reaction: E + Ar -> E + Ar(3S1!!!)
+      file: "xsec_reaction_28_file.txt"
+      param:
+      delta-eps-e: 14.236
+
+    - reaction: E + Ar -> E + Ar(2S3)
+      file: "xsec_reaction_29_file.txt"
+      param:
+      delta-eps-e: 14.241
+
+    - reaction: E + Ar -> E + Ar(2S2)
+      file: "xsec_reaction_30_file.txt"
+      param:
+      delta-eps-e: 14.255
+
+    - reaction: E + Ar -> E + Ar(3S1!)
+      file: "xsec_reaction_31_file.txt"
+      param:
+      delta-eps-e: 14.304
+
+    - reaction: E + Ar -> E + Ar(4D5)
+      file: "xsec_reaction_32_file.txt"
+      param:
+      delta-eps-e: 14.711
+
+    - reaction: E + Ar -> E + Ar(3S4)
+      file: "xsec_reaction_33_file.txt"
+      param:
+      delta-eps-e: 14.848
+
+    - reaction: E + Ar -> E + Ar(2P2)
+      file: "xsec_reaction_34_file.txt"
+      param:
+      delta-eps-e: 13.328
+
+    - reaction: E + Ar -> E + Ar(4D2)
+      file: "xsec_reaction_35_file.txt"
+      param:
+      delta-eps-e: 14.859
+
+    - reaction: E + Ar -> E + Ar(4S1!)
+      file: "xsec_reaction_36_file.txt"
+      param:
+      delta-eps-e: 15.004
+
+    - reaction: E + Ar -> E + Ar(3S2)
+      file: "xsec_reaction_37_file.txt"
+      param:
+      delta-eps-e: 15.022
+
+    - reaction: E + Ar -> E + Ar(5D5)
+      file: "xsec_reaction_38_file.txt"
+      param:
+      delta-eps-e: 15.118
+
+    - reaction: E + Ar -> E + Ar(4S4)
+      file: "xsec_reaction_39_file.txt"
+      param:
+      delta-eps-e: 15.186
+
+    - reaction: E + Ar -> E + Ar(5D2)
+      file: "xsec_reaction_40_file.txt"
+      param:
+      delta-eps-e: 15.19
+
+    - reaction: E + Ar -> E + Ar(6D5)
+      file: "xsec_reaction_41_file.txt"
+      param:
+      delta-eps-e: 15.308
+
+    - reaction: E + Ar -> E + Ar(5S1!)
+      file: "xsec_reaction_42_file.txt"
+      param:
+      delta-eps-e: 15.351
+
+    - reaction: E + Ar -> E + Ar(4S2)
+      file: "xsec_reaction_43_file.txt"
+      param:
+      delta-eps-e: 15.36
+
+    - reaction: E + Ar -> E + Ar(5S4)
+      file: "xsec_reaction_44_file.txt"
+      param:
+      delta-eps-e: 15.366
+
+    - reaction: E + Ar -> E + Ar(6D2)
+      file: "xsec_reaction_45_file.txt"
+      param:
+      delta-eps-e: 15.374
+
+    - reaction: E + Ar -> E + E + Ar+
+      file: "xsec_reaction_46_file.txt"
+      param:
+      delta-eps-e: 15.76
+
+    - reaction: E + CF4 -> CF3 + F + e #table 21
+      file: "xsec_reaction_47_file.txt"
+      param:
+      delta-eps-e: 12.5
+
+    - reaction: e + CF4 -> CF2 + F + F + e #table 21
+      file: "xsec_reaction_48_file.txt"
+      param:
+      delta-eps-e: 14
+
+    - reaction: e + CF4 -> CF + F + F + F + e #table 21
+      file: "xsec_reaction_49_file.txt"
+      param:
+      delta-eps-e: 15
+
+    - reaction: e + CF4 -> CF3+ + F + e + e #table 13
+      file: "xsec_reaction_50_file.txt"
+      param:
+      delta-eps-e: 14.7
+
+    - reaction: e + CF4 -> CF2+ + F + F + e + e #table 13
+      file: "xsec_reaction_51_file.txt"
+      param:
+      delta-eps-e: 20.19
+
+    - reaction: e + CF4 -> CF+ + F + F + F + e + e #table 13
+      file: "xsec_reaction_52_file.txt"
+      param:
+      delta-eps-e: 23.7
+
+    - reaction: e + CF3 -> CF2+ + F + e + e #table 32
+      file: "xsec_reaction_53_file.txt"
+      param:
+      delta-eps-e: 17.1
+
+    - reaction: e + CF2 -> CF2+ + e + e #table 33
+      xfile: "xsec_reaction_54_file.txt"
+      param:
+      delta-eps-e: 14.6
+
+    - reaction: e + CF -> CF+ + e + e #table 31
+      file: "xsec_reaction_55_file.txt"
+      param:
+      delta-eps-e: 5.42
+
+    - reaction: e + F -> F+ + e + e #BSR
+      file: "xsec_reaction_56_file.txt"
+      param:
+      delta-eps-e: 17.687
+
+    - reaction: e + F2 -> F- + F #siglo
+      file: "xsec_reaction_57_file.txt"
+      param:
+      delta-eps-e: 0
+
+    - reaction: e + F2 -> F + F + e #siglo
+      xsec_file: "xsec_reaction_58_file.txt"
+      param:
+      delta-eps-e: 3.16
+
+    - reaction: e + F2 -> F2+ + 2e #siglo
+      file: "xsec_reaction_59_file.txt"
+      param:
+      delta-eps-e: 15.69
+
+    - reaction: e + CF4 -> F- + CF3 #Bonham Table IV
+      file: "xsec_reaction_60_file.txt"
+      param:
+      delta-eps-e: 0
+
+    - reaction: e + CF4 -> F + CF3- #Bonham Table IV
+      file: "xsec_reaction_61_file.txt"
+      param:
+      delta-eps-e: 0
+
+
+rate-based:
+
+
+#a->A, index 0; ne->Ne->index 1; ee->Ee->index 2; ng->Ng->index 3; eg->Eg->index4    [a,ne,ee,ng,eg]
+
+  - reaction: e + CF3+ -> CF3
+    params: [6.0e-14, 0,0,0,0]
+      #[a,ne,ee,ng,eg]
+
+  - reaction: e + CF2+ -> CF2
+    params: [6.0e-14,0,0,0,0]
+
+  - reaction: F- + CF3 -> CF4 + e
+    params: [5.0e-16,0,0,0,0]
+
+  - reaction: F- + CF2 -> CF3 + e
+    params: [3.0e-16,0,0,0,0]
+
+  - reaction: F- + CF -> CF2 + e
+    params: [2.0e-16,0,0,0,0]
+
+  - reaction: F- + C -> CF + e
+    params: [1.0e-16,0,0,0,0]
+
+  - reaction: F- + F -> F2 + e
+    params: [1.0e-16,0,0,0,0]
+
+  - reaction: F- + CF3+ -> CF3 + F
+    params: [4.0e-13,0,0,0,0]
+
+  - reaction: F- + CF2+ -> CF2 + F
+    params: [4.0e-13,0,0,0,0]
+
+  - reaction: F- + CF+ -> CF + F
+    params: [4.0e-13,0,0,0,0]
+
+  - reaction: CF2+ + CF4 -> CF3+ + CF3
+    params: [4.0e-16,0,0,0,0]
+
+  - reaction: CF2+ + CF3 -> CF3+ + CF2
+    params: [1.48e-15,0,0,0,0]
+
+  - reaction: CF2+ + CF2 -> CF2+ + CF2
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: CF2+ + CF -> CF3+ + C
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: CF2+ + C -> CF+ + CF
+    params: [1.04e-15,0,0,0,0]
+
+  - reaction: CF+ + CF4 -> CF3+ + CF2
+    params: [1.8e-16,0,0,0,0]
+
+  - reaction: CF+ + CF3 -> CF2+ + CF
+    params: [1.71e-15,0,0,0,0]
+
+  - reaction: CF+ + CF2 -> CF2+ + CF
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: F+ + CF3 -> CF2+ + F2
+    params: [2.9e-15,0,0,0,0]
+
+  - reaction: F+ + CF2 -> CF+ + F2
+    params: [2.28e-15,0,0,0,0]
+
+  - reaction: F+ + CF -> CF+ + F
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: F+ + CF4 -> CF3+ + F2
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: F+ + CF3 -> CF3+ + F
+    params: [1.0e-15,0,0,0,0]
+
+  - reaction: CF3 + F -> CF4
+    params: [2.0e-17,0,0,0,0]
+
+  - reaction: CF2 + F -> CF3
+    params: [1.8e-17,0,0,0,0]
+
+  - reaction: CF + F -> CF2
+    params: [9.96e-17,0,0,0,0]
+
+  - reaction: F + F + CF4 -> F2 + CF4
+    params: [6.77e-40,0,0,0,0]
+
+  - reaction: F + F + Ar -> F2 + Ar
+    params: [6.77e-40,0,0,0,0]
+
+  - reaction: CF2 + F2 -> CF3 + F
+    params: [8.3e-14,0,0,0,0]
+
+  - reaction: Ar(1S4) -> Ar
+    params: [1.32e+8,0,0,0,0]
+
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar(1s2) -> Ar
+    params: [5.32e+8,0,0,0,0]
+
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar** -> Ar(1S2)
+    params: [1.9e+5,0,0,0,0]
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar** -> Ar(1S3)
+    params: [9.8e+5,0,0,0,0]
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar** -> Ar(1S4)
+    params: [5.4e+6,0,0,0,0]
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar** -> Ar(1S5)
+    params: [1.89e+7,0,0,0,0]
+            #ref: "NIST Atomic Spectra Database"
+
+  - reaction: Ar2* -> Ar + Ar
+    params: [3.03e+8,0,0,0,0] #3.3 ns lifetime ,different A in Kannari, Fujioka
+
+  - reaction: Ar(1s5) + Ar + CF4 -> Ar2* + CF4 # M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s5) + Ar + Ar -> Ar2* + Ar # M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s4) + Ar + CF4 -> Ar2* + CF4 #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s4) + Ar + Ar -> Ar2* + Ar #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s3) + Ar + CF4 -> Ar2* + CF4 #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s3) + Ar + Ar -> Ar2* + Ar #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s2) + Ar + CF4 -> Ar2* + CF4 #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1s2) + Ar + Ar -> Ar2* + Ar #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar** + Ar + CF4 -> Ar2* + CF4  #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar** + Ar + M -> Ar2* + Ar  #M based
+    params: [3.6e-45,0,0,-0.6,-0.007]
+
+  - reaction: Ar(1S5) + Ar(1S4) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.412
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar(1S3) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.511
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar(1S2) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.616
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar** -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -8.695
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar(1S3) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.587
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar(1S2) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.692
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar** -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -8.771
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S3) + Ar(1S2) -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -7.791
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S3) + Ar** -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -8.87
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S2) + Ar** -> Ar+ + Ar + e
+    params: [6.3e-16,0,0,0,0]
+    delta_eps_e: -8.975
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar(1S4) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.412
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar(1S3) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.511
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar(1S2) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.616
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S5) + Ar** -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -8.695
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar(1S3) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.587
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar(1S2) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.692
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S4) + Ar** -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -8.771
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S3) + Ar(1S2) -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -7.791
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S3) + Ar** -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -8.87
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar(1S2) + Ar** -> Ar2+ + e
+    params: [5.7e-16,0,0,0,0]
+    delta_eps_e: -8.975
+    # ref: "A. Bogaerts, and R. Gijbels, J. Appl. Phys. 86, 4124 (1999). - for Ar(1s5). Total rate for Ar2+ and Ar+ from N. B. Kolokolov and A. B. Blagoev, Phys. Usp. 36, 152 (1993). Branching ratio from J. Pavlik, J. Glosik, M. Sicha, M. Tichy, and P. Potocek, Contrib. Plasma Phys. 30, 437 (1990)."
+
+  - reaction: Ar+ + e + e -> Ar(1S5) + e
+    params: [5.03e-33, -4.5, 0,0,0] #ne-> Te based! assumed form: A*te^n with Te in eV
+            #ref: " M. A. Biondi in “Principles of Laser Plasmas” ed. G. Bekefi (Wiley, New York, 1976), Ch. 4."
+
+  - reaction: Ar+ + e -> Ar(1S5)
+    params: [4.0e-19, -0.5, 0,0,0] # ne->Te based! Assumed form A*Te^n with Te in eV.]
+            #ref: " M. A. Biondi in “Principles of Laser Plasmas” ed. G. Bekefi (Wiley, New York, 1976), Ch. 4."
+
+  - reaction: CF3- + Ar+ -> CF3 + Ar**
+    params: [1.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + Ar2+ -> CF3 + Ar** + Ar
+    params: [1.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar -> Ar+ + Ar
+    params: [5.66e-16, 0.5,0,0,0]
+            #ref: "AP"
+
+  - reaction: Ar+ + Ar** -> Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar(1S5) -> Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar(1S4) -> Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar(1S3) -> Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar(1S2) -> Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + Ar2* -> Ar2+ + Ar
+    params: [1.00e-17, 0.0,0,0,0]
+            #ref: "EST"
+
+  - reaction: Ar+ + F2 -> F2+ + Ar
+    params: [1.00e-17, 0.0,0,0,0]
+            #ref: "EST"
+
+  - reaction: Ar+ + CF4 -> Ar + CF3+ + F
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: "gas based ignore 0.97"
+
+  - reaction: Ar+ + CF3 -> Ar + CF3+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + CF2 -> Ar + CF2+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar+ + CF -> Ar + CF+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar** -> Ar + Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar(1S5) -> Ar + Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar(1S4) -> Ar + Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar(1S3) -> Ar + Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar(1S2) -> Ar + Ar + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + Ar2* -> Ar2+ + Ar2*
+    params: [1.00e-15, 0.0,0,0,0]
+            #ref: "EST"
+
+  - reaction: Ar2+ + CF3 -> Ar + Ar + CF3+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + CF2 -> Ar + Ar + CF2+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: Ar2+ + CF -> Ar + Ar + CF+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + CF3+ -> CF2 + F + CF3
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + CF2+ -> CF3 + CF + F
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + CF+ -> CF3 + CF
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + C+ -> CF3 + C
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + F+ -> CF3 + F*
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: CF3- + F2+ -> CF3 + F* + F
+    params: [2.00e-13, -0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar -> Ar+ + F
+    params: [1.00e-17, 0.0,0,0,0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar** -> F + Ar+
+    params: [1.01e-17, 0.5,0,0,0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar(1S5) -> F + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar(1S4) -> F + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar(1S3) -> F + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar(1S2) -> F + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F+ + Ar2* -> Ar2+ + F
+    params: [1.00e-17, 0,0, 0.0, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar** -> F2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar(1S5) -> F2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar(1S4) -> F2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar(1S3) -> F2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar(1S2) -> F2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: F2+ + Ar2* -> Ar2+ + F2
+    params: [1.00e-17, 0,0, 0.0, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar** -> CF3 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar(1S5) -> CF3 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar(1S4) -> CF3 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar(1S3) -> CF3 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar(1S2) -> CF3 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF3+ + Ar2* -> CF3 + Ar2+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar** -> CF2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar(1S5) -> CF2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar(1S4) -> CF2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar(1S3) -> CF2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar(1S2) -> CF2 + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF2+ + Ar2* -> CF2 + Ar2+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar** -> CF + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar(1S5) -> CF + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar(1S4) -> CF + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar(1S3) -> CF + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar(1S2) -> CF + Ar+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: CF+ + Ar2* -> CF + Ar2+
+    params: [1.01e-17, 0,0, 0.5, 0]
+            #ref: " needs work "
+
+  - reaction: Ar(1S5) + Ar -> Ar(1S4) + Ar
+    params: [9.3292e-21, 0,0, 0.5, 0]
+            #ref: "3"
+
+  - reaction: Ar(1S4) + Ar -> Ar(1S5) + Ar
+    params: [1.5549e-20, 0, 0, 0.5,0]
+            #ref: "3"
+
+  - reaction: Ar(1S5) + Ar -> Ar(1S3) + Ar
+    params: [3.1097e-21, 0, 0, 0.5, 0.1748]
+            #ref: "3"
+
+  - reaction: Ar(1S3) + Ar -> Ar(1S5) + Ar
+    params: [1.5549e-20, 0, 0, 0.5,0]
+            #ref: "3"
+
+  - reaction: Ar(1S5) + Ar -> Ar(1S2) + Ar
+    params: [9.3292e-21, 0, 0, 0.5, 0.2797]
+            #ref: "3"
+
+  - reaction: Ar(1S2) + Ar -> Ar(1S5) + Ar
+    params: [1.5549e-20, 0, 0, 0.5,0]
+            #ref: "3"
+
+  - reaction: Ar(1S4) + Ar -> Ar(1S3) + Ar
+    params: [5.1622e-21, 0, 0, 0.5, 0.0989]
+            #ref: "3"
+
+  - reaction: Ar(1S3) + Ar -> Ar(1S4) + Ar
+    params: [1.5549e-20, 0,0,0.5,0]
+            #ref: "3"
+
+  - reaction: Ar(1S4) + Ar -> Ar(1S2) + Ar
+    params: [1.5549e-20, 0, 0, 0.5, 0.2038]
+            #ref: "3"
+
+  - reaction: Ar(1S2) + Ar -> Ar(1S4) + Ar
+    params: [1.5549e-20, 0, 0, 0.5, 0]
+            #ref: "3"
+
+  - reaction: Ar(1S3) + Ar -> Ar(1S2) + Ar
+    params: [4.6646e-20, 0,0, 0.5, 0.1049]
+            #ref: "3"
+
+  - reaction: Ar(1S2) + Ar -> Ar(1S3) + Ar
+    params: [1.5549e-20, 0, 0, 0.5, 0]
+            #ref: "3"
+
+  - reaction: Ar+ + Ar + Ar -> Ar2+ + Ar
+    params: [6.4630e-45, 0, 0,-1,0]
+            #ref: "15"
+
+  - reaction: Ar2* + Ar2* -> Ar2+ + Ar + Ar + E
+    params: [3.1097e-15, 0, 0, 0.5,0]
+            #ref: "4"
+
+  - reaction: E + Ar2+ -> Ar + Ar
+    params: [2.69e-14, -0.67, 0,0,0]
+            #ref: "16"
+
+  - reaction: E + Ar2* -> Ar2+ + E + E
+    params: [9.0e-14, 0.7, 3.66, 0,0]
+            #ref: "4"
+  - reaction: E + Ar2* -> Ar + Ar + E
+    params: [1.0e-13,0,0,0,0]
+            #ref: "4"
+
+  - reaction: C2F6 + Ar(1S5) -> CF3 + CF3 + Ar
+    params: [4e-15,0,0,0,0]
+
+  - reaction: C2F6 + Ar(1S4) -> CF3 + CF3 + Ar
+    params: [4e-15,0,0,0,0]
+
+  - reaction: C2F6 + Ar(1S3) -> CF3 + CF3 + Ar
+    params: [4e-15,0,0,0,0]
+
+  - reaction: C2F6 + Ar(1S2) -> CF3 + CF3 + Ar
+    params: [4e-15,0,0,0,0]
+
+  - reaction: C2F6 + Ar** -> CF3 + CF3 + Ar
+    params: [4e-15,0,0,0,0]
+
+  - reaction: CF3 + CF3 + CF4 -> C2F6 + CF4
+    params: [3.94e-41,0,0,0,0]
+
+  - reaction: CF3 + CF3 + Ar -> C2F6 + Ar
+    params: [3.94e-41,0,0,0,0]
+
+# file_paths:
+#          xsec_reaction_1_file: "../cross-sections/Ar/Ar1.txt"
+#          xsec_reaction_2_file: "../cross-sections/Ar/Ar2.txt"
+#          xsec_reaction_3_file: "../cross-sections/Ar/Ar3.txt"
+#          xsec_reaction_4_file: "../cross-sections/Ar/Ar4.txt"
+#          xsec_reaction_5_file: "../cross-sections/Ar/Ar5.txt"
+#          xsec_reaction_6_file: "../cross-sections/Ar/Ar6.txt"
+#          xsec_reaction_7_file: "../cross-sections/Ar/Ar7.txt"
+#          xsec_reaction_8_file: "../cross-sections/Ar/Ar8.txt"
+#          xsec_reaction_9_file: "../cross-sections/Ar/Ar9.txt"
+#          xsec_reaction_10_file: "../cross-sections/Ar/Ar10.txt"
+#          xsec_reaction_11_file: "../cross-sections/Ar/Ar11.txt"
+#          xsec_reaction_12_file: "../cross-sections/Ar/Ar12.txt"
+#          xsec_reaction_13_file: "../cross-sections/Ar/Ar13.txt"
+#          xsec_reaction_14_file: "../cross-sections/Ar/Ar14.txt"
+#          xsec_reaction_15_file: "../cross-sections/Ar/Ar15.txt"
+#          xsec_reaction_16_file: "../cross-sections/Ar/Ar16.txt"
+#          xsec_reaction_17_file: "../cross-sections/Ar/Ar17.txt"
+#          xsec_reaction_18_file: "../cross-sections/Ar/Ar18.txt"
+#          xsec_reaction_19_file: "../cross-sections/Ar/Ar19.txt"
+#          xsec_reaction_20_file: "../cross-sections/Ar/Ar20.txt"
+#          xsec_reaction_21_file: "../cross-sections/Ar/Ar21.txt"
+#          xsec_reaction_22_file: "../cross-sections/Ar/Ar22.txt"
+#          xsec_reaction_23_file: "../cross-sections/Ar/Ar23.txt"
+#          xsec_reaction_24_file: "../cross-sections/Ar/Ar24.txt"
+#          xsec_reaction_25_file: "../cross-sections/Ar/Ar25.txt"
+#          xsec_reaction_26_file: "../cross-sections/Ar/Ar26.txt"
+#          xsec_reaction_27_file: "../cross-sections/Ar/Ar27.txt"
+#          xsec_reaction_28_file: "../cross-sections/Ar/Ar28.txt"
+#          xsec_reaction_29_file: "../cross-sections/Ar/Ar29.txt"
+#          xsec_reaction_30_file: "../cross-sections/Ar/Ar30.txt"
+#          xsec_reaction_31_file: "../cross-sections/Ar/Ar31.txt"
+#          xsec_reaction_32_file: "../cross-sections/Ar/Ar32.txt"
+#          xsec_reaction_33_file: "../cross-sections/Ar/Ar33.txt"
+#          xsec_reaction_34_file: "../cross-sections/Ar/Ar34.txt"
+#          xsec_reaction_35_file: "../cross-sections/Ar/Ar35.txt"
+#          xsec_reaction_36_file: "../cross-sections/Ar/Ar36.txt"
+#          xsec_reaction_37_file: "../cross-sections/Ar/Ar37.txt"
+#          xsec_reaction_38_file: "../cross-sections/Ar/Ar38.txt"
+#          xsec_reaction_39_file: "../cross-sections/Ar/Ar39.txt"
+#          xsec_reaction_40_file: "../cross-sections/Ar/Ar40.txt"
+#          xsec_reaction_41_file: "../cross-sections/Ar/Ar41.txt"
+#          xsec_reaction_42_file: "../cross-sections/Ar/Ar42.txt"
+#          xsec_reaction_43_file: "../cross-sections/Ar/Ar43.txt"
+#          xsec_reaction_44_file: "../cross-sections/Ar/Ar44.txt"
+#          xsec_reaction_45_file: "../cross-sections/Ar/Ar45.txt"
+#          xsec_reaction_46_file: "../cross-sections/Ar/Ar46.txt"
+#          xsec_reaction_47_file: "../cross-sections/CF4/CF4_dissoc_CF3_F.txt"
+#          xsec_reaction_48_file: "../cross-sections/CF4/CF4_dissoc_CF2_F_F.txt"
+#          xsec_reaction_49_file: "../cross-sections/CF4/CF4_dissoc_CF_F_F_F.txt"
+#          xsec_reaction_50_file: "../cross-sections/CF4/CF4_iz_CF3.txt"
+#          xsec_reaction_51_file: "../cross-sections/CF4/CF4_iz_CF2.txt"
+#          xsec_reaction_52_file: "../cross-sections/CF4/CF4_iz_CF.txt"
+#          xsec_reaction_53_file: "../cross-sections/CF4/CF3_iz_CF2.txt"
+#          xsec_reaction_54_file: "../cross-sections/CF4/CF2_iz.txt"
+#          xsec_reaction_55_file: "../cross-sections/CF4/CF_iz.txt"
+#          xsec_reaction_56_file: "../cross-sections/CF4/F_iz.txt"
+#          xsec_reaction_57_file: "../cross-sections/CF4/F2_att.txt"
+#          xsec_reaction_58_file: "../cross-sections/CF4/F2_diss.txt"
+#          xsec_reaction_59_file: "../cross-sections/CF4/F2_iz.txt"
+#          xsec_reaction_60_file: "../cross-sections/CF4/CF4_dissoc_att_CF3.txt"
+#          xsec_reaction_61_file: "../cross-sections/CF4/CF4_dissoc_att_F.txt"
