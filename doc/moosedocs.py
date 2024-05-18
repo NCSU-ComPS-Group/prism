@@ -25,5 +25,9 @@ if MOOSE_PYTHON_DIR not in sys.path:
     sys.path.append(MOOSE_PYTHON_DIR)
 
 from MooseDocs import main
+import subprocess
 if __name__ == '__main__':
+    os.chdir("content/doxygen")
+    subprocess.call(["doxygen"])
+    os.chdir("../../")
     sys.exit(main.run())

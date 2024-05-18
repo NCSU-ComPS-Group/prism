@@ -27,9 +27,7 @@ Extensions:
             How it Works:
                 Reaction Parsing: how_it_works/reaction_parsing.md
                 Species Parsing: how_it_works/species_parsing.md
-            Provided Classes:
-                NetworkParser: classes/NetworkParser.md
-                Reaction: classes/Reaction.md
-                Species: classes/Species.md
+            Doxygen: doxygen/html/index.html
+
 
     MooseDocs.extensions.appsyntax: disable
