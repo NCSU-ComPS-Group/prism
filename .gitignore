@@ -6,4 +6,5 @@ test/run_tests
 test/output
 test/coverage_report
 test/converage.info
+doc/content/doxygen/html
 
