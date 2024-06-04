@@ -1,5 +1,15 @@
 [doxygen/index.html](doc/content/doxygen/html/index.html)
 
+# Installation
+
+```bash
+  conda activate rxn-cpp
+  mkdir -p ~/projects
+  cd ~/projects
+  git clone https://github.com/gsgall/rxn-cpp
+  cd ~/projects/rxn-cpp
+```
+
 # Mamba
 
 Use of a package manager is recommended for use of this program. This will help avoid potentialy library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from [https://mooseframework.inl.gov/getting_started/installation/conda.html](https://mooseframework.inl.gov/getting_started/installation/conda.html)
@@ -11,22 +21,10 @@ When installing mamba using these instructions you can stop after the instructio
 To ensure no conflicts with other projects you can create a new environment to work in.
 
 ```bash
+  cd ~/projects/rxn-cpp
   conda create --name rxn-cpp
   conda activate rxn-cpp
-  conda install -c conda-forge fmt
-  conda install -c conda-forge yaml-cpp
-  conda install -c conda-forge lcov
-  conda install -c conda-forge gtest
-```
-
-# Installation
-
-```bash
-  conda activate rxn-cpp
-  mkdir -p ~/projects
-  cd ~/projects
-  git clone https://github.com/gsgall/rxn-cpp
-  cd ~/projects/rxn-cpp
+  conda install --file environment.yml
 ```
 
 # Build

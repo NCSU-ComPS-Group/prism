@@ -20,6 +20,7 @@ Extensions:
         name: rxn-cpp
         repo: https://github.ncsu.edu/NCSU-ComPS-Group/rxn-cpp
         menu:
+            Doxygen: doxygen/html/annotated.html
             Getting Started:
                 Installation: getting_started/installation.md
                 Input Syntax: getting_started/input_syntax.md
@@ -27,7 +28,6 @@ Extensions:
             How it Works:
                 Reaction Parsing: how_it_works/reaction_parsing.md
                 Species Parsing: how_it_works/species_parsing.md
-            Doxygen: doxygen/html/index.html
 
 
     MooseDocs.extensions.appsyntax: disable
