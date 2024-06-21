@@ -3,14 +3,14 @@
 #include <string>
 #include <unordered_map>
 #include "yaml-cpp/yaml.h"
-#include "Reaction.h"
 
 namespace rxn{
 
+class Reaction;
+
 class NetworkParser {
   public:
-    // Static function to get the instance of the singleton
-    static NetworkParser& getInstance();
+    NetworkParser();
 
     void clear();
     /**
@@ -21,27 +21,21 @@ class NetworkParser {
     */
     void parseNetwork(const std::string & file);
 
-    void checkRefs();
+    void setCheckRefs(const bool check_refs);
     const std::unordered_map<std::string, std::string> & getLumpedMap();
 
     void writeLatexTable(const std::string & file);
     void writeSpeciesSummary(const std::string & file);
+
   private:
     bool _errors = false;
-    bool _check_refs = false;
+    bool _check_refs = true;
     /** Map of YAML::Node's from all of the files which networks have been parsed */
     std::unordered_map<std::string, YAML::Node> _networks;
     /** Mapping the reaction network files to the bibliographies */
     std::unordered_map<std::string, std::string> _bibs;
     std::unordered_map<std::string, std::string> _data_paths;
     bool _bib_errors;
-
-
-    // Private constructor to prevent instantiation
-    NetworkParser() {}
-    // Private copy constructor and assignment operator to prevent cloning
-    NetworkParser(const NetworkParser&) = delete;
-    NetworkParser& operator=(const NetworkParser&) = delete;
 
     void checkFile(const std::string & file) const;
     void checkBibFile(const std::string & file);
@@ -58,8 +52,6 @@ class NetworkParser {
 
     std::vector<std::shared_ptr<const Reaction>> _rate_based;
     std::vector<std::shared_ptr<const Reaction>> _xsec_based;
-    // Private instance of the singleton
-    static NetworkParser* _instance;
 };
 
 }

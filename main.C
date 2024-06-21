@@ -37,7 +37,7 @@ main()
 
   // time_span = chrono::duration_cast<chrono::duration<double>>(_stop_time - _start_time);
   // cout << "Execution time (sec) = " << time_span.count() << endl;
-  // rxn::NetworkParser& np = rxn::NetworkParser::getInstance();
+  rxn::NetworkParser np;
 
   // if (argc != 2)
   // {

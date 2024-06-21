@@ -1,7 +1,7 @@
 #include <sys/stat.h>
 
 #include "SpeciesFactory.h"
-#include "NetworkParser.h"
+#include "Reaction.h"
 #include "SubSpecies.h"
 #include "InvalidInput.h"
 #include "YamlHelper.h"

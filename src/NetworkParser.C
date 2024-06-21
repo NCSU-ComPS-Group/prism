@@ -3,6 +3,7 @@
 #include <iostream>
 #include "fmt/core.h"
 
+
 #include "NetworkParser.h"
 #include "InvalidInput.h"
 #include "YamlHelper.h"
@@ -10,27 +11,20 @@
 #include "StringHelper.h"
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
+#include "Reaction.h"
 
 using namespace std;
 
 namespace rxn
 {
 
-NetworkParser* NetworkParser::_instance = nullptr;
-
-NetworkParser& NetworkParser::getInstance()
-{
-    // Create the _instance if it does not exist
-    if (_instance == nullptr) {
-        _instance = new NetworkParser();
-    }
-    return *_instance;
-}
+NetworkParser::NetworkParser()
+{}
 
 void
 NetworkParser::clear()
 {
-  _check_refs = false;
+  _check_refs = true;
   _networks.clear();
   _bibs.clear();
   _data_paths.clear();
@@ -38,10 +32,12 @@ NetworkParser::clear()
   BibTexHelper::getInstance().clear();
 }
 
-void NetworkParser::checkRefs()
+void NetworkParser::setCheckRefs(const bool check_refs)
 {
-  _check_refs = true;
+  _check_refs = check_refs;
 }
+
+
 
 void
 NetworkParser::checkFile(const string & file) const

@@ -74,7 +74,7 @@ If you are getting the error when running main where it is looking for the libra
   touch ./etc/conda/deactivate.d/env_vars.sh
   echo 'unset DYLD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
   cd -
-  conda deactivate rxn-cpp
+  conda deactivate
   conda activate rxn-cpp
 ```
 
@@ -89,6 +89,6 @@ The following commands are the same but for a linux system.
   touch ./etc/conda/deactivate.d/env_vars.sh
   echo 'unset LD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
   cd -
-  conda deactivate rxn-cpp
+  conda deactivate
   conda activate rxn-cpp
 ```
