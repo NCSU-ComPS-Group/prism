@@ -1,12 +1,12 @@
 name: Bug Report
-description: Report a bug that is preventing proper operation of the framework or an application
+description: Report a bug that is preventing proper use of this library
 labels: 'T: defect, P: normal'
 
 body:
 - type: markdown
   attributes:
     value: >
-      #### Before submitting a bug, please make sure the issue hasn't been already addressed by searching through [the existing and past issues](https://github.com/idaholab/moose/issues).
+      #### Before submitting a bug, please make sure the issue hasn't been already addressed by searching through [the existing and past issues](https://github.com/gsgall/rxn-cpp/issues).
 - type: textarea
   attributes:
     label: Bug Description
@@ -28,17 +28,7 @@ body:
       Does this prevent you from getting your work done, or is it more of an annoyance?
   validations:
     required: true
-- type: textarea
-  attributes:
-    label: "[Optional] Diagnostics"
-    description: |
-      **Please note that the diagnostics contain information about your system.** 
-      To expedite the debugging process, please run the following and paste the output below.
-      ```sh
-      ./scripts/diagnostics.sh
-      ```
-  validations:
-    required: false
+
 - type: markdown
   attributes:
     value: >
