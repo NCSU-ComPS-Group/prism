@@ -5,7 +5,8 @@ TESTING_FLAG = -DTESTING
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 # flags for memory leakage testing
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
+WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS = -std=c++17 $(WARNING_FLAGS) $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
@@ -21,11 +22,11 @@ TEST_EXECUTABLE = run_tests
 CONDA_LIB_DIR = $(CONDA_PREFIX)/lib
 CONDA_INCLUDE_DIR = $(CONDA_PREFIX)/include
 
-GTEST_LIBS = -lgtest -lgtest_main
+GTEST_LINK = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
 
-TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
+TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LINK)
 
 PROJECT_SOURCES := $(wildcard $(PROJECT_SRC_DIR)/*.C)
 PROJECT_OBJECTS := $(patsubst $(PROJECT_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(PROJECT_SOURCES))

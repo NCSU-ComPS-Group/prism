@@ -27,7 +27,6 @@ FMT_LINK = -lfmt
 
 LINKS = $(YAML_LINK) $(FMT_LINK)
 
-
 # build just the reaction parser
 $(EXE): $(OBJECTS)
 	@echo "Building $(EXE)"

@@ -1,41 +1,61 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Werror
+TESTING_FLAG = -DTESTING
+# flags for memory leakage testing
+ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
+WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS = -std=c++17 $(WARNING_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 
-# Directories
-SRC_DIR = tests
-BUILD_DIR = build
+HELPER_SRC_DIR = helpers/src
+HELPER_INCLUDE_DIR = helpers/include
+
+TEST_SRC_DIR = tests
+TEST_BUILD_DIR = build
 TEST_EXECUTABLE = run_tests
 
-# Find all test source files in the test directory
-TEST_SOURCES := $(wildcard $(SRC_DIR)/*.C)
-TEST_OBJECTS := $(patsubst $(SRC_DIR)/%.C, $(BUILD_DIR)/%.o, $(TEST_SOURCES))
+CONDA_LIB_DIR = $(CONDA_PREFIX)/lib
+CONDA_INCLUDE_DIR = $(CONDA_PREFIX)/include
 
-# Include Google Test and Google Mock libraries
-GTEST_DIR = $(CONDA_PREFIX)
-GTEST_LIB_DIR = $(GTEST_DIR)/lib
-GTEST_INCLUDE_DIR = $(GTEST_DIR)/include
-GTEST_LIBS = -lgtest -lgtest_main
-RXN_LINK = -lrxn-cpp
+GTEST_LINK = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
+RXN_LINK = -lrxn-cpp
 
-LINKS = $(RXN_LINK) $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
+TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LINK) $(RXN_LINK)
 
+HELPER_SOURCES := $(wildcard $(HELPER_SRC_DIR)/*.C)
+HELPER_OBJECTS := $(patsubst $(HELPER_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(HELPER_SOURCES))
 
-# Build rule for test objects
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.C
+TEST_SOURCES := $(wildcard $(TEST_SRC_DIR)/*.C)
+TEST_OBJECTS := $(patsubst $(TEST_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(TEST_SOURCES))
+
+HELPER_INCLUDE := helpers/include
+
+$(TEST_BUILD_DIR)/%.o: $(HELPER_SRC_DIR)/%.C
 	@mkdir -p build
-	@$(CXX) $(CXXFLAGS) -I$(GTEST_INCLUDE_DIR) -c $< -o $@
+	@echo $@
+	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
 
-# Build rule for the test runner
-$(TEST_EXECUTABLE): $(TEST_OBJECTS)
-	@$(CXX) $(CXXFLAGS) -I$(GTEST_INCLUDE_DIR) -L$(GTEST_LIB_DIR) -o $@ $^ $(LINKS)
+$(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
+	@mkdir -p build
+	@echo $@
+	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
 
-.PHONY: all clean
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
+	@mkdir -p output
+	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
+
+.PHONY: all clean coverage clean-coverage
 
 all: $(TEST_EXECUTABLE)
 
 clean:
-	@rm -rf $(BUILD_DIR)/*.o
+	@rm -rf $(TEST_BUILD_DIR)/*.o
 	@rm -f $(TEST_EXECUTABLE)
+	@rm -rf $(PROJECT_BUILD_DIR)/*.o
+	@rm -rf build/*.g*
+	@rm -rf *.dSYM
+	@rm -f *.out
+
+clean-coverage:
+	@rm -rf coverage.info

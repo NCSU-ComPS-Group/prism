@@ -1,0 +1,61 @@
+# Compiler settings
+CXX = g++
+TESTING_FLAG = -DTESTING
+CXXFLAGS = -std=c++17 -g -Wall -Werror
+
+PROJECT = rxn-cpp
+
+LIBRARY_NAME = lib$(PROJECT).so
+
+# Directories
+SRCDIR = src
+INCDIR = include
+BUILDDIR = build
+
+# Source and header files
+SOURCES = $(wildcard $(SRCDIR)/*.C)
+HEADERS = $(wildcard $(INCDIR)/*.h)
+OBJECTS = $(patsubst $(SRCDIR)/%.C,$(BUILDDIR)/%.o,$(SOURCES))
+
+# Include and library paths
+INCLUDE_PATH = -I$(CONDA_PREFIX)/include
+LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
+
+YAML_LINK = -lyaml-cpp
+FMT_LINK = -lfmt
+
+LINKS = $(YAML_LINK) $(FMT_LINK)
+
+# Build the shared library
+$(LIBRARY_NAME): $(OBJECTS)
+	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS)
+	@echo "$(LIBRARY_NAME) built successfully!"
+
+# Build all of the source files for the library
+$(BUILDDIR)/%.o: $(SRCDIR)/%.C
+	@mkdir -p $(@D)
+	@$(CXX) $(CXXFLAGS) -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
+	@echo "Building $<"
+
+# Rule to create the library and executable
+all: $(LIBRARY_NAME)
+
+# Clean the build artifacts
+clean:
+	@rm -rf *.dSYM
+	@rm -f $(LIBRARY_NAME)
+	@rm -rf $(BUILDDIR)/*
+
+install: all
+	@mkdir -p $(CONDA_PREFIX)/include/$(PROJECT)
+	@cp -r $(INCDIR)/$(PROJECT) $(CONDA_PREFIX)/include
+	@mv $(LIBRARY_NAME) $(CONDA_PREFIX)/lib
+
+uninstall:
+	@rm -rf $(CONDA_PREFIX)/include/$(PROJECT)
+	@rm $(CONDA_PREFIX)/lib/$(LIBRARY_NAME)
+
+install-testing: CXXFLAGS += $(TESTING_FLAG)
+install-testing: install
+
+.PHONY: all clean
