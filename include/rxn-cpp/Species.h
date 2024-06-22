@@ -33,7 +33,7 @@ namespace rxn
     // to the member variables which hold the Reaction information
     friend class SpeciesFactory;
     /** the list of the sub_species in the the class */
-    const std::vector<const SubSpecies> _sub_species;
+    const std::vector<SubSpecies> _sub_species;
     const std::string _neutral_ground_state;
     /** All rate based reactions */
     std::vector<std::weak_ptr<const Reaction>> _rate_based;
