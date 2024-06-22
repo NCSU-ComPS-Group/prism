@@ -3,7 +3,7 @@ name: macos-build
 on:
   push:
     branches:
-      - main
+      - devel
 
 jobs:
   macos-build:
