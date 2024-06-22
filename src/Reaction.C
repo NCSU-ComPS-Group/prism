@@ -143,10 +143,10 @@ Reaction::Reaction(const YAML::Node & rxn_input,
   _products.clear();
 }
 
-const vector<const shared_ptr<Species>>
+const vector<shared_ptr<const Species>>
 Reaction::getSpecies() const
 {
-  vector<const shared_ptr<Species>> species_sp;
+  vector<shared_ptr<const Species>> species_sp;
 
   for (const auto & s_wp: _species)
   {

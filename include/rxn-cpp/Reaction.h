@@ -37,7 +37,7 @@ public:
   double getDeltaEnergyElectron() const {return _delta_eps_e;}
   double getDeltaEnergyGas() const {return _delta_eps_g;}
   bool isElastic() const {return _is_elastic;}
-  const std::vector<const std::shared_ptr<Species>> getSpecies() const;
+  const std::vector<std::shared_ptr<const Species>> getSpecies() const;
   const std::string getReferencesAsString() const;
   const std::vector<double> & getFunctionParams() const;
   const TabulatedReactionData & getTabulatedData() const;
@@ -51,6 +51,7 @@ public:
   bool operator!=(const Reaction & other) const;
 
 private:
+  friend class SpeciesFactory;
   std::string checkName(const YAML::Node & rxn_input);
   unsigned int getCoeff(std::string & s);
 

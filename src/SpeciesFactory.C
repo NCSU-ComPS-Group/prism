@@ -265,9 +265,10 @@ SpeciesFactory::getLumpedSpecies(weak_ptr<Species> & s)
 void
 SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
 {
-  auto s_vec = r->getSpecies();
-  for (auto s : s_vec)
+  auto s_vec = r->_species;
+  for (auto s_wp : s_vec)
   {
+    auto s = s_wp.lock();
     const auto & r_wp = s->_rate_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
@@ -281,9 +282,10 @@ SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
 void
 SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
 {
-  auto s_vec = r->getSpecies();
-  for (auto s : s_vec)
+  auto s_vec = r->_species;
+  for (auto s_wp : s_vec)
   {
+    auto s = s_wp.lock();
     const auto & r_wp = s->_xsec_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
