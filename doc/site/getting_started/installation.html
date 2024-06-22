@@ -1,0 +1,47 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Installation | rxn-cpp</title><link href="../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">rxn-cpp</a><a href="https://github.ncsu.edu/NCSU-ComPS-Group/rxn-cpp" class="right"><img src="../media/framework/github-logo.png" class="github-mark"></img><img src="../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="37864c96-e180-4e23-9651-d1d7dae2e241" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2a360829-3267-4929-aec0-1fbeb6f08a03" data-constrainWidth="false">How it Works<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#" class="sidenav-trigger" data-target="7b50a59e-2f3f-4f37-8533-a28dd29a134e"><i class="material-icons">menu</i></a><ul class="sidenav" id="7b50a59e-2f3f-4f37-8533-a28dd29a134e"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="d6049111-3a1a-4281-8249-762e86f09aaf" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="fd0430ec-eb39-45a2-9e50-fcddb4116481" data-constrainWidth="false">How it Works<i class="material-icons right">arrow_drop_down</i></a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="37864c96-e180-4e23-9651-d1d7dae2e241"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="staying_upto_date.html">Updating</a></li></ul><ul class="dropdown-content" id="2a360829-3267-4929-aec0-1fbeb6f08a03"><li><a href="../how_it_works/reaction_parsing.html">Reaction Parsing</a></li><li><a href="../how_it_works/species_parsing.html">Species Parsing</a></li></ul><ul class="dropdown-content" id="d6049111-3a1a-4281-8249-762e86f09aaf"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="staying_upto_date.html">Updating</a></li></ul><ul class="dropdown-content" id="fd0430ec-eb39-45a2-9e50-fcddb4116481"><li><a href="../how_it_works/reaction_parsing.html">Reaction Parsing</a></li><li><a href="../how_it_works/species_parsing.html">Species Parsing</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><span class="breadcrumb">getting_started</span><a href="#" class="breadcrumb">installation</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><p><a href="doc/content/doxygen/html/index.html">doxygen/index.html</a></p><section id="363a74b5-faf6-4f88-8fb8-ef8e6f27dd3f" data-section-level="1" data-section-text="Installation"><h1 id="installation">Installation</h1><pre class="moose-pre"><code class="language-bash">
+  conda activate rxn-cpp
+  mkdir -p ~/projects
+  cd ~/projects
+  git clone https://github.com/gsgall/rxn-cpp
+  cd ~/projects/rxn-cpp
+</code></pre></section><section id="24c9a5a8-e0ad-4685-9b5b-11e31cd07761" data-section-level="1" data-section-text="Mamba"><h1 id="mamba">Mamba</h1><p>Use of a package manager is recommended for use of this program. This will help avoid potentialy library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from <a href="https://mooseframework.inl.gov/getting_started/installation/conda.html">https://mooseframework.inl.gov/getting_started/installation/conda.html</a></p><p>When installing mamba using these instructions you can stop after the instruction to restart you terminal is given</p></section><section id="80f3f7bc-5f89-46c4-8dbb-73f4b7db0d66" data-section-level="1" data-section-text="Creating a new environment"><h1 id="creating-a-new-environment">Creating a new environment</h1><p>To ensure no conflicts with other projects you can create a new environment to work in.</p><pre class="moose-pre"><code class="language-bash">
+  cd ~/projects/rxn-cpp
+  conda create --name rxn-cpp
+  conda activate rxn-cpp
+  conda install --file environment.yml
+</code></pre></section><section id="ab1a13d9-a0db-44d6-ad7a-77536179be80" data-section-level="1" data-section-text="Build"><h1 id="build">Build</h1><pre class="moose-pre"><code class="language-bash">
+  make -j 4
+</code></pre></section><section id="30c134df-5f9e-4a92-b6eb-30f7c7839ec9" data-section-level="1" data-section-text="Build The Docs"><h1 id="build-the-docs">Build The Docs</h1><p>Since this system relies on the MOOSE documentation system you will need MOOSE installed to build and host the documentation site locally. We expect you to have MOOSE installed  at <code>~/projects/moose</code> if you would like to do this.</p><pre class="moose-pre"><code class="language-bash">
+conda activate moose
+cd ~/projects/rxn-cpp/doc
+MOOSE_DIR=~/projects/moose ROOT_DIR=~/projects/rxn-cpp/doc ./moosedocs.py build --serve
+</code></pre></section><section id="789d51e5-f123-4386-8488-ab101c757bb9" data-section-level="1" data-section-text="Running Unit Tests"><h1 id="running-unit-tests">Running Unit Tests</h1><pre class="moose-pre"><code class="language-bash">
+  cd test
+  make
+  ./run_tests -j 4
+</code></pre></section><section id="0f287d8f-1c9f-447a-b6bc-4a52fe269138" data-section-level="1" data-section-text="Remove Environment"><h1 id="remove-environment">Remove Environment</h1><p>If you&#x27;d like to remove the environment for any reason you can use the following</p><pre class="moose-pre"><code class="language-bash">
+  conda activate base
+  conda env remove -n rxn-cpp
+</code></pre></section><section id="a3367f9d-d46c-464c-a86d-050d85e13fdf" data-section-level="1" data-section-text="Trouble Shooting"><h1 id="trouble-shooting">Trouble Shooting</h1><p>If you are getting the error when running main where it is looking for the library in a different location you may need to update your search path. You can modify your conda environment variables. First you need create some files and folders</p><pre class="moose-pre"><code class="language-bash">
+  cd $CONDA_PREFIX
+  mkdir -p ./etc/conda/activate.d
+  mkdir -p ./etc/conda/deactivate.d
+  touch ./etc/conda/activate.d/env_vars.sh
+  echo &#x27;export DYLD_LIBRARY_PATH=&quot;$CONDA_PREFIX/lib:$DYLD_LIBRARY_PATH&quot;&#x27; &gt; ./etc/conda/activate.d/env_vars.sh
+  touch ./etc/conda/deactivate.d/env_vars.sh
+  echo &#x27;unset DYLD_LIBRARY_PATH&#x27; &gt; ./etc/conda/deactivate.d/env_vars.sh
+  cd -
+  conda deactivate
+  conda activate rxn-cpp
+</code></pre><p>The following commands are the same but for a linux system.</p><pre class="moose-pre"><code class="language-bash">
+  cd $CONDA_PREFIX
+  mkdir -p ./etc/conda/activate.d
+  mkdir -p ./etc/conda/deactivate.d
+  touch ./etc/conda/activate.d/env_vars.sh
+  echo &#x27;export LD_LIBRARY_PATH=&quot;$CONDA_PREFIX/lib:$LD_LIBRARY_PATH&quot;&#x27; &gt; ./etc/conda/activate.d/env_vars.sh
+  touch ./etc/conda/deactivate.d/env_vars.sh
+  echo &#x27;unset LD_LIBRARY_PATH&#x27; &gt; ./etc/conda/deactivate.d/env_vars.sh
+  cd -
+  conda deactivate
+  conda activate rxn-cpp
+</code></pre></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../js/init.js"></script><script type="text/javascript" src="../js/navigation.js"></script><script type="text/javascript" src="../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../js/search_index.js"></script><script type="text/javascript" src="../js/sqa_moose.js"></script>

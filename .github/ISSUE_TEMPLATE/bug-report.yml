@@ -18,7 +18,8 @@ body:
   attributes:
     label: Steps to Reproduce
     description: |
-      Steps to reproduce the behavior (input file, or modifications to an existing input file, etc.)
+      In order to make it easier for us to address your issue we request that you write a test to be added to the test suite that covers your case.
+      If you need help writing a case please first look at the examples in the `test/tests` directory and if you need further assistance please reach out on the discussions forum (https://github.com/gsgall/rxn-cpp/discussions).
   validations:
     required: true
 - type: textarea

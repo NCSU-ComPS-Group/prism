@@ -41,7 +41,7 @@ Since this system relies on the MOOSE documentation system you will need MOOSE i
 ```bash
 conda activate moose
 cd ~/projects/rxn-cpp/doc
-MOOSE_DIR=~/projects/moose ROOT_DIR=~/projects/rxn-cpp/doc ./moosedocs.py build --serve
+MOOSE_DIR=~/projects/moose ROOT_DIR=./ ./moosedocs.py build --serve
 ```
 
 # Running Unit Tests
