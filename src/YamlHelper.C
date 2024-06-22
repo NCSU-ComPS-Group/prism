@@ -123,12 +123,12 @@ template double getParam<double>(const string & param, const YAML::Node & node, 
 template bool getParam<bool>(const string & param, const YAML::Node & node, const bool required);
 
 
-const vector<const string>
-getExtraParams(const YAML::Node & node, const vector<const string> & allowed)
+const vector<string>
+getExtraParams(const YAML::Node & node, const vector<string> & allowed)
 {
   string temp_param;
   bool extra_param;
-  vector<const string> extra_params;
+  vector<string> extra_params;
 
   for (auto it = node.begin(); it != node.end(); ++it)
   {

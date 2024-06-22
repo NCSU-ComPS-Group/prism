@@ -17,7 +17,7 @@ Species::Species(const string & name)
   setLatexName();
 }
 
-const vector<const SubSpecies>
+const vector<SubSpecies>
 Species::decomposeSpecies()
 {
   vector<string> temp_parts = splitByCapital(_name);
@@ -49,7 +49,7 @@ Species::decomposeSpecies()
     parts.push_back(part);
   }
 
-  vector<const SubSpecies> sub_sp;
+  vector<SubSpecies> sub_sp;
 
   for (auto part : parts)
   {
@@ -116,10 +116,10 @@ Species::operator!=(const Species & other) const
   return !(*this == other);
 }
 
-const std::vector<const shared_ptr<const Reaction>>
+const std::vector<shared_ptr<const Reaction>>
 Species::convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & vec) const
 {
-  vector<const shared_ptr<const Reaction>> temp_list;
+  vector<shared_ptr<const Reaction>> temp_list;
   for (auto r_wp : vec)
   {
     temp_list.push_back(r_wp.lock());

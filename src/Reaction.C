@@ -103,7 +103,7 @@ Reaction::Reaction(const YAML::Node & rxn_input,
 
 
 
-  const vector<const string> extra_params = getExtraParams(rxn_input, allowed_reaction_params);
+  const auto extra_params = getExtraParams(rxn_input, allowed_reaction_params);
 
   if (extra_params.size() != 0)
   {

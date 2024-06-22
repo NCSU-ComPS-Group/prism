@@ -153,7 +153,7 @@ NetworkParser::parseNetwork(const string & file)
   checkFile(file);
   const YAML::Node network = YAML::LoadFile(file);
 
-  const vector<const string> extra_params = getExtraParams(network, allowed_network_inputs);
+  const auto extra_params = getExtraParams(network, allowed_network_inputs);
 
   if (extra_params.size() != 0)
   {

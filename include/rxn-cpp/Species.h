@@ -18,14 +18,14 @@ namespace rxn
     /** Comparison for checking whether or not the two are not equal  */
     bool operator!=(const Species & other) const;
     /** Getter method for all rate based reactions */
-    const std::vector<const std::shared_ptr<const Reaction>> getRateBasedReactions() const {return convertToSharedPtr(_rate_based);}
-    const std::vector<const std::shared_ptr<const Reaction>> getXSecBasedReactions() const {return convertToSharedPtr(_xsec_based);}
-    const std::vector<const std::shared_ptr<const Reaction>> getTabulatedRateBasedReactions() const {return convertToSharedPtr(_tabulated_rate_based);}
-    const std::vector<const std::shared_ptr<const Reaction>> getFunctionRateBasedReactions() const {return convertToSharedPtr(_function_rate_based);}
-    const std::vector<const std::shared_ptr<const Reaction>> getTabulatedXSecBasedReactions() const {return convertToSharedPtr(_tabulated_xsec_based);}
-    const std::vector<const std::shared_ptr<const Reaction>> getFunctionXSecBasedReactions() const {return convertToSharedPtr(_function_xsec_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getRateBasedReactions() const {return convertToSharedPtr(_rate_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getXSecBasedReactions() const {return convertToSharedPtr(_xsec_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getTabulatedRateBasedReactions() const {return convertToSharedPtr(_tabulated_rate_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getFunctionRateBasedReactions() const {return convertToSharedPtr(_function_rate_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getTabulatedXSecBasedReactions() const {return convertToSharedPtr(_tabulated_xsec_based);}
+    const std::vector<std::shared_ptr<const Reaction>> getFunctionXSecBasedReactions() const {return convertToSharedPtr(_function_xsec_based);}
     /** Getter method for the subspecies list */
-    const std::vector<const SubSpecies> & getSubSpecies() const {return _sub_species;}
+    const std::vector<SubSpecies> & getSubSpecies() const {return _sub_species;}
     const std::string & getNeutralGroundState() const {return _neutral_ground_state;}
 
   private:
@@ -50,13 +50,13 @@ namespace rxn
      * This method breaks down the species into the various
      * different elements that are in the species
     */
-    const std::vector<const SubSpecies> decomposeSpecies();
+    const std::vector<SubSpecies> decomposeSpecies();
     /** Method for getting the total mass based on all of the subspecies */
     void setMass() override;
     /** Method for getting the total charge number based on all of the subspecies */
     void setChargeNumber() override;
     std::string setNeutralGroundState() const;
-    const std::vector<const std::shared_ptr<const Reaction>>
+    const std::vector<std::shared_ptr<const Reaction>>
     convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & vec) const;
   };
 }
