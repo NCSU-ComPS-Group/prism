@@ -7,74 +7,51 @@ using namespace std;
 
 namespace rxn
 {
-  SpeciesBase::SpeciesBase(const string & name) :
-    _name(checkName(name))
-  {
-  }
+SpeciesBase::SpeciesBase(const string & name) :
+  _name(checkName(name))
+{
+}
 
-  string
-  SpeciesBase::checkName(const string & s)
-  {
-    if (s.length() == 0)
-      throw InvalidSpecies(s, "Species cannot be an empty string");
+string
+SpeciesBase::checkName(const string & s)
+{
+  if (s.length() == 0)
+    throw InvalidSpecies(s, "Species cannot be an empty string");
 
-    if (s[0] == 'e' || s[0] == 'E')
+  if (s[0] == 'e' || s[0] == 'E')
+  {
+    if (s.length() > 1)
     {
-      if (s.length() > 1)
-      {
-        throw InvalidSpecies(s, "Electrons cannot have modifiers");
-      }
-    } else {
-      if (s != "hnu" && findFirstCapital(s) == -1)
-      {
-        throw InvalidSpecies(s, "Any non-electron, non-photon species must start with a captial letter");
-      }
+      throw InvalidSpecies(s, "Electrons cannot have modifiers");
     }
-    return s;
+  } else {
+    if (s != "hnu" && findFirstCapital(s) == -1)
+    {
+      throw InvalidSpecies(s, "Any non-electron, non-photon species must start with a captial letter");
+    }
   }
+  return s;
+}
 
-  bool
-  SpeciesBase::operator==(const SpeciesBase & other) const
-  {
-    return _name == other.getName();
-  }
+bool
+SpeciesBase::operator==(const SpeciesBase & other) const
+{
+  return _name == other.getName();
+}
 
 
-  bool
-  SpeciesBase::operator!=(const SpeciesBase & other) const
-  {
-    return !(*this == other);
-  }
+bool
+SpeciesBase::operator!=(const SpeciesBase & other) const
+{
+  return !(*this == other);
+}
 
-  const string
-  SpeciesBase::getName() const
-  {
-    return _name;
-  }
+double
+SpeciesBase::getCharge() const
+{
+  return static_cast<float>(_charge_num) * ELEMENTAL_CHARGE;
+}
 
-  double
-  SpeciesBase::getMass() const
-  {
-    return _mass;
-  }
-
-  int
-  SpeciesBase::getChargeNumber() const
-  {
-    return _charge_num;
-  }
-
-  double
-  SpeciesBase::getCharge() const
-  {
-    return static_cast<float>(_charge_num) * e;
-  }
-
-  string
-  SpeciesBase::getLatexRepresentation() const
-  {
-    return _latex_name;
-  }
 } // namespace RXN
 
 size_t

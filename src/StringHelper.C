@@ -3,9 +3,13 @@
 #include <cctype>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include "fmt/core.h"
+#include "InvalidInput.h"
+#include "int_range.h"
 
 using namespace std;
+
 namespace rxn
 {
   const string WHITESPACE = " \n\r\t\f\v";
@@ -58,12 +62,9 @@ namespace rxn
   findFirstCapital(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
       if (isupper(s[i]))
-      {
         return i;
-      }
-    }
+
     return -1;
   }
 
@@ -71,12 +72,8 @@ namespace rxn
   findFirstSpecial(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
-      if (isalnum(s[i]))
-        continue;
-
-      return i;
-    }
+      if (!isalnum(s[i]))
+        return i;
     return -1;
   }
 
@@ -84,10 +81,9 @@ namespace rxn
   findFirstNonLetter(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
       if (!isalpha(s[i]))
         return i;
-    }
+
     return -1;
   }
 
@@ -95,10 +91,9 @@ namespace rxn
   findFirstLetter(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
       if (isalpha(s[i]))
         return i;
-    }
+
     return -1;
   }
 
@@ -106,10 +101,19 @@ namespace rxn
   findFirstNonNumber(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
       if (!isdigit(s[i]))
         return i;
-    }
+
+    return -1;
+  }
+
+  int
+  findFirstNumber(const string & s)
+  {
+    for (size_t i = 0; i < s.length(); ++i)
+      if (isdigit(s[i]))
+        return i;
+
     return -1;
   }
 
@@ -117,10 +121,9 @@ namespace rxn
   findFirstNonSpecial(const string & s)
   {
     for (size_t i = 0; i < s.length(); ++i)
-    {
       if (isalnum(s[i]))
         return i;
-    }
+
     return -1;
   }
 
@@ -133,15 +136,11 @@ namespace rxn
 
     // case for no capitals just give the string back
     if (capital_idx == -1)
-    {
       return {s};
-    }
 
     // case for a single character string
     if (capital_idx == 0 && s.length() == 1)
-    {
       return {s};
-    }
 
     string sub_s = s;
 
@@ -149,7 +148,6 @@ namespace rxn
 
     while (capital_idx != -1)
     {
-
       cut_locations.push_back(capital_idx);
       // lower case the captial and find the next one
       sub_s[capital_idx] = tolower(sub_s[capital_idx]);
@@ -171,9 +169,7 @@ namespace rxn
     int exponent = 0;
 
     if (val == 0)
-    {
       return "0.00";
-    }
 
     exponent = static_cast<int>(std::floor(std::log10(std::abs(val))));
 
@@ -207,5 +203,52 @@ namespace rxn
   printRed(const string & s)
   {
     cout << makeRed(s);
+  }
+
+  vector<vector<double>>
+  readDataFromFile(const std::string & file,
+                   const std::string & delimiter,
+                   const unsigned int line_length)
+  {
+
+    vector<vector<double>> all_data = vector<vector<double>>(line_length);
+    // Create an input file stream
+    std::ifstream data_input(file);
+
+    // Check if the file was opened successfully
+    if (!data_input.is_open())
+      throw InvalidInput("Unable to open data file '" + file + "'");
+
+    std::string line;
+    // Read the file line by line
+    unsigned int line_count = 0;
+    while (getline(data_input, line)) {
+      line_count++;
+      const auto & string_data = splitByDelimiter(line, delimiter);
+
+      if (string_data.size() != line_length)
+      {
+        data_input.close();
+        throw InvalidInput("Line " + to_string(line_count) + " in file '" + file + "' contains " +
+                           to_string(uint(string_data.size())) + " value" +
+                           (uint(string_data.size()) == 1 ? "" : "s") +
+                           " when it should contain " + to_string(line_length) + " value" +
+                           (line_length == 1 ? "" : "s"));
+      }
+
+      try {
+        for (const auto i : make_range(line_length))
+          all_data[i].push_back(stod(string_data[i]));
+
+      } catch (exception & e) {
+        data_input.close();
+        throw InvalidInput("There was an issue parsing something on line " + to_string(line_count) + " in file '" + file + "'.");
+      }
+    }
+
+    // Close the file
+    data_input.close();
+
+    return all_data;
   }
 }

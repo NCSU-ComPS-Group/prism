@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 namespace rxn {
   /**
@@ -76,6 +77,14 @@ namespace rxn {
   int findFirstNonNumber(const std::string & s);
 
   /**
+   * Find the first number in a std::string
+   * @param s the std::string to search
+   * @returns the index of the non number if
+   *          no number is found -1 is returned
+   */
+  int findFirstNumber(const std::string & s);
+
+  /**
    * @param s the std::string to search
    * Find the first non special character in a std::string
    * @returns the index of the non special character if
@@ -122,4 +131,6 @@ namespace rxn {
    * @param s the std::string to add the characters to
    */
   std::string makeRed(const std::string & s);
+
+  std::vector<std::vector<double>> readDataFromFile(const std::string & file, const std::string & delimiter, const unsigned int line_length);
 }

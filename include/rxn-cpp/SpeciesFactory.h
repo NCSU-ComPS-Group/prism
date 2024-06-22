@@ -21,6 +21,7 @@ class SpeciesFactory {
     const std::string getLatexOverride(const std::string & name) const;
 
     std::weak_ptr<Species> getSpecies(const std::string & name);
+    const std::map<std::string, std::shared_ptr<Species>> & getSpeciesMap() const {return _species;}
     /**
      * Method checks for lumped states of a species
      * if there is one it will return the pointer to the species the name is lumped into

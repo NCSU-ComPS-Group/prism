@@ -21,8 +21,8 @@ TEST(Reaction, CompareReactions)
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
-  Reaction r1 = Reaction(rxn_input);
-  Reaction r2 = Reaction(rxn_input);
+  Reaction r1 = Reaction(rxn_input, 0, "", "", false, false);
+  Reaction r2 = Reaction(rxn_input, 0, "", "", false, false);
 
   std::hash<Reaction> hasher;
   size_t hash1 = hasher(r1);
@@ -46,14 +46,14 @@ TEST(Reaction, TestBasicReactionFromNode)
   rxn_input[REFERENCE_KEY] = "test";
   rxn_input[NOTE_KEY] = YAML::Load("[something, something else]");
 
-  Reaction r = Reaction(rxn_input);
+  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
   EXPECT_EQ(r.getNotes(), vector<string>({"something", "something else"}));
 
-  EXPECT_EQ(r.getRateParams().size(), (unsigned int) 0);
+  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
   // EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -62,7 +62,7 @@ TEST(Reaction, TestBasicReactionFromNode)
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 
   EXPECT_EQ(r.getLatexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
-  EXPECT_EQ(r.getName(), "Ar + e -> Ar + e");
+  EXPECT_EQ(r.getExpression(), "Ar + e -> Ar + e");
 }
 
 TEST(Reaction, TestBasicReactionArrhenius)
@@ -72,7 +72,7 @@ TEST(Reaction, TestBasicReactionArrhenius)
   rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
   rxn_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input);
+  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
   vector<double> params = {1, 2, 3, 0, 0};
 
@@ -81,15 +81,15 @@ TEST(Reaction, TestBasicReactionArrhenius)
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
   EXPECT_EQ(r.getNotes().size(), (unsigned int) 0);
 
-  EXPECT_EQ(r.getRateParams().size(),(unsigned int)  5);
-  EXPECT_EQ(r.getRateParams(), params);
+  EXPECT_EQ(r.getFunctionParams().size(),(unsigned int)  5);
+  EXPECT_EQ(r.getFunctionParams(), params);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
   EXPECT_EQ(r.getLatexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
-  EXPECT_EQ(r.getName(), "Ar + e -> Ar + e");
+  EXPECT_EQ(r.getExpression(), "Ar + e -> Ar + e");
 }
 
 TEST(Reaction, TestSpeciesWithCoeffReaction)
@@ -99,20 +99,20 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input);
+  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int) 0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
 
-  EXPECT_EQ(r.getRateParams().size(), (unsigned int)  0);
+  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
   EXPECT_EQ(r.getLatexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
-  EXPECT_EQ(r.getName(), "4Ar + 3e -> 4Ar + 3e");
+  EXPECT_EQ(r.getExpression(), "4Ar + 3e -> 4Ar + 3e");
 }
 
 TEST(Reaction, TestSpeciesWithNoCoeffReaction)
@@ -122,20 +122,20 @@ TEST(Reaction, TestSpeciesWithNoCoeffReaction)
   rxn_input[FILE_KEY] = "reaction1.txt";
   rxn_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input);
+  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
 
-  EXPECT_EQ(r.getRateParams().size(), (unsigned int)0);
+  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
   EXPECT_EQ(r.getLatexRepresentation(), "2Ar + 2e $\\rightarrow$ 2Ar + 2e");
-  EXPECT_EQ(r.getName(), "Ar + Ar + e + e -> Ar + Ar + e + e");
+  EXPECT_EQ(r.getExpression(), "Ar + Ar + e + e -> Ar + Ar + e + e");
 }
 
 TEST(Reaction, TestUnbalanced)
@@ -144,19 +144,19 @@ TEST(Reaction, TestUnbalanced)
   rxn_input[REACTION_KEY] = "e + Ar* -> e + Ar+";
   rxn_input[FILE_KEY] = "reaction1.txt";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
 
   rxn_input[REACTION_KEY] = "e + Ar -> e + Ar2";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
 
   rxn_input[REACTION_KEY] = "e + Ar* -> Ar+";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
 
   rxn_input[REACTION_KEY] = "e + Ar* -> He";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
 }
 
 
@@ -192,6 +192,60 @@ TEST(Reaction, TooManyInputs)
   rxn_input[FILE_KEY] = YAML::Load("a file");
 
   EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+}
+
+TEST(Reaction, NoCrossSectionFileFound)
+{
+
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[FILE_KEY] = "not_a_file.txt";
+  rxn_input[REFERENCE_KEY] = "test";
+  rxn_input[NOTE_KEY] = YAML::Load("[something, something else]");
+
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false), exception);
+}
+
+TEST(Reaction, ValidCrossSection)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
+  rxn_input[FILE_KEY] = "reaction1.txt";
+  rxn_input[REFERENCE_KEY] = "test";
+
+  Reaction r = Reaction(rxn_input, 0, "inputs/data/", "", false);
+
+  TabulatedReactionData xsec_data;
+
+  xsec_data.energies = vector<double>{8.580209E-01, 1.083042E+00, 1.308050E+00, 1.533033E+00, 1.753759E+00};
+  xsec_data.values = vector<double>{2.409262E+08, 2.708660E+08, 3.004261E+08, 3.242994E+08, 3.481368E+08};
+
+
+  EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
+  EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
+  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
+  EXPECT_EQ(r.getTabulatedData().energies, xsec_data.energies);
+  EXPECT_EQ(r.getTabulatedData().values, xsec_data.values);
+
+  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
+
+  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+
+  EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
+  EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
+  EXPECT_EQ(r.getLatexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
+  EXPECT_EQ(r.getExpression(), "4Ar + 3e -> 4Ar + 3e");
+}
+
+TEST(Reaction, UnevenValidCrossSection)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
+  rxn_input[FILE_KEY] = "uneven_input.txt";
+  rxn_input[REFERENCE_KEY] = "test";
+
+  EXPECT_THROW(Reaction(rxn_input, 0, "inputs/data/", "", false), InvalidInput);
 }
 
 // }
@@ -230,7 +284,7 @@ TEST(Reaction, TooManyInputs)
 //   EXPECT_EQ(r.getStoicCoeffByName("CF2+"), 1);
 //   EXPECT_EQ(r.getStoicCoeffByName("F"), 2);
 //   EXPECT_EQ(r.getLatexRepresentation(), "e + CF$_{4}$ $\\rightarrow$ CF$_{2}$$^{+}$ + 2F + 2e");
-//   EXPECT_EQ(r.getName(), "e + CF4 -> CF2+ + 2F + 2e");
+//   EXPECT_EQ(r.getExpression(), "e + CF4 -> CF2+ + 2F + 2e");
 // }
 
 // TEST(Reaction, ReactionWithDeltaEpsilons)
@@ -274,5 +328,5 @@ TEST(Reaction, TooManyInputs)
 //   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 2);
 
 //   EXPECT_EQ(r.getLatexRepresentation(), "Ar$_{2}$$^{+}$ + Kr $\\rightarrow$ Kr$^{+}$ + 2Ar");
-//   EXPECT_EQ(r.getName(), "Ar2+ + Kr -> Kr+ + 2Ar");
+//   EXPECT_EQ(r.getExpression(), "Ar2+ + Kr -> Kr+ + 2Ar");
 // }

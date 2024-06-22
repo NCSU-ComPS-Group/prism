@@ -266,10 +266,15 @@ void
 SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
 {
   auto s_vec = r->getSpecies();
-  for (auto s_wp : s_vec)
+  for (auto s : s_vec)
   {
-    auto s = s_wp.lock();
-    s->_rate_based.push_back(weak_ptr<const Reaction>(r));
+    const auto & r_wp = s->_rate_based.emplace_back(weak_ptr<const Reaction>(r));
+    if (r->hasTabulatedData())
+    {
+      s->_tabulated_rate_based.push_back(r_wp);
+      continue;
+    }
+    s->_function_rate_based.push_back(r_wp);
   }
 }
 
@@ -277,10 +282,15 @@ void
 SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
 {
   auto s_vec = r->getSpecies();
-  for (auto s_wp : s_vec)
+  for (auto s : s_vec)
   {
-    auto s = s_wp.lock();
-    s->_xsec_based.push_back(weak_ptr<const Reaction>(r));
+    const auto & r_wp = s->_xsec_based.emplace_back(weak_ptr<const Reaction>(r));
+    if (r->hasTabulatedData())
+    {
+      s->_tabulated_xsec_based.push_back(r_wp);
+      continue;
+    }
+    s->_function_xsec_based.push_back(r_wp);
   }
 }
 
@@ -367,29 +377,29 @@ SpeciesFactory::getSpeciesSummary() const
         {
           if (ssb.find(SOURCE_KEY) == ssb.end())
           {
-            ssb.emplace(SOURCE_KEY, vector<string>{r->getName()});
+            ssb.emplace(SOURCE_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[SOURCE_KEY].push_back(r->getName());
+          ssb[SOURCE_KEY].push_back(r->getExpression());
         }
 
         if (stoic_coeff == 0) {
           if (ssb.find(BALANCED_KEY) == ssb.end())
           {
-            ssb.emplace(BALANCED_KEY, vector<string>{r->getName()});
+            ssb.emplace(BALANCED_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[BALANCED_KEY].push_back(r->getName());
+          ssb[BALANCED_KEY].push_back(r->getExpression());
         }
 
         if (stoic_coeff < 0)
         {
           if (ssb.find(SINK_KEY) == ssb.end())
           {
-            ssb.emplace(SINK_KEY, vector<string>{r->getName()});
+            ssb.emplace(SINK_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[SINK_KEY].push_back(r->getName());
+          ssb[SINK_KEY].push_back(r->getExpression());
         }
       }
 
@@ -417,30 +427,30 @@ SpeciesFactory::getSpeciesSummary() const
         {
           if (ssb.find(SOURCE_KEY) == ssb.end())
           {
-            ssb.emplace(SOURCE_KEY, vector<string>{r->getName()});
+            ssb.emplace(SOURCE_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[SOURCE_KEY].push_back(r->getName());
+          ssb[SOURCE_KEY].push_back(r->getExpression());
         }
 
         if (stoic_coeff == 0)
         {
           if (ssb.find(BALANCED_KEY) == ssb.end())
           {
-            ssb.emplace(BALANCED_KEY, vector<string>{r->getName()});
+            ssb.emplace(BALANCED_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[BALANCED_KEY].push_back(r->getName());
+          ssb[BALANCED_KEY].push_back(r->getExpression());
         }
 
         if (stoic_coeff < 0)
         {
           if (ssb.find(SINK_KEY) == ssb.end())
           {
-            ssb.emplace(SINK_KEY, vector<string>{r->getName()});
+            ssb.emplace(SINK_KEY, vector<string>{r->getExpression()});
             continue;
           }
-          ssb[SINK_KEY].push_back(r->getName());
+          ssb[SINK_KEY].push_back(r->getExpression());
         }
       }
 

@@ -119,6 +119,17 @@ TEST(StringHelper, findFirstNonSpecial)
   EXPECT_EQ(findFirstNonSpecial(test), -1);
 }
 
+TEST(StringHelper, findFirstNumber)
+{
+  string test = "adl1(k";
+
+  EXPECT_EQ(findFirstNumber(test), 3);
+
+  test = "adskfjasdfkljhj";
+
+  EXPECT_EQ(findFirstNumber(test), -1);
+}
+
 TEST(StringHelper, splitByCapital)
 {
   string test = "lkasdfoiwkj";
