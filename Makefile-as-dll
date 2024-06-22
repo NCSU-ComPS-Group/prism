@@ -32,9 +32,10 @@ $(LIBRARY_NAME): $(OBJECTS)
 	@echo "$(LIBRARY_NAME) built successfully!"
 
 # Build all of the source files for the library
+# -fPIC flag is required for linux shared_object build
 $(BUILDDIR)/%.o: $(SRCDIR)/%.C
 	@mkdir -p $(@D)
-	@$(CXX) $(CXXFLAGS) -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -fPIC -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
 	@echo "Building $<"
 
 # Rule to create the library and executable
