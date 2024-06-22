@@ -2,6 +2,7 @@
 
 #include "SpeciesBase.h"
 #include <vector>
+#include <memory>
 
 namespace rxn
 {

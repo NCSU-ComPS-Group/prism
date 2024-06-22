@@ -2,6 +2,8 @@
 #include "SubSpecies.h"
 #include "StringHelper.h"
 
+#include <limits>
+
 using namespace std;
 
 namespace rxn
