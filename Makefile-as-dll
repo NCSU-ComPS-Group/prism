@@ -51,9 +51,9 @@ install: all
 	@cp -r $(INCDIR)/$(PROJECT) $(CONDA_PREFIX)/include
 	@mv $(LIBRARY_NAME) $(CONDA_PREFIX)/lib
 
-uninstall:
+uninstall: clean
 	@rm -rf $(CONDA_PREFIX)/include/$(PROJECT)
-	@rm $(CONDA_PREFIX)/lib/$(LIBRARY_NAME)
+	@rm -f $(CONDA_PREFIX)/lib/$(LIBRARY_NAME)
 
 install-testing: CXXFLAGS += $(TESTING_FLAG)
 install-testing: install
