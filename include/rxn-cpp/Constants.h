@@ -5,7 +5,8 @@
 
 namespace rxn
 {
-/// allowed input blocks
+/// allowed upper level input blocks
+///@{
 const std::string BIB_KEY = "bibliography";
 const std::string PATH_KEY = "data-path";
 const std::string RATE_BASED = "rate-based";
@@ -13,10 +14,13 @@ const std::string XSEC_BASED = "xsec-based";
 const std::string LATEX_OVERRIDES = "latex-overrides";
 const std::string CUSTOM_SPECIES = "custom-species";
 const std::string LUMPED_SPECIES = "lumped-species";
+///@}
+/// vector of allowed upper level input blocks for param checking
 const std::vector<std::string> allowed_network_inputs = {BIB_KEY, PATH_KEY, RATE_BASED, XSEC_BASED, LATEX_OVERRIDES, CUSTOM_SPECIES, LUMPED_SPECIES};
 /// input keys for the custom species block
 const std::string NAME_KEY = "name";
 const std::string MASS_KEY = "mass";
+/// vector of allowed inputs blocks in the custom species block
 const std::vector<std::string> allowed_custom_params = {NAME_KEY, MASS_KEY};
 /// input keys for lumping block
 const std::string LUMPED_KEY  = "lumped";

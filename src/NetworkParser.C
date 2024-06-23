@@ -19,6 +19,13 @@ using namespace std;
 namespace rxn
 {
 
+NetworkParser::NetworkParser():
+  _network_has_errors(false),
+  _network_has_bib_errors(false),
+  _check_refs(true),
+  _read_xsec_files(true)
+{}
+
 NetworkParser* NetworkParser::_instance = nullptr;
 
 NetworkParser& NetworkParser::getInstance()
@@ -45,8 +52,8 @@ NetworkParser::setDelimiter(const string & delimiter)
 void
 NetworkParser::clear()
 {
-  _bib_errors = false;
-  _errors = false;
+  _network_has_bib_errors = false;
+  _network_has_errors = false;
   _check_refs = true;
   _read_xsec_files = true;
   _networks.clear();
@@ -62,17 +69,6 @@ NetworkParser::clear()
   _tabulated_rate_based.clear();
   _function_rate_based.clear();
 }
-
-void NetworkParser::setCheckRefs(const bool check_refs)
-{
-  _check_refs = check_refs;
-}
-
-void NetworkParser::setReadXsecFiles(const bool read_xsec_files)
-{
-  _read_xsec_files = read_xsec_files;
-}
-
 
 void
 NetworkParser::checkFile(const string & file) const
@@ -90,18 +86,15 @@ NetworkParser::checkFile(const string & file) const
 }
 
 void
-NetworkParser::checkBibFile(const string & file)
+NetworkParser::checkBibFile(const string & file) const
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
-  _bib_errors = false;
-
   try {
-    bth.collectReferences(file);
+    BibTexHelper::getInstance().collectReferences(file);
   } catch (const invalid_argument & e) {
     printRed("\n\n" + string(e.what()) + "\n\n");
   }
 
-  if (_check_refs && _bib_errors)
+  if (_check_refs && _network_has_bib_errors)
   {
     InvalidInputExit("Errors in BibTex file: '" + file + "'");
   }
@@ -156,7 +149,7 @@ NetworkParser::parseReactions(const YAML::Node & network,
       }
 
     } catch (const InvalidReaction & e) {
-      _errors = true;
+      _network_has_errors = true;
       printRed(e.what());
     }
   }
@@ -220,6 +213,14 @@ NetworkParser::parseNetwork(const string & file)
 
   for (const auto & s_entries : SpeciesFactory::getInstance().getSpeciesMap())
     _species.push_back(s_entries.second);
+}
+
+void
+NetworkParser::preventInvalidDataFetch() const
+{
+  if (_network_has_errors)
+    InvalidInputExit(
+        "Errors exist in your network, you must resolved these before you can retrieve any data.");
 }
 
 // void
