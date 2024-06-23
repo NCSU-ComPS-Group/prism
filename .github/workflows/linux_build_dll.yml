@@ -31,6 +31,10 @@ jobs:
       run: |
         conda activate rxn-cpp
         export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+        make -f Makefile-as-dll install -j 4
+        make -f Makefile-with-dll
+        ./main
+        make -f Makefile-as-dll uninstall
         make -f Makefile-as-dll install-testing -j 4
         cd test
         make -f Makefile-with-dll -j 4

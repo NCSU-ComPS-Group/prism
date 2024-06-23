@@ -1,0 +1,26 @@
+# Compiler settings
+CXX = g++
+WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS = -std=c++17 $(WARNING_FLAGS)
+# Source file and executable name
+SRC = main.C
+EXE = main
+
+# adding include to look in the conda environment
+INCLUDE_PATH = -I$(CONDA_PREFIX)/include
+# link instructions to look in the conda environment
+LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
+
+YAML_LINK = -lyaml-cpp
+FMT_LINK = -lfmt
+RXN_LINK = -lrxn-cpp
+LINKS = $(YAML_LINK) $(FMT_LINK) $(RXN_LINK)
+
+# build main with the rest of the code as a dll
+$(EXE):
+	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SRC) -o $(EXE) $(LINKS)
+
+# clean up the parser
+clean:
+	@rm -rf *.dSYM
+	@rm -f $(EXE)

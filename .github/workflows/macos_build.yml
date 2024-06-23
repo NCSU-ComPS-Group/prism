@@ -35,6 +35,8 @@ jobs:
       run: |
         conda activate rxn-cpp
         export DYLD_LIBRARY_PATH="$CONDA_PREFIX/lib:$DYLD_LIBRARY_PATH"
+        make -j 4
+        ./main
         cd test
         make -j 4
         ./run_tests -j 4

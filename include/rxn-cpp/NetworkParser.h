@@ -11,7 +11,10 @@ class Species;
 
 class NetworkParser {
   public:
-    NetworkParser(const std::string & delimiter=" ");
+    // Static function to get the instance of the singleton
+    static NetworkParser & getInstance();
+
+    // NetworkParser(const std::string & delimiter=" ");
 
     void clear();
     /**
@@ -24,7 +27,7 @@ class NetworkParser {
 
     void setCheckRefs(const bool check_refs);
     void setReadXsecFiles(const bool read_xsec_files);
-    void setDataDelimiter(const std::string & delimiter);
+    void setDelimiter(const std::string & delimiter);
 
     const std::unordered_map<std::string, std::string> & getLumpedMap();
 
@@ -38,7 +41,13 @@ class NetworkParser {
     const std::vector<std::shared_ptr<const Species>> & getSpecies() const {return _species;}
 
   private:
-    const std::string _delimiter;
+    NetworkParser() {}
+    NetworkParser(const NetworkParser&) = delete;
+    NetworkParser& operator=(const NetworkParser&) = delete;
+    // Private instance of the singleton
+    static NetworkParser* _instance;
+
+    std::string _delimiter;
     bool _errors = false;
     bool _check_refs = true;
     bool _read_xsec_files = true;

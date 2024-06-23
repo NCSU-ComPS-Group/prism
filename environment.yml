@@ -1,5 +1,0 @@
-conda-forge::fmt
-conda-forge::yaml-cpp
-conda-forge::lcov
-conda-forge::gtest
-

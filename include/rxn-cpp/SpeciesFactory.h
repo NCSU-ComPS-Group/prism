@@ -7,8 +7,8 @@
 
 #include "Species.h"
 
-class Reaction;
 namespace rxn{
+class Reaction;
 
 class SpeciesFactory {
   public:

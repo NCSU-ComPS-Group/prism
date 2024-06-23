@@ -9,15 +9,17 @@ class NetworkParserTest : public testing::Test {
   protected:
     void SetUp() override {
       // Save cout's buffer...
-      // sbuf = std::cout.rdbuf();
-      // // Redirect cout to our stringstream buffer or any other ostream
-      // std::cout.rdbuf(buffer.rdbuf());
+      sbuf = std::cout.rdbuf();
+      // Redirect cout to our stringstream buffer or any other ostream
+      std::cout.rdbuf(buffer.rdbuf());
+      rxn::NetworkParser::getInstance().clear();
     }
 
     void TearDown() override {
       // When done redirect cout to its old self
-      // std::cout.rdbuf(sbuf);
-      // sbuf = nullptr;
+      std::cout.rdbuf(sbuf);
+      sbuf = nullptr;
+      rxn::NetworkParser::getInstance().clear();
     }
 
     std::stringstream buffer{};
@@ -26,14 +28,15 @@ class NetworkParserTest : public testing::Test {
 
 TEST_F(NetworkParserTest, NoFileFound)
 {
-  rxn::NetworkParser np;
+  auto & np = rxn::NetworkParser::getInstance();
 
   EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
 }
 
 TEST_F(NetworkParserTest, RepeatFile)
 {
-  rxn::NetworkParser np;
+  auto & np = rxn::NetworkParser::getInstance();
+
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
   np.parseNetwork("inputs/simple_argon_rate.yaml");
@@ -43,7 +46,8 @@ TEST_F(NetworkParserTest, RepeatFile)
 
 TEST_F(NetworkParserTest, LongFileWithRefs)
 {
-  rxn::NetworkParser np;
+  auto & np = rxn::NetworkParser::getInstance();
+
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
   EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
@@ -51,7 +55,8 @@ TEST_F(NetworkParserTest, LongFileWithRefs)
 
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
-  rxn::NetworkParser np = rxn::NetworkParser("\t");
+  auto & np = rxn::NetworkParser::getInstance();
+  np.setDelimiter("\t");
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
 
   const auto & tabular_rxns = np.getTabulatedRateReactions();
@@ -238,7 +243,9 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
 
 TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
-  rxn::NetworkParser np = rxn::NetworkParser("\t");
+  auto & np = rxn::NetworkParser::getInstance();
+  np.setDelimiter("\t");
+
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
 
   const auto & tabular_rxns = np.getTabulatedXSecReactions();

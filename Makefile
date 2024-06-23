@@ -1,7 +1,8 @@
 # Compiler settings
 CXX = g++
-CXXFLAGS = -std=c++17 -g  -O3
-# -Wall -Wextra -Wpedantic -Werror
+WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS = -std=c++17 -O3 $(WARNING_FLAGS)
+
 # Source file and executable name
 SRC = main.C
 EXE = main
@@ -27,14 +28,14 @@ FMT_LINK = -lfmt
 
 LINKS = $(YAML_LINK) $(FMT_LINK)
 
+# build both reaction parser and yaml library
+all: $(EXE)
+
 # build just the reaction parser
 $(EXE): $(OBJECTS)
 	@echo "Building $(EXE)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) $(OBJECTS) $(SRC) -o $(EXE) $(LINKS)
 	@echo "$(EXE) built successfully!"
-
-# build both reaction parser and yaml library
-all: $(EXE)
 
 # build all of the source files for the parser
 $(BUILDDIR)/%.o: $(SRCDIR)/%.C
@@ -45,4 +46,4 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.C
 clean:
 	@rm -rf *.dSYM
 	@rm -f $(EXE)
-	@rm  -rf build/*
+	@rm  -rf build

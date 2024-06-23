@@ -19,14 +19,19 @@ using namespace std;
 namespace rxn
 {
 
-NetworkParser::NetworkParser(const std::string & delimiter) :
-  _delimiter(setDelimiter(delimiter))
+NetworkParser* NetworkParser::_instance = nullptr;
+
+NetworkParser& NetworkParser::getInstance()
 {
-  clear();
+    // Create the _instance if it does not exist
+    if (_instance == nullptr) {
+      _instance = new NetworkParser();
+    }
+    return *_instance;
 }
 
-const string
-NetworkParser::setDelimiter(const string & delimiter) const
+void
+NetworkParser::setDelimiter(const string & delimiter)
 {
   if (delimiter.length() == 0)
     InvalidInputExit("The tabular data delimiter cannot be an empty string");
@@ -34,18 +39,28 @@ NetworkParser::setDelimiter(const string & delimiter) const
   if (findFirstNumber(delimiter) != -1)
     InvalidInputExit("The tabular provided data delimiter '" + delimiter + "' is invalid\nDelimiters cannot contain numbers");
 
-  return delimiter;
+  _delimiter = delimiter;
 }
 
 void
 NetworkParser::clear()
 {
+  _bib_errors = false;
+  _errors = false;
   _check_refs = true;
+  _read_xsec_files = true;
   _networks.clear();
   _bibs.clear();
   _data_paths.clear();
   SpeciesFactory::getInstance().clear();
   BibTexHelper::getInstance().clear();
+  _species.clear();
+  _xsec_based.clear();
+  _tabulated_xsec_based.clear();
+  _function_xsec_based.clear();
+  _rate_based.clear();
+  _tabulated_rate_based.clear();
+  _function_rate_based.clear();
 }
 
 void NetworkParser::setCheckRefs(const bool check_refs)
