@@ -3,7 +3,7 @@ name: linux-build-dll
 on:
   push:
     branches:
-      - devel
+      - main
 
 jobs:
   linux-build:
