@@ -1,12 +1,10 @@
 # Compiler and flags
-CXX = g++
 TESTING_FLAG = -DTESTING
 # flags for code coverage testing
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 # flags for memory leakage testing
-ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
-WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
-CXXFLAGS = -std=c++17 $(WARNING_FLAGS) $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
+ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -fsanitize-address-use-after-scope -fsanitize=undefined
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 
 PROJECT_NAME = rxn-cpp
 PROJECT_SRC_DIR = ../src
@@ -22,11 +20,11 @@ TEST_EXECUTABLE = run_tests
 CONDA_LIB_DIR = $(CONDA_PREFIX)/lib
 CONDA_INCLUDE_DIR = $(CONDA_PREFIX)/include
 
-GTEST_LINK = -lgtest -lgtest_main
+GTEST_LIBS = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
 
-TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LINK)
+TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LIBS)
 
 PROJECT_SOURCES := $(wildcard $(PROJECT_SRC_DIR)/*.C)
 PROJECT_OBJECTS := $(patsubst $(PROJECT_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(PROJECT_SOURCES))
@@ -40,6 +38,7 @@ TEST_OBJECTS := $(patsubst $(TEST_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(TEST_SO
 HELPER_INCLUDE := helpers/include
 PROJECT_INCLUDE := ../include
 
+all: $(TEST_EXECUTABLE)
 
 $(TEST_BUILD_DIR)/%.o: $(PROJECT_SRC_DIR)/%.C
 	@mkdir -p build
@@ -57,12 +56,11 @@ $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
+	@echo "BUILD SUCCESS: $(CONDA_LIB_DIR)"
 	@mkdir -p output
-	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
-
+	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -lgtest -lgtest_main -lyaml-cpp -lfmt -o $@ $^
 .PHONY: all clean coverage clean-coverage
 
-all: $(TEST_EXECUTABLE)
 
 clean:
 	@rm -rf $(TEST_BUILD_DIR)/*.o
@@ -72,7 +70,6 @@ clean:
 	@rm -rf build/*.g*
 	@rm -rf *.dSYM
 	@rm -f *.out
-
 
 coverage: all
 	lcov --capture --directory . --output-file coverage.info

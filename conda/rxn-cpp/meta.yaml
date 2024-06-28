@@ -1,0 +1,28 @@
+package:
+  name: rxn-cpp
+  version: 1.0.0
+
+requirements:
+  build:
+    - make
+    - {{ compiler('cxx') }}
+    - yaml-cpp
+    - fmt
+
+  run:
+    - fmt
+    - yaml-cpp
+
+
+channels:
+  - conda-forge
+  - defaults
+
+extra:
+  recipe-maintainers:
+    - gsgall
+
+about:
+  home: asdf
+  license: test
+  summary: "A simple conda package that creates activate and deactivate scripts and installs a few packages."

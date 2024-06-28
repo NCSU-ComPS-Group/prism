@@ -1,8 +1,6 @@
 # Compiler and flags
-CXX = g++
-TESTING_FLAG = -DTESTING
+TESTING_FLAG = -DTESTING -DCONDA_TESTING
 # flags for memory leakage testing
-ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
 WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
 CXXFLAGS = -std=c++17 $(WARNING_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 

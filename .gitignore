@@ -8,3 +8,6 @@ test/coverage_report
 test/converage.info
 doc/content/doxygen/html
 doc/site
+linux*
+osx*
+win*

@@ -1,8 +1,6 @@
-# Compiler settings
-CXX = g++
 TESTING_FLAG = -DTESTING
 WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
-CXXFLAGS = -std=c++17 -g $(WARNING_FLAGS)
+CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O3
 
 PROJECT = rxn-cpp
 

@@ -26,13 +26,6 @@ class NetworkParserTest : public testing::Test {
     std::streambuf *sbuf;
 };
 
-TEST_F(NetworkParserTest, NoFileFound)
-{
-  auto & np = rxn::NetworkParser::getInstance();
-
-  EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
-}
-
 TEST_F(NetworkParserTest, RepeatFile)
 {
   auto & np = rxn::NetworkParser::getInstance();
@@ -41,17 +34,33 @@ TEST_F(NetworkParserTest, RepeatFile)
   np.setReadXsecFiles(false);
   np.parseNetwork("inputs/simple_argon_rate.yaml");
 
-  EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
+  #ifdef CONDA_TESTING
+    EXPECT_DEATH(np.parseNetwork("inputs/simple_argon_rate.yaml"), "");
+  #else
+    EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
+  #endif
 }
+
+TEST_F(NetworkParserTest, NoFileFound)
+{
+  auto & np = rxn::NetworkParser::getInstance();
+
+  #ifdef CONDA_TESTING
+    EXPECT_DEATH(np.parseNetwork("not-a-file.txt"), "");
+  #else
+    EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
+  #endif
+}
+
 
 TEST_F(NetworkParserTest, LongFileWithRefs)
 {
   auto & np = rxn::NetworkParser::getInstance();
-
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
   EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
 }
+
 
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
