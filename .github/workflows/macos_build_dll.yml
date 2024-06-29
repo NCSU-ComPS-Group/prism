@@ -25,13 +25,16 @@ jobs:
         use-mamba: true
         activate-environment: prism
         environment-file: scripts/conda_user.yml
+    - name: Install Compiler
+      run: |
+        conda activate prism
+        conda install -y clangxx
+        export CXX=$(which clang++)
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build and run tests
       run: |
         conda activate prism
-        conda install clangxx
-        export CXX=clang++
         make -f Makefile-with-dll -j 4
         ./main
         cd test
