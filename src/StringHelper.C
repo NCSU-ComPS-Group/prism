@@ -208,10 +208,10 @@ namespace rxn
   vector<vector<double>>
   readDataFromFile(const std::string & file,
                    const std::string & delimiter,
-                   const unsigned int line_length)
+                   const unsigned int num_columns)
   {
 
-    vector<vector<double>> all_data = vector<vector<double>>(line_length);
+    vector<vector<double>> all_data = vector<vector<double>>(num_columns);
     // Create an input file stream
     std::ifstream data_input(file);
 
@@ -222,27 +222,30 @@ namespace rxn
     std::string line;
     // Read the file line by line
     unsigned int line_count = 0;
-    while (getline(data_input, line)) {
+    while (getline(data_input, line))
+    {
       line_count++;
       const auto & string_data = splitByDelimiter(line, delimiter);
 
-      if (string_data.size() != line_length)
+      if (string_data.size() != num_columns)
       {
         data_input.close();
         throw InvalidInput("Line " + to_string(line_count) + " in file '" + file + "' contains " +
                            to_string(uint(string_data.size())) + " value" +
-                           (uint(string_data.size()) == 1 ? "" : "s") +
-                           " when it should contain " + to_string(line_length) + " value" +
-                           (line_length == 1 ? "" : "s"));
+                           (uint(string_data.size()) == 1 ? "" : "s") + " when it should contain " +
+                           to_string(num_columns) + " value" + (num_columns == 1 ? "" : "s"));
       }
 
-      try {
-        for (const auto i : make_range(line_length))
+      try
+      {
+        for (const auto i : make_range(num_columns))
           all_data[i].push_back(stod(string_data[i]));
-
-      } catch (exception & e) {
+      }
+      catch (exception & e)
+      {
         data_input.close();
-        throw InvalidInput("There was an issue parsing something on line " + to_string(line_count) + " in file '" + file + "'.");
+        throw InvalidInput("There was an issue parsing something on line " + to_string(line_count) +
+                           " in file '" + file + "'.");
       }
     }
 

@@ -3,7 +3,6 @@
 #include <iostream>
 #include "fmt/core.h"
 
-
 #include "NetworkParser.h"
 #include "InvalidInput.h"
 #include "YamlHelper.h"
@@ -19,12 +18,13 @@ using namespace std;
 namespace rxn
 {
 
-NetworkParser::NetworkParser():
-  _network_has_errors(false),
-  _network_has_bib_errors(false),
-  _check_refs(true),
-  _read_xsec_files(true)
-{}
+NetworkParser::NetworkParser()
+  : _network_has_errors(false),
+    _network_has_bib_errors(false),
+    _check_refs(true),
+    _read_xsec_files(true)
+{
+}
 
 NetworkParser* NetworkParser::_instance = nullptr;
 
@@ -44,7 +44,8 @@ NetworkParser::setDelimiter(const string & delimiter)
     InvalidInputExit("The tabular data delimiter cannot be an empty string");
 
   if (findFirstNumber(delimiter) != -1)
-    InvalidInputExit("The tabular provided data delimiter '" + delimiter + "' is invalid\nDelimiters cannot contain numbers");
+    InvalidInputExit("The tabular provided data delimiter '" + delimiter +
+                     "' is invalid\nDelimiters cannot contain numbers");
 
   _delimiter = delimiter;
 }
@@ -124,18 +125,28 @@ NetworkParser::parseReactions(const YAML::Node & network,
   for (auto input : network[type])
   {
     try {
-      const auto rxn = rxn_list->emplace_back(make_shared<const Reaction>(input, 1 + _rate_based.size() + _xsec_based.size(), data_path, bib_file, _check_refs, _read_xsec_files, _delimiter));
+      const auto rxn = rxn_list->emplace_back(
+          make_shared<const Reaction>(input,
+                                      1 + _rate_based.size() + _xsec_based.size(),
+                                      data_path,
+                                      bib_file,
+                                      _check_refs,
+                                      _read_xsec_files,
+                                      _delimiter));
 
       if (rxn->hasTabulatedData())
       {
         tabulated_rxn_list->push_back(rxn);
-      } else {
+      }
+      else
+      {
         function_rxn_list->push_back(rxn);
       }
 
       if (rxn->isElastic() && type != RATE_BASED)
       {
-        throw InvalidReaction(rxn_list->back()->getExpression(), "Elastic reactions can only be in the '" + RATE_BASED + "' block");
+        throw InvalidReaction(rxn_list->back()->getExpression(),
+                              "Elastic reactions can only be in the '" + RATE_BASED + "' block");
       }
       printGreen("Reaction Validated: " + rxn->getExpression() + "\n");
       if (type == RATE_BASED)
@@ -147,7 +158,6 @@ NetworkParser::parseReactions(const YAML::Node & network,
       {
         SpeciesFactory::getInstance().addXSecBasedReaction(rxn);
       }
-
     } catch (const InvalidReaction & e) {
       _network_has_errors = true;
       printRed(e.what());
@@ -165,9 +175,10 @@ NetworkParser::parseNetwork(const string & file)
 
   if (extra_params.size() != 0)
   {
-    string error_string = string("Extra block") + (extra_params.size() == 1 ? "s" : "") + string("found\n");
+    string error_string =
+        string("Extra block") + (extra_params.size() == 1 ? "s" : "") + string("found\n");
 
-    for (const string & ep: extra_params)
+    for (const string & ep : extra_params)
       error_string += "'" + ep + "'\n";
 
     InvalidInputExit(error_string);
@@ -198,16 +209,29 @@ NetworkParser::parseNetwork(const string & file)
   SpeciesFactory::getInstance().collectLumpedSpecies(network);
   SpeciesFactory::getInstance().collectLatexOverrides(network);
 
-  if (!paramProvided(RATE_BASED, network, OPTIONAL) && !paramProvided(XSEC_BASED, network, OPTIONAL))
+  if (!paramProvided(RATE_BASED, network, OPTIONAL) &&
+      !paramProvided(XSEC_BASED, network, OPTIONAL))
   {
     InvalidInputExit("No reactions were found in file: '" + file + "'\n" +
                      "You must provide reactions in atleast one of the following blocks\n'" +
                      RATE_BASED + "', '" + XSEC_BASED + "'");
   }
 
-  parseReactions(network, &_rate_based, &_tabulated_rate_based, &_function_rate_based, RATE_BASED, _data_paths[file], _bibs[file]);
+  parseReactions(network,
+                 &_rate_based,
+                 &_tabulated_rate_based,
+                 &_function_rate_based,
+                 RATE_BASED,
+                 _data_paths[file],
+                 _bibs[file]);
 
-  parseReactions(network, &_xsec_based, &_tabulated_xsec_based, &_function_xsec_based, XSEC_BASED, _data_paths[file], _bibs[file]);
+  parseReactions(network,
+                 &_xsec_based,
+                 &_tabulated_xsec_based,
+                 &_function_xsec_based,
+                 XSEC_BASED,
+                 _data_paths[file],
+                 _bibs[file]);
 
   _species.clear();
 
@@ -228,7 +252,8 @@ NetworkParser::preventInvalidDataFetch() const
 // {
 
 //   if (_errors)
-//     InvalidInputExit("A LaTeX table cannot be generated\n  There are errors in your reaction network that must be corrected");
+//     InvalidInputExit("A LaTeX table cannot be generated\n  There are errors in your reaction
+//     network that must be corrected");
 
 //   unsigned int rxn_counter = 0;
 //   unsigned int note_counter = 0;
@@ -237,8 +262,6 @@ NetworkParser::preventInvalidDataFetch() const
 //   map<unsigned int, string> inverse_note_numbers;
 
 //   vector<string> all_notes;
-
-
 
 //   string latex = "\\documentclass{article}\n";
 //   latex += "\\usepackage{tabu}\n";
@@ -271,15 +294,15 @@ NetworkParser::preventInvalidDataFetch() const
 //   if (_rate_based.size() > 0)
 //   {
 //     latex += "\\section{Rate Based Reactions}\n";
-//     tableHelper(latex, _rate_based, rxn_counter, note_counter, note_numbers, inverse_note_numbers, all_notes);
-//     latex += "\\newpage\n";
+//     tableHelper(latex, _rate_based, rxn_counter, note_counter, note_numbers,
+//     inverse_note_numbers, all_notes); latex += "\\newpage\n";
 //   }
 
 //   if (_xsec_based.size() > 0)
 //   {
 //     latex += "\\section{Cross Section Reactions}\n";
-//     tableHelper(latex, _xsec_based, rxn_counter, note_counter, note_numbers, inverse_note_numbers, all_notes);
-//     latex += "\\newpage\n";
+//     tableHelper(latex, _xsec_based, rxn_counter, note_counter, note_numbers,
+//     inverse_note_numbers, all_notes); latex += "\\newpage\n";
 //   }
 
 //   for (unsigned int i = 0; i < all_notes.size(); ++i)
@@ -410,4 +433,3 @@ NetworkParser::writeSpeciesSummary(const string & file)
   out.close();
 }
 }
-

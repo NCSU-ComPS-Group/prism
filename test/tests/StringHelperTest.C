@@ -44,7 +44,6 @@ TEST(StringHelper, splitByDelimiter)
   split = {"Ar", "e"};
 
   EXPECT_EQ(split, splitByDelimiter(unsplit, " + "));
-
 }
 
 TEST(StringHelper, findFirstCapital)
@@ -58,7 +57,6 @@ TEST(StringHelper, findFirstCapital)
   EXPECT_EQ(findFirstCapital(test), -1);
 }
 
-
 TEST(StringHelper, findFirstSpecial)
 {
   string test = "adl(k";
@@ -70,7 +68,6 @@ TEST(StringHelper, findFirstSpecial)
   EXPECT_EQ(findFirstSpecial(test), -1);
 }
 
-
 TEST(StringHelper, findFirstNonLetter)
 {
   string test = "adl(k";
@@ -80,9 +77,7 @@ TEST(StringHelper, findFirstNonLetter)
   test = "adasdfkhjsadipughiujbrvjkb";
 
   EXPECT_EQ(findFirstNonLetter(test), -1);
-
 }
-
 
 TEST(StringHelper, findFirstLetter)
 {
@@ -93,7 +88,6 @@ TEST(StringHelper, findFirstLetter)
   test = "98173298761486700*$%^";
 
   EXPECT_EQ(findFirstLetter(test), -1);
-
 }
 
 TEST(StringHelper, findFirstNonNumber)

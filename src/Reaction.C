@@ -25,7 +25,7 @@ Reaction::Reaction(const YAML::Node & rxn_input,
                    const std::string & delimiter)
   : _number(rxn_number),
     _data_path(data_path),
-    _expression(checkName(rxn_input)),
+    _expression(checkExpression(rxn_input)),
     _delta_eps_e(getParam<double>(DELTA_EPS_E_KEY, rxn_input, OPTIONAL)),
     _delta_eps_g(getParam<double>(DELTA_EPS_G_KEY, rxn_input, OPTIONAL)),
     _is_elastic(getParam<bool>(ELASTIC_KEY, rxn_input, OPTIONAL)),
@@ -40,19 +40,22 @@ Reaction::Reaction(const YAML::Node & rxn_input,
 
   if (file_key_provided && params_key_provided)
   {
-    throw InvalidReaction(_expression, "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
+    throw InvalidReaction(_expression,
+                          "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
   }
 
   if (!file_key_provided && !params_key_provided)
   {
-    throw InvalidReaction(_expression, "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
+    throw InvalidReaction(_expression,
+                          "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
   }
 
   if (_is_elastic && (delta_eps_e_provided || delta_eps_g_provided))
   {
-    throw InvalidReaction(_expression, "For an elastic reaction you may not provide '" + DELTA_EPS_E_KEY + "' nor '" + DELTA_EPS_G_KEY + "'");
+    throw InvalidReaction(_expression,
+                          "For an elastic reaction you may not provide '" + DELTA_EPS_E_KEY +
+                              "' nor '" + DELTA_EPS_G_KEY + "'");
   }
-
 
   if (params_key_provided)
   {
@@ -62,7 +65,8 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     _tabulated_data.values.resize(0);
     if (_params[0] <= 0.0)
     {
-      throw InvalidReaction(_expression, "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
+      throw InvalidReaction(_expression,
+                            "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
     }
 
     if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
@@ -95,13 +99,13 @@ Reaction::Reaction(const YAML::Node & rxn_input,
         _tabulated_data.values.push_back(_temporary_data[1][i]);
       }
 
-      if (!is_sorted(_tabulated_data.energies.begin(), _tabulated_data.energies.end())) {
-        throw InvalidInput("Energy data in file '" + file + "' is not in ascending order");
+      if (!is_sorted(_tabulated_data.energies.begin(), _tabulated_data.energies.end()))
+      {
+        throw InvalidReaction(_expression,
+                              "Energy data in file '" + file + "' is not in ascending order");
       }
     }
   }
-
-
 
   const auto extra_params = getExtraParams(rxn_input, allowed_reaction_params);
 
@@ -112,11 +116,13 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     if (extra_params.size() == 1)
     {
       error_string = "Extra parameter found\n";
-    } else {
+    }
+    else
+    {
       error_string = "Extra parameters found\n";
     }
 
-    for (const string & ep: extra_params)
+    for (const string & ep : extra_params)
     {
       error_string += "          '" + ep + "'\n";
     }
@@ -148,29 +154,30 @@ Reaction::getSpecies() const
 {
   vector<shared_ptr<const Species>> species_sp;
 
-  for (const auto & s_wp: _species)
+  for (const auto & s_wp : _species)
   {
     species_sp.push_back(s_wp.lock());
   }
   return species_sp;
 }
 
-
 string
-Reaction::checkName(const YAML::Node & rxn_input)
+Reaction::checkExpression(const YAML::Node & rxn_input)
 {
 
   string rxn_str = getParam<string>(REACTION_KEY, rxn_input, REQUIRED);
   if (rxn_str.find(" -> ") == string::npos)
   {
-    throw InvalidReaction(_expression, "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
+    throw InvalidReaction(_expression,
+                          "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
   }
 
   return rxn_str;
 }
 
 void
-Reaction::setSides(){
+Reaction::setSides()
+{
 
   vector<string> sides = splitByDelimiter(_expression, " -> ");
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
@@ -187,7 +194,7 @@ Reaction::setSides(){
     coeff = getCoeff(s);
     auto stoic_it = _stoic_coeffs.find(s);
 
-    if ( stoic_it == _stoic_coeffs.end())
+    if (stoic_it == _stoic_coeffs.end())
     {
       _stoic_coeffs.emplace(s, -coeff);
       _reactant_count.emplace(s, coeff);
@@ -198,9 +205,12 @@ Reaction::setSides(){
       _reactant_count[s] += coeff;
     }
 
-    try {
+    try
+    {
       s_wp = sf.getSpecies(s);
-    } catch (const exception & e ) {
+    }
+    catch (const exception & e)
+    {
       throw InvalidReaction(_expression, e.what());
     }
     // only add the species to the list once
@@ -217,7 +227,7 @@ Reaction::setSides(){
     coeff = getCoeff(s);
     auto stoic_it = _stoic_coeffs.find(s);
 
-    if ( stoic_it == _stoic_coeffs.end())
+    if (stoic_it == _stoic_coeffs.end())
     {
       _stoic_coeffs.emplace(s, coeff);
       _product_count.emplace(s, coeff);
@@ -228,9 +238,12 @@ Reaction::setSides(){
       _product_count[s] += coeff;
     }
 
-    try {
+    try
+    {
       s_wp = sf.getSpecies(s);
-    } catch (const exception & e ) {
+    }
+    catch (const exception & e)
+    {
       throw InvalidReaction(_expression, e.what());
     }
 
@@ -309,9 +322,10 @@ Reaction::validateReaction()
         continue;
       auto it = r_elements.find(sub_p.getBase());
 
-      if ( it == r_elements.end())
+      if (it == r_elements.end())
       {
-        throw InvalidReaction(_expression,"'" + sub_p.getBase() + "' does not appear as a reactant");
+        throw InvalidReaction(_expression,
+                              "'" + sub_p.getBase() + "' does not appear as a reactant");
       }
       // we'll keep track of the element count on both sides
       if (p_elements.count(sub_p.getBase()) == 0)
@@ -332,9 +346,12 @@ Reaction::validateReaction()
     auto p_it = p_elements.find(it.first);
     if (p_it == p_elements.end() || p_it->second != it.second)
     {
-      throw InvalidReaction(_expression, fmt::format("Element or electron '{}' appears {:d} times as a reactant and {:d} times as a product.",
-                      it.first,
-                      p_elements[it.first], it.second));
+      throw InvalidReaction(_expression,
+                            fmt::format("Element or electron '{}' appears {:d} times as a reactant "
+                                        "and {:d} times as a product.",
+                                        it.first,
+                                        p_elements[it.first],
+                                        it.second));
     }
   }
 
@@ -360,7 +377,7 @@ Reaction::substituteLumped()
   {
     // exchange the pointers and get the previous unlumped name in temp_s_string
     unlumped_expression = sf.getLumpedSpecies(_reactants[i]);
-    lumped_expression =  _reactants[i].lock()->getName();
+    lumped_expression = _reactants[i].lock()->getName();
     if (unlumped_expression.length() == 0)
     {
       continue;
@@ -369,7 +386,8 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(unlumped_expression);
-      _notes.push_back("Species \\lq " + unlumped_expression + "\\rq{}  has been lumped into \\lq " + lumped_expression + "\\rq");
+      _notes.push_back("Species \\lq " + unlumped_expression +
+                       "\\rq{}  has been lumped into \\lq " + lumped_expression + "\\rq");
     }
 
     // update the reactant count for the lumped species
@@ -378,7 +396,9 @@ Reaction::substituteLumped()
     {
       _reactant_count[lumped_expression] = _reactant_count[unlumped_expression];
       _stoic_coeffs[lumped_expression] = _stoic_coeffs[unlumped_expression];
-    } else {
+    }
+    else
+    {
       _reactant_count[lumped_expression] += _reactant_count[unlumped_expression];
     }
   }
@@ -386,7 +406,7 @@ Reaction::substituteLumped()
   for (unsigned int i = 0; i < _products.size(); ++i)
   {
     unlumped_expression = sf.getLumpedSpecies(_products[i]);
-    lumped_expression =  _products[i].lock()->getName();
+    lumped_expression = _products[i].lock()->getName();
 
     if (unlumped_expression.length() == 0)
     {
@@ -396,7 +416,8 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(unlumped_expression);
-      _notes.push_back("Species \\lq " + unlumped_expression + "\\rq{} has been lumped into \\lq " + lumped_expression + "\\rq");
+      _notes.push_back("Species \\lq " + unlumped_expression + "\\rq{} has been lumped into \\lq " +
+                       lumped_expression + "\\rq");
     }
 
     // update the reactant count for the lumped species
@@ -405,7 +426,9 @@ Reaction::substituteLumped()
     {
       _product_count[lumped_expression] = _product_count[unlumped_expression];
       _stoic_coeffs[lumped_expression] = _stoic_coeffs[unlumped_expression];
-    } else {
+    }
+    else
+    {
       _product_count[lumped_expression] += _product_count[unlumped_expression];
     }
   }
@@ -456,9 +479,12 @@ Reaction::checkReferences()
   BibTexHelper & bth = BibTexHelper::getInstance();
   for (auto ref : _references)
   {
-    try {
+    try
+    {
       bth.checkCiteKey(_bib_file, ref);
-    } catch (const invalid_argument & e) {
+    }
+    catch (const invalid_argument & e)
+    {
       throw InvalidReaction(_expression, e.what());
     }
   }
@@ -467,20 +493,20 @@ Reaction::checkReferences()
 const vector<double> &
 Reaction::getFunctionParams() const
 {
-  if (_params.size() == 0)
-  {
+  switch (_params.size())
+  case 0:
     throw invalid_argument("Reaction: '" + _expression + "' does not have rate parameters");
-  }
+
   return _params;
 }
 
 const TabulatedReactionData &
 Reaction::getTabulatedData() const
 {
-  if (_tabulated_data.energies.size() == 0)
-  {
-    throw invalid_argument("Reaction: '" + _expression + "' does not have cross section data");
-  }
+  switch (_tabulated_data.energies.size())
+  case 0:
+    throw invalid_argument("Reaction: '" + _expression + "' does not have tabulated data");
+
   return _tabulated_data;
 }
 
@@ -518,13 +544,13 @@ int
 Reaction::getStoicCoeffByName(const string & s_expression) const
 {
   auto it = _stoic_coeffs.find(s_expression);
+
   if (it == _stoic_coeffs.end())
   {
     throw invalid_argument("Species " + s_expression + " is not in reaction " + _expression);
   }
 
   return it->second;
-
 }
 
 void

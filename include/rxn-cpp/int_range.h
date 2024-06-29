@@ -34,7 +34,6 @@ cast_int(Told oldvar)
   return (static_cast<Tnew>(oldvar));
 }
 
-
 /**
  * The \p IntRange templated class is intended to make it easy to
  * loop over integers which are indices of a container.
@@ -55,54 +54,46 @@ template <typename T>
 class IntRange
 {
 public:
-  class iterator {
+  class iterator
+  {
   public:
-    iterator (T i) : _i(i) {}
+    iterator(T i) : _i(i) {}
 
-    T operator* () const { return _i; }
+    T operator*() const { return _i; }
 
-    const iterator & operator++ ()
+    const iterator & operator++()
     {
       ++_i;
       return *this;
     }
 
-    iterator operator++ (int)
+    iterator operator++(int)
     {
       iterator returnval(*this);
       ++_i;
       return returnval;
     }
 
-    bool operator== (const iterator & j) const
-    {
-      return ( _i == j._i );
-    }
+    bool operator==(const iterator & j) const { return (_i == j._i); }
 
-    bool operator!= (const iterator & j) const
-    {
-      return !(*this == j);
-    }
+    bool operator!=(const iterator & j) const { return !(*this == j); }
 
   private:
     T _i;
   };
 
   template <typename U, typename V>
-  IntRange(U begin, V end) :
-    _begin(cast_int<T>(begin)),
-    _end(cast_int<T>(end))
-  {}
+  IntRange(U begin, V end) : _begin(cast_int<T>(begin)), _end(cast_int<T>(end))
+  {
+  }
 
   iterator begin() const { return _begin; }
 
-  iterator end () const { return _end; }
+  iterator end() const { return _end; }
 
 private:
   iterator _begin, _end;
 };
-
-
 
 /**
  * Helper function that returns an IntRange<std::size_t> representing
@@ -110,7 +101,8 @@ private:
  * has a size() member).
  */
 template <typename T>
-auto index_range(const T & sizable)
+auto
+index_range(const T & sizable)
 {
   return IntRange<decltype(sizable.size())>(0, sizable.size());
 }
@@ -121,12 +113,11 @@ auto index_range(const T & sizable)
  * typing over calling the IntRange<T> constructor directly.
  */
 template <typename T>
-IntRange<T> make_range(T beg, T end)
+IntRange<T>
+make_range(T beg, T end)
 {
   return {beg, end};
 }
-
-
 
 /**
  * The 1-parameter version of make_range() saves even more typing in
@@ -142,9 +133,8 @@ IntRange<T> make_range(T beg, T end)
  * exactly once rather than once per loop iteration.
  */
 template <typename T>
-IntRange<T> make_range(T end)
+IntRange<T>
+make_range(T end)
 {
   return {T(0), end};
 }
-
-

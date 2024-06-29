@@ -124,13 +124,11 @@ SubSpecies::setChargeNumber()
     return;
   }
 
-
   if (_modifier.length() == 0)
   {
     _charge_num = 0;
     return;
   }
-
 
   string s;
   if (_subscript > 1)
@@ -164,7 +162,6 @@ SubSpecies::setChargeNumber()
     return;
   }
 
-
   int sign = 0;
 
   if (s[0] == '-')
@@ -177,7 +174,6 @@ SubSpecies::setChargeNumber()
     _charge_num = sign;
     return;
   }
-
 
   // removing the + or -
   auto sub_s = s.substr(1, s.length());
@@ -214,7 +210,8 @@ SubSpecies::setMass()
     return;
   }
 
-  float ionization_mass = static_cast<float>(_charge_num) * SpeciesFactory::getInstance().getMass("e");
+  float ionization_mass =
+      static_cast<float>(_charge_num) * SpeciesFactory::getInstance().getMass("e");
   _mass = base_mass - ionization_mass;
 }
 
@@ -326,7 +323,6 @@ SubSpecies::operator!=(const SubSpecies & other) const
   return !(*this == other);
 }
 
-
 string
 SubSpecies::setNeutralGroundState() const
 {
@@ -339,7 +335,6 @@ SubSpecies::setNeutralGroundState() const
   }
   return ngs;
 }
-
 }
 
 size_t

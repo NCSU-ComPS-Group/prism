@@ -10,9 +10,9 @@ namespace rxn
 {
 
 Species::Species(const string & name)
-: SpeciesBase(name),
-  _sub_species(decomposeSpecies()),
-  _neutral_ground_state(setNeutralGroundState())
+  : SpeciesBase(name),
+    _sub_species(decomposeSpecies()),
+    _neutral_ground_state(setNeutralGroundState())
 {
   setMass();
   setChargeNumber();
@@ -33,9 +33,10 @@ Species::decomposeSpecies()
     }
     // if the last character of the most recently added part contains '(' but no closing
     // paranthesis then we need to check to see if the last character of this next part is ')'
-    // this way we consider everything in the () to be a modifier even if it contains a capital letter
-    // example case of this is Ar(S) or even Ar(aas2d3S)
-    if ((parts.back().find("(") != string::npos && parts.back().find(")") == string::npos) && part.back() == ')')
+    // this way we consider everything in the () to be a modifier even if it contains a capital
+    // letter example case of this is Ar(S) or even Ar(aas2d3S)
+    if ((parts.back().find("(") != string::npos && parts.back().find(")") == string::npos) &&
+        part.back() == ')')
     {
       // get the last element
       auto temp_part = parts.back();
@@ -78,7 +79,6 @@ Species::setChargeNumber()
     total_num += s.getChargeNumber();
   _charge_num = total_num;
 }
-
 
 void
 Species::setLatexName()
@@ -140,7 +140,6 @@ Species::setNeutralGroundState() const
 
   return temp;
 }
-
 }
 
 

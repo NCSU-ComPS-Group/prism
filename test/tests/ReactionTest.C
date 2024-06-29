@@ -76,12 +76,12 @@ TEST(Reaction, TestBasicReactionArrhenius)
 
   vector<double> params = {1, 2, 3, 0, 0};
 
-  EXPECT_EQ(r.getReactionNumber(), (unsigned int ) 0);
-  EXPECT_EQ(r.getReferencesAsString(),"\\cite{test}");
+  EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
+  EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
-  EXPECT_EQ(r.getNotes().size(), (unsigned int) 0);
+  EXPECT_EQ(r.getNotes().size(), (unsigned int)0);
 
-  EXPECT_EQ(r.getFunctionParams().size(),(unsigned int)  5);
+  EXPECT_EQ(r.getFunctionParams().size(), (unsigned int)5);
   EXPECT_EQ(r.getFunctionParams(), params);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -101,7 +101,7 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getReactionNumber(), (unsigned int) 0);
+  EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
 
@@ -158,7 +158,6 @@ TEST(Reaction, TestUnbalanced)
 
   EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
 }
-
 
 TEST(Reaction, ExtraParams)
 {
@@ -217,9 +216,10 @@ TEST(Reaction, ValidCrossSection)
 
   TabulatedReactionData xsec_data;
 
-  xsec_data.energies = vector<double>{8.580209E-01, 1.083042E+00, 1.308050E+00, 1.533033E+00, 1.753759E+00};
-  xsec_data.values = vector<double>{2.409262E+08, 2.708660E+08, 3.004261E+08, 3.242994E+08, 3.481368E+08};
-
+  xsec_data.energies =
+      vector<double>{8.580209E-01, 1.083042E+00, 1.308050E+00, 1.533033E+00, 1.753759E+00};
+  xsec_data.values =
+      vector<double>{2.409262E+08, 2.708660E+08, 3.004261E+08, 3.242994E+08, 3.481368E+08};
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
@@ -305,7 +305,6 @@ TEST(Reaction, UnevenValidCrossSection)
 
 //   vector<Species> reactants = {s1, s2};
 //   vector<Species> products = {s3, s4, s4};
-
 
 //   vector<float> params = {1, 2, 3, 0, 0};
 

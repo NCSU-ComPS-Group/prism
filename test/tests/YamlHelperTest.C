@@ -22,7 +22,6 @@ TEST(YamlHelper, TestGetParams)
   input["test"] = "[test, tests]";
 
   EXPECT_THROW(getParams<double>("test", input, false), InvalidInput);
-
 }
 
 TEST(YamlHelper, TestGetParam)

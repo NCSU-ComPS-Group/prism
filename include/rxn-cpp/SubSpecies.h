@@ -19,13 +19,13 @@ namespace rxn
     bool operator!=(const SubSpecies & other) const;
 
     /** getter method for the elemental base of the species */
-    const std::string & getBase() const {return _base;}
+    const std::string & getBase() const { return _base; }
     /** getter method for the modifier std::string */
-    const std::string & getModifier() const {return _modifier;}
+    const std::string & getModifier() const { return _modifier; }
     /** getter method for the subscript on the subspecies */
-    unsigned int getSubscript() const {return _subscript;}
+    unsigned int getSubscript() const { return _subscript; }
 
-    const std::string & getNeutralGroundState() const {return _neutral_ground_state;}
+    const std::string & getNeutralGroundState() const { return _neutral_ground_state; }
 
   private:
     /** This will be just the elemental name */
@@ -68,6 +68,6 @@ struct std::hash<rxn::SubSpecies>
   /**
    * Custom override for the hash method
    * Hash is only based on the name std::string
-  */
+   */
   size_t operator()(const rxn::SubSpecies & obj) const;
 };

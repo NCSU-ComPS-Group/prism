@@ -34,24 +34,23 @@ TEST_F(NetworkParserTest, RepeatFile)
   np.setReadXsecFiles(false);
   np.parseNetwork("inputs/simple_argon_rate.yaml");
 
-  #ifdef CONDA_TESTING
-    EXPECT_DEATH(np.parseNetwork("inputs/simple_argon_rate.yaml"), "");
-  #else
-    EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
-  #endif
+#ifdef CONDA_TESTING
+  EXPECT_DEATH(np.parseNetwork("inputs/simple_argon_rate.yaml"), "");
+#else
+  EXPECT_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"), exception);
+#endif
 }
 
 TEST_F(NetworkParserTest, NoFileFound)
 {
   auto & np = rxn::NetworkParser::getInstance();
 
-  #ifdef CONDA_TESTING
-    EXPECT_DEATH(np.parseNetwork("not-a-file.txt"), "");
-  #else
-    EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
-  #endif
+#ifdef CONDA_TESTING
+  EXPECT_DEATH(np.parseNetwork("not-a-file.txt"), "");
+#else
+  EXPECT_THROW(np.parseNetwork("not-a-file.txt"), exception);
+#endif
 }
-
 
 TEST_F(NetworkParserTest, LongFileWithRefs)
 {
@@ -60,7 +59,6 @@ TEST_F(NetworkParserTest, LongFileWithRefs)
   np.setReadXsecFiles(false);
   EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
 }
-
 
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
@@ -155,10 +153,10 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   const auto & species = np.getSpecies();
   EXPECT_EQ(species.size(), uint(7));
 
-
   for (const auto & s : species)
   {
-    if (s->getName() == "Ar") {
+    if (s->getName() == "Ar")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(7));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar + e -> Ar + e");
       EXPECT_EQ(s->getRateBasedReactions()[1]->getExpression(), "Ar + e -> Ar(aS) + e");
@@ -177,7 +175,9 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
       EXPECT_EQ(s->getFunctionRateBasedReactions()[0]->getExpression(), "2Ar* -> Ar+ + Ar + e");
       EXPECT_EQ(s->getFunctionRateBasedReactions()[1]->getExpression(), "Ar* + Ar -> 2Ar");
       EXPECT_EQ(s->getFunctionRateBasedReactions()[2]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
-    } else if (s->getName() == "e") {
+    }
+    else if (s->getName() == "e")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(7));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar + e -> Ar + e");
       EXPECT_EQ(s->getRateBasedReactions()[1]->getExpression(), "Ar + e -> Ar(aS) + e");
@@ -196,14 +196,18 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
       EXPECT_EQ(s->getFunctionRateBasedReactions().size(), uint(2));
       EXPECT_EQ(s->getFunctionRateBasedReactions()[0]->getExpression(), "Ar* + e -> Ar^r + e");
       EXPECT_EQ(s->getFunctionRateBasedReactions()[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
-    } else if (s->getName() == "Ar(aS)") {
+    }
+    else if (s->getName() == "Ar(aS)")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar + e -> Ar(aS) + e");
 
       EXPECT_EQ(s->getTabulatedRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getTabulatedRateBasedReactions()[0]->getExpression(), "Ar + e -> Ar(aS) + e");
       EXPECT_EQ(s->getFunctionRateBasedReactions().size(), uint(0));
-    } else if (s->getName() == "Ar+") {
+    }
+    else if (s->getName() == "Ar+")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(3));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar + e -> Ar+ + 2e");
       EXPECT_EQ(s->getRateBasedReactions()[1]->getExpression(), "Ar* + e -> Ar+ + 2e");
@@ -214,7 +218,9 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
       EXPECT_EQ(s->getTabulatedRateBasedReactions()[1]->getExpression(), "Ar* + e -> Ar+ + 2e");
       EXPECT_EQ(s->getFunctionRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getFunctionRateBasedReactions()[0]->getExpression(), "2Ar* -> Ar+ + Ar + e");
-    } else if (s->getName() == "Ar*") {
+    }
+    else if (s->getName() == "Ar*")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(6));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar* + e -> Ar+ + 2e");
       EXPECT_EQ(s->getRateBasedReactions()[1]->getExpression(), "Ar* + e -> Ar + e");
@@ -231,14 +237,18 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
       EXPECT_EQ(s->getFunctionRateBasedReactions()[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
       EXPECT_EQ(s->getFunctionRateBasedReactions()[2]->getExpression(), "Ar* + Ar -> 2Ar");
       EXPECT_EQ(s->getFunctionRateBasedReactions()[3]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
-    } else if (s->getName() == "Ar^r") {
+    }
+    else if (s->getName() == "Ar^r")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar* + e -> Ar^r + e");
 
       EXPECT_EQ(s->getTabulatedRateBasedReactions().size(), uint(0));
       EXPECT_EQ(s->getFunctionRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getFunctionRateBasedReactions()[0]->getExpression(), "Ar* + e -> Ar^r + e");
-    } else if (s->getName() == "Ar2") {
+    }
+    else if (s->getName() == "Ar2")
+    {
       EXPECT_EQ(s->getRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getRateBasedReactions()[0]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
 
@@ -246,7 +256,6 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
       EXPECT_EQ(s->getFunctionRateBasedReactions().size(), uint(1));
       EXPECT_EQ(s->getFunctionRateBasedReactions()[0]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
     }
-
   }
 }
 

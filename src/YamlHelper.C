@@ -21,15 +21,17 @@ std::string getTypeName<double>() {
     return "double";
 }
 
-template<>
-std::string getTypeName<bool>() {
-    return "bool";
+template <>
+std::string
+getTypeName<bool>()
+{
+  return "bool";
 }
 
 // Specialization for double
 template<>
 double defaultValue<double>() {
-    return 0.0;
+  return 0.0;
 }
 
 // Specialization for string
@@ -38,14 +40,15 @@ string defaultValue<string>() {
     return "";
 }
 
-template<>
-bool defaultValue<bool>()
+template <>
+bool
+defaultValue<bool>()
 {
   return false;
 }
 
-
-bool paramProvided(const string & param, const YAML::Node & node, const bool required)
+bool
+paramProvided(const string & param, const YAML::Node & node, const bool required)
 {
   if (!node[param])
   {
@@ -59,7 +62,8 @@ bool paramProvided(const string & param, const YAML::Node & node, const bool req
 }
 
 template <typename T>
-vector<T> getParams(const string & param, const YAML::Node & node, const bool required)
+vector<T>
+getParams(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!paramProvided(param, node, required))
@@ -92,13 +96,14 @@ vector<T> getParams(const string & param, const YAML::Node & node, const bool re
   return values;
 }
 
-template vector<string> getParams<string>(const string & param, const YAML::Node & node, const bool required);
-template vector<double> getParams<double>(const string & param, const YAML::Node & node, const bool required);
-
-
+template vector<string>
+getParams<string>(const string & param, const YAML::Node & node, const bool required);
+template vector<double>
+getParams<double>(const string & param, const YAML::Node & node, const bool required);
 
 template <typename T>
-T getParam(const string & param, const YAML::Node & node, const bool required)
+T
+getParam(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!paramProvided(param, node, required))
@@ -118,10 +123,11 @@ T getParam(const string & param, const YAML::Node & node, const bool required)
   return value;
 }
 
-template string getParam<string>(const string & param, const YAML::Node & node, const bool required);
-template double getParam<double>(const string & param, const YAML::Node & node, const bool required);
+template string
+getParam<string>(const string & param, const YAML::Node & node, const bool required);
+template double
+getParam<double>(const string & param, const YAML::Node & node, const bool required);
 template bool getParam<bool>(const string & param, const YAML::Node & node, const bool required);
-
 
 const vector<string>
 getExtraParams(const YAML::Node & node, const vector<string> & allowed)

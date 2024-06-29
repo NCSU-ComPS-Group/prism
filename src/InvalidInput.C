@@ -45,7 +45,7 @@ namespace rxn {
     ostringstream oss;
     oss << node;
 
-    _error =  message + "\n\nInvalid Input in Block:\n\n" + block + "\n\n" + oss.str() + "\n\n";
+    _error = message + "\n\nInvalid Input in Block:\n\n" + block + "\n\n" + oss.str() + "\n\n";
   }
 
   const char*

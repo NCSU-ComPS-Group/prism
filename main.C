@@ -9,8 +9,7 @@ using namespace std;
 int
 main()
 {
-  [[ maybe_unused ]]
-  auto & np = rxn::NetworkParser::getInstance();
+  [[maybe_unused]] auto & np = rxn::NetworkParser::getInstance();
 
   return EXIT_SUCCESS;
 }

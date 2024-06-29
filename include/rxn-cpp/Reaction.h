@@ -11,15 +11,46 @@
 namespace rxn
 {
 
+/**
+ * Struct for holding tabulated data
+ * read from user provided files
+ */
 struct TabulatedReactionData
 {
+  /// where the data from the first column of the file is stored
   std::vector<double> energies;
+  /// where the data from the secdon column of the file is stored
   std::vector<double> values;
 };
 
+/**
+ * Stores all of the data needed to perform calculations with
+ * a specific reaction
+ */
 class Reaction
 {
 public:
+  /**
+   * @param rxn_input the block of the input file that holds the data for a reaction
+   * @param rxn_number an id number for the reaction
+   * @param data_path the folder where the reaction will search for a data file if it is requested
+   * @param bib_file the file which holds the reference data for this reaction
+   * @param check_refs whether or not this reaction will verify that the references provided
+   * actually exist. The will never be false in real use
+   * @param read_xsec_files whether or not this reaction will actually collect the data from the
+   * provided file. This will will never be false in real use
+   * @param delimieter the delimieter that seperates the columns in the data file
+   * @throws InvalidReaction if the user has provided a file where to find data and parameters for
+   * functional data
+   * @throws InvalidReaction if the user does not provide a file and does not provide function
+   * parameters
+   * @throws InvalidReaction if the user provides changes in energy for an elastic reaction
+   * @throws InvalidReaction if the first parameter in a functional form is zero (this is because we
+   * are only supporting arrhenius forms now)
+   * @throws InvalidReaction if the user provides a data file and the first column has data that is
+   * not in sorted order
+   * @throws InvalidReaction if the user has extra unused parameters in an input block
+   */
   Reaction(const YAML::Node & rxn_input,
            const int rxn_number = 0,
            const std::string & data_path = "",
@@ -28,72 +59,129 @@ public:
            const bool read_xsec_files = true,
            const std::string & delimiter = " ");
 
-  const std::string & getExpression() const {return _expression;}
-  const std::string & getLatexRepresentation() const {return _latex_expression;}
-  unsigned int getReactionNumber() const {return _number;}
-  const std::vector<std::string> & getReferences() const {return _references;}
-  const std::vector<std::string> & getNotes() const {return _notes;}
+  /**
+   * Self descriptive getter methods
+   */
+  ///@{
+  const std::string & getExpression() const { return _expression; }
+  const std::string & getLatexRepresentation() const { return _latex_expression; }
+  unsigned int getReactionNumber() const { return _number; }
+  const std::vector<std::string> & getReferences() const { return _references; }
+  const std::vector<std::string> & getNotes() const { return _notes; }
   bool hasTabulatedData() const { return _has_tabulated_data; }
-  double getDeltaEnergyElectron() const {return _delta_eps_e;}
-  double getDeltaEnergyGas() const {return _delta_eps_g;}
-  bool isElastic() const {return _is_elastic;}
+  double getDeltaEnergyElectron() const { return _delta_eps_e; }
+  double getDeltaEnergyGas() const { return _delta_eps_g; }
+  bool isElastic() const { return _is_elastic; }
+  ///@}
+  /**
+   * Getter method for the list of species in this reaction
+   * this is a relatively expensive method and calls to this should be minimized
+   */
   const std::vector<std::shared_ptr<const Species>> getSpecies() const;
+  /**
+   * Getter method for getting cite keys formatted for LaTeX
+   * Ex: \cite{citekey1} \cite{citekey1}
+   */
   const std::string getReferencesAsString() const;
+  /**
+   * Returns a reference to the function parameters if there is functional data
+   * @throws invalid_argument if this method is called on a reaction for which tabulated data was
+   * provided
+   */
   const std::vector<double> & getFunctionParams() const;
+  /**
+   * Retrurns a reference to the struct containing data read from a file
+   * @throws invalid_argument if this method is called on a reaction that has a functional
+   * parameters provided
+   */
   const TabulatedReactionData & getTabulatedData() const;
+  /**
+   * Get the stoiciometric coefficient for a species in this reaction
+   * by the name that represents it
+   * Ex: "Ar"
+   * @param s_expression the string that represents the species
+   * @throws invalid_argument if the coefficient for a species that does not exist in this reaction
+   * requested
+   */
   int getStoicCoeffByName(const std::string & s_expression) const;
   /**
    * equality operator override and compares the reaction name
    * the latex name of the reaction and the reaction number is the same
-  */
+   */
   bool operator==(const Reaction & other) const;
   /** returns not == operator overload */
   bool operator!=(const Reaction & other) const;
 
 private:
+  /** SpeciesFactor is a friend so that it can access the species in this reaction */
   friend class SpeciesFactory;
-  std::string checkName(const YAML::Node & rxn_input);
+  /** helper to make sure the reaction exprssion is at least acceptable without
+   * checking it too hard
+   * @param throws InvalidReaction if the reaction does not contain '->'
+   */
+  std::string checkExpression(const YAML::Node & rxn_input);
+
+  /**
+   * Helper method for getting and removing the coefficient
+   * of a species in the reaction
+   */
   unsigned int getCoeff(std::string & s);
 
   /**
    * Sets up the reactants and products for the reaction
    * calculated the stoiciometric coefficients for each species
-  */
+   */
   void setSides();
+  /** Checks to make sure the reaction is properly balanced */
   void validateReaction();
+  /** Sets up the LateX for the species */
   void setLatexRepresentation();
+  /** Substitutes any species in the reaction for their proper lumped representation  */
   void substituteLumped();
+  /** checks to make sure the refereces provided for a reaction actually exist */
   void checkReferences();
+  /** Makes sure we only hold on to one weak_ptr per species */
   void collectUniqueSpecies();
-
+  /// the id number for this reaction
   const unsigned int _number;
+  /// the directory where to find a data file
   const std::string _data_path;
+  /// the symbolic expression for the reaction
   const std::string _expression;
+  /// the change in electron energy
   const double _delta_eps_e;
+  /// the change in gas energy
   const double _delta_eps_g;
+  /// whether or not this reaction is elastic
   const bool _is_elastic;
+  /// the bib file that contains the references for this reaction
   const std::string _bib_file;
+  /// a list of the citekeys used in this reaction
   const std::vector<std::string> _references;
+  /// whether or not the reaction had data read from a file
   bool _has_tabulated_data;
+  /// the notes attached to this reaction
   std::vector<std::string> _notes;
+  /// the function parameters if they are provided
   std::vector<double> _params;
+  /// the data from file if it is provided
   TabulatedReactionData _tabulated_data;
-
+  /// A list of the species that exist in this reaction
   std::vector<std::weak_ptr<Species>> _species;
+  /// The stoiciometric coefficeints for this reaction
   std::unordered_map<std::string, int> _stoic_coeffs;
-
+  /// the LaTeX version of the symbolic expression
   std::string _latex_expression;
 
-  /// all of these are relatively temporary member variables and
-  /// will be cleared once we are done with them to avoid
-  // storing the same data multiple times on the reaction object.
+  /// temporary member variables that are only used in construction of the object
+  /// TODO remove this at somepoint and just pass these around in the constructor
+  ///@{
   std::vector<std::weak_ptr<Species>> _reactants;
   std::vector<std::weak_ptr<Species>> _products;
   std::unordered_map<std::string, unsigned int> _reactant_count;
   std::unordered_map<std::string, unsigned int> _product_count;
-
+  ///@}
 };
-
 }
 
 template <>

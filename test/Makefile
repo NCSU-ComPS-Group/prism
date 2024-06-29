@@ -56,7 +56,6 @@ $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
-	@echo "BUILD SUCCESS: $(CONDA_LIB_DIR)"
 	@mkdir -p output
 	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -lgtest -lgtest_main -lyaml-cpp -lfmt -o $@ $^
 .PHONY: all clean coverage clean-coverage

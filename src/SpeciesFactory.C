@@ -80,7 +80,9 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
   {
     if (findFirstNonLetter(names[i]) != -1)
     {
-      InvalidInputExit(network[CUSTOM_SPECIES], CUSTOM_SPECIES, "'" + names[i] + "' contains characters other than letters");
+      InvalidInputExit(network[CUSTOM_SPECIES],
+                       CUSTOM_SPECIES,
+                       "'" + names[i] + "' contains characters other than letters");
     }
     _base_masses[names[i]] = masses[i];
   }
@@ -304,7 +306,6 @@ SpeciesFactory::getSpeciesSummary() const
 
   string summary = "";
 
-
   unordered_map<string, vector<string>> lumped_string;
   for (auto it : _lumped_map)
   {
@@ -319,7 +320,7 @@ SpeciesFactory::getSpeciesSummary() const
   if (lumped_count > 0)
   {
     summary += "# " + to_string(lumped_count) + " species are lumped into " +
-              to_string(lumped_string.size()) + " species\n";
+               to_string(lumped_string.size()) + " species\n";
     summary += "lumped-species:\n";
     summary += "  - count: " + to_string(lumped_count) + "\n";
 
@@ -385,7 +386,8 @@ SpeciesFactory::getSpeciesSummary() const
           ssb[SOURCE_KEY].push_back(r->getExpression());
         }
 
-        if (stoic_coeff == 0) {
+        if (stoic_coeff == 0)
+        {
           if (ssb.find(BALANCED_KEY) == ssb.end())
           {
             ssb.emplace(BALANCED_KEY, vector<string>{r->getExpression()});
@@ -458,7 +460,7 @@ SpeciesFactory::getSpeciesSummary() const
 
       for (auto it : ssb)
       {
-        reaction_summary += "        " + it.first + ": "  + to_string(it.second.size()) + "\n";
+        reaction_summary += "        " + it.first + ": " + to_string(it.second.size()) + "\n";
         for (auto r : it.second)
         {
           reaction_summary += "          - " + r + "\n";
@@ -477,5 +479,4 @@ SpeciesFactory::getSpeciesSummary() const
   // cout << summary << endl;
   return summary;
 }
-
 }

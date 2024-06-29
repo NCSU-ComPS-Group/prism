@@ -7,10 +7,7 @@ using namespace std;
 
 namespace rxn
 {
-SpeciesBase::SpeciesBase(const string & name) :
-  _name(checkName(name))
-{
-}
+SpeciesBase::SpeciesBase(const string & name) : _name(checkName(name)) {}
 
 string
 SpeciesBase::checkName(const string & s)
@@ -24,10 +21,13 @@ SpeciesBase::checkName(const string & s)
     {
       throw InvalidSpecies(s, "Electrons cannot have modifiers");
     }
-  } else {
+  }
+  else
+  {
     if (s != "hnu" && findFirstCapital(s) == -1)
     {
-      throw InvalidSpecies(s, "Any non-electron, non-photon species must start with a captial letter");
+      throw InvalidSpecies(s,
+                           "Any non-electron, non-photon species must start with a captial letter");
     }
   }
   return s;
@@ -38,7 +38,6 @@ SpeciesBase::operator==(const SpeciesBase & other) const
 {
   return _name == other.getName();
 }
-
 
 bool
 SpeciesBase::operator!=(const SpeciesBase & other) const
