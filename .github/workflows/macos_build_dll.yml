@@ -30,6 +30,7 @@ jobs:
     - name: Build and run tests
       run: |
         conda activate prism
+        conda install clangxx
         export CXX=clang++
         make -f Makefile-with-dll -j 4
         ./main
