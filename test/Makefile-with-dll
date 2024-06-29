@@ -17,9 +17,9 @@ CONDA_INCLUDE_DIR = $(CONDA_PREFIX)/include
 GTEST_LINK = -lgtest -lgtest_main
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
-RXN_LINK = -lrxn-cpp
+PRISM_LINK = -lprism
 
-TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LINK) $(RXN_LINK)
+TEST_LINKS = $(YAML_LINK) $(FMT_LINK) $(GTEST_LINK) $(PRISM_LINK)
 
 HELPER_SOURCES := $(wildcard $(HELPER_SRC_DIR)/*.C)
 HELPER_OBJECTS := $(patsubst $(HELPER_SRC_DIR)/%.C, $(TEST_BUILD_DIR)/%.o, $(HELPER_SOURCES))

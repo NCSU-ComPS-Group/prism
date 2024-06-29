@@ -1,5 +1,5 @@
 Content:
-    rxn-cpp:
+    prism:
         root_dir: ${ROOT_DIR}/content
     moose:
         root_dir: ${MOOSE_DIR}/framework/doc/content
@@ -13,18 +13,17 @@ Content:
 Renderer:
     type: MooseDocs.base.MaterializeRenderer
     extra-css:
-        - css/zapdos.css
+        - css/ncsu.css
 
 Extensions:
     MooseDocs.extensions.navigation:
-        name: rxn-cpp
+        name: PRISM
         repo: https://github.ncsu.edu/NCSU-ComPS-Group/rxn-cpp
         menu:
             Doxygen: doxygen/html/annotated.html
             Getting Started:
                 Installation: getting_started/installation.md
                 Input Syntax: getting_started/input_syntax.md
-                Updating: getting_started/staying_upto_date.md
             How it Works:
                 Reaction Parsing: how_it_works/reaction_parsing.md
                 Species Parsing: how_it_works/species_parsing.md

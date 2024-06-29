@@ -10,5 +10,5 @@ mkdir -p $PREFIX/lib
 mkdir -p $PREFIX/include
 
 
-mv librxn-cpp.so $PREFIX/lib
-cp -r include/rxn-cpp $PREFIX/include
+mv libprism.so $PREFIX/lib
+cp -r include/prism $PREFIX/include

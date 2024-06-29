@@ -2,7 +2,7 @@ TESTING_FLAG = -DTESTING
 WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
 CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O3
 
-PROJECT = rxn-cpp
+PROJECT = prism
 
 LIBRARY_NAME = lib$(PROJECT).so
 

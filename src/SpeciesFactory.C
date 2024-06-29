@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
 
 SpeciesFactory* SpeciesFactory::_instance = nullptr;

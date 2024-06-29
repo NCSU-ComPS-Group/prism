@@ -1,6 +1,6 @@
 ## Input File Syntax
 
-The rxn-cpp project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by rxn-cpp.
+The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by PRISM.
 
 - Data Path Block
 - Custom Species Block
@@ -10,11 +10,11 @@ The rxn-cpp project utilizes the yaml file format to store reaction networks. Th
 - Rate Based Reactions Block
 - Cross Section Based Reactions Block
 
-It is important to note that since this project uses the yaml file format, projects which adopt the rxn-cpp format standard can also include additional blocks which will be ignored by the rxn-cpp project.
+It is important to note that since this project uses the yaml file format, projects which adopt the PRISM format standard can also include additional blocks which will be ignored by the PRISM project.
 
 ## Data Path Block
 
-To reduce the amount of user input requried the rxn-cpp project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the file parameter used in the reaction block. It can be defined in the following manner.
+To reduce the amount of user input requried the PRISM project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the file parameter used in the reaction block. It can be defined in the following manner.
 
 ```yaml
   data-path: path/to/data/
@@ -36,7 +36,7 @@ If no `data-path` parameter is defined we provide the default data path of `data
 
 ## Custom Species Block
 
-The rxn-cpp project provides the mass of neutral and ionized species for all species which are based on elements in the periodic table. This data has been collected from the following sources [!cite](baum2010nuclides) and [!cite](pubchem).
+The PRISM project provides the mass of neutral and ionized species for all species which are based on elements in the periodic table. This data has been collected from the following sources [!cite](baum2010nuclides) and [!cite](pubchem).
 
 However, we understand that in some cases users may need and or want to define a custom species or override the default mass provided for an element. When defining a custom species simply define the name and mass of the species with the following syntax.
 
@@ -115,7 +115,7 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 
 ## Reaction Input Parameters
 
-The rxn-cpp project supports two main types of reactions. The first is reactions which have cross sections or reaction rates tabulated in files. The second is reactions which have an analytic expression for their cross section or reaction rate.
+The PRISM project supports two main types of reactions. The first is reactions which have cross sections or reaction rates tabulated in files. The second is reactions which have an analytic expression for their cross section or reaction rate.
 
 | Parameter | Description | Data Type | Required? | Default Value |
 | - | - | - | - | - |

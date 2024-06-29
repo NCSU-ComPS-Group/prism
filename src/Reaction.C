@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
 Reaction::Reaction(const YAML::Node & rxn_input,
                    const int rxn_number,
@@ -581,19 +581,20 @@ Reaction::collectUniqueSpecies()
 }
 }
 
-size_t hash<rxn::Reaction>::operator()(const rxn::Reaction & obj) const
-  {
-    constexpr size_t hash_factor = 37;
+size_t
+hash<prism::Reaction>::operator()(const prism::Reaction & obj) const
+{
+  constexpr size_t hash_factor = 37;
 
-    size_t val = 17; // Start with a prime number
+  size_t val = 17; // Start with a prime number
 
-    val += hash_factor * hash<string>()(obj.getExpression());
-    val += hash_factor * hash<int>()(obj.getReactionNumber());
-    val += hash_factor * hash<string>()(obj.getLatexRepresentation());
-    // not including the reactants and products in the hash
-    // this is becuase these may change if there are lumped species
-    // or if i want to add a map of reactions to species while I am
-    // still parsing reaction
-    return val;
+  val += hash_factor * hash<string>()(obj.getExpression());
+  val += hash_factor * hash<int>()(obj.getReactionNumber());
+  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
+  // not including the reactants and products in the hash
+  // this is becuase these may change if there are lumped species
+  // or if i want to add a map of reactions to species while I am
+  // still parsing reaction
+  return val;
   }
 

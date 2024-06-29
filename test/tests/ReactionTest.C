@@ -1,28 +1,28 @@
 #include <gtest/gtest.h>
-#include "rxn-cpp/rxn-cpp.h"
+#include "prism/prism.h"
 #include "yaml-cpp/yaml.h"
 
 using namespace std;
-using namespace rxn;
+using namespace prism;
 
 TEST(Reaction, InvalidReaction)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + e + Ar + e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + e + Ar + e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
 
-  EXPECT_THROW(Reaction r1 = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction r1 = Reaction(prism_input), InvalidReaction);
 }
 
 TEST(Reaction, CompareReactions)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
-  Reaction r1 = Reaction(rxn_input, 0, "", "", false, false);
-  Reaction r2 = Reaction(rxn_input, 0, "", "", false, false);
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
+  Reaction r1 = Reaction(prism_input, 0, "", "", false, false);
+  Reaction r2 = Reaction(prism_input, 0, "", "", false, false);
 
   std::hash<Reaction> hasher;
   size_t hash1 = hasher(r1);
@@ -40,13 +40,13 @@ TEST(Reaction, CompareReactions)
 
 TEST(Reaction, TestBasicReactionFromNode)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
-  rxn_input[NOTE_KEY] = YAML::Load("[something, something else]");
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
+  prism_input[NOTE_KEY] = YAML::Load("[something, something else]");
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
+  Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
@@ -67,12 +67,12 @@ TEST(Reaction, TestBasicReactionFromNode)
 
 TEST(Reaction, TestBasicReactionArrhenius)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
-  rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  prism_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+  prism_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
+  Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
   vector<double> params = {1, 2, 3, 0, 0};
 
@@ -94,12 +94,12 @@ TEST(Reaction, TestBasicReactionArrhenius)
 
 TEST(Reaction, TestSpeciesWithCoeffReaction)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
+  Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
@@ -117,12 +117,12 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
 
 TEST(Reaction, TestSpeciesWithNoCoeffReaction)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + Ar + e + e -> Ar + Ar + e + e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + Ar + e + e -> Ar + Ar + e + e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
+  Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
   EXPECT_EQ(r.getReactionNumber(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
@@ -140,79 +140,79 @@ TEST(Reaction, TestSpeciesWithNoCoeffReaction)
 
 TEST(Reaction, TestUnbalanced)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "e + Ar* -> e + Ar+";
-  rxn_input[FILE_KEY] = "reaction1.txt";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "e + Ar* -> e + Ar+";
+  prism_input[FILE_KEY] = "reaction1.txt";
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
+  EXPECT_THROW(Reaction(prism_input, 0, "", "", false, false), InvalidReaction);
 
-  rxn_input[REACTION_KEY] = "e + Ar -> e + Ar2";
+  prism_input[REACTION_KEY] = "e + Ar -> e + Ar2";
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
+  EXPECT_THROW(Reaction(prism_input, 0, "", "", false, false), InvalidReaction);
 
-  rxn_input[REACTION_KEY] = "e + Ar* -> Ar+";
+  prism_input[REACTION_KEY] = "e + Ar* -> Ar+";
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
+  EXPECT_THROW(Reaction(prism_input, 0, "", "", false, false), InvalidReaction);
 
-  rxn_input[REACTION_KEY] = "e + Ar* -> He";
+  prism_input[REACTION_KEY] = "e + Ar* -> He";
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, false), InvalidReaction);
+  EXPECT_THROW(Reaction(prism_input, 0, "", "", false, false), InvalidReaction);
 }
 
 TEST(Reaction, ExtraParams)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "H2 + e -> H2 + e";
-  rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
-  rxn_input["Extra input"] = "something";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "H2 + e -> H2 + e";
+  prism_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+  prism_input["Extra input"] = "something";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction r = Reaction(prism_input), InvalidReaction);
 
-  rxn_input["Extra input"] = "something";
-  rxn_input["Extra input2"] = "something";
+  prism_input["Extra input"] = "something";
+  prism_input["Extra input2"] = "something";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction r = Reaction(prism_input), InvalidReaction);
 }
 
 TEST(Reaction, TooManyInputs)
 {
 
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "H2 + e -> H2 + e";
-  rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
-  rxn_input[DELTA_EPS_E_KEY] = "1.1";
-  rxn_input[ELASTIC_KEY] = "true";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "H2 + e -> H2 + e";
+  prism_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+  prism_input[DELTA_EPS_E_KEY] = "1.1";
+  prism_input[ELASTIC_KEY] = "true";
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction r = Reaction(prism_input), InvalidReaction);
 
-  rxn_input = YAML::Node();
-  rxn_input[REACTION_KEY] = "H2 + e -> H2 + e";
-  rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
-  rxn_input[FILE_KEY] = YAML::Load("a file");
+  prism_input = YAML::Node();
+  prism_input[REACTION_KEY] = "H2 + e -> H2 + e";
+  prism_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+  prism_input[FILE_KEY] = YAML::Load("a file");
 
-  EXPECT_THROW(Reaction r = Reaction(rxn_input), InvalidReaction);
+  EXPECT_THROW(Reaction r = Reaction(prism_input), InvalidReaction);
 }
 
 TEST(Reaction, NoCrossSectionFileFound)
 {
 
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
-  rxn_input[FILE_KEY] = "not_a_file.txt";
-  rxn_input[REFERENCE_KEY] = "test";
-  rxn_input[NOTE_KEY] = YAML::Load("[something, something else]");
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  prism_input[FILE_KEY] = "not_a_file.txt";
+  prism_input[REFERENCE_KEY] = "test";
+  prism_input[NOTE_KEY] = YAML::Load("[something, something else]");
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false), exception);
+  EXPECT_THROW(Reaction(prism_input, 0, "", "", false), exception);
 }
 
 TEST(Reaction, ValidCrossSection)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
-  rxn_input[FILE_KEY] = "reaction1.txt";
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
+  prism_input[FILE_KEY] = "reaction1.txt";
+  prism_input[REFERENCE_KEY] = "test";
 
-  Reaction r = Reaction(rxn_input, 0, "inputs/data/", "", false);
+  Reaction r = Reaction(prism_input, 0, "inputs/data/", "", false);
 
   TabulatedReactionData xsec_data;
 
@@ -240,25 +240,25 @@ TEST(Reaction, ValidCrossSection)
 
 TEST(Reaction, UnevenValidCrossSection)
 {
-  YAML::Node rxn_input;
-  rxn_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
-  rxn_input[FILE_KEY] = "uneven_input.txt";
-  rxn_input[REFERENCE_KEY] = "test";
+  YAML::Node prism_input;
+  prism_input[REACTION_KEY] = "4Ar + 3e -> 4Ar + 3e";
+  prism_input[FILE_KEY] = "uneven_input.txt";
+  prism_input[REFERENCE_KEY] = "test";
 
-  EXPECT_THROW(Reaction(rxn_input, 0, "inputs/data/", "", false), InvalidInput);
+  EXPECT_THROW(Reaction(prism_input, 0, "inputs/data/", "", false), InvalidInput);
 }
 
 // }
 
 // TEST(Reaction, TestMolecularBreakDown)
 // {
-//   YAML::Node rxn_input;
-//   rxn_input[REACTION_KEY] = "e + CF4 -> CF2+ + 2F + 2e";
-//   rxn_input[FILE_KEY] = "reaction1.txt";
-//   rxn_input[REFERENCE_KEY] = "test";
-//   rxn_input[DATA_BASE_KEY] = "test";
+//   YAML::Node prism_input;
+//   prism_input[REACTION_KEY] = "e + CF4 -> CF2+ + 2F + 2e";
+//   prism_input[FILE_KEY] = "reaction1.txt";
+//   prism_input[REFERENCE_KEY] = "test";
+//   prism_input[DATA_BASE_KEY] = "test";
 
-//   Reaction r = Reaction(rxn_input, 0, "inputs/data/", false);
+//   Reaction r = Reaction(prism_input, 0, "inputs/data/", false);
 
 //   Species s1 = Species("e");
 //   Species s2 = Species("CF4");
@@ -289,14 +289,14 @@ TEST(Reaction, UnevenValidCrossSection)
 
 // TEST(Reaction, ReactionWithDeltaEpsilons)
 // {
-//   YAML::Node rxn_input;
-//   rxn_input[REACTION_KEY] = "Ar2+ + Kr -> Kr+ + 2Ar";
-//   rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
-//   rxn_input[DELTA_EPS_E_KEY] = 20;
-//   rxn_input[DELTA_EPS_G_KEY] = -10;
-//   rxn_input[REFERENCE_KEY] = "test";
+//   YAML::Node prism_input;
+//   prism_input[REACTION_KEY] = "Ar2+ + Kr -> Kr+ + 2Ar";
+//   prism_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+//   prism_input[DELTA_EPS_E_KEY] = 20;
+//   prism_input[DELTA_EPS_G_KEY] = -10;
+//   prism_input[REFERENCE_KEY] = "test";
 
-//   Reaction r = Reaction(rxn_input, 0, "", false);
+//   Reaction r = Reaction(prism_input, 0, "", false);
 
 //   Species s1 = Species("Ar2+");
 //   Species s2 = Species("Kr");

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
   const string WHITESPACE = " \n\r\t\f\v";
 

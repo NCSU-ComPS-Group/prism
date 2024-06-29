@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
 
 SubSpecies::SubSpecies(const string & name)
@@ -338,13 +338,13 @@ SubSpecies::setNeutralGroundState() const
 }
 
 size_t
-hash<rxn::SubSpecies>::operator()(const rxn::SubSpecies & obj) const
+hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const
 {
   constexpr size_t hash_factor = 37;
 
   size_t val = 17; // Start with a prime number
 
-  val += hash_factor * hash<rxn::SpeciesBase>()(obj);
+  val += hash_factor * hash<prism::SpeciesBase>()(obj);
   val += hash_factor * hash<string>()(obj.getBase());
   val += hash_factor * hash<string>()(obj.getModifier());
   val += hash_factor * hash<unsigned int>()(obj.getSubscript());

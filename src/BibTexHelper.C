@@ -8,7 +8,7 @@
 #include "StringHelper.h"
 
 using namespace std;
-namespace rxn
+namespace prism
 {
 
   BibTexHelper* BibTexHelper::_instance = nullptr;

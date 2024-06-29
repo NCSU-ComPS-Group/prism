@@ -2,7 +2,7 @@
 
 # HOME style=visibility:hidden;
 
-# rxn-cpp class=center light style=font-size:300%
+# PRISM class=center light style=font-size:300%
 
 # An open standard for reaction network io and analysis class=center style=font-weight:200;font-size:200%
 

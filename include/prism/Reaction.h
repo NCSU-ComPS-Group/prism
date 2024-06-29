@@ -8,7 +8,7 @@
 #include "Species.h"
 #include "Constants.h"
 
-namespace rxn
+namespace prism
 {
 
 /**
@@ -185,14 +185,14 @@ private:
 }
 
 template <>
-  struct std::hash<rxn::Reaction>
-  {
-    /**
-     * Override for the hash method hash is based on
-     * std::string representation of the reaction
-     * the reaction number
-     * the latex representation of the reaction
-     * @param obj the reaction object
-     */
-    size_t operator()(const rxn::Reaction & obj) const;
-  };
+struct std::hash<prism::Reaction>
+{
+  /**
+   * Override for the hash method hash is based on
+   * std::string representation of the reaction
+   * the reaction number
+   * the latex representation of the reaction
+   * @param obj the reaction object
+   */
+  size_t operator()(const prism::Reaction & obj) const;
+};

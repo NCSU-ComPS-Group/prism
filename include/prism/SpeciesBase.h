@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-namespace rxn
+namespace prism
 {
 /**
  * Base class for species and subspecies
@@ -57,15 +57,15 @@ private:
   virtual void setChargeNumber() = 0;
   /** methods for setting the latex name of each species */
   virtual void setLatexName() = 0;
-  };
+};
 }
 
 template <>
-struct std::hash<rxn::SpeciesBase>
+struct std::hash<prism::SpeciesBase>
 {
   /**
    * Custom hash function based only on the name of the species
    * @param obj the SpeciesBase to be hashed
    */
-  size_t operator()(const rxn::SpeciesBase & obj) const;
+  size_t operator()(const prism::SpeciesBase & obj) const;
 };

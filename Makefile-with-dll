@@ -11,8 +11,8 @@ LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
 
 YAML_LINK = -lyaml-cpp
 FMT_LINK = -lfmt
-RXN_LINK = -lrxn-cpp
-LINKS = $(YAML_LINK) $(FMT_LINK) $(RXN_LINK)
+PRISM_LINK = -lprism
+LINKS = $(YAML_LINK) $(FMT_LINK) $(PRISM_LINK)
 
 # build main with the rest of the code as a dll
 $(EXE):

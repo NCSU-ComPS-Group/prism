@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
-#include "rxn-cpp/Constants.h"
-#include "rxn-cpp/Species.h"
-#include "rxn-cpp/SubSpecies.h"
-#include "rxn-cpp/SpeciesFactory.h"
-#include "rxn-cpp/InvalidInput.h"
+#include "prism/Constants.h"
+#include "prism/Species.h"
+#include "prism/SubSpecies.h"
+#include "prism/SpeciesFactory.h"
+#include "prism/InvalidInput.h"
 
-using namespace rxn;
+using namespace prism;
 using namespace std;
 
 TEST(Species, Equal)
@@ -39,7 +39,7 @@ TEST(Species, PhotonTest)
 {
   Species s = Species("hnu");
 
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("hnu");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("hnu");
   double s_charge = 0;
   EXPECT_EQ(s.getName(), "hnu");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -61,7 +61,7 @@ TEST(Species, PhotonTest)
 TEST(Species, LowerCaseElectronTest)
 {
   Species s = Species("e");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -ELEMENTAL_CHARGE;
   EXPECT_EQ(s.getName(), "e");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -82,7 +82,7 @@ TEST(Species, LowerCaseElectronTest)
 TEST(Species, UpperCaseElectronTest)
 {
   Species s = Species("E");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("E");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("E");
   double s_charge = -ELEMENTAL_CHARGE;
   EXPECT_EQ(s.getName(), "E");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -103,7 +103,7 @@ TEST(Species, UpperCaseElectronTest)
 TEST(Species, GroundStateNoCharge)
 {
   Species s = Species("Ar");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("Ar");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("Ar");
   EXPECT_EQ(s.getName(), "Ar");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
   EXPECT_EQ(s.getChargeNumber(), 0);
@@ -124,8 +124,8 @@ TEST(Species, GroundStateSinglePositiveIon)
 {
   Species s = Species("Ar+");
 
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("Ar") -
-                  rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("Ar") -
+                  prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = ELEMENTAL_CHARGE;
   EXPECT_EQ(s.getName(), "Ar+");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -147,8 +147,8 @@ TEST(Species, GroundStateSinglePositiveIon)
 TEST(Species, GroundStateMultiplePositiveIon)
 {
   Species s = Species("Ar+4");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("Ar") -
-                  4 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("Ar") -
+                  4 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = 4 * ELEMENTAL_CHARGE;
   EXPECT_EQ(s.getName(), "Ar+4");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -173,8 +173,8 @@ TEST(Species, GroundStateMultiplePositiveIon)
 TEST(Species, GroundStateSingleNegativeIon)
 {
   Species s = Species("Ar-");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("Ar") +
-                  rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("Ar") +
+                  prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar-");
@@ -196,8 +196,8 @@ TEST(Species, GroundStateSingleNegativeIon)
 TEST(Species, GroundStateMultipleNegativeIon)
 {
   Species s = Species("Ar-100");
-  double s_mass = rxn::SpeciesFactory::getInstance().getMass("Ar") +
-                  100 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = prism::SpeciesFactory::getInstance().getMass("Ar") +
+                  100 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -100 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar-100");
@@ -219,7 +219,7 @@ TEST(Species, GroundStateMultipleNegativeIon)
 TEST(Species, GroundStateMolecular)
 {
   Species s = Species("Ar2");
-  double s_mass = 2 * rxn::SpeciesFactory::getInstance().getMass("Ar");
+  double s_mass = 2 * prism::SpeciesFactory::getInstance().getMass("Ar");
 
   EXPECT_EQ(s.getName(), "Ar2");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
@@ -240,7 +240,7 @@ TEST(Species, GroundStateMolecular)
 TEST(Species, GroundStateLargeMolecule)
 {
   Species s = Species("Ar188");
-  double s_mass = 188 * rxn::SpeciesFactory::getInstance().getMass("Ar");
+  double s_mass = 188 * prism::SpeciesFactory::getInstance().getMass("Ar");
   EXPECT_EQ(s.getName(), "Ar188");
   EXPECT_FLOAT_EQ(s.getMass(), s_mass);
   EXPECT_EQ(s.getChargeNumber(), 0);
@@ -261,8 +261,8 @@ TEST(Species, MolecularNegativeIon)
 {
   Species s = Species("Ar2-100");
 
-  double s_mass = 2 * rxn::SpeciesFactory::getInstance().getMass("Ar") +
-                  100 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = 2 * prism::SpeciesFactory::getInstance().getMass("Ar") +
+                  100 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -100 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar2-100");
@@ -284,8 +284,8 @@ TEST(Species, MolecularNegativeIon)
 TEST(Species, MolecularPositiveIon)
 {
   Species s = Species("Ar120+39");
-  double s_mass = 120 * rxn::SpeciesFactory::getInstance().getMass("Ar") -
-                  39 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = 120 * prism::SpeciesFactory::getInstance().getMass("Ar") -
+                  39 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = 39 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar120+39");
@@ -307,8 +307,8 @@ TEST(Species, MolecularPositiveIon)
 TEST(Species, MolecularPositiveIonWithModifier)
 {
   Species s = Species("Ar120+39(test)");
-  double s_mass = 120 * rxn::SpeciesFactory::getInstance().getMass("Ar") -
-                  39 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = 120 * prism::SpeciesFactory::getInstance().getMass("Ar") -
+                  39 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = 39 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar120+39(test)");
@@ -330,8 +330,8 @@ TEST(Species, MolecularPositiveIonWithModifier)
 TEST(Species, MolecularNegativeIonWithModifier)
 {
   Species s = Species("Ar2-100(test)");
-  double s_mass = 2 * rxn::SpeciesFactory::getInstance().getMass("Ar") +
-                  100 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = 2 * prism::SpeciesFactory::getInstance().getMass("Ar") +
+                  100 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -100 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Ar2-100(test)");
@@ -353,11 +353,11 @@ TEST(Species, MolecularNegativeIonWithModifier)
 TEST(Species, ComplexPositiveMolecule)
 {
   Species s = Species("Ar2CF4H3+4(test)");
-  double ar_mass = 2 * rxn::SpeciesFactory::getInstance().getMass("Ar");
-  double c_mass = rxn::SpeciesFactory::getInstance().getMass("C");
-  double f_mass = 4 * rxn::SpeciesFactory::getInstance().getMass("F");
-  double h_mass = 3 * rxn::SpeciesFactory::getInstance().getMass("H");
-  double e_mass = 4 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double ar_mass = 2 * prism::SpeciesFactory::getInstance().getMass("Ar");
+  double c_mass = prism::SpeciesFactory::getInstance().getMass("C");
+  double f_mass = 4 * prism::SpeciesFactory::getInstance().getMass("F");
+  double h_mass = 3 * prism::SpeciesFactory::getInstance().getMass("H");
+  double e_mass = 4 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = 4 * ELEMENTAL_CHARGE;
 
   double s_mass = ar_mass + c_mass + f_mass + h_mass - e_mass;
@@ -419,12 +419,12 @@ TEST(Species, CustomLongSpecies)
   dataNode["mass"] = 1000;
   customSpeciesNode["custom-species"].push_back(dataNode);
 
-  rxn::SpeciesFactory::getInstance().collectCustomSpecies(customSpeciesNode);
+  prism::SpeciesFactory::getInstance().collectCustomSpecies(customSpeciesNode);
 
   Species s = Species("Polypeptide2-100(test)");
 
-  double s_mass = 2 * rxn::SpeciesFactory::getInstance().getMass("Polypeptide") +
-                  100 * rxn::SpeciesFactory::getInstance().getMass("e");
+  double s_mass = 2 * prism::SpeciesFactory::getInstance().getMass("Polypeptide") +
+                  100 * prism::SpeciesFactory::getInstance().getMass("e");
   double s_charge = -100 * ELEMENTAL_CHARGE;
 
   EXPECT_EQ(s.getName(), "Polypeptide2-100(test)");
@@ -438,7 +438,7 @@ TEST(Species, CustomLongSpecies)
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int) 2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(),
-                  2 * 1000 + 100 * rxn::SpeciesFactory::getInstance().getMass("e"));
+                  2 * 1000 + 100 * prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), -100 * ELEMENTAL_CHARGE);
   EXPECT_EQ(s.getSubSpecies()[0].getLatexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");

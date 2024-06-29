@@ -3,9 +3,8 @@
 #include <stdexcept>
 #include "yaml-cpp/yaml.h"
 
-
-
-namespace rxn {
+namespace prism
+{
 /** Custom Exception when there is an issue in creating a species object */
 class InvalidSpecies : public std::exception
 {

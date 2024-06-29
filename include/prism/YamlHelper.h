@@ -3,13 +3,14 @@
 #include <vector>
 #include "yaml-cpp/yaml.h"
 
-
-namespace rxn
+namespace prism
 {
 
-template<typename T> T defaultValue();
+template <typename T>
+T defaultValue();
 
-template<typename T> std::string getTypeName();
+template <typename T>
+std::string getTypeName();
 
 bool paramProvided(const std::string & param, const YAML::Node & node, const bool required);
 

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
-#include "rxn-cpp/BibTexHelper.h"
+#include "prism/BibTexHelper.h"
 
-using namespace rxn;
+using namespace prism;
 using namespace std;
 
 TEST(BibTexHelper, BibNotFound)

@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++17 -O3 $(WARNING_FLAGS)
 SRC = main.C
 EXE = main
 
-PROJECT = rxn-cpp
+PROJECT = prism
 # Directories
 SRCDIR = src
 INCDIR = include

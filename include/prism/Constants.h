@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-namespace rxn
+namespace prism
 {
 /// allowed upper level input blocks
 ///@{

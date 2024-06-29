@@ -3,11 +3,11 @@
 # Installation
 
 ```bash
-  conda activate rxn-cpp
+  conda activate PRISM
   mkdir -p ~/projects
   cd ~/projects
-  git clone https://github.com/gsgall/rxn-cpp
-  cd ~/projects/rxn-cpp
+  git clone https://github.com/gsgall/PRISM
+  cd ~/projects/PRISM
 ```
 
 # Mamba
@@ -21,9 +21,9 @@ When installing mamba using these instructions you can stop after the instructio
 To ensure no conflicts with other projects you can create a new environment to work in.
 
 ```bash
-  cd ~/projects/rxn-cpp
-  conda create --name rxn-cpp
-  conda activate rxn-cpp
+  cd ~/projects/PRISM
+  conda create --name PRISM
+  conda activate PRISM
   conda install --file environment.yml
 ```
 
@@ -40,7 +40,7 @@ Since this system relies on the MOOSE documentation system you will need MOOSE i
 
 ```bash
 conda activate moose
-cd ~/projects/rxn-cpp/doc
+cd ~/projects/PRISM/doc
 MOOSE_DIR=~/projects/moose ROOT_DIR=./ ./moosedocs.py build --serve
 ```
 
@@ -58,7 +58,7 @@ If you'd like to remove the environment for any reason you can use the following
 
 ```bash
   conda activate base
-  conda env remove -n rxn-cpp
+  conda env remove -n PRISM
 ```
 
 # Trouble Shooting
@@ -75,7 +75,7 @@ If you are getting the error when running main where it is looking for the libra
   echo 'unset DYLD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
   cd -
   conda deactivate
-  conda activate rxn-cpp
+  conda activate PRISM
 ```
 
 The following commands are the same but for a linux system.
@@ -90,5 +90,5 @@ The following commands are the same but for a linux system.
   echo 'unset LD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
   cd -
   conda deactivate
-  conda activate rxn-cpp
+  conda activate PRISM
 ```

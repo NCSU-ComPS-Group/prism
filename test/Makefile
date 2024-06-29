@@ -6,7 +6,7 @@ GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -fsanitize-address-use-after-scope -fsanitize=undefined
 CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
 
-PROJECT_NAME = rxn-cpp
+PROJECT_NAME = prism
 PROJECT_SRC_DIR = ../src
 PROJECT_INCLUDE_DIR = ../include/$(PROJECT_NAME)
 

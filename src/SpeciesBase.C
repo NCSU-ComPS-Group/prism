@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
 SpeciesBase::SpeciesBase(const string & name) : _name(checkName(name)) {}
 
@@ -54,7 +54,7 @@ SpeciesBase::getCharge() const
 } // namespace RXN
 
 size_t
-hash <rxn::SpeciesBase>::operator()(const rxn::SpeciesBase & obj) const
+hash<prism::SpeciesBase>::operator()(const prism::SpeciesBase & obj) const
 {
   // hash based on the name
   return hash<string>()(obj.getName());

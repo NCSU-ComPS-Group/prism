@@ -1,7 +1,6 @@
 #include "Constants.h"
 
-
-namespace rxn
+namespace prism
 {
 
 

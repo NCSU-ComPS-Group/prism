@@ -1,15 +1,17 @@
 package:
-  name: rxn-cpp-dev
+  name: prism
   version: 1.0.0
 
 requirements:
-  run:
+  build:
     - make
     - {{ compiler('cxx') }}
+    - yaml-cpp
+    - fmt
+
+  run:
     - fmt
     - yaml-cpp
-    - lcov
-    - gtest
 
 
 channels:

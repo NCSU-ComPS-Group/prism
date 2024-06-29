@@ -4,7 +4,8 @@
 #include <unordered_map>
 #include "yaml-cpp/yaml.h"
 
-namespace rxn{
+namespace prism
+{
 
 class Reaction;
 class Species;
@@ -13,19 +14,20 @@ class Species;
  * This is the class that processes reaction networks and
  * allows for interaction with the data contained in the network
  */
-class NetworkParser {
-  public:
-    /** Getter for the singleton instance */
-    static NetworkParser & getInstance();
-    /** Resets the parser to a fresh state, as if no networks have been processed */
-    void clear();
-    /**
-     * Method goes through all of the reactions in this network
-     * constructs Reaction objects and then puts the reactions
-     * in the correct lists for future use
-     * @param file the yaml file which contains the reaction network
-    */
-    void parseNetwork(const std::string & file);
+class NetworkParser
+{
+public:
+  /** Getter for the singleton instance */
+  static NetworkParser & getInstance();
+  /** Resets the parser to a fresh state, as if no networks have been processed */
+  void clear();
+  /**
+   * Method goes through all of the reactions in this network
+   * constructs Reaction objects and then puts the reactions
+   * in the correct lists for future use
+   * @param file the yaml file which contains the reaction network
+   */
+  void parseNetwork(const std::string & file);
 
 // These methods are only available in testing mode
 // this allows for easier unit testing and should never

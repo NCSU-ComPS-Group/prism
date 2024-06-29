@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "gtest/gtest.h"
-#include "rxn-cpp/rxn-cpp.h"
+#include "prism/prism.h"
 
-using namespace rxn;
+using namespace prism;
 using namespace std;
 
 class NetworkParserTest : public testing::Test {
@@ -12,14 +12,14 @@ class NetworkParserTest : public testing::Test {
       sbuf = std::cout.rdbuf();
       // Redirect cout to our stringstream buffer or any other ostream
       std::cout.rdbuf(buffer.rdbuf());
-      rxn::NetworkParser::getInstance().clear();
+      prism::NetworkParser::getInstance().clear();
     }
 
     void TearDown() override {
       // When done redirect cout to its old self
       std::cout.rdbuf(sbuf);
       sbuf = nullptr;
-      rxn::NetworkParser::getInstance().clear();
+      prism::NetworkParser::getInstance().clear();
     }
 
     std::stringstream buffer{};
@@ -28,7 +28,7 @@ class NetworkParserTest : public testing::Test {
 
 TEST_F(NetworkParserTest, RepeatFile)
 {
-  auto & np = rxn::NetworkParser::getInstance();
+  auto & np = prism::NetworkParser::getInstance();
 
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
@@ -43,7 +43,7 @@ TEST_F(NetworkParserTest, RepeatFile)
 
 TEST_F(NetworkParserTest, NoFileFound)
 {
-  auto & np = rxn::NetworkParser::getInstance();
+  auto & np = prism::NetworkParser::getInstance();
 
 #ifdef CONDA_TESTING
   EXPECT_DEATH(np.parseNetwork("not-a-file.txt"), "");
@@ -54,7 +54,7 @@ TEST_F(NetworkParserTest, NoFileFound)
 
 TEST_F(NetworkParserTest, LongFileWithRefs)
 {
-  auto & np = rxn::NetworkParser::getInstance();
+  auto & np = prism::NetworkParser::getInstance();
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
   EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
@@ -62,93 +62,93 @@ TEST_F(NetworkParserTest, LongFileWithRefs)
 
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
-  auto & np = rxn::NetworkParser::getInstance();
+  auto & np = prism::NetworkParser::getInstance();
   np.setDelimiter("\t");
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
 
-  const auto & tabular_rxns = np.getTabulatedRateReactions();
-  const auto & function_rxns = np.getFunctionRateReactions();
+  const auto & tabular_prisms = np.getTabulatedRateReactions();
+  const auto & function_prisms = np.getFunctionRateReactions();
 
-  EXPECT_EQ(tabular_rxns.size(), uint(5));
-  EXPECT_EQ(tabular_rxns[0]->getExpression(), "Ar + e -> Ar + e");
-  EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[0]->getSpecies().size(), uint(2));
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.front(), 4.556000E-02);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.front(), 5.348394E+05);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.back(), 1.510000E+01);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.back(), 1.271554E+04);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.size(), uint(300));
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.size(), uint(300));
+  EXPECT_EQ(tabular_prisms.size(), uint(5));
+  EXPECT_EQ(tabular_prisms[0]->getExpression(), "Ar + e -> Ar + e");
+  EXPECT_EQ(tabular_prisms[0]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(tabular_prisms[0]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[0]->getSpecies().size(), uint(2));
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.front(), 4.556000E-02);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.front(), 5.348394E+05);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.back(), 1.510000E+01);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.back(), 1.271554E+04);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.size(), uint(300));
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.size(), uint(300));
 
-  EXPECT_EQ(tabular_rxns[1]->getExpression(), "Ar + e -> Ar(aS) + e");
-  EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyElectron(), 11.56);
-  EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[1]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.front(), 4.009375E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.back(), 1.589177E+01);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.back(), 2.540293E+09);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.size(), uint(72));
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.size(), uint(72));
+  EXPECT_EQ(tabular_prisms[1]->getExpression(), "Ar + e -> Ar(aS) + e");
+  EXPECT_EQ(tabular_prisms[1]->getDeltaEnergyElectron(), 11.56);
+  EXPECT_EQ(tabular_prisms[1]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[1]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.front(), 4.009375E+00);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.front(), 0.000000E+00);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.back(), 1.589177E+01);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.back(), 2.540293E+09);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.size(), uint(72));
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.size(), uint(72));
 
-  EXPECT_EQ(tabular_rxns[2]->getExpression(), "Ar + e -> Ar+ + 2e");
-  EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyElectron(), 15.7);
-  EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[2]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.front(), 5.369030E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.back(), 1.604311E+01);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.back(), 1.120582E+10);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.size(), uint(67));
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.size(), uint(67));
+  EXPECT_EQ(tabular_prisms[2]->getExpression(), "Ar + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_prisms[2]->getDeltaEnergyElectron(), 15.7);
+  EXPECT_EQ(tabular_prisms[2]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[2]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.front(), 5.369030E+00);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.front(), 0.000000E+00);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.back(), 1.604311E+01);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.back(), 1.120582E+10);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.size(), uint(67));
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.size(), uint(67));
 
-  EXPECT_EQ(tabular_rxns[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
-  EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyElectron(), 4.14);
-  EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[3]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.front(), 1.734815E+00);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.front(), 3.058910E+06);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.back(), 1.602641E+01);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.back(), 9.857869E+10);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.size(), uint(76));
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.size(), uint(76));
+  EXPECT_EQ(tabular_prisms[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_prisms[3]->getDeltaEnergyElectron(), 4.14);
+  EXPECT_EQ(tabular_prisms[3]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[3]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.front(), 1.734815E+00);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.front(), 3.058910E+06);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.back(), 1.602641E+01);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.back(), 9.857869E+10);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.size(), uint(76));
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.size(), uint(76));
 
-  EXPECT_EQ(tabular_rxns[4]->getExpression(), "Ar* + e -> Ar + e");
-  EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyElectron(), -11.56);
-  EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[4]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.front(), 8.580209E-01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.front(), 2.409262E+08);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.back(), 1.600345E+01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.back(), 1.118470E+09);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.size(), uint(73));
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.size(), uint(73));
+  EXPECT_EQ(tabular_prisms[4]->getExpression(), "Ar* + e -> Ar + e");
+  EXPECT_EQ(tabular_prisms[4]->getDeltaEnergyElectron(), -11.56);
+  EXPECT_EQ(tabular_prisms[4]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[4]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.front(), 8.580209E-01);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.front(), 2.409262E+08);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.back(), 1.600345E+01);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.back(), 1.118470E+09);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.size(), uint(73));
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.size(), uint(73));
 
-  EXPECT_EQ(function_rxns.size(), uint(4));
-  EXPECT_EQ(function_rxns[0]->getExpression(), "Ar* + e -> Ar^r + e");
-  EXPECT_EQ(function_rxns[0]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[0]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[0]->getSpecies().size(), uint(3));
-  EXPECT_EQ(function_rxns[0]->getFunctionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms.size(), uint(4));
+  EXPECT_EQ(function_prisms[0]->getExpression(), "Ar* + e -> Ar^r + e");
+  EXPECT_EQ(function_prisms[0]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[0]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[0]->getSpecies().size(), uint(3));
+  EXPECT_EQ(function_prisms[0]->getFunctionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
-  EXPECT_EQ(function_rxns[1]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[1]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[1]->getSpecies().size(), uint(4));
-  EXPECT_EQ(function_rxns[1]->getFunctionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
+  EXPECT_EQ(function_prisms[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
+  EXPECT_EQ(function_prisms[1]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[1]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[1]->getSpecies().size(), uint(4));
+  EXPECT_EQ(function_prisms[1]->getFunctionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[2]->getExpression(), "Ar* + Ar -> 2Ar");
-  EXPECT_EQ(function_rxns[2]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[2]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[2]->getSpecies().size(), uint(2));
-  EXPECT_EQ(function_rxns[2]->getFunctionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms[2]->getExpression(), "Ar* + Ar -> 2Ar");
+  EXPECT_EQ(function_prisms[2]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[2]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[2]->getSpecies().size(), uint(2));
+  EXPECT_EQ(function_prisms[2]->getFunctionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[3]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
-  EXPECT_EQ(function_rxns[3]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[3]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[3]->getSpecies().size(), uint(3));
-  EXPECT_EQ(function_rxns[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms[3]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
+  EXPECT_EQ(function_prisms[3]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[3]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[3]->getSpecies().size(), uint(3));
+  EXPECT_EQ(function_prisms[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
   const auto & species = np.getSpecies();
   EXPECT_EQ(species.size(), uint(7));
@@ -261,94 +261,94 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
 
 TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
-  auto & np = rxn::NetworkParser::getInstance();
+  auto & np = prism::NetworkParser::getInstance();
   np.setDelimiter("\t");
 
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
 
-  const auto & tabular_rxns = np.getTabulatedXSecReactions();
-  const auto & function_rxns = np.getFunctionXSecReactions();
+  const auto & tabular_prisms = np.getTabulatedXSecReactions();
+  const auto & function_prisms = np.getFunctionXSecReactions();
 
-  EXPECT_EQ(tabular_rxns.size(), uint(5));
-  EXPECT_EQ(tabular_rxns[0]->getExpression(), "Ar + e -> Ar + e");
-  EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[0]->getSpecies().size(), uint(2));
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.front(), 4.556000E-02);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.front(), 5.348394E+05);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.back(), 1.510000E+01);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.back(), 1.271554E+04);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.size(), uint(300));
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.size(), uint(300));
+  EXPECT_EQ(tabular_prisms.size(), uint(5));
+  EXPECT_EQ(tabular_prisms[0]->getExpression(), "Ar + e -> Ar + e");
+  EXPECT_EQ(tabular_prisms[0]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(tabular_prisms[0]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[0]->getSpecies().size(), uint(2));
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.front(), 4.556000E-02);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.front(), 5.348394E+05);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.back(), 1.510000E+01);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.back(), 1.271554E+04);
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().energies.size(), uint(300));
+  EXPECT_EQ(tabular_prisms[0]->getTabulatedData().values.size(), uint(300));
 
-  EXPECT_EQ(tabular_rxns[1]->getExpression(), "Ar + e -> Ar(aS) + e");
-  EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyElectron(), 11.56);
-  EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[1]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.front(), 4.009375E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.back(), 1.589177E+01);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.back(), 2.540293E+09);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.size(), uint(72));
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.size(), uint(72));
+  EXPECT_EQ(tabular_prisms[1]->getExpression(), "Ar + e -> Ar(aS) + e");
+  EXPECT_EQ(tabular_prisms[1]->getDeltaEnergyElectron(), 11.56);
+  EXPECT_EQ(tabular_prisms[1]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[1]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.front(), 4.009375E+00);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.front(), 0.000000E+00);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.back(), 1.589177E+01);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.back(), 2.540293E+09);
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().energies.size(), uint(72));
+  EXPECT_EQ(tabular_prisms[1]->getTabulatedData().values.size(), uint(72));
 
-  EXPECT_EQ(tabular_rxns[2]->getExpression(), "Ar + e -> Ar+ + 2e");
-  EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyElectron(), 15.7);
-  EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[2]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.front(), 5.369030E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.back(), 1.604311E+01);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.back(), 1.120582E+10);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.size(), uint(67));
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.size(), uint(67));
+  EXPECT_EQ(tabular_prisms[2]->getExpression(), "Ar + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_prisms[2]->getDeltaEnergyElectron(), 15.7);
+  EXPECT_EQ(tabular_prisms[2]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[2]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.front(), 5.369030E+00);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.front(), 0.000000E+00);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.back(), 1.604311E+01);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.back(), 1.120582E+10);
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().energies.size(), uint(67));
+  EXPECT_EQ(tabular_prisms[2]->getTabulatedData().values.size(), uint(67));
 
-  EXPECT_EQ(tabular_rxns[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
-  EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyElectron(), 4.14);
-  EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[3]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.front(), 1.734815E+00);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.front(), 3.058910E+06);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.back(), 1.602641E+01);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.back(), 9.857869E+10);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.size(), uint(76));
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.size(), uint(76));
+  EXPECT_EQ(tabular_prisms[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_prisms[3]->getDeltaEnergyElectron(), 4.14);
+  EXPECT_EQ(tabular_prisms[3]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[3]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.front(), 1.734815E+00);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.front(), 3.058910E+06);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.back(), 1.602641E+01);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.back(), 9.857869E+10);
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().energies.size(), uint(76));
+  EXPECT_EQ(tabular_prisms[3]->getTabulatedData().values.size(), uint(76));
 
-  EXPECT_EQ(tabular_rxns[4]->getExpression(), "Ar* + e -> Ar + e");
-  EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyElectron(), -11.56);
-  EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(tabular_rxns[4]->getSpecies().size(), uint(3));
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.front(), 8.580209E-01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.front(), 2.409262E+08);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.back(), 1.600345E+01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.back(), 1.118470E+09);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.size(), uint(73));
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.size(), uint(73));
+  EXPECT_EQ(tabular_prisms[4]->getExpression(), "Ar* + e -> Ar + e");
+  EXPECT_EQ(tabular_prisms[4]->getDeltaEnergyElectron(), -11.56);
+  EXPECT_EQ(tabular_prisms[4]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(tabular_prisms[4]->getSpecies().size(), uint(3));
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.front(), 8.580209E-01);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.front(), 2.409262E+08);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.back(), 1.600345E+01);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.back(), 1.118470E+09);
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().energies.size(), uint(73));
+  EXPECT_EQ(tabular_prisms[4]->getTabulatedData().values.size(), uint(73));
 
-  EXPECT_EQ(function_rxns.size(), uint(4));
-  EXPECT_EQ(function_rxns[0]->getExpression(), "Ar* + e -> Ar^r + e");
-  EXPECT_EQ(function_rxns[0]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[0]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[0]->getSpecies().size(), uint(3));
-  EXPECT_EQ(function_rxns[0]->getFunctionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms.size(), uint(4));
+  EXPECT_EQ(function_prisms[0]->getExpression(), "Ar* + e -> Ar^r + e");
+  EXPECT_EQ(function_prisms[0]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[0]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[0]->getSpecies().size(), uint(3));
+  EXPECT_EQ(function_prisms[0]->getFunctionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
-  EXPECT_EQ(function_rxns[1]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[1]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[1]->getSpecies().size(), uint(4));
-  EXPECT_EQ(function_rxns[1]->getFunctionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
+  EXPECT_EQ(function_prisms[1]->getExpression(), "2Ar* -> Ar+ + Ar + e");
+  EXPECT_EQ(function_prisms[1]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[1]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[1]->getSpecies().size(), uint(4));
+  EXPECT_EQ(function_prisms[1]->getFunctionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[2]->getExpression(), "Ar* + Ar -> 2Ar");
-  EXPECT_EQ(function_rxns[2]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[2]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[2]->getSpecies().size(), uint(2));
-  EXPECT_EQ(function_rxns[2]->getFunctionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms[2]->getExpression(), "Ar* + Ar -> 2Ar");
+  EXPECT_EQ(function_prisms[2]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[2]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[2]->getSpecies().size(), uint(2));
+  EXPECT_EQ(function_prisms[2]->getFunctionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[3]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
-  EXPECT_EQ(function_rxns[3]->getDeltaEnergyElectron(), 0.0);
-  EXPECT_EQ(function_rxns[3]->getDeltaEnergyGas(), 0.0);
-  EXPECT_EQ(function_rxns[3]->getSpecies().size(), uint(3));
-  EXPECT_EQ(function_rxns[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
+  EXPECT_EQ(function_prisms[3]->getExpression(), "Ar* + 2Ar -> Ar2 + Ar");
+  EXPECT_EQ(function_prisms[3]->getDeltaEnergyElectron(), 0.0);
+  EXPECT_EQ(function_prisms[3]->getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(function_prisms[3]->getSpecies().size(), uint(3));
+  EXPECT_EQ(function_prisms[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
   const auto & species = np.getSpecies();
   EXPECT_EQ(species.size(), uint(7));

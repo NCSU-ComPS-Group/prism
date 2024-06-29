@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 #include "yaml-cpp/yaml.h"
-#include "rxn-cpp/YamlHelper.h"
-#include "rxn-cpp/InvalidInput.h"
+#include "prism/YamlHelper.h"
+#include "prism/InvalidInput.h"
 
-using namespace rxn;
+using namespace prism;
 using namespace std;
 
 TEST(YamlHelper, TestParamProvided)

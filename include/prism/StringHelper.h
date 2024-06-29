@@ -4,7 +4,8 @@
 #include <vector>
 #include <utility>
 
-namespace rxn {
+namespace prism
+{
 /**
  * Trim the white space from left end of a std::string.
  * This function will modify the value of s

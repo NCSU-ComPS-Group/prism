@@ -9,7 +9,8 @@
 
 using namespace std;
 
-namespace rxn {
+namespace prism
+{
 
 template<>
 std::string getTypeName<string>() {

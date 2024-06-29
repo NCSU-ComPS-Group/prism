@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace rxn
+namespace prism
 {
 
 NetworkParser::NetworkParser()
@@ -26,15 +26,17 @@ NetworkParser::NetworkParser()
 {
 }
 
-NetworkParser* NetworkParser::_instance = nullptr;
+NetworkParser * NetworkParser::_instance = nullptr;
 
-NetworkParser& NetworkParser::getInstance()
+NetworkParser &
+NetworkParser::getInstance()
 {
-    // Create the _instance if it does not exist
-    if (_instance == nullptr) {
-      _instance = new NetworkParser();
-    }
-    return *_instance;
+  // Create the _instance if it does not exist
+  if (_instance == nullptr)
+  {
+    _instance = new NetworkParser();
+  }
+  return *_instance;
 }
 
 void
