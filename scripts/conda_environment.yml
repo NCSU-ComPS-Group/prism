@@ -1,9 +1,0 @@
-channels:
-  - conda-forge
-dependencies:
-  - fmt
-  - yaml-cpp
-  - lcov
-  - gtest
-
-

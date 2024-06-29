@@ -1,0 +1,10 @@
+channels:
+  - gsgall
+  - conda-forge
+dependencies:
+  - {{ compiler('cxx') }}
+  - gtest
+  - lcov
+  - prism
+
+

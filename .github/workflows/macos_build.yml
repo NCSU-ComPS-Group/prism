@@ -23,14 +23,13 @@ jobs:
       with:
         miniforge-variant: Mambaforge
         use-mamba: true
-        activate-environment: rxn-cpp
-        environment-file: scripts/conda_environment.yml
+        activate-environment: prism
+        environment-file: scripts/conda_dev.yml
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build and run tests
       run: |
-        conda activate rxn-cpp
-        export DYLD_LIBRARY_PATH="$CONDA_PREFIX/lib:$DYLD_LIBRARY_PATH"
+        conda activate prism
         make -j 4
         ./main
         cd test
