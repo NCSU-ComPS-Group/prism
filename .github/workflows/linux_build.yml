@@ -61,17 +61,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    - name: Set up Mambaforge3 and conda environment
-      uses: conda-incubator/setup-miniconda@v3
-      with:
-        miniforge-variant: Mambaforge
-        use-mamba: true
-        activate-environment: moose
-        channels: https://conda.software.inl.gov/public
-        environment-file: scripts/conda_env.yml
     - name: Build Docs
       run: |
+        conda create -n moose
         conda activate moose
+        conda config --add channels https://conda.software.inl.gov/public
         conda install -y moose-dev
         conda install -y doxygen
         cd doc
