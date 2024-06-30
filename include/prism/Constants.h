@@ -39,7 +39,7 @@ const std::string NOTE_KEY = "notes";
 const std::string REFERENCE_KEY = "references";
 const std::string FILE_KEY = "file";
 const std::string PARAM_KEY = "params";
-const uint NUM_REQUIRED_ARR_PARAMS = 5;
+const unsigned int NUM_REQUIRED_ARR_PARAMS = 5;
 const std::vector<std::string> allowed_reaction_params = {REACTION_KEY,
                                                           DELTA_EPS_E_KEY,
                                                           DELTA_EPS_G_KEY,
@@ -60,6 +60,6 @@ const float N_A = 6.02214179E+23;
 /** Fundamental charge in C */
 const float ELEMENTAL_CHARGE = 1.602176487E-19;
 
-typedef uint ReactionId;
-typedef uint SpeciesId;
+typedef unsigned int ReactionId;
+typedef unsigned int SpeciesId;
 }

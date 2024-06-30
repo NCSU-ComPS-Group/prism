@@ -66,7 +66,7 @@ SpeciesFactory::collectCustomSpecies(const YAML::Node & network)
   if (names[0] == "null")
     InvalidInputExit(network[CUSTOM_SPECIES], CUSTOM_SPECIES, "'" + NAME_KEY + "' parameter was parsed as 'null'");
 
-  for (uint i = 0; i < names.size(); ++i)
+  for (unsigned int i = 0; i < names.size(); ++i)
   {
     if (findFirstNonLetter(names[i]) != -1)
       InvalidInputExit(network[CUSTOM_SPECIES],
@@ -89,7 +89,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
   string temp_lumped;
   vector<string> temp_actuals;
 
-  for (uint i = 0; i < network[LUMPED_SPECIES].size(); ++i)
+  for (unsigned int i = 0; i < network[LUMPED_SPECIES].size(); ++i)
   {
     if (!paramProvided(LUMPED_KEY, network[LUMPED_SPECIES][i], OPTIONAL))
       InvalidInputExit("When providing the " + LUMPED_SPECIES + " block you must also provide the '" + LUMPED_KEY + "' parameter");
@@ -117,7 +117,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
     if (temp_actuals[0] == "null")
       InvalidInputExit(network[LUMPED_SPECIES][i], LUMPED_SPECIES, "'" + ACTUAL_KEY + "' parameter was parsed as 'null'");
 
-    for (uint j = 0; j < temp_actuals.size(); ++j)
+    for (unsigned int j = 0; j < temp_actuals.size(); ++j)
       _lumped_map[temp_actuals[j]] = getSpecies(temp_lumped).lock();
   }
 }
@@ -164,7 +164,7 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
   if (overrides[0] == "null")
     InvalidInputExit(network[LATEX_OVERRIDES], LATEX_OVERRIDES, "'" + LATEX_KEY + "' parameter was parsed as 'null'");
 
-  for (uint i = 0; i < species.size(); ++i)
+  for (unsigned int i = 0; i < species.size(); ++i)
     _latex_overrides[species[i]] = overrides[i];
 }
 
@@ -300,8 +300,8 @@ SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
 string
 SpeciesFactory::getSpeciesSummary() const
 {
-  uint lumped_count = _lumped_map.size();
-  uint species_count = 0.0;
+  unsigned int lumped_count = _lumped_map.size();
+  unsigned int species_count = 0.0;
 
   string summary = "";
 

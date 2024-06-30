@@ -191,10 +191,10 @@ private:
 
   // void tableHelper(std::string & latex,
   //                    const std::vector<std::shared_ptr<const Reaction>> & reactions,
-  //                    uint & rxn_counter,
-  //                    uint & note_counter,
-  //                    std::map<std::string, uint> & note_numbers,
-  //                    std::map<uint, std::string> & inverse_note_numbers,
+  //                    unsigned int & rxn_counter,
+  //                    unsigned int & note_counter,
+  //                    std::map<std::string, unsigned int> & note_numbers,
+  //                    std::map<unsigned int, std::string> & inverse_note_numbers,
   //                    std::vector<std::string> & all_notes);
 
   /**

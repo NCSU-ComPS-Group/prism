@@ -48,7 +48,7 @@ TEST(Reaction, TestBasicReactionFromNode)
 
   Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (uint)0);
+  EXPECT_EQ(r.getId(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
   EXPECT_EQ(r.getNotes(), vector<string>({"something", "something else"}));
@@ -76,12 +76,12 @@ TEST(Reaction, TestBasicReactionArrhenius)
 
   vector<double> params = {1, 2, 3, 0, 0};
 
-  EXPECT_EQ(r.getId(), (uint)0);
+  EXPECT_EQ(r.getId(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
-  EXPECT_EQ(r.getNotes().size(), (uint)0);
+  EXPECT_EQ(r.getNotes().size(), (unsigned int)0);
 
-  EXPECT_EQ(r.getFunctionParams().size(), (uint)5);
+  EXPECT_EQ(r.getFunctionParams().size(), (unsigned int)5);
   EXPECT_EQ(r.getFunctionParams(), params);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -101,7 +101,7 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
 
   Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (uint)0);
+  EXPECT_EQ(r.getId(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
 
@@ -124,7 +124,7 @@ TEST(Reaction, TestSpeciesWithNoCoeffReaction)
 
   Reaction r = Reaction(prism_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (uint)0);
+  EXPECT_EQ(r.getId(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
 
@@ -221,7 +221,7 @@ TEST(Reaction, ValidCrossSection)
   xsec_data.values =
       vector<double>{2.409262E+08, 2.708660E+08, 3.004261E+08, 3.242994E+08, 3.481368E+08};
 
-  EXPECT_EQ(r.getId(), (uint)0);
+  EXPECT_EQ(r.getId(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
   EXPECT_EQ(r.getReferences(), vector<string>{"test"});
   EXPECT_EQ(r.getTabulatedData().energies, xsec_data.energies);
@@ -271,7 +271,7 @@ TEST(Reaction, UnevenValidCrossSection)
 //   EXPECT_EQ(r.getId(), 0);
 
 //   EXPECT_EQ(r.getEquationType(), FROM_FILE_STR);
-//   EXPECT_EQ(r.getParams().size(), (uint) 0);
+//   EXPECT_EQ(r.getParams().size(), (unsigned int) 0);
 //   EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
 //   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
 //   EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
@@ -312,7 +312,7 @@ TEST(Reaction, UnevenValidCrossSection)
 //   EXPECT_EQ(r.getReference(), "\\cite{test}");
 
 //   EXPECT_EQ(r.getEquationType(), ARRHENIUS_STR);
-//   EXPECT_EQ(r.getParams().size(), (uint) 5);
+//   EXPECT_EQ(r.getParams().size(), (unsigned int) 5);
 //   EXPECT_EQ(r.getParams(), params);
 //   EXPECT_EQ(r.getPathToData(), "");
 //   EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 20);

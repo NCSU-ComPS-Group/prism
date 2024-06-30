@@ -38,7 +38,7 @@ namespace prism
 
     string line;
     vector<string> parts;
-    uint line_count = 0;
+    unsigned int line_count = 0;
     while (std::getline(stream, line))
     {
       line_count++;

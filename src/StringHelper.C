@@ -202,7 +202,7 @@ namespace prism
   }
 
   vector<vector<double>>
-  readDataFromFile(const std::string & file, const std::string & delimiter, const uint num_columns)
+  readDataFromFile(const std::string & file, const std::string & delimiter, const unsigned int num_columns)
   {
 
     vector<vector<double>> all_data = vector<vector<double>>(num_columns);
@@ -215,7 +215,7 @@ namespace prism
 
     std::string line;
     // Read the file line by line
-    uint line_count = 0;
+    unsigned int line_count = 0;
     while (getline(data_input, line))
     {
       line_count++;
@@ -224,14 +224,14 @@ namespace prism
       {
         data_input.close();
         throw InvalidInput("Line " + to_string(line_count) + " in file '" + file + "' contains " +
-                           to_string(uint(string_data.size())) + " value" +
-                           (uint(string_data.size()) == 1 ? "" : "s") + " when it should contain " +
+                           to_string((unsigned int) string_data.size()) + " value" +
+                           ((unsigned int) string_data.size() == 1 ? "" : "s") + " when it should contain " +
                            to_string(num_columns) + " value" + (num_columns == 1 ? "" : "s"));
       }
 
       try
       {
-        for (uint i = 0; i < num_columns; ++i)
+        for (unsigned int i = 0; i < num_columns; ++i)
           all_data[i].push_back(stod(string_data[i]));
       }
       catch (exception & e)

@@ -95,7 +95,7 @@ SubSpecies::setModifier()
   return _name.substr(base_end, _name.length());
 }
 
-uint
+unsigned int
 SubSpecies::setSubscript()
 {
   // case when there is no subscript
@@ -346,7 +346,7 @@ hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const
   val += hash_factor * hash<prism::SpeciesBase>()(obj);
   val += hash_factor * hash<string>()(obj.getBase());
   val += hash_factor * hash<string>()(obj.getModifier());
-  val += hash_factor * hash<uint>()(obj.getSubscript());
+  val += hash_factor * hash<unsigned int>()(obj.getSubscript());
   val += hash_factor * hash<int>()(obj.getChargeNumber());
   val += hash_factor * hash<float>()(obj.getMass());
   val += hash_factor * hash<float>()(obj.getCharge());

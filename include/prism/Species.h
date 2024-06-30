@@ -63,27 +63,27 @@ public:
     return convertToSharedPtr(_function_xsec_based);
   }
   ///@}
-  const std::vector<const ReactionData> & getRateBasedReactionData() const
+  const std::vector<ReactionData> & getRateBasedReactionData() const
   {
     return _rate_based_data;
   }
-  const std::vector<const ReactionData> & getTabulatedRateBasedReactionData() const
+  const std::vector<ReactionData> & getTabulatedRateBasedReactionData() const
   {
     return _tabulated_rate_based_data;
   }
-  const std::vector<const ReactionData> & getFunctionRateBasedReactionData() const
+  const std::vector<ReactionData> & getFunctionRateBasedReactionData() const
   {
     return _function_rate_based_data;
   }
-  const std::vector<const ReactionData> & getXSecBasedReactionData() const
+  const std::vector<ReactionData> & getXSecBasedReactionData() const
   {
     return _xsec_based_data;
   }
-  const std::vector<const ReactionData> & getTabulatedXSecBasedReactionData() const
+  const std::vector<ReactionData> & getTabulatedXSecBasedReactionData() const
   {
     return _tabulated_xsec_based_data;
   }
-  const std::vector<const ReactionData> & getFunctionXSecBasedReactionData() const
+  const std::vector<ReactionData> & getFunctionXSecBasedReactionData() const
   {
     return _function_xsec_based_data;
   }
@@ -105,18 +105,18 @@ private:
   const std::string _neutral_ground_state;
   /** All rate based reactions */
   ///@{
-  std::vector<const ReactionData> _rate_based_data;
-  std::vector<const ReactionData> _tabulated_rate_based_data;
-  std::vector<const ReactionData> _function_rate_based_data;
+  std::vector<ReactionData> _rate_based_data;
+  std::vector<ReactionData> _tabulated_rate_based_data;
+  std::vector<ReactionData> _function_rate_based_data;
   std::vector<std::weak_ptr<const Reaction>> _rate_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_rate_based;
   std::vector<std::weak_ptr<const Reaction>> _function_rate_based;
   ///@}
   /** All xsec based reactions */
   ///@{
-  std::vector<const ReactionData> _xsec_based_data;
-  std::vector<const ReactionData> _tabulated_xsec_based_data;
-  std::vector<const ReactionData> _function_xsec_based_data;
+  std::vector<ReactionData> _xsec_based_data;
+  std::vector<ReactionData> _tabulated_xsec_based_data;
+  std::vector<ReactionData> _function_xsec_based_data;
   std::vector<std::weak_ptr<const Reaction>> _xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _function_xsec_based;

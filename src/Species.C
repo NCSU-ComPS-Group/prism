@@ -102,7 +102,7 @@ Species::operator==(const Species & other) const
   if (_latex_name != other._latex_name)
     return false;
 
-  for (uint i = 0; i < _sub_species.size(); ++i)
+  for (unsigned int i = 0; i < _sub_species.size(); ++i)
     if (_sub_species[i] != other._sub_species[i])
       return false;
 

@@ -26,7 +26,7 @@ struct SpeciesData
 {
   SpeciesId id;
   int stoic_coeff;
-  uint occurances;
+  unsigned int occurances;
 };
 
 /**
@@ -78,8 +78,8 @@ public:
   double getDeltaEnergyElectron() const { return _delta_eps_e; }
   double getDeltaEnergyGas() const { return _delta_eps_g; }
   bool isElastic() const { return _is_elastic; }
-  const std::vector<const SpeciesData> & getReactantData() const { return _reactant_data; }
-  const std::vector<const SpeciesData> & getProductData() const { return _product_data; }
+  const std::vector<SpeciesData> & getReactantData() const { return _reactant_data; }
+  const std::vector<SpeciesData> & getProductData() const { return _product_data; }
   ///@}
   /**
    * Getter method for the list of species in this reaction
@@ -134,7 +134,7 @@ private:
    * Helper method for getting and removing the coefficient
    * of a species in the reaction
    */
-  uint getCoeff(std::string & s);
+  unsigned int getCoeff(std::string & s);
 
   /**
    * Sets up the reactants and products for the reaction
@@ -189,16 +189,16 @@ private:
   ///@{
   std::vector<std::weak_ptr<Species>> _reactants;
   std::vector<std::weak_ptr<Species>> _products;
-  std::unordered_map<std::string, uint> _reactant_count;
-  std::unordered_map<std::string, uint> _product_count;
+  std::unordered_map<std::string, unsigned int> _reactant_count;
+  std::unordered_map<std::string, unsigned int> _product_count;
   ///@
   /// these should also really be sets in the future
   /// for now this is annoying but it's fine
   /// not doing this because this should get released soon
   /// this is how we can prodive quick access to the data needed for simulations
   ///@{
-  std::vector<const SpeciesData> _reactant_data;
-  std::vector<const SpeciesData> _product_data;
+  std::vector<SpeciesData> _reactant_data;
+  std::vector<SpeciesData> _product_data;
   ///@}
 };
 }

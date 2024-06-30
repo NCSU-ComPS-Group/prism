@@ -62,7 +62,7 @@ Reaction::Reaction(const YAML::Node & rxn_input,
                             "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
 
     if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
-      for (uint i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
+      for (unsigned int i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
         _params.push_back(0.0);
   }
 
@@ -77,9 +77,9 @@ Reaction::Reaction(const YAML::Node & rxn_input,
       if (stat(file.c_str(), &buffer) != 0)
         throw InvalidInput("Cross section data file: '" + file + "' does not exist");
 
-      const auto & _temporary_data = readDataFromFile(file, delimiter, uint(2));
+      const auto & _temporary_data = readDataFromFile(file, delimiter, (unsigned int)2);
 
-      for (uint i = 0; i < _temporary_data[0].size(); ++i)
+      for (unsigned int i = 0; i < _temporary_data[0].size(); ++i)
       {
         _tabulated_data.energies.push_back(_temporary_data[0][i]);
         _tabulated_data.values.push_back(_temporary_data[1][i]);
@@ -179,7 +179,7 @@ Reaction::setSides()
 
   weak_ptr<Species> s_wp;
 
-  uint coeff;
+  unsigned int coeff;
   for (string s : lhs_str)
   {
     coeff = getCoeff(s);
@@ -246,10 +246,10 @@ Reaction::setSides()
   }
 }
 
-uint
+unsigned int
 Reaction::getCoeff(string & s)
 {
-  uint coeff = 0;
+  unsigned int coeff = 0;
 
   int coeff_idx = findFirstLetter(s);
   if (coeff_idx == 0)
@@ -270,7 +270,7 @@ Reaction::validateReaction()
   // all of the elements that exist in the reactants
   // unordered_set<string> r_elements;
   unordered_map<string, int> r_elements;
-  uint s_count;
+  unsigned int s_count;
   for (auto weak_r : _reactants)
   {
     auto r = weak_r.lock();
@@ -359,7 +359,7 @@ Reaction::substituteLumped()
   // I want to make sure to not add the same note several times
   set<string> lumped;
 
-  for (uint i = 0; i < _reactants.size(); ++i)
+  for (unsigned int i = 0; i < _reactants.size(); ++i)
   {
     // exchange the pointers and get the previous unlumped name in temp_s_string
     // this points either to the same reactant or to its lumped state
@@ -398,7 +398,7 @@ Reaction::substituteLumped()
     _stoic_coeffs.erase(reactant_name);
   }
 
-  for (uint i = 0; i < _products.size(); ++i)
+  for (unsigned int i = 0; i < _products.size(); ++i)
   {
     // exchange the pointers and get the previous unlumped name in temp_s_string
     // this points either to the same reactant or to its lumped state
@@ -448,7 +448,7 @@ Reaction::substituteLumped()
 void
 Reaction::setLatexRepresentation()
 {
-  uint s_count = 0;
+  unsigned int s_count = 0;
   for (auto weak_r : _reactants)
   {
     s_count++;

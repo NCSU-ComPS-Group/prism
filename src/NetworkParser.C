@@ -266,11 +266,11 @@ NetworkParser::getSpeciesNameById(const SpeciesId id) const
 //     InvalidInputExit("A LaTeX table cannot be generated\n  There are errors in your reaction
 //     network that must be corrected");
 
-//   uint rxn_counter = 0;
-//   uint note_counter = 0;
+//   unsigned int rxn_counter = 0;
+//   unsigned int note_counter = 0;
 
-//   map<string, uint> note_numbers;
-//   map<uint, string> inverse_note_numbers;
+//   map<string, unsigned int> note_numbers;
+//   map<unsigned int, string> inverse_note_numbers;
 
 //   vector<string> all_notes;
 
@@ -316,7 +316,7 @@ NetworkParser::getSpeciesNameById(const SpeciesId id) const
 //     inverse_note_numbers, all_notes); latex += "\\newpage\n";
 //   }
 
-//   for (uint i = 0; i < all_notes.size(); ++i)
+//   for (unsigned int i = 0; i < all_notes.size(); ++i)
 //   {
 //     latex += fmt::format("\\footnotemark[{:d}]", i + 1) + "{" + all_notes[i] + "}\\\\ \n";
 //   }
@@ -339,14 +339,14 @@ NetworkParser::getSpeciesNameById(const SpeciesId id) const
 // void
 // NetworkParser::tableHelper(string & latex,
 //                            const vector<shared_ptr<const Reaction>> & reactions,
-//                            uint & rxn_counter,
-//                            uint & note_counter,
-//                            map<string, uint> & note_numbers,
-//                            map<uint, string> & inverse_note_numbers,
+//                            unsigned int & rxn_counter,
+//                            unsigned int & note_counter,
+//                            map<string, unsigned int> & note_numbers,
+//                            map<unsigned int, string> & inverse_note_numbers,
 //                            vector<string> & all_notes)
 // {
 
-//   const uint max_rows = 32;
+//   const unsigned int max_rows = 32;
 
 //   string table_header = "\\begin{table}[H]\n";
 //   table_header += "  \\centering\n";
@@ -361,7 +361,7 @@ NetworkParser::getSpeciesNameById(const SpeciesId id) const
 //   string table_closer = "    \\end{tabu}\n";
 //   table_closer += "  }\n";
 //   table_closer += "\\end{table}\n\n";
-//   uint local_rxn_counter = 0;
+//   unsigned int local_rxn_counter = 0;
 //   for (auto r : reactions)
 //   {
 
@@ -398,7 +398,7 @@ NetworkParser::getSpeciesNameById(const SpeciesId id) const
 //     latex += r->getReferencesAsString() + " ";
 
 //     string notes_string;
-//     vector<uint> numbers;
+//     vector<unsigned int> numbers;
 
 //     for (auto note : r->getNotes())
 //     {

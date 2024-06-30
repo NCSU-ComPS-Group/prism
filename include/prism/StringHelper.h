@@ -142,5 +142,5 @@ std::string makeRed(const std::string & s);
  * @param num_columns the number of columns allowed in the file
  */
 std::vector<std::vector<double>>
-readDataFromFile(const std::string & file, const std::string & delimiter, const uint num_columns);
+readDataFromFile(const std::string & file, const std::string & delimiter, const unsigned int num_columns);
 }

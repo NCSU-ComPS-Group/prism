@@ -51,7 +51,7 @@ TEST(Species, PhotonTest)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "hnu");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "hnu");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), 0);
@@ -72,7 +72,7 @@ TEST(Species, LowerCaseElectronTest)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "e");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "e");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -93,7 +93,7 @@ TEST(Species, UpperCaseElectronTest)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "E");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "E");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -113,7 +113,7 @@ TEST(Species, GroundStateNoCharge)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), 0);
@@ -137,7 +137,7 @@ TEST(Species, GroundStateSinglePositiveIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -163,7 +163,7 @@ TEST(Species, GroundStateMultiplePositiveIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar+4");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 4);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -186,7 +186,7 @@ TEST(Species, GroundStateSingleNegativeIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar-");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -209,7 +209,7 @@ TEST(Species, GroundStateMultipleNegativeIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar-100");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -230,7 +230,7 @@ TEST(Species, GroundStateMolecular)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)2);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), 0);
@@ -250,7 +250,7 @@ TEST(Species, GroundStateLargeMolecule)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar188");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)188);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)188);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), 0);
@@ -274,7 +274,7 @@ TEST(Species, MolecularNegativeIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2-100");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)2);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -297,7 +297,7 @@ TEST(Species, MolecularPositiveIon)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar120+39");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)120);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)120);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 39);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -320,7 +320,7 @@ TEST(Species, MolecularPositiveIonWithModifier)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar120+39(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)120);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)120);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 39);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -343,7 +343,7 @@ TEST(Species, MolecularNegativeIonWithModifier)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2-100(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)2);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), s_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), s_charge);
@@ -376,7 +376,7 @@ TEST(Species, ComplexPositiveMolecule)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Ar2");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Ar");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)2);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(), ar_mass);
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getCharge(), 0);
@@ -385,7 +385,7 @@ TEST(Species, ComplexPositiveMolecule)
   EXPECT_EQ(s.getSubSpecies()[1].getName(), "C");
   EXPECT_EQ(s.getSubSpecies()[1].getBase(), "C");
   EXPECT_EQ(s.getSubSpecies()[1].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[1].getSubscript(), (uint)1);
+  EXPECT_EQ(s.getSubSpecies()[1].getSubscript(), (unsigned int)1);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[1].getMass(), c_mass);
   EXPECT_EQ(s.getSubSpecies()[1].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[1].getCharge(), 0);
@@ -394,7 +394,7 @@ TEST(Species, ComplexPositiveMolecule)
   EXPECT_EQ(s.getSubSpecies()[2].getName(), "F4");
   EXPECT_EQ(s.getSubSpecies()[2].getBase(), "F");
   EXPECT_EQ(s.getSubSpecies()[2].getModifier(), "");
-  EXPECT_EQ(s.getSubSpecies()[2].getSubscript(), (uint)4);
+  EXPECT_EQ(s.getSubSpecies()[2].getSubscript(), (unsigned int)4);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[2].getMass(), f_mass);
   EXPECT_EQ(s.getSubSpecies()[2].getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[2].getCharge(), 0);
@@ -403,7 +403,7 @@ TEST(Species, ComplexPositiveMolecule)
   EXPECT_EQ(s.getSubSpecies()[3].getName(), "H3+4(test)");
   EXPECT_EQ(s.getSubSpecies()[3].getBase(), "H");
   EXPECT_EQ(s.getSubSpecies()[3].getModifier(), "(test)");
-  EXPECT_EQ(s.getSubSpecies()[3].getSubscript(), (uint)3);
+  EXPECT_EQ(s.getSubSpecies()[3].getSubscript(), (unsigned int)3);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[3].getMass(), h_mass - e_mass);
   EXPECT_EQ(s.getSubSpecies()[3].getChargeNumber(), 4);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[3].getCharge(), s_charge);
@@ -436,7 +436,7 @@ TEST(Species, CustomLongSpecies)
   EXPECT_EQ(s.getSubSpecies()[0].getName(), "Polypeptide2-100(test)");
   EXPECT_EQ(s.getSubSpecies()[0].getBase(), "Polypeptide");
   EXPECT_EQ(s.getSubSpecies()[0].getModifier(), "(test)");
-  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (uint)2);
+  EXPECT_EQ(s.getSubSpecies()[0].getSubscript(), (unsigned int)2);
   EXPECT_FLOAT_EQ(s.getSubSpecies()[0].getMass(),
                   2 * 1000 + 100 * prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getSubSpecies()[0].getChargeNumber(), -100);
