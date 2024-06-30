@@ -24,6 +24,7 @@ jobs:
         miniforge-variant: Mambaforge
         use-mamba: true
         activate-environment: prism
+        channels: https://conda.software.inl.gov/public
         environment-file: scripts/conda_env.yml
     - name: Set Compiler
       run: |
@@ -56,3 +57,29 @@ jobs:
       run: |
         cd conda/prism
         conda build .
+    - name: Get MOOSE submodule
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Set up Mambaforge3 and conda environment
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        activate-environment: moose
+        channels: https://conda.software.inl.gov/public
+        environment-file: scripts/conda_env.yml
+    - name: Build Docs
+      run: |
+        conda install -y moose-dev
+        conda install -y doxygen
+        cd doc
+        cd moose/test
+        make hit
+        cd -
+        MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
+
+
+
+
+

@@ -50,6 +50,10 @@ public:
    * contains numbers
    */
   void setDelimiter(const std::string & delimiter);
+  /**
+   * Writes a summary of the species in the network to a file
+   * @param file the file which you want to write the species summary to
+   */
   void writeSpeciesSummary(const std::string & file);
 
   // Various getter methods for the different categories of reactions
@@ -108,6 +112,7 @@ public:
    * Gets all of the unique species that exist in the reaction network.
    * This function will also exist the program if there are any errors in the
    * reaction networks that have been parsed
+   * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
   const std::vector<std::shared_ptr<const Species>> & getSpecies() const
@@ -116,6 +121,11 @@ public:
     return _species;
   }
 
+  /**
+   * Fetchs the string representation of a species given its id
+   * @param id id of the species (the position in the vector provided by the getSpecies() method )
+   * @throws invalid_argument if you have requested a species with an id that is not in the network
+   */
   const std::string & getSpeciesNameById(const SpeciesId id) const;
 
 private:

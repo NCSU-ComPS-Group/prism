@@ -9,8 +9,17 @@
 namespace prism
 {
 
+/**
+ * Struct for a quick way to access which reactions the species is in
+ * Since we keep track of rate_based and xsec_based reactions seperately
+ * there will be two sets of ids
+ * a set of ids from 0-(n-1) for rate-based reactions (corrisponding to their index in the)
+ * vector you can get from getRateBasedReactions
+ * the same is true for cross section based reactions
+ */
 struct ReactionData
 {
+  /// the id of a given reaction that this species is a part of
   ReactionId id;
 };
 
@@ -29,60 +38,125 @@ public:
    * @param name the symbol used for the species
    */
   Species(const std::string & name);
+  /**
+   * getter for the unique id for the species
+   * @returns its position in the vector returned by NetworkParser::getSpecies()
+   */
   SpeciesId getId() const { return _id; }
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const Species & other) const;
-  /** Getter methods for the reactions of specific types this species
+  /**
+   * Getter methods for the reactions of specific types this species
    * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
    */
-  ///@{
   const std::vector<std::shared_ptr<const Reaction>> getRateBasedReactions() const
   {
     return convertToSharedPtr(_rate_based);
   }
+  /**
+   * Getter methods for the reactions of specific types this species
+   * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   */
   const std::vector<std::shared_ptr<const Reaction>> getXSecBasedReactions() const
   {
     return convertToSharedPtr(_xsec_based);
   }
+  /**
+   * Getter methods for the reactions of specific types this species
+   * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   */
   const std::vector<std::shared_ptr<const Reaction>> getTabulatedRateBasedReactions() const
   {
     return convertToSharedPtr(_tabulated_rate_based);
   }
+  /**
+   * Getter methods for the reactions of specific types this species
+   * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   */
   const std::vector<std::shared_ptr<const Reaction>> getFunctionRateBasedReactions() const
   {
     return convertToSharedPtr(_function_rate_based);
   }
+  /**
+   * Getter methods for the reactions of specific types this species
+   * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   */
   const std::vector<std::shared_ptr<const Reaction>> getTabulatedXSecBasedReactions() const
   {
     return convertToSharedPtr(_tabulated_xsec_based);
   }
+  /**
+   * Getter methods for the reactions of specific types this species
+   * is either a product or reactant of
+   * Warning there are expensive calls and you should use the equivelant
+   * method for getting the reaction data and then index into the vectors provided
+   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   */
   const std::vector<std::shared_ptr<const Reaction>> getFunctionXSecBasedReactions() const
   {
     return convertToSharedPtr(_function_xsec_based);
   }
-  ///@}
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getRateBasedReactionData() const
   {
     return _rate_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getTabulatedRateBasedReactionData() const
   {
     return _tabulated_rate_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getFunctionRateBasedReactionData() const
   {
     return _function_rate_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getXSecBasedReactionData() const
   {
     return _xsec_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getTabulatedXSecBasedReactionData() const
   {
     return _tabulated_xsec_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
   const std::vector<ReactionData> & getFunctionXSecBasedReactionData() const
   {
     return _function_xsec_based_data;

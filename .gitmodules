@@ -1,0 +1,3 @@
+[submodule "doc/moose"]
+	path = doc/moose
+	url = https://github.com/idaholab/moose.git

@@ -15,21 +15,39 @@ class Reaction;
 /**
  * This factory creates and stores, and passes around all of the species
  * that exist in a reaction mechanism
+ * The end user should never use this
  */
 class SpeciesFactory
 {
-public:
+#ifndef TESTING
+  private:
+#else
+  public:
+#endif
   /** Static function to get the instance of the singleton */
   static SpeciesFactory & getInstance();
   /** resets the factory to a state as if no reactions have been parsed */
   void clear();
-  /**
+  // if we are in testing mode we'll give other people access to these
+  // otherwise we want them to be private
+  void collectCustomSpecies(const YAML::Node & network);
+  void collectLumpedSpecies(const YAML::Node & network);
+  void collectLatexOverrides(const YAML::Node & network);
+   /**
    * Gets the mass of a requested species
    * @param name the string representation of the species
    * @throws InvalidSpecies if it does not know the mass of the requested species
    * @returns the molar mass of the species if it knows it
    */
   double getMass(const std::string & name) const;
+#ifdef TESTING
+  private:
+#endif
+  /// friend class so the parser can call several private methods
+  friend class NetworkParser;
+  friend class SubSpecies;
+  friend class Reaction;
+
   /**
    * Getts the latex override for a species if one has been requested
    * @param name the string representation of the species
@@ -37,8 +55,26 @@ public:
    */
   const std::string getLatexOverride(const std::string & name) const;
 
+  /**
+   * Given a species id this returns its string name
+   * @param id the species id
+   * @throws invalid_argument if a species id that does not exist is provided
+   * @returns the string representation of the species name
+   */
   const std::string & getSpeciesNameById(const SpeciesId id) const;
+  /**
+   * Returns a weak_ptr to a species based on its name
+   * if the factory does not contain a species with this name a new one
+   * will be created
+   * this is the only method that should ever be used to create species
+   * objects
+   * @param name a string name of the species
+   * @returns a weak_ptr to the species that has been created
+   */
   std::weak_ptr<Species> getSpecies(const std::string & name);
+  /**
+   *
+   */
   const std::map<std::string, std::shared_ptr<Species>> & getSpeciesMap() const { return _species; }
   /**
    * Method checks for lumped states of a species
@@ -47,26 +83,26 @@ public:
    * @param s the std::weak pointer to the species object held by the reaction
    */
   std::weak_ptr<Species> getLumpedSpecies(std::weak_ptr<Species> s);
-
+  /**
+   * Method gives all of the species objects in the factor which are used
+   * in reactions an id. they are based on the number of reactions they exist in
+   * the species in the most reactions will have the lowest index
+   */
   void indexSpecies();
-// if we are in testing mode we'll give other people access to these
-// otherwise we want them to be private
-#ifdef TESTING
-  void collectCustomSpecies(const YAML::Node & network);
-  void collectLumpedSpecies(const YAML::Node & network);
-  void collectLatexOverrides(const YAML::Node & network);
-#endif
 
   /**
    * Adds the reaction to the species collections of reactions
    * for the respective type
+   * @param r the reaction object
    */
-  ///@{
   void addRateBasedReaction(std::shared_ptr<const Reaction> r);
+  /**
+   * Adds the reaction to the species collections of reactions
+   * for the respective type
+   * * @param r the reaction object
+   */
   void addXSecBasedReaction(std::shared_ptr<const Reaction> r);
-  ///@}
 
-private:
   /// Stuff to ensure this is a singleton class
   ///@{
   SpeciesFactory();
@@ -77,8 +113,6 @@ private:
   static SpeciesFactory * _instance;
   /// the index to be assigned to the next species created
   ///@}
-  /// friend class so the parser can call several private methods
-  friend class NetworkParser;
   /**
    * Creates a string summary for all the species in the system
    */
@@ -91,12 +125,6 @@ private:
   std::unordered_map<std::string, std::string> _latex_overrides;
   /// the mape between species ids and their names
   std::unordered_map<SpeciesId, std::string> _species_names;
-
-#ifndef TESTING
-  void collectCustomSpecies(const YAML::Node & network);
-  void collectLumpedSpecies(const YAML::Node & network);
-  void collectLatexOverrides(const YAML::Node & network);
-#endif
 
   std::unordered_map<std::string, double> _default_masses = {{"hnu", 0.0},
                                                              {"M", 1},
@@ -218,7 +246,7 @@ private:
                                                              {"Md", 28.0984315},
                                                              {"No", 259.10103},
                                                              {"Lr", 262.10961}};
-  // // copy the defaults into the bases
+  /// copy the defaults into the bases
   std::unordered_map<std::string, double> _base_masses = _default_masses;
 };
 

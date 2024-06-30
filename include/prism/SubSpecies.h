@@ -15,6 +15,10 @@ namespace prism
 class SubSpecies : public SpeciesBase
 {
 public:
+  /**
+   * Creates a simple SubSpecies object
+   * @param name the string representation of the subspecies
+   */
   SubSpecies(const std::string & name);
 
   /** Comparison operator checks if the sub species have the same member variables */
@@ -28,7 +32,10 @@ public:
   const std::string & getModifier() const { return _modifier; }
   /** getter method for the subscript on the subspecies */
   unsigned int getSubscript() const { return _subscript; }
-
+  /**
+   * Gets the ground neutral state of the subspecies
+   * Ex: H3* -> H3
+   */
   const std::string & getNeutralGroundState() const { return _neutral_ground_state; }
 
 private:

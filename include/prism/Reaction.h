@@ -22,10 +22,17 @@ struct TabulatedReactionData
   std::vector<double> values;
 };
 
+/**
+ * Struct for quickly accessing data about which speies
+ * are in a reaction
+ */
 struct SpeciesData
 {
+  /// the unique id for the species (guaranteed to be in the range 0-(n-1) where n in the number unique species)
   SpeciesId id;
+  /// the stoiciometric coefficient for the species
   int stoic_coeff;
+  /// the number of times the species occurs on a side of the reaction
   unsigned int occurances;
 };
 
@@ -45,7 +52,7 @@ public:
    * actually exist. The will never be false in real use
    * @param read_xsec_files whether or not this reaction will actually collect the data from the
    * provided file. This will will never be false in real use
-   * @param delimieter the delimieter that seperates the columns in the data file
+   * @param delimiter the delimieter that seperates the columns in the data file
    * @throws InvalidReaction if the user has provided a file where to find data and parameters for
    * functional data
    * @throws InvalidReaction if the user does not provide a file and does not provide function
@@ -65,22 +72,55 @@ public:
            const bool read_xsec_files = true,
            const std::string & delimiter = " ");
 
+
   /**
-   * Self descriptive getter methods
+   * Self descriptive getter method
    */
-  ///@{
   const std::string & getExpression() const { return _expression; }
+  /**
+   * Self descriptive getter method
+   */
   const std::string & getLatexRepresentation() const { return _latex_expression; }
+  /**
+   * Self descriptive getter method
+   * note that Reactions ids are based on the block reactions are in
+   * all reaction ids are between 0 and n-1 where n is the number of reactions in
+   * the reaction block
+   * this allows quick access into vectors provided by the network parser object
+   */
   ReactionId getId() const { return _id; }
+  /**
+   * Self descriptive getter method
+   */
   const std::vector<std::string> & getReferences() const { return _references; }
+  /**
+   * Self descriptive getter method
+   */
   const std::vector<std::string> & getNotes() const { return _notes; }
+  /**
+   * Self descriptive getter method
+   */
   bool hasTabulatedData() const { return _has_tabulated_data; }
+  /**
+   * Self descriptive getter method
+   */
   double getDeltaEnergyElectron() const { return _delta_eps_e; }
+  /**
+   * Self descriptive getter method
+   */
   double getDeltaEnergyGas() const { return _delta_eps_g; }
-  bool isElastic() const { return _is_elastic; }
+  /**
+   * Self descriptive getter method
+   */
   const std::vector<SpeciesData> & getReactantData() const { return _reactant_data; }
+  /**
+   * Self descriptive getter method
+   */
   const std::vector<SpeciesData> & getProductData() const { return _product_data; }
-  ///@}
+  /**
+   * Wether or not the user set a reaction as elastic or not
+   */
+  bool isElastic() const { return _is_elastic; }
   /**
    * Getter method for the list of species in this reaction
    * this is a relatively expensive method and calls to this should be minimized
@@ -88,7 +128,6 @@ public:
   const std::vector<std::shared_ptr<const Species>> getSpecies() const;
   /**
    * Getter method for getting cite keys formatted for LaTeX
-   * Ex: \cite{citekey1} \cite{citekey1}
    */
   const std::string getReferencesAsString() const;
   /**
