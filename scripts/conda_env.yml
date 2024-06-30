@@ -1,9 +1,6 @@
 channels:
   - gsgall
-  - conda-forge
 dependencies:
-  - gtest
-  - lcov
-  - prism
+  - prism-dev
 
 
