@@ -2,5 +2,6 @@ channels:
   - gsgall
 dependencies:
   - prism-dev
+  - conda-build 
 
 

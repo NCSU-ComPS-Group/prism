@@ -52,4 +52,7 @@ jobs:
         cd test
         make -f Makefile-with-dll -j 4
         ./run_tests -j 4
-
+    - name: Build conda package
+      run: |
+        cd conda/prism
+        conda build .
