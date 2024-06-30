@@ -199,7 +199,7 @@ NetworkParser::parseNetwork(const string & file)
     InvalidInputExit("No reactions were found in file: '" + file + "'\n" +
                      "You must provide reactions in atleast one of the following blocks\n'" +
                      RATE_BASED + "', '" + XSEC_BASED + "'");
-  cout << "We're in this bouy" << endl;
+
   parseReactions(network,
                  &_rate_id,
                  &_rate_based,

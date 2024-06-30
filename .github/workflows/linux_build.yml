@@ -3,7 +3,7 @@ name: linux-build
 on:
   push:
     branches:
-      - main
+      - devel
 
 jobs:
   linux-build:
@@ -23,16 +23,33 @@ jobs:
       with:
         miniforge-variant: Mambaforge
         use-mamba: true
-        activate-environment: rxn-cpp
-        environment-file: scripts/conda_environment.yml
+        activate-environment: prism
+        environment-file: scripts/conda_env.yml
+    - name: Set Compiler
+      run: |
+        conda activate prism
+        export CXX=$(which g++)
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-    - name: Build and run tests
+    - name: Build main, and library directly
       run: |
-        conda activate rxn-cpp
-        export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
         make -j 4
         ./main
+        make clean
+    - name: Build and run main with dll
+      run: |
+        make -f Makefile-as-dll install -j 4
+        make -f Makefile-with-dll -j 4
+        ./main
+    - name: Build and run tests directly
+      run: |
         cd test
         make -j 4
         ./run_tests -j 4
+        make clean
+    - name: Build and run tests with dll
+      run: |
+        cd test
+        make -f Makefile-with-dll -j 4
+        ./run_tests -j 4
+
