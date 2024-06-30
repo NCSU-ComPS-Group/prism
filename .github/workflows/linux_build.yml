@@ -71,6 +71,7 @@ jobs:
         environment-file: scripts/conda_env.yml
     - name: Build Docs
       run: |
+        conda activate moose
         conda install -y moose-dev
         conda install -y doxygen
         cd doc
