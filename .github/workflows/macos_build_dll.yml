@@ -1,4 +1,4 @@
-name: macos-from-conda
+name: macos-build-dll
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         miniforge-variant: Mambaforge
         use-mamba: true
         activate-environment: prism
-        environment-file: scripts/conda_user.yml
+        environment-file: scripts/conda_env.yml
     - name: Install Compiler
       run: |
         conda activate prism
@@ -35,8 +35,15 @@ jobs:
     - name: Build and run tests
       run: |
         conda activate prism
+        make -j 4
+        ./main
+        make clean
+        make -f Makefile-as-dll install -j 4
         make -f Makefile-with-dll -j 4
         ./main
         cd test
+        make -j 4
+        ./run_tests -j 4
+        make clean
         make -f Makefile-with-dll -j 4
         ./run_tests -j 4
