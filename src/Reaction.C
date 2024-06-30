@@ -10,20 +10,19 @@
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
 #include "SubSpecies.h"
-#include "int_range.h"
 
 using namespace std;
 
 namespace prism
 {
 Reaction::Reaction(const YAML::Node & rxn_input,
-                   const int rxn_number,
+                   const int id,
                    const string & data_path,
                    const string & bib_file,
                    const bool check_refs,
                    const bool read_xsec_files,
                    const std::string & delimiter)
-  : _number(rxn_number),
+  : _id(id),
     _data_path(data_path),
     _expression(checkExpression(rxn_input)),
     _delta_eps_e(getParam<double>(DELTA_EPS_E_KEY, rxn_input, OPTIONAL)),
@@ -33,29 +32,24 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     _references(getParams<string>(REFERENCE_KEY, rxn_input, OPTIONAL)),
     _notes(getParams<string>(NOTE_KEY, rxn_input, OPTIONAL))
 {
+
   const bool params_key_provided = paramProvided(PARAM_KEY, rxn_input, OPTIONAL);
   const bool file_key_provided = paramProvided(FILE_KEY, rxn_input, OPTIONAL);
   const bool delta_eps_e_provided = paramProvided(DELTA_EPS_E_KEY, rxn_input, OPTIONAL);
   const bool delta_eps_g_provided = paramProvided(DELTA_EPS_G_KEY, rxn_input, OPTIONAL);
 
   if (file_key_provided && params_key_provided)
-  {
     throw InvalidReaction(_expression,
                           "Both '" + FILE_KEY + "' and '" + PARAM_KEY + "' cannot be provided");
-  }
 
   if (!file_key_provided && !params_key_provided)
-  {
     throw InvalidReaction(_expression,
                           "Either '" + FILE_KEY + "' or '" + PARAM_KEY + "' must be provided");
-  }
 
   if (_is_elastic && (delta_eps_e_provided || delta_eps_g_provided))
-  {
     throw InvalidReaction(_expression,
                           "For an elastic reaction you may not provide '" + DELTA_EPS_E_KEY +
                               "' nor '" + DELTA_EPS_G_KEY + "'");
-  }
 
   if (params_key_provided)
   {
@@ -64,18 +58,12 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     _tabulated_data.energies.resize(0);
     _tabulated_data.values.resize(0);
     if (_params[0] <= 0.0)
-    {
       throw InvalidReaction(_expression,
                             "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
-    }
 
     if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
-    {
-      for (unsigned int i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
-      {
+      for (uint i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
         _params.push_back(0.0);
-      }
-    }
   }
 
   if (file_key_provided)
@@ -87,23 +75,19 @@ Reaction::Reaction(const YAML::Node & rxn_input,
       const string & file = data_path + getParam<string>(FILE_KEY, rxn_input, REQUIRED);
       struct stat buffer;
       if (stat(file.c_str(), &buffer) != 0)
-      {
         throw InvalidInput("Cross section data file: '" + file + "' does not exist");
-      }
 
       const auto & _temporary_data = readDataFromFile(file, delimiter, uint(2));
 
-      for (const auto i : make_range(_temporary_data[0].size()))
+      for (uint i = 0; i < _temporary_data[0].size(); ++i)
       {
         _tabulated_data.energies.push_back(_temporary_data[0][i]);
         _tabulated_data.values.push_back(_temporary_data[1][i]);
       }
 
       if (!is_sorted(_tabulated_data.energies.begin(), _tabulated_data.energies.end()))
-      {
         throw InvalidReaction(_expression,
                               "Energy data in file '" + file + "' is not in ascending order");
-      }
     }
   }
 
@@ -114,18 +98,12 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     string error_string;
 
     if (extra_params.size() == 1)
-    {
       error_string = "Extra parameter found\n";
-    }
     else
-    {
       error_string = "Extra parameters found\n";
-    }
 
     for (const string & ep : extra_params)
-    {
       error_string += "          '" + ep + "'\n";
-    }
 
     throw InvalidReaction(_expression, error_string);
   }
@@ -138,15 +116,31 @@ Reaction::Reaction(const YAML::Node & rxn_input,
   collectUniqueSpecies();
 
   if (check_refs)
-  {
     checkReferences();
+
+  auto temp_r = _reactants;
+  _reactants.clear();
+  set<string> unique_check;
+  for (const auto & s_wp : temp_r)
+  {
+    const auto s = s_wp.lock();
+    if (unique_check.find(s->getName()) != unique_check.end())
+      continue;
+    _reactants.push_back(s_wp);
+    unique_check.insert(s->getName());
   }
 
-  // clearning all of the data that is any more than the minimum we need
-  _reactant_count.clear();
-  _product_count.clear();
-  _reactants.clear();
+  auto temp_p = _products;
   _products.clear();
+  unique_check.clear();
+  for (const auto & s_wp : temp_p)
+  {
+    const auto s = s_wp.lock();
+    if (unique_check.find(s->getName()) != unique_check.end())
+      continue;
+    _products.push_back(s_wp);
+    unique_check.insert(s->getName());
+  }
 }
 
 const vector<shared_ptr<const Species>>
@@ -155,9 +149,8 @@ Reaction::getSpecies() const
   vector<shared_ptr<const Species>> species_sp;
 
   for (const auto & s_wp : _species)
-  {
     species_sp.push_back(s_wp.lock());
-  }
+
   return species_sp;
 }
 
@@ -167,10 +160,8 @@ Reaction::checkExpression(const YAML::Node & rxn_input)
 
   string rxn_str = getParam<string>(REACTION_KEY, rxn_input, REQUIRED);
   if (rxn_str.find(" -> ") == string::npos)
-  {
     throw InvalidReaction(_expression,
                           "'" + REACTION_KEY + "' parameter does not contain ' -> ' substring");
-  }
 
   return rxn_str;
 }
@@ -188,7 +179,7 @@ Reaction::setSides()
 
   weak_ptr<Species> s_wp;
 
-  unsigned int coeff;
+  uint coeff;
   for (string s : lhs_str)
   {
     coeff = getCoeff(s);
@@ -255,16 +246,14 @@ Reaction::setSides()
   }
 }
 
-unsigned int
+uint
 Reaction::getCoeff(string & s)
 {
-  unsigned int coeff = 0;
+  uint coeff = 0;
 
   int coeff_idx = findFirstLetter(s);
   if (coeff_idx == 0)
-  {
     coeff = 1;
-  }
   else
   {
     coeff = stoi(s.substr(0, coeff_idx));
@@ -281,7 +270,7 @@ Reaction::validateReaction()
   // all of the elements that exist in the reactants
   // unordered_set<string> r_elements;
   unordered_map<string, int> r_elements;
-  unsigned int s_count;
+  uint s_count;
   for (auto weak_r : _reactants)
   {
     auto r = weak_r.lock();
@@ -366,78 +355,100 @@ void
 Reaction::substituteLumped()
 {
   SpeciesFactory & sf = SpeciesFactory::getInstance();
-  string unlumped_expression;
-  string lumped_expression;
-  string lump_string;
   // string of species that have been lumped into a different state
   // I want to make sure to not add the same note several times
   set<string> lumped;
 
-  for (unsigned int i = 0; i < _reactants.size(); ++i)
+  for (uint i = 0; i < _reactants.size(); ++i)
   {
     // exchange the pointers and get the previous unlumped name in temp_s_string
-    unlumped_expression = sf.getLumpedSpecies(_reactants[i]);
-    lumped_expression = _reactants[i].lock()->getName();
-    if (unlumped_expression.length() == 0)
-    {
+    // this points either to the same reactant or to its lumped state
+    const auto lumped_state = sf.getLumpedSpecies(_reactants[i]);
+    const auto lumped_name = lumped_state.lock()->getName();
+    const auto reactant_name = _reactants[i].lock()->getName();
+    // if they are they same this species is not lumped into anything
+    if (lumped_name == reactant_name)
       continue;
-    }
-    auto it = lumped.find(unlumped_expression);
+
+    auto it = lumped.find(lumped_name);
     if (it == lumped.end())
     {
-      lumped.insert(unlumped_expression);
-      _notes.push_back("Species \\lq " + unlumped_expression +
-                       "\\rq{}  has been lumped into \\lq " + lumped_expression + "\\rq");
+      lumped.insert(lumped_name);
+      _notes.push_back("Species \\lq " + reactant_name + "\\rq{}  has been lumped into \\lq " +
+                       lumped_name + "\\rq");
     }
 
-    // update the reactant count for the lumped species
-    auto it2 = _reactant_count.find(lumped_expression);
+    // replace the data needed with the lumped state
+    _reactants[i] = lumped_state;
+    auto it2 = _reactant_count.find(lumped_name);
+
     if (it2 == _reactant_count.end())
-    {
-      _reactant_count[lumped_expression] = _reactant_count[unlumped_expression];
-      _stoic_coeffs[lumped_expression] = _stoic_coeffs[unlumped_expression];
-    }
+      _reactant_count[lumped_name] = _reactant_count[reactant_name];
     else
-    {
-      _reactant_count[lumped_expression] += _reactant_count[unlumped_expression];
-    }
+      _reactant_count[lumped_name] += _reactant_count[reactant_name];
+
+    auto it3 = _stoic_coeffs.find(lumped_name);
+
+    if (it3 == _stoic_coeffs.end())
+      _stoic_coeffs[lumped_name] = _stoic_coeffs[reactant_name];
+    else
+      _stoic_coeffs[lumped_name] += _stoic_coeffs[reactant_name];
+
+    _reactant_count.erase(reactant_name);
+    _stoic_coeffs.erase(reactant_name);
   }
 
-  for (unsigned int i = 0; i < _products.size(); ++i)
+  for (uint i = 0; i < _products.size(); ++i)
   {
-    unlumped_expression = sf.getLumpedSpecies(_products[i]);
-    lumped_expression = _products[i].lock()->getName();
-
-    if (unlumped_expression.length() == 0)
-    {
+    // exchange the pointers and get the previous unlumped name in temp_s_string
+    // this points either to the same reactant or to its lumped state
+    const auto lumped_state = sf.getLumpedSpecies(_products[i]);
+    const auto lumped_name = lumped_state.lock()->getName();
+    const auto product_name = _products[i].lock()->getName();
+    // if they are they same this species is not lumped into anything
+    if (lumped_name == product_name)
       continue;
-    }
-    auto it = lumped.find(unlumped_expression);
+
+    auto it = lumped.find(product_name);
     if (it == lumped.end())
     {
-      lumped.insert(unlumped_expression);
-      _notes.push_back("Species \\lq " + unlumped_expression + "\\rq{} has been lumped into \\lq " +
-                       lumped_expression + "\\rq");
+      lumped.insert(lumped_name);
+      _notes.push_back("Species \\lq " + product_name + "\\rq{}  has been lumped into \\lq " +
+                       lumped_name + "\\rq");
     }
 
-    // update the reactant count for the lumped species
-    auto it2 = _product_count.find(lumped_expression);
+    // replace the data needed with the lumped state
+    _products[i] = lumped_state;
+    auto it2 = _product_count.find(lumped_name);
     if (it2 == _product_count.end())
-    {
-      _product_count[lumped_expression] = _product_count[unlumped_expression];
-      _stoic_coeffs[lumped_expression] = _stoic_coeffs[unlumped_expression];
-    }
+      _product_count[lumped_name] = _product_count[product_name];
     else
-    {
-      _product_count[lumped_expression] += _product_count[unlumped_expression];
-    }
+      _product_count[lumped_name] += _product_count[product_name];
+
+    _product_count.erase(product_name);
+
+    // its possible this coefficient was replaced when the reactants where substitued
+    // so we need to make sure there is something to do here
+    auto it3 = _stoic_coeffs.find(product_name);
+
+    if (it3 == _stoic_coeffs.end())
+      continue;
+
+    auto it4 = _stoic_coeffs.find(lumped_name);
+
+    if (it4 == _stoic_coeffs.end())
+      _stoic_coeffs[lumped_name] = _stoic_coeffs[product_name];
+    else
+      _stoic_coeffs[lumped_name] += _stoic_coeffs[product_name];
+
+    _stoic_coeffs.erase(product_name);
   }
 }
 
 void
 Reaction::setLatexRepresentation()
 {
-  unsigned int s_count = 0;
+  uint s_count = 0;
   for (auto weak_r : _reactants)
   {
     s_count++;
@@ -470,6 +481,30 @@ Reaction::setLatexRepresentation()
 
     if (s_count != _product_count.size())
       _latex_expression += " + ";
+  }
+}
+
+void
+Reaction::setSpeciesData()
+{
+  for (const auto & s_wp : _reactants)
+  {
+    const auto s = s_wp.lock();
+    SpeciesData temp;
+    temp.id = s->getId();
+    temp.occurances = _reactant_count[s->getName()];
+    temp.stoic_coeff = _stoic_coeffs[s->getName()];
+    _reactant_data.push_back(temp);
+  }
+
+  for (const auto & s_wp : _products)
+  {
+    const auto s = s_wp.lock();
+    SpeciesData temp;
+    temp.id = s->getId();
+    temp.occurances = _product_count[s->getName()];
+    temp.stoic_coeff = _stoic_coeffs[s->getName()];
+    _product_data.push_back(temp);
   }
 }
 
@@ -516,7 +551,7 @@ Reaction::operator==(const Reaction & other) const
   if (_expression != other._expression)
     return false;
 
-  if (_number != other._number)
+  if (_id != other._id)
     return false;
 
   if (_latex_expression != other._latex_expression)
@@ -546,9 +581,7 @@ Reaction::getStoicCoeffByName(const string & s_expression) const
   auto it = _stoic_coeffs.find(s_expression);
 
   if (it == _stoic_coeffs.end())
-  {
     throw invalid_argument("Species " + s_expression + " is not in reaction " + _expression);
-  }
 
   return it->second;
 }
@@ -589,12 +622,11 @@ hash<prism::Reaction>::operator()(const prism::Reaction & obj) const
   size_t val = 17; // Start with a prime number
 
   val += hash_factor * hash<string>()(obj.getExpression());
-  val += hash_factor * hash<int>()(obj.getReactionNumber());
+  val += hash_factor * hash<int>()(obj.getId());
   val += hash_factor * hash<string>()(obj.getLatexRepresentation());
   // not including the reactants and products in the hash
   // this is becuase these may change if there are lumped species
   // or if i want to add a map of reactions to species while I am
   // still parsing reaction
   return val;
-  }
-
+}

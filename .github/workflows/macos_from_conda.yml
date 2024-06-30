@@ -1,4 +1,4 @@
-name: macos-build-dll
+name: macos-from-conda
 
 on:
   push:

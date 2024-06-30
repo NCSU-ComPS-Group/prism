@@ -10,7 +10,6 @@
 
 namespace prism
 {
-
 /**
  * Struct for holding tabulated data
  * read from user provided files
@@ -23,6 +22,13 @@ struct TabulatedReactionData
   std::vector<double> values;
 };
 
+struct SpeciesData
+{
+  SpeciesId id;
+  int stoic_coeff;
+  uint occurances;
+};
+
 /**
  * Stores all of the data needed to perform calculations with
  * a specific reaction
@@ -32,7 +38,7 @@ class Reaction
 public:
   /**
    * @param rxn_input the block of the input file that holds the data for a reaction
-   * @param rxn_number an id number for the reaction
+   * @param rxn_id an id number for the reaction
    * @param data_path the folder where the reaction will search for a data file if it is requested
    * @param bib_file the file which holds the reference data for this reaction
    * @param check_refs whether or not this reaction will verify that the references provided
@@ -52,7 +58,7 @@ public:
    * @throws InvalidReaction if the user has extra unused parameters in an input block
    */
   Reaction(const YAML::Node & rxn_input,
-           const int rxn_number = 0,
+           const int rxn_id = 0,
            const std::string & data_path = "",
            const std::string & bib_file = "",
            const bool check_refs = true,
@@ -65,13 +71,15 @@ public:
   ///@{
   const std::string & getExpression() const { return _expression; }
   const std::string & getLatexRepresentation() const { return _latex_expression; }
-  unsigned int getReactionNumber() const { return _number; }
+  ReactionId getId() const { return _id; }
   const std::vector<std::string> & getReferences() const { return _references; }
   const std::vector<std::string> & getNotes() const { return _notes; }
   bool hasTabulatedData() const { return _has_tabulated_data; }
   double getDeltaEnergyElectron() const { return _delta_eps_e; }
   double getDeltaEnergyGas() const { return _delta_eps_g; }
   bool isElastic() const { return _is_elastic; }
+  const std::vector<const SpeciesData> & getReactantData() const { return _reactant_data; }
+  const std::vector<const SpeciesData> & getProductData() const { return _product_data; }
   ///@}
   /**
    * Getter method for the list of species in this reaction
@@ -115,6 +123,7 @@ public:
 private:
   /** SpeciesFactor is a friend so that it can access the species in this reaction */
   friend class SpeciesFactory;
+  friend class NetworkParser;
   /** helper to make sure the reaction exprssion is at least acceptable without
    * checking it too hard
    * @param throws InvalidReaction if the reaction does not contain '->'
@@ -125,7 +134,7 @@ private:
    * Helper method for getting and removing the coefficient
    * of a species in the reaction
    */
-  unsigned int getCoeff(std::string & s);
+  uint getCoeff(std::string & s);
 
   /**
    * Sets up the reactants and products for the reaction
@@ -142,8 +151,10 @@ private:
   void checkReferences();
   /** Makes sure we only hold on to one weak_ptr per species */
   void collectUniqueSpecies();
+  /** sets up the SpeciesData with the correct Ids for species */
+  void setSpeciesData();
   /// the id number for this reaction
-  const unsigned int _number;
+  const ReactionId _id;
   /// the directory where to find a data file
   const std::string _data_path;
   /// the symbolic expression for the reaction
@@ -173,13 +184,21 @@ private:
   /// the LaTeX version of the symbolic expression
   std::string _latex_expression;
 
-  /// temporary member variables that are only used in construction of the object
-  /// TODO remove this at somepoint and just pass these around in the constructor
+  /// vectors to store data about the species
+  /// TODO make these into sets at somepoint
   ///@{
   std::vector<std::weak_ptr<Species>> _reactants;
   std::vector<std::weak_ptr<Species>> _products;
-  std::unordered_map<std::string, unsigned int> _reactant_count;
-  std::unordered_map<std::string, unsigned int> _product_count;
+  std::unordered_map<std::string, uint> _reactant_count;
+  std::unordered_map<std::string, uint> _product_count;
+  ///@
+  /// these should also really be sets in the future
+  /// for now this is annoying but it's fine
+  /// not doing this because this should get released soon
+  /// this is how we can prodive quick access to the data needed for simulations
+  ///@{
+  std::vector<const SpeciesData> _reactant_data;
+  std::vector<const SpeciesData> _product_data;
   ///@}
 };
 }

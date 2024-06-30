@@ -27,7 +27,7 @@ public:
   /** getter method for the modifier std::string */
   const std::string & getModifier() const { return _modifier; }
   /** getter method for the subscript on the subspecies */
-  unsigned int getSubscript() const { return _subscript; }
+  uint getSubscript() const { return _subscript; }
 
   const std::string & getNeutralGroundState() const { return _neutral_ground_state; }
 
@@ -37,7 +37,7 @@ private:
   /** The rest of name after the elemental name that has been removed */
   std::string _modifier;
   /** The subscript of the number ex: Ar2 this is 2 */
-  const unsigned int _subscript;
+  const uint _subscript;
   const std::string _neutral_ground_state;
   /** method for the setting the element which the species modifies */
   std::string setBase();
@@ -49,7 +49,7 @@ private:
   /**
    * Method for getting the subscript as an integer
    */
-  unsigned int setSubscript();
+  uint setSubscript();
   /**
    * Method for setting the mass of the subspecies based on the
    * subscript and elemental mass

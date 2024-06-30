@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Constants.h"
+
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -9,6 +12,8 @@ namespace prism
 
 class Reaction;
 class Species;
+class SpeciesFactory;
+class BibTexHelper;
 
 /**
  * This is the class that processes reaction networks and
@@ -111,6 +116,8 @@ public:
     return _species;
   }
 
+  const std::string & getSpeciesNameById(const SpeciesId id) const;
+
 private:
   /** private constructor because only this class can create itself */
   NetworkParser();
@@ -118,6 +125,8 @@ private:
   NetworkParser(const NetworkParser &) = delete;
   /** delete the copy assignment to make this a singleton */
   NetworkParser & operator=(const NetworkParser &) = delete;
+  SpeciesFactory & _factory;
+  BibTexHelper & _bib_helper;
   /// Private instance of the singleton,
   /// this is the only instance of this class that will ever exist
   static NetworkParser * _instance;
@@ -141,7 +150,8 @@ private:
   std::unordered_map<std::string, std::string> _bibs;
   /// Map for keeping track of the location where data files are stored for each network
   std::unordered_map<std::string, std::string> _data_paths;
-
+  ReactionId _rate_id;
+  ReactionId _xsec_id;
   /**
    * checks to make sure a network input file exists
    * also checks to make sure it hasn't already been parsed
@@ -171,7 +181,8 @@ private:
    * @param bib_file the bib file which contains the cite keys needed for these reactions
    */
   void parseReactions(const YAML::Node & inputs,
-                      std::vector<std::shared_ptr<const Reaction>> * rxn_list,
+                      ReactionId * rxn_id,
+                      std::vector<std::shared_ptr<Reaction>> * rxn_list,
                       std::vector<std::shared_ptr<const Reaction>> * tabulated_rxn_list,
                       std::vector<std::shared_ptr<const Reaction>> * function_rxn_list,
                       const std::string & type,
@@ -180,10 +191,10 @@ private:
 
   // void tableHelper(std::string & latex,
   //                    const std::vector<std::shared_ptr<const Reaction>> & reactions,
-  //                    unsigned int & rxn_counter,
-  //                    unsigned int & note_counter,
-  //                    std::map<std::string, unsigned int> & note_numbers,
-  //                    std::map<unsigned int, std::string> & inverse_note_numbers,
+  //                    uint & rxn_counter,
+  //                    uint & note_counter,
+  //                    std::map<std::string, uint> & note_numbers,
+  //                    std::map<uint, std::string> & inverse_note_numbers,
   //                    std::vector<std::string> & all_notes);
 
   /**
@@ -197,10 +208,10 @@ private:
   /// storage for all of the reactions in the networks seperated based on
   /// types of reactions and where they get data from
   ///@{
-  std::vector<std::shared_ptr<const Reaction>> _rate_based;
+  std::vector<std::shared_ptr<Reaction>> _rate_based;
   std::vector<std::shared_ptr<const Reaction>> _tabulated_rate_based;
   std::vector<std::shared_ptr<const Reaction>> _function_rate_based;
-  std::vector<std::shared_ptr<const Reaction>> _xsec_based;
+  std::vector<std::shared_ptr<Reaction>> _xsec_based;
   std::vector<std::shared_ptr<const Reaction>> _tabulated_xsec_based;
   std::vector<std::shared_ptr<const Reaction>> _function_xsec_based;
   ///@}

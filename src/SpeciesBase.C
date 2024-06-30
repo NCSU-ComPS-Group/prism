@@ -17,18 +17,15 @@ SpeciesBase::checkName(const string & s)
 
   if (s[0] == 'e' || s[0] == 'E')
   {
+
     if (s.length() > 1)
-    {
       throw InvalidSpecies(s, "Electrons cannot have modifiers");
-    }
   }
   else
   {
     if (s != "hnu" && findFirstCapital(s) == -1)
-    {
       throw InvalidSpecies(s,
                            "Any non-electron, non-photon species must start with a captial letter");
-    }
   }
   return s;
 }
@@ -51,7 +48,7 @@ SpeciesBase::getCharge() const
   return static_cast<float>(_charge_num) * ELEMENTAL_CHARGE;
 }
 
-} // namespace RXN
+}
 
 size_t
 hash<prism::SpeciesBase>::operator()(const prism::SpeciesBase & obj) const

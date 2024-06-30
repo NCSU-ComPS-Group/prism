@@ -6,6 +6,7 @@
 #include "yaml-cpp/yaml.h"
 
 #include "Species.h"
+#include "Constants.h"
 
 namespace prism
 {
@@ -36,6 +37,7 @@ public:
    */
   const std::string getLatexOverride(const std::string & name) const;
 
+  const std::string & getSpeciesNameById(const SpeciesId id) const;
   std::weak_ptr<Species> getSpecies(const std::string & name);
   const std::map<std::string, std::shared_ptr<Species>> & getSpeciesMap() const { return _species; }
   /**
@@ -44,7 +46,9 @@ public:
    * if there is not a lumped species it will simply return a pointer to the same species
    * @param s the std::weak pointer to the species object held by the reaction
    */
-  std::string getLumpedSpecies(std::weak_ptr<Species> & s);
+  std::weak_ptr<Species> getLumpedSpecies(std::weak_ptr<Species> s);
+
+  void indexSpecies();
 // if we are in testing mode we'll give other people access to these
 // otherwise we want them to be private
 #ifdef TESTING
@@ -65,12 +69,13 @@ public:
 private:
   /// Stuff to ensure this is a singleton class
   ///@{
-  SpeciesFactory() {}
+  SpeciesFactory();
   // Private copy constructor and assignment operator to prevent cloning
   SpeciesFactory(const SpeciesFactory &) = delete;
   SpeciesFactory & operator=(const SpeciesFactory &) = delete;
   // Private instance of the singleton
   static SpeciesFactory * _instance;
+  /// the index to be assigned to the next species created
   ///@}
   /// friend class so the parser can call several private methods
   friend class NetworkParser;
@@ -84,6 +89,8 @@ private:
   std::unordered_map<std::string, std::shared_ptr<Species>> _lumped_map;
   /// the map of species names to latex overrides
   std::unordered_map<std::string, std::string> _latex_overrides;
+  /// the mape between species ids and their names
+  std::unordered_map<SpeciesId, std::string> _species_names;
 
 #ifndef TESTING
   void collectCustomSpecies(const YAML::Node & network);

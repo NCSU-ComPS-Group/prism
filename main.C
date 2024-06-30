@@ -9,7 +9,8 @@ using namespace std;
 int
 main()
 {
-  [[maybe_unused]] auto & np = prism::NetworkParser::getInstance();
+  [[ maybe_unused ]]
+  auto & np = prism::NetworkParser::getInstance();
 
   return EXIT_SUCCESS;
 }

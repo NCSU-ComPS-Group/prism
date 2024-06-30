@@ -16,9 +16,9 @@ namespace prism
   BibTexHelper& BibTexHelper::getInstance()
   {
       // Create the _instance if it does not exist
-      if (_instance == nullptr) {
-          _instance = new BibTexHelper();
-      }
+      if (_instance == nullptr)
+        _instance = new BibTexHelper();
+
       return *_instance;
   }
 
@@ -34,13 +34,11 @@ namespace prism
     std::ifstream stream(file); // Replace "filename.txt" with your file's name
     unordered_set<string> temp_refs;
     if (!stream.is_open())
-    {
       throw invalid_argument("File: '" + file + "' not found");
-    }
 
     string line;
     vector<string> parts;
-    unsigned int line_count = 0;
+    uint line_count = 0;
     while (std::getline(stream, line))
     {
       line_count++;
@@ -74,15 +72,11 @@ namespace prism
     auto refs_it = _refs.find(file);
 
     if (refs_it == _refs.end())
-    {
       throw invalid_argument(fmt::format("File '{}' was not found in your references.", file));
-    }
 
     auto key_it = refs_it->second.find(citekey);
 
     if (key_it == refs_it->second.end())
-    {
       throw invalid_argument(fmt::format("Citekey '{}' was not found in your references.", citekey));
-    }
   }
 }

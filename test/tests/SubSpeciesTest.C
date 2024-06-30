@@ -64,7 +64,7 @@ TEST(SubSpecies, PhotonTest)
   EXPECT_EQ(s.getName(), "hnu");
   EXPECT_EQ(s.getBase(), "hnu");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(), prism::SpeciesFactory::getInstance().getMass("hnu"));
   EXPECT_EQ(s.getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getCharge(), 0);
@@ -78,7 +78,7 @@ TEST(SubSpecies, LowerCasesElectronTest)
   EXPECT_EQ(s.getName(), "e");
   EXPECT_EQ(s.getBase(), "e");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(), prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getChargeNumber(), -1);
   EXPECT_FLOAT_EQ(s.getCharge(), -ELEMENTAL_CHARGE);
@@ -92,7 +92,7 @@ TEST(SubSpecies, UpperCasesElectronTest)
   EXPECT_EQ(s.getName(), "E");
   EXPECT_EQ(s.getBase(), "E");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(), prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getChargeNumber(), -1);
   EXPECT_FLOAT_EQ(s.getCharge(), -ELEMENTAL_CHARGE);
@@ -106,7 +106,7 @@ TEST(SubSpecies, GroundStateNoCharge)
   EXPECT_EQ(s.getName(), "Ar");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(), prism::SpeciesFactory::getInstance().getMass("Ar"));
   EXPECT_EQ(s.getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getCharge(), 0);
@@ -120,7 +120,7 @@ TEST(SubSpecies, GroundStateSinglePositiveIon)
   EXPECT_EQ(s.getName(), "Ar+");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(),
                   prism::SpeciesFactory::getInstance().getMass("Ar") -
                       prism::SpeciesFactory::getInstance().getMass("e"));
@@ -137,7 +137,7 @@ TEST(SubSpecies, GroundStateMultiplePositiveIon)
   EXPECT_EQ(s.getName(), "Ar+4");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(),
                   prism::SpeciesFactory::getInstance().getMass("Ar") -
                       4 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -154,7 +154,7 @@ TEST(SubSpecies, GroundStateSingleNegativeIon)
   EXPECT_EQ(s.getName(), "Ar-");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(),
                   prism::SpeciesFactory::getInstance().getMass("Ar") +
                       prism::SpeciesFactory::getInstance().getMass("e"));
@@ -171,7 +171,7 @@ TEST(SubSpecies, GroundStateMultipleNegativeIon)
   EXPECT_EQ(s.getName(), "Ar-100");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 1);
+  EXPECT_EQ(s.getSubscript(), (uint)1);
   EXPECT_FLOAT_EQ(s.getMass(),
                   prism::SpeciesFactory::getInstance().getMass("Ar") +
                       100 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -187,7 +187,7 @@ TEST(SubSpecies, GroundStateMolecular)
   EXPECT_EQ(s.getName(), "Ar2");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(), 2 * prism::SpeciesFactory::getInstance().getMass("Ar"));
   EXPECT_EQ(s.getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getCharge(), 0);
@@ -201,7 +201,7 @@ TEST(SubSpecies, GroundStateLargeMolecule)
   EXPECT_EQ(s.getName(), "Ar188");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 188);
+  EXPECT_EQ(s.getSubscript(), (uint)188);
   EXPECT_FLOAT_EQ(s.getMass(), 188 * prism::SpeciesFactory::getInstance().getMass("Ar"));
   EXPECT_EQ(s.getChargeNumber(), 0);
   EXPECT_FLOAT_EQ(s.getCharge(), 0);
@@ -215,7 +215,7 @@ TEST(SubSpecies, MolecularNegativeIon)
   EXPECT_EQ(s.getName(), "Ar2-100");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(),
                   2 * prism::SpeciesFactory::getInstance().getMass("Ar") +
                       100 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -231,7 +231,7 @@ TEST(SubSpecies, MolecularPositiveIon)
   EXPECT_EQ(s.getName(), "Ar120+39");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 120);
+  EXPECT_EQ(s.getSubscript(), (uint)120);
   EXPECT_FLOAT_EQ(s.getMass(),
                   120 * prism::SpeciesFactory::getInstance().getMass("Ar") -
                       39 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -247,7 +247,7 @@ TEST(SubSpecies, MolecularPositiveIonWithModifier)
   EXPECT_EQ(s.getName(), "Ar120+39(test)");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "(test)");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 120);
+  EXPECT_EQ(s.getSubscript(), (uint)120);
   EXPECT_FLOAT_EQ(s.getMass(),
                   120 * prism::SpeciesFactory::getInstance().getMass("Ar") -
                       39 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -263,7 +263,7 @@ TEST(SubSpecies, MolecularNegativeIonWithModifier)
   EXPECT_EQ(s.getName(), "Ar2-100(test)");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "(test)");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(),
                   2 * prism::SpeciesFactory::getInstance().getMass("Ar") +
                       100 * prism::SpeciesFactory::getInstance().getMass("e"));
@@ -288,7 +288,7 @@ TEST(SubSpecies, CustomSpeciesBase)
   EXPECT_EQ(s.getName(), "A2-100(test)");
   EXPECT_EQ(s.getBase(), "A");
   EXPECT_EQ(s.getModifier(), "(test)");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(), 2 * 5 + 100 * prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getCharge(), -100 * ELEMENTAL_CHARGE);
@@ -312,7 +312,7 @@ TEST(SubSpecies, MassOverride)
   EXPECT_EQ(s.getName(), "Ar2-100(test)");
   EXPECT_EQ(s.getBase(), "Ar");
   EXPECT_EQ(s.getModifier(), "(test)");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(), 2 * 5 + 100 * prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getCharge(), -100 * ELEMENTAL_CHARGE);
@@ -335,7 +335,7 @@ TEST(SubSpecies, LongCustomSpecies)
   EXPECT_EQ(s.getName(), "Polypeptide2-100(test)");
   EXPECT_EQ(s.getBase(), "Polypeptide");
   EXPECT_EQ(s.getModifier(), "(test)");
-  EXPECT_EQ(s.getSubscript(), (unsigned int) 2);
+  EXPECT_EQ(s.getSubscript(), (uint)2);
   EXPECT_FLOAT_EQ(s.getMass(), 2 * 1000 + 100 * prism::SpeciesFactory::getInstance().getMass("e"));
   EXPECT_EQ(s.getChargeNumber(), -100);
   EXPECT_FLOAT_EQ(s.getCharge(), -100 * ELEMENTAL_CHARGE);

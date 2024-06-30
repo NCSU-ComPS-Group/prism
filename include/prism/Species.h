@@ -1,13 +1,22 @@
 #pragma once
 
 #include "SpeciesBase.h"
+#include "Constants.h"
+
 #include <vector>
 #include <memory>
 
 namespace prism
 {
+
+struct ReactionData
+{
+  ReactionId id;
+};
+
 class Reaction;
 class SubSpecies;
+
 /**
  * The species object which represents the products
  * and reactants in the reaction
@@ -20,7 +29,7 @@ public:
    * @param name the symbol used for the species
    */
   Species(const std::string & name);
-
+  SpeciesId getId() const { return _id; }
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
@@ -54,6 +63,30 @@ public:
     return convertToSharedPtr(_function_xsec_based);
   }
   ///@}
+  const std::vector<const ReactionData> & getRateBasedReactionData() const
+  {
+    return _rate_based_data;
+  }
+  const std::vector<const ReactionData> & getTabulatedRateBasedReactionData() const
+  {
+    return _tabulated_rate_based_data;
+  }
+  const std::vector<const ReactionData> & getFunctionRateBasedReactionData() const
+  {
+    return _function_rate_based_data;
+  }
+  const std::vector<const ReactionData> & getXSecBasedReactionData() const
+  {
+    return _xsec_based_data;
+  }
+  const std::vector<const ReactionData> & getTabulatedXSecBasedReactionData() const
+  {
+    return _tabulated_xsec_based_data;
+  }
+  const std::vector<const ReactionData> & getFunctionXSecBasedReactionData() const
+  {
+    return _function_xsec_based_data;
+  }
   /** Getter method for the subspecies list */
   const std::vector<SubSpecies> & getSubSpecies() const { return _sub_species; }
   /**
@@ -65,18 +98,25 @@ public:
 private:
   /// The species factory helps add reactionts to our lists
   friend class SpeciesFactory;
+  SpeciesId _id;
   /// the list of the sub_species in the the class */
   const std::vector<SubSpecies> _sub_species;
   /// The string representation of the ground neutral state of the
   const std::string _neutral_ground_state;
   /** All rate based reactions */
   ///@{
+  std::vector<const ReactionData> _rate_based_data;
+  std::vector<const ReactionData> _tabulated_rate_based_data;
+  std::vector<const ReactionData> _function_rate_based_data;
   std::vector<std::weak_ptr<const Reaction>> _rate_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_rate_based;
   std::vector<std::weak_ptr<const Reaction>> _function_rate_based;
   ///@}
   /** All xsec based reactions */
   ///@{
+  std::vector<const ReactionData> _xsec_based_data;
+  std::vector<const ReactionData> _tabulated_xsec_based_data;
+  std::vector<const ReactionData> _function_xsec_based_data;
   std::vector<std::weak_ptr<const Reaction>> _xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _function_xsec_based;
@@ -98,6 +138,8 @@ private:
   /** Helper for giving out shared_ptrs to the reactions that thsi species is a part of  */
   const std::vector<std::shared_ptr<const Reaction>>
   convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & vec) const;
+
+  void setId(SpeciesId id) { _id = id; }
 };
 }
 

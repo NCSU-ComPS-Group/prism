@@ -55,9 +55,7 @@ Species::decomposeSpecies()
   vector<SubSpecies> sub_sp;
 
   for (auto part : parts)
-  {
     sub_sp.push_back(SubSpecies(part));
-  }
 
   return sub_sp;
 }
@@ -104,11 +102,10 @@ Species::operator==(const Species & other) const
   if (_latex_name != other._latex_name)
     return false;
 
-  for (unsigned int i = 0; i < _sub_species.size(); ++i)
-  {
+  for (uint i = 0; i < _sub_species.size(); ++i)
     if (_sub_species[i] != other._sub_species[i])
       return false;
-  }
+
   return true;
 }
 
@@ -123,9 +120,8 @@ Species::convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & v
 {
   vector<shared_ptr<const Reaction>> temp_list;
   for (auto r_wp : vec)
-  {
     temp_list.push_back(r_wp.lock());
-  }
+
   return temp_list;
 }
 
@@ -134,9 +130,7 @@ Species::setNeutralGroundState() const
 {
   string temp = "";
   for (auto sub : _sub_species)
-  {
     temp += sub.getNeutralGroundState();
-  }
 
   return temp;
 }

@@ -6,7 +6,6 @@
 #include <fstream>
 #include "fmt/core.h"
 #include "InvalidInput.h"
-#include "int_range.h"
 
 using namespace std;
 
@@ -155,9 +154,8 @@ namespace prism
     }
 
     for (size_t i = 0; i < cut_locations.size() - 1; ++i)
-    {
       parts.push_back(s.substr(cut_locations[i], cut_locations[i + 1] - cut_locations[i]));
-    }
+
     parts.push_back(s.substr(cut_locations.back(), s.length()));
 
     return parts;
@@ -177,8 +175,6 @@ namespace prism
 
 
     return fmt::format( "{:.2f}", mantissa) + "$\\times 10^{" + fmt::format("{:d}", exponent) + "}$";
-    // std::cout << std::fixed << std::setprecision(2) << mantissa << " x 10^" << exponent
-    //           << std::endl;
   }
 
   string
@@ -206,9 +202,7 @@ namespace prism
   }
 
   vector<vector<double>>
-  readDataFromFile(const std::string & file,
-                   const std::string & delimiter,
-                   const unsigned int num_columns)
+  readDataFromFile(const std::string & file, const std::string & delimiter, const uint num_columns)
   {
 
     vector<vector<double>> all_data = vector<vector<double>>(num_columns);
@@ -221,12 +215,11 @@ namespace prism
 
     std::string line;
     // Read the file line by line
-    unsigned int line_count = 0;
+    uint line_count = 0;
     while (getline(data_input, line))
     {
       line_count++;
       const auto & string_data = splitByDelimiter(line, delimiter);
-
       if (string_data.size() != num_columns)
       {
         data_input.close();
@@ -238,7 +231,7 @@ namespace prism
 
       try
       {
-        for (const auto i : make_range(num_columns))
+        for (uint i = 0; i < num_columns; ++i)
           all_data[i].push_back(stod(string_data[i]));
       }
       catch (exception & e)

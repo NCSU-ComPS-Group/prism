@@ -9,7 +9,7 @@ namespace prism
 InvalidSpecies::InvalidSpecies(const string & name, const string & message)
 {
   _error = "\n\nInvalid Species: " + name + "\n  Reason: " + message + "\n\n";
-  }
+}
 
   const char*
   InvalidSpecies::what() const noexcept

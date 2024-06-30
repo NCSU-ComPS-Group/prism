@@ -54,9 +54,8 @@ paramProvided(const string & param, const YAML::Node & node, const bool required
   if (!node[param])
   {
     if (required)
-    {
       throw InvalidInput(node, "Parameter '" + param + "' must be provided!");
-    }
+
     return false;
   }
   return true;
@@ -68,9 +67,7 @@ getParams(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!paramProvided(param, node, required))
-  {
     return vector<T>(0);
-  }
 
   vector<T> values;
 
@@ -108,9 +105,7 @@ getParam(const string & param, const YAML::Node & node, const bool required)
 {
   // if the param is not valid but we don't error just return an empty vector
   if (!paramProvided(param, node, required))
-  {
     return defaultValue<T>();
-  }
 
   T value;
   try {
@@ -152,9 +147,7 @@ getExtraParams(const YAML::Node & node, const vector<string> & allowed)
     }
 
     if (extra_param)
-    {
       extra_params.push_back(temp_param);
-    }
   }
   return extra_params;
 }
