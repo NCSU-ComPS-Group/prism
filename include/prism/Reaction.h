@@ -17,9 +17,30 @@ namespace prism
 struct TabulatedReactionData
 {
   /// where the data from the first column of the file is stored
-  std::vector<double> energies;
+  double energy;
   /// where the data from the secdon column of the file is stored
-  std::vector<double> values;
+  double value;
+
+  /**
+   * < operator only compares the energy values
+   * this is used for sorting and to be able to use other
+   * standard library functions that need this operator
+   */
+  bool operator<(const TabulatedReactionData & other) const { return energy < other.energy; }
+  /**
+   * < operator only compares the energy values
+   * this is used for sorting and to be able to use other
+   * standard library functions that need this operator
+   */
+  bool operator<(const double other) const { return energy < other; }
+  /**
+   * equality operator checks to make sure both values are in
+   * the struct are the same
+   */
+  bool operator==(const TabulatedReactionData & other) const
+  {
+    return (energy == other.energy) && (value == other.value);
+  }
 };
 
 /**
@@ -30,8 +51,6 @@ struct SpeciesData
 {
   /// the unique id for the species (guaranteed to be in the range 0-(n-1) where n in the number unique species)
   SpeciesId id;
-  /// the stoiciometric coefficient for the species
-  int stoic_coeff;
   /// the number of times the species occurs on a side of the reaction
   unsigned int occurances;
 };
@@ -71,7 +90,6 @@ public:
            const bool check_refs = true,
            const bool read_xsec_files = true,
            const std::string & delimiter = " ");
-
 
   /**
    * Self descriptive getter method
@@ -141,7 +159,7 @@ public:
    * @throws invalid_argument if this method is called on a reaction that has a functional
    * parameters provided
    */
-  const TabulatedReactionData & getTabulatedData() const;
+  const std::vector<TabulatedReactionData> & getTabulatedData() const;
   /**
    * Get the stoiciometric coefficient for a species in this reaction
    * by the name that represents it
@@ -152,12 +170,30 @@ public:
    */
   int getStoicCoeffByName(const std::string & s_expression) const;
   /**
+   * Get the stoiciometric coefficient for a species in this reaction
+   * by its id
+   * @param id the species id
+   * @throws invalid_argument if the coefficient for a species that does not exist in this reaction
+   * requested
+   */
+  int getStoicCoeffById(const SpeciesId id) const;
+  /**
    * equality operator override and compares the reaction name
    * the latex name of the reaction and the reaction number is the same
    */
   bool operator==(const Reaction & other) const;
   /** returns not == operator overload */
   bool operator!=(const Reaction & other) const;
+  /**
+   * Samples data at the point T_e and T_g based on the provided parameters
+   * If the reaction object has tabulated data then the second parameter is ignored
+   * and a simple linear interpolation is utilized
+   * The function that this calls is based on the number parameters provided
+   * in the reaction input block
+   * @param T_e the electron temperature
+   * @param T_g the gas temperature
+   */
+  double sampleData(const double T_e, const double T_g = 0) const { return _sampler(T_e, T_g); }
 
 private:
   /** SpeciesFactor is a friend so that it can access the species in this reaction */
@@ -192,6 +228,20 @@ private:
   void collectUniqueSpecies();
   /** sets up the SpeciesData with the correct Ids for species */
   void setSpeciesData();
+  /**
+   * interpolated between the data provided in file
+   * this does not support interpolation with both parameters
+   * this ignores the second parameter passed the function
+   */
+  double interpolator(const double T_e, const double T_g) const;
+  /** Evaluates the arrhenius form requested */
+  double constantRate(const double T_e, const double T_g) const;
+  double partialArrhenius1(const double T_e, const double T_g) const;
+  double partialArrhenius2(const double T_e, const double T_g) const;
+  double partialArrhenius3(const double T_e, const double T_g) const;
+  double fullArrhenius(const double T_e, const double T_g) const;
+  /// Function pointer or std::function to hold the current sampling method
+  std::function<double(double, double)> _sampler;
   /// the id number for this reaction
   const ReactionId _id;
   /// the directory where to find a data file
@@ -215,11 +265,13 @@ private:
   /// the function parameters if they are provided
   std::vector<double> _params;
   /// the data from file if it is provided
-  TabulatedReactionData _tabulated_data;
+  std::vector<TabulatedReactionData> _tabulated_data;
   /// A list of the species that exist in this reaction
   std::vector<std::weak_ptr<Species>> _species;
   /// The stoiciometric coefficeints for this reaction
   std::unordered_map<std::string, int> _stoic_coeffs;
+  /// The stoiciometric coefficients for this reaction indexed by id
+  std::unordered_map<SpeciesId, int> _id_stoic_map;
   /// the LaTeX version of the symbolic expression
   std::string _latex_expression;
 

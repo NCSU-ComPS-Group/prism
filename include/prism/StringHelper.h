@@ -36,7 +36,7 @@ void trim(std::string & s);
  * @returns A std::vector of std::strings which are the parts of the std::strings seperated by the
  * delimiter
  */
-std::vector<std::string> splitByDelimiter(const std::string & s, const std::string d);
+std::vector<std::string> splitByDelimiter(const std::string & s, const std::string & d);
 
 /**
  * Find the first capital letter in a std::string

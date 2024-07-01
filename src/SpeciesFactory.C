@@ -230,8 +230,10 @@ SpeciesFactory::indexSpecies()
        temp.end(),
        [](shared_ptr<Species> & a, shared_ptr<Species> & b)
        {
-         return (a->getRateBasedReactionData().size() + a->getXSecBasedReactionData().size()) >
-                (b->getRateBasedReactionData().size() + b->getXSecBasedReactionData().size());
+         return (a->getRateBasedReactionData().size() + a->getXSecBasedReactionData().size() +
+                 a->getRateBasedReactions().size() + a->getXSecBasedReactions().size()) >
+                (b->getRateBasedReactionData().size() + b->getXSecBasedReactionData().size() +
+                 b->getRateBasedReactions().size() + b->getXSecBasedReactions().size());
        });
 
   SpeciesId s_idx = 0;
@@ -261,17 +263,22 @@ SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
   {
     auto s = s_wp.lock();
     auto rd = ReactionData();
+    const auto stoic_coeff = r->getStoicCoeffByName(s->getName());
     rd.id = r->getId();
-    s->_rate_based_data.push_back(rd);
+    rd.stoic_coeff = stoic_coeff;
+    if (stoic_coeff != 0)
+      s->_rate_based_data.push_back(rd);
     const auto & r_wp = s->_rate_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
       s->_tabulated_rate_based.push_back(r_wp);
-      s->_tabulated_rate_based_data.push_back(rd);
+      if (stoic_coeff != 0)
+        s->_tabulated_rate_based_data.push_back(rd);
       continue;
     }
     s->_function_rate_based.push_back(r_wp);
-    s->_function_rate_based_data.push_back(rd);
+    if (stoic_coeff != 0)
+      s->_function_rate_based_data.push_back(rd);
   }
 }
 
@@ -283,17 +290,22 @@ SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
   {
     auto s = s_wp.lock();
     auto rd = ReactionData();
+    const auto stoic_coeff = r->getStoicCoeffByName(s->getName());
     rd.id = r->getId();
-    s->_xsec_based_data.push_back(rd);
+    rd.stoic_coeff = stoic_coeff;
+    if (stoic_coeff != 0)
+      s->_xsec_based_data.push_back(rd);
     const auto & r_wp = s->_xsec_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
       s->_tabulated_xsec_based.push_back(r_wp);
-      s->_tabulated_xsec_based_data.push_back(rd);
+      if (stoic_coeff != 0)
+        s->_tabulated_xsec_based_data.push_back(rd);
       continue;
     }
     s->_function_xsec_based.push_back(r_wp);
-    s->_function_xsec_based_data.push_back(rd);
+    if (stoic_coeff != 0)
+      s->_function_xsec_based_data.push_back(rd);
   }
 }
 

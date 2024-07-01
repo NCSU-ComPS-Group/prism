@@ -57,6 +57,8 @@ const bool REQUIRED = true;
 const bool OPTIONAL = false;
 /** Avagadros number in 1 / mol */
 const float N_A = 6.02214179E+23;
+/** Boltzmann's constant */
+const double k_B = 1.380649E-23;
 /** Fundamental charge in C */
 const float ELEMENTAL_CHARGE = 1.602176487E-19;
 

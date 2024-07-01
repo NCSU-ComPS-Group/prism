@@ -2,6 +2,7 @@
 
 #include <sys/stat.h>
 #include <algorithm>
+#include <functional>
 #include "fmt/core.h"
 
 #include "YamlHelper.h"
@@ -55,11 +56,44 @@ Reaction::Reaction(const YAML::Node & rxn_input,
   {
     _has_tabulated_data = false;
     _params = getParams<double>(PARAM_KEY, rxn_input, REQUIRED);
-    _tabulated_data.energies.resize(0);
-    _tabulated_data.values.resize(0);
+    _tabulated_data.resize(0);
     if (_params[0] <= 0.0)
       throw InvalidReaction(_expression,
-                            "The first valid of '" + PARAM_KEY + "'cannot be zero or negative");
+                            "The first value of '" + PARAM_KEY + "'cannot be zero or negative");
+
+    if (_params.size() > 2 && _params[2] <= 0.0)
+      throw InvalidReaction(_expression,
+                            "The theshold energy E_e (index 2) in '" + PARAM_KEY +
+                                "'cannot be zero or negative");
+
+    if (_params.size() == 5 && _params[4] <= 0.0)
+      throw InvalidReaction(_expression,
+                            "The theshold energy E_g (index 4) in '" + PARAM_KEY +
+                                "'cannot be zero or negative");
+
+    switch (_params.size())
+    {
+      case 1:
+        _sampler =
+            bind(&Reaction::constantRate, this, std::placeholders::_1, std::placeholders::_2);
+        break;
+      case 2:
+        _sampler =
+            bind(&Reaction::partialArrhenius1, this, std::placeholders::_1, std::placeholders::_2);
+        break;
+      case 3:
+        _sampler =
+            bind(&Reaction::partialArrhenius2, this, std::placeholders::_1, std::placeholders::_2);
+        break;
+      case 4:
+        _sampler =
+            bind(&Reaction::partialArrhenius3, this, std::placeholders::_1, std::placeholders::_2);
+        break;
+      case 5:
+        _sampler =
+            bind(&Reaction::fullArrhenius, this, std::placeholders::_1, std::placeholders::_2);
+        break;
+    }
 
     if (_params.size() != NUM_REQUIRED_ARR_PARAMS)
       for (unsigned int i = _params.size(); i < NUM_REQUIRED_ARR_PARAMS; ++i)
@@ -81,13 +115,17 @@ Reaction::Reaction(const YAML::Node & rxn_input,
 
       for (unsigned int i = 0; i < _temporary_data[0].size(); ++i)
       {
-        _tabulated_data.energies.push_back(_temporary_data[0][i]);
-        _tabulated_data.values.push_back(_temporary_data[1][i]);
+        auto & data = _tabulated_data.emplace_back();
+
+        data.energy = _temporary_data[0][i];
+        data.value = _temporary_data[1][i];
       }
 
-      if (!is_sorted(_tabulated_data.energies.begin(), _tabulated_data.energies.end()))
+      if (!is_sorted(_tabulated_data.begin(), _tabulated_data.end()))
         throw InvalidReaction(_expression,
                               "Energy data in file '" + file + "' is not in ascending order");
+
+      _sampler = bind(&Reaction::interpolator, this, std::placeholders::_1, std::placeholders::_2);
     }
   }
 
@@ -487,14 +525,15 @@ Reaction::setLatexRepresentation()
 void
 Reaction::setSpeciesData()
 {
+  _id_stoic_map.clear();
   for (const auto & s_wp : _reactants)
   {
     const auto s = s_wp.lock();
     SpeciesData temp;
     temp.id = s->getId();
     temp.occurances = _reactant_count[s->getName()];
-    temp.stoic_coeff = _stoic_coeffs[s->getName()];
     _reactant_data.push_back(temp);
+    _id_stoic_map[s->getId()] = _stoic_coeffs[s->getName()];
   }
 
   for (const auto & s_wp : _products)
@@ -503,8 +542,8 @@ Reaction::setSpeciesData()
     SpeciesData temp;
     temp.id = s->getId();
     temp.occurances = _product_count[s->getName()];
-    temp.stoic_coeff = _stoic_coeffs[s->getName()];
     _product_data.push_back(temp);
+    _id_stoic_map[s->getId()] = _stoic_coeffs[s->getName()];
   }
 }
 
@@ -525,6 +564,67 @@ Reaction::checkReferences()
   }
 }
 
+double
+Reaction::interpolator(const double T_e, const double /*T_g*/) const
+{
+  if (T_e < _tabulated_data.front().energy || T_e > _tabulated_data.back().energy)
+  {
+    throw invalid_argument(
+        makeRed("\n\nYou are requesting an extrapolatory sampling from reaction\n\n" + _expression +
+                "\nMin energy: " + to_string(_tabulated_data.front().energy) + "\nMax energy: " +
+                to_string(_tabulated_data.back().energy) + "\nRequested energy: " + to_string(T_e) +
+                "\n\nThis is not supported please provide more data.\n\n"));
+  }
+  // find the value in the array that if greater and or equal to the electron energy
+  auto d2 = std::lower_bound(_tabulated_data.begin(), _tabulated_data.end(), T_e);
+  // case when the first value in the data is requested
+  if (d2 == _tabulated_data.begin())
+  {
+    return d2->value;
+  }
+  // case when the last value in the data is requested
+  else if (d2 == _tabulated_data.end())
+  {
+    return (d2 - 1)->value;
+  }
+  // regular interpolation case
+  // now get the element that is less than the element
+  auto d1 = d2 - 1;
+  return (d2->value - d1->value) / (d2->energy - d1->energy) * (T_e - d1->energy) + d1->value;
+}
+
+double
+Reaction::constantRate(const double /*T_e*/, const double /*T_g*/) const
+{
+  return _params[0];
+}
+
+double
+Reaction::partialArrhenius1(const double T_e, const double /*T_g*/) const
+{
+  return _params[0] * std::pow(T_e, _params[1]);
+}
+
+double
+Reaction::partialArrhenius2(const double T_e, const double /*T_g*/) const
+{
+  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e));
+}
+
+double
+Reaction::partialArrhenius3(const double T_e, const double T_g) const
+{
+  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e)) *
+         std::pow(T_g, _params[3]);
+}
+
+double
+Reaction::fullArrhenius(const double T_e, const double T_g) const
+{
+  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e)) *
+         std::pow(T_g, _params[3]) * std::exp(-_params[4] / (k_B * T_g));
+}
+
 const vector<double> &
 Reaction::getFunctionParams() const
 {
@@ -535,10 +635,10 @@ Reaction::getFunctionParams() const
   return _params;
 }
 
-const TabulatedReactionData &
+const std::vector<TabulatedReactionData> &
 Reaction::getTabulatedData() const
 {
-  switch (_tabulated_data.energies.size())
+  switch (_tabulated_data.size())
   case 0:
     throw invalid_argument("Reaction: '" + _expression + "' does not have tabulated data");
 
@@ -582,6 +682,18 @@ Reaction::getStoicCoeffByName(const string & s_expression) const
 
   if (it == _stoic_coeffs.end())
     throw invalid_argument("Species " + s_expression + " is not in reaction " + _expression);
+
+  return it->second;
+}
+
+int
+Reaction::getStoicCoeffById(const SpeciesId id) const
+{
+  auto it = _id_stoic_map.find(id);
+
+  if (it == _id_stoic_map.end())
+    throw invalid_argument("No species with id " + to_string(id) + " is in reaction " +
+                           _expression);
 
   return it->second;
 }

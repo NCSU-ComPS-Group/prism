@@ -35,7 +35,7 @@ namespace prism
   }
 
   vector<string>
-  splitByDelimiter(const string & s, const string d)
+  splitByDelimiter(const string & s, const string & d)
   {
     vector<string> sub_s;
     auto temp_s = s;
@@ -219,6 +219,19 @@ namespace prism
     while (getline(data_input, line))
     {
       line_count++;
+      if (line.find(delimiter) == string::npos)
+      {
+        throw InvalidInput("Unable to find delimiter '" + delimiter + "' on line " +
+                           to_string(line_count) + " of file '" + file + "'");
+      }
+
+      if (line.find(delimiter) == 0)
+      {
+        throw InvalidInput("Delimiter '" + delimiter + "' may not be found on line " +
+                           to_string(line_count) + " of file '" + file + "'\n" +
+                           "The delimieter may also have been found at the beginning of the line");
+      }
+
       const auto & string_data = splitByDelimiter(line, delimiter);
       if (string_data.size() != num_columns)
       {

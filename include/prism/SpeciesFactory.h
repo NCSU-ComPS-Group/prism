@@ -20,9 +20,9 @@ class Reaction;
 class SpeciesFactory
 {
 #ifndef TESTING
-  private:
+private:
 #else
-  public:
+public:
 #endif
   /** Static function to get the instance of the singleton */
   static SpeciesFactory & getInstance();
@@ -33,7 +33,7 @@ class SpeciesFactory
   void collectCustomSpecies(const YAML::Node & network);
   void collectLumpedSpecies(const YAML::Node & network);
   void collectLatexOverrides(const YAML::Node & network);
-   /**
+  /**
    * Gets the mass of a requested species
    * @param name the string representation of the species
    * @throws InvalidSpecies if it does not know the mass of the requested species
@@ -41,7 +41,7 @@ class SpeciesFactory
    */
   double getMass(const std::string & name) const;
 #ifdef TESTING
-  private:
+private:
 #endif
   /// friend class so the parser can call several private methods
   friend class NetworkParser;

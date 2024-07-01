@@ -67,7 +67,8 @@ NetworkParser::clear()
   _data_paths.clear();
   _factory.clear();
   _bib_helper.clear();
-  _species.clear();
+  _all_species.clear();
+  _transient_species.clear();
   _xsec_based.clear();
   _tabulated_xsec_based.clear();
   _function_xsec_based.clear();
@@ -219,22 +220,32 @@ NetworkParser::parseNetwork(const string & file)
 
   _factory.indexSpecies();
 
-  _species.clear();
+  _all_species.clear();
+  _transient_species.clear();
   // lets collect all of the species that
   // are still in some reactions
   // species may be in the factory but not used because
   // the user may lump states the point where they are unused
   for (const auto & s : _factory.getSpeciesMap())
   {
+    if (s.second->getRateBasedReactions().size() + s.second->getXSecBasedReactions().size() == 0)
+      continue;
+
+    _all_species.push_back(s.second);
+
     if (s.second->getRateBasedReactionData().size() + s.second->getXSecBasedReactionData().size() ==
         0)
       continue;
-
-    _species.push_back(s.second);
+    _transient_species.push_back(s.second);
   }
   // putting them in order by species id
-  sort(_species.begin(),
-       _species.end(),
+  sort(_transient_species.begin(),
+       _transient_species.end(),
+       [](shared_ptr<const Species> & a, shared_ptr<const Species> & b)
+       { return a->getId() < b->getId(); });
+
+  sort(_all_species.begin(),
+       _all_species.end(),
        [](shared_ptr<const Species> & a, shared_ptr<const Species> & b)
        { return a->getId() < b->getId(); });
 

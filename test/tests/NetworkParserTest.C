@@ -9,16 +9,16 @@ class NetworkParserTest : public testing::Test {
   protected:
     void SetUp() override {
       // Save cout's buffer...
-      sbuf = std::cout.rdbuf();
+      // sbuf = std::cout.rdbuf();
       // Redirect cout to our stringstream buffer or any other ostream
-      std::cout.rdbuf(buffer.rdbuf());
+      // std::cout.rdbuf(buffer.rdbuf());
       prism::NetworkParser::getInstance().clear();
     }
 
     void TearDown() override {
       // When done redirect cout to its old self
-      std::cout.rdbuf(sbuf);
-      sbuf = nullptr;
+      // std::cout.rdbuf(sbuf);
+      // sbuf = nullptr;
       prism::NetworkParser::getInstance().clear();
     }
 
@@ -65,9 +65,10 @@ TEST_F(NetworkParserTest, LumpedSpecies)
   auto & np = prism::NetworkParser::getInstance();
   EXPECT_NO_THROW(np.parseNetwork("inputs/lumped_species.yaml"));
 
-  const auto & s_list = np.getSpecies();
+  const auto & s_list = np.getAllSpecies();
   const auto & r_list = np.getFunctionRateReactions();
   EXPECT_EQ(s_list.size(), (unsigned int)3);
+  EXPECT_EQ(np.getTransientSpecies().size(), (unsigned int)2);
   EXPECT_EQ(r_list.size(), (unsigned int)5);
 
   for (const auto & r : r_list)
@@ -86,29 +87,25 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, -1);
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
         }
         for (const auto & s : p_data)
         {
           if (np.getSpeciesNameById(s.id) == "N2")
           {
-            EXPECT_EQ(s.id, SpeciesId(2));
+            EXPECT_EQ(s.id, SpeciesId(1));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 1);
             continue;
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
         }
@@ -120,15 +117,13 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         {
           if (np.getSpeciesNameById(s.id) == "N2")
           {
-            EXPECT_EQ(s.id, SpeciesId(2));
+            EXPECT_EQ(s.id, SpeciesId(1));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, -1);
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
         }
         for (const auto & s : p_data)
@@ -137,14 +132,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 1);
             continue;
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
         }
@@ -158,13 +151,11 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
         }
         for (const auto & s : p_data)
@@ -173,14 +164,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
         }
@@ -194,13 +183,11 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
         }
         for (const auto & s : p_data)
@@ -209,14 +196,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
           if (np.getSpeciesNameById(s.id) == "e")
           {
-            EXPECT_EQ(s.id, SpeciesId(1));
+            EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
         }
@@ -230,7 +215,6 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)2);
-            EXPECT_EQ(s.stoic_coeff, 0);
           }
         }
         for (const auto & s : p_data)
@@ -239,7 +223,6 @@ TEST_F(NetworkParserTest, LumpedSpecies)
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)2);
-            EXPECT_EQ(s.stoic_coeff, 0);
             continue;
           }
         }
@@ -262,56 +245,51 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyElectron(), 0.0);
   EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[0]->getSpecies().size(), (unsigned int)2);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.front(), 4.556000E-02);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.front(), 5.348394E+05);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.back(), 1.510000E+01);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.back(), 1.271554E+04);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.size(), (unsigned int)300);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.size(), (unsigned int)300);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().front().energy, 4.556000E-02);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().front().value, 5.348394E+05);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().back().energy, 1.510000E+01);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().back().value, 1.271554E+04);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().size(), (unsigned int)300);
 
   EXPECT_EQ(tabular_rxns[1]->getExpression(), "Ar + e -> Ar(aS) + e");
   EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyElectron(), 11.56);
   EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[1]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.front(), 4.009375E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.back(), 1.589177E+01);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.back(), 2.540293E+09);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.size(), (unsigned int)72);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.size(), (unsigned int)72);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().front().energy, 4.009375E+00);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().front().value, 0.000000E+00);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().back().energy, 1.589177E+01);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().back().value, 2.540293E+09);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().size(), (unsigned int)72);
 
   EXPECT_EQ(tabular_rxns[2]->getExpression(), "Ar + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyElectron(), 15.7);
   EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[2]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.front(), 5.369030E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.back(), 1.604311E+01);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.back(), 1.120582E+10);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.size(), (unsigned int)67);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.size(), (unsigned int)67);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().front().energy, 5.369030E+00);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().front().value, 0.000000E+00);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().back().energy, 1.604311E+01);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().back().value, 1.120582E+10);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().size(), (unsigned int)67);
 
   EXPECT_EQ(tabular_rxns[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyElectron(), 4.14);
   EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[3]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.front(), 1.734815E+00);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.front(), 3.058910E+06);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.back(), 1.602641E+01);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.back(), 9.857869E+10);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.size(), (unsigned int)76);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.size(), (unsigned int)76);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().front().energy, 1.734815E+00);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().front().value, 3.058910E+06);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().back().energy, 1.602641E+01);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().back().value, 9.857869E+10);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().size(), (unsigned int)76);
 
   EXPECT_EQ(tabular_rxns[4]->getExpression(), "Ar* + e -> Ar + e");
   EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyElectron(), -11.56);
   EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[4]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.front(), 8.580209E-01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.front(), 2.409262E+08);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.back(), 1.600345E+01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.back(), 1.118470E+09);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.size(), (unsigned int)73);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.size(), (unsigned int)73);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().front().energy, 8.580209E-01);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().front().value, 2.409262E+08);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().back().energy, 1.600345E+01);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().back().value, 1.118470E+09);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().size(), (unsigned int)73);
 
   EXPECT_EQ(function_rxns.size(), (unsigned int)4);
   EXPECT_EQ(function_rxns[0]->getExpression(), "Ar* + e -> Ar^r + e");
@@ -338,7 +316,7 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(function_rxns[3]->getSpecies().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
-  const auto & species = np.getSpecies();
+  const auto & species = np.getAllSpecies();
   EXPECT_EQ(species.size(), (unsigned int)7);
 
   for (const auto & s : species)
@@ -462,56 +440,51 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyElectron(), 0.0);
   EXPECT_EQ(tabular_rxns[0]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[0]->getSpecies().size(), (unsigned int)2);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.front(), 4.556000E-02);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.front(), 5.348394E+05);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.back(), 1.510000E+01);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.back(), 1.271554E+04);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().energies.size(), (unsigned int)300);
-  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().values.size(), (unsigned int)300);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().front().energy, 4.556000E-02);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().front().value, 5.348394E+05);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().back().energy, 1.510000E+01);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().back().value, 1.271554E+04);
+  EXPECT_EQ(tabular_rxns[0]->getTabulatedData().size(), (unsigned int)300);
 
   EXPECT_EQ(tabular_rxns[1]->getExpression(), "Ar + e -> Ar(aS) + e");
   EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyElectron(), 11.56);
   EXPECT_EQ(tabular_rxns[1]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[1]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.front(), 4.009375E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.back(), 1.589177E+01);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.back(), 2.540293E+09);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().energies.size(), (unsigned int)72);
-  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().values.size(), (unsigned int)72);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().front().energy, 4.009375E+00);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().front().value, 0.000000E+00);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().back().energy, 1.589177E+01);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().back().value, 2.540293E+09);
+  EXPECT_EQ(tabular_rxns[1]->getTabulatedData().size(), (unsigned int)72);
 
   EXPECT_EQ(tabular_rxns[2]->getExpression(), "Ar + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyElectron(), 15.7);
   EXPECT_EQ(tabular_rxns[2]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[2]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.front(), 5.369030E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.front(), 0.000000E+00);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.back(), 1.604311E+01);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.back(), 1.120582E+10);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().energies.size(), (unsigned int)67);
-  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().values.size(), (unsigned int)67);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().front().energy, 5.369030E+00);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().front().value, 0.000000E+00);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().back().energy, 1.604311E+01);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().back().value, 1.120582E+10);
+  EXPECT_EQ(tabular_rxns[2]->getTabulatedData().size(), (unsigned int)67);
 
   EXPECT_EQ(tabular_rxns[3]->getExpression(), "Ar* + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyElectron(), 4.14);
   EXPECT_EQ(tabular_rxns[3]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[3]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.front(), 1.734815E+00);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.front(), 3.058910E+06);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.back(), 1.602641E+01);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.back(), 9.857869E+10);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().energies.size(), (unsigned int)76);
-  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().values.size(), (unsigned int)76);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().front().energy, 1.734815E+00);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().front().value, 3.058910E+06);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().back().energy, 1.602641E+01);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().back().value, 9.857869E+10);
+  EXPECT_EQ(tabular_rxns[3]->getTabulatedData().size(), (unsigned int)76);
 
   EXPECT_EQ(tabular_rxns[4]->getExpression(), "Ar* + e -> Ar + e");
   EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyElectron(), -11.56);
   EXPECT_EQ(tabular_rxns[4]->getDeltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[4]->getSpecies().size(), (unsigned int)3);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.front(), 8.580209E-01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.front(), 2.409262E+08);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.back(), 1.600345E+01);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.back(), 1.118470E+09);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().energies.size(), (unsigned int)73);
-  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().values.size(), (unsigned int)73);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().front().energy, 8.580209E-01);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().front().value, 2.409262E+08);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().back().energy, 1.600345E+01);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().back().value, 1.118470E+09);
+  EXPECT_EQ(tabular_rxns[4]->getTabulatedData().size(), (unsigned int)73);
 
   EXPECT_EQ(function_rxns.size(), (unsigned int)4);
   EXPECT_EQ(function_rxns[0]->getExpression(), "Ar* + e -> Ar^r + e");
@@ -538,7 +511,7 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(function_rxns[3]->getSpecies().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[3]->getFunctionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
-  const auto & species = np.getSpecies();
+  const auto & species = np.getAllSpecies();
   EXPECT_EQ(species.size(), (unsigned int)7);
 
   for (const auto & s : species)

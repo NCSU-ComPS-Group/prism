@@ -67,6 +67,30 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
+  const std::vector<std::shared_ptr<Reaction>> & getRateBasedReactions() const
+  {
+    preventInvalidDataFetch();
+    return _rate_based;
+  }
+  /**
+   * Gets all of the reactions in the xsec-based block
+   * that have cross section data in a file.
+   * This function will exist the program if there are any errors in the
+   * reaction networks that have been parsed
+   * @returns a vector of shared_ptr for all of the reactions of this type
+   */
+  const std::vector<std::shared_ptr<Reaction>> & getXSecBasedReactions() const
+  {
+    preventInvalidDataFetch();
+    return _xsec_based;
+  }
+  /**
+   * Gets all of the reactions in the xsec-based block
+   * that have cross section data in a file.
+   * This function will exist the program if there are any errors in the
+   * reaction networks that have been parsed
+   * @returns a vector of shared_ptr for all of the reactions of this type
+   */
   const std::vector<std::shared_ptr<const Reaction>> & getTabulatedXSecReactions() const
   {
     preventInvalidDataFetch();
@@ -109,16 +133,29 @@ public:
     return _function_rate_based;
   }
   /**
-   * Gets all of the unique species that exist in the reaction network.
+   * Gets all of the species in the network that have a non-zero
    * This function will also exist the program if there are any errors in the
    * reaction networks that have been parsed
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::shared_ptr<const Species>> & getSpecies() const
+  const std::vector<std::shared_ptr<const Species>> & getTransientSpecies() const
   {
     preventInvalidDataFetch();
-    return _species;
+    return _transient_species;
+  }
+
+  /**
+   * Gets all of the species in the network
+   * This function will also exist the program if there are any errors in the
+   * reaction networks that have been parsed
+   * Species are ordered based on their ids and will always be in id order
+   * @returns a vector of shared_ptr for all unique species in the network
+   */
+  const std::vector<std::shared_ptr<const Species>> & getAllSpecies() const
+  {
+    preventInvalidDataFetch();
+    return _all_species;
   }
 
   /**
@@ -152,8 +189,10 @@ private:
   /// wehter or not to actually read data from files
   /// this is only false in testing mode
   bool _read_xsec_files;
+  /// a list of all of the unqiue species that exist in the network that have a non-zero stoichiometric coefficient in atleast one reaction
+  std::vector<std::shared_ptr<const Species>> _transient_species;
   /// a list of all of the unqiue species that exist in the network
-  std::vector<std::shared_ptr<const Species>> _species;
+  std::vector<std::shared_ptr<const Species>> _all_species;
   /// Map of YAML::Node's from all of the files which networks have been parsed
   std::unordered_map<std::string, YAML::Node> _networks;
   /// Map for keeping track of the bib files that belong to each network
