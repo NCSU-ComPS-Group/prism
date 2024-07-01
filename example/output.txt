@@ -1,0 +1,48 @@
+
+Starting to parse 'rate-based' reaction block
+
+Reaction Validated: Ar* + e -> Ar^r + e
+Reaction Validated: 2Ar* -> Ar+ + Ar + e
+Reaction Validated: Ar* + Ar -> 2Ar
+Reaction Validated: Ar* + 2Ar -> Ar2 + Ar
+Reaction Validated: Ar + e -> Ar + e
+Reaction Validated: Ar + e -> Ar(aS) + e
+Reaction Validated: Ar + e -> Ar+ + 2e
+Reaction Validated: Ar* + e -> Ar+ + 2e
+Reaction Validated: Ar* + e -> Ar + e
+
+Species:  Ar
+   1   0.0000e+00 (Ar(aS))^2
+   1   3.0000e-15 (Ar(aS))^1 (Ar)^1
+  -1   1.1000e-31 (Ar(aS))^1 (Ar)^2
+  -1   9.9736e+08 (Ar)^1 (Ar*)^1
+  -1   1.8670e+09 (Ar)^1 (Ar*)^1
+   1   1.1882e+09 (Ar(aS))^1 (Ar*)^1
+
+Species:  Ar*
+  -1   2.0000e-07 (Ar(aS))^1 (Ar*)^1
+  -2   0.0000e+00 (Ar(aS))^2
+  -1   3.0000e-15 (Ar(aS))^1 (Ar)^1
+  -1   1.1000e-31 (Ar(aS))^1 (Ar)^2
+  -1   7.5471e+10 (Ar(aS))^1 (Ar*)^1
+  -1   1.1882e+09 (Ar(aS))^1 (Ar*)^1
+
+Species:  e
+   1   0.0000e+00 (Ar(aS))^2
+   1   1.8670e+09 (Ar)^1 (Ar*)^1
+   1   7.5471e+10 (Ar(aS))^1 (Ar*)^1
+
+Species:  Ar+
+   1   0.0000e+00 (Ar(aS))^2
+   1   1.8670e+09 (Ar)^1 (Ar*)^1
+   1   7.5471e+10 (Ar(aS))^1 (Ar*)^1
+
+Species:  Ar(aS)
+   1   9.9736e+08 (Ar)^1 (Ar*)^1
+
+Species:  Ar2
+   1   1.1000e-31 (Ar(aS))^1 (Ar)^2
+
+Species:  Ar^r
+   1   2.0000e-07 (Ar(aS))^1 (Ar*)^1
+

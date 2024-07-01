@@ -21,6 +21,8 @@ struct ReactionData
 {
   /// the id of a given reaction that this species is a part of
   ReactionId id;
+  /// the species stoichiometry for the species in the reaction
+  /// with the prescribed if
   int stoic_coeff;
 };
 

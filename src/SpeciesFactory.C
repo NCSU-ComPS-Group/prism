@@ -223,17 +223,32 @@ SpeciesFactory::indexSpecies()
 {
   std::vector<shared_ptr<Species>> temp;
 
-  for (const auto & s : _species)
-    temp.push_back(s.second);
+  for (const auto & s : _species){
+   temp.push_back(s.second);
+  }
 
   sort(temp.begin(),
        temp.end(),
        [](shared_ptr<Species> & a, shared_ptr<Species> & b)
        {
-         return (a->getRateBasedReactionData().size() + a->getXSecBasedReactionData().size() +
-                 a->getRateBasedReactions().size() + a->getXSecBasedReactions().size()) >
-                (b->getRateBasedReactionData().size() + b->getXSecBasedReactionData().size() +
-                 b->getRateBasedReactions().size() + b->getXSecBasedReactions().size());
+        // comparing based on how many reactions the species is in and how many it is actually
+        // used in
+        // species which have a zero stoiciometric coefficient will not have those reactions
+        // in their data but will have it in their reactions list
+        auto a_count =
+            a->getRateBasedReactionData().size() + a->getXSecBasedReactionData().size() +
+            a->getRateBasedReactions().size() + a->getXSecBasedReactions().size();
+        auto b_count =
+            b->getRateBasedReactionData().size() + b->getXSecBasedReactionData().size() +
+            b->getRateBasedReactions().size() + b->getXSecBasedReactions().size();
+
+        if (a_count != b_count)
+          return a_count > b_count;
+        // now we are also comparing based on their string names just to
+        // help with testing this doesn't matter all that much in reality
+        // there are probably some weird instances when this isn't enough for
+        // truly unique ordering but it's fine for now
+        return a->getName() < b->getName();
        });
 
   SpeciesId s_idx = 0;

@@ -1,3 +1,5 @@
+!listing prism/main.C
+
 ## Input File Syntax
 
 The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by PRISM.

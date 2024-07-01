@@ -1,5 +1,3 @@
-[doxygen/index.html](doc/content/doxygen/html/index.html)
-
 # Installation
 
 ```bash
