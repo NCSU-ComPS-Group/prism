@@ -1,0 +1,196 @@
+# species which are never consumed
+all-sources:
+  - species: [e, Ar+, Ar(aS), Ar2, Ar^r]
+# species which are only in balanced reactions
+constant-species:
+  - species: []
+# species which are only consumed
+all-sinks:
+  - species: [Ar*]
+
+
+unique-species:
+  - count: 7
+  - Ar
+  - Ar*
+  - e
+  - Ar+
+  - Ar(aS)
+  - Ar2
+  - Ar^r
+
+
+reacion-summary:
+  - Ar:
+    - rate-based-count: 7
+      sources:
+        - count: 3
+        - 2Ar* -> Ar+ + Ar + e
+        - Ar* + Ar -> 2Ar
+        - Ar* + e -> Ar + e
+
+      balanced:
+        - count: 1
+        - Ar + e -> Ar + e
+
+      sinks:
+        - count: 3
+        - Ar* + 2Ar -> Ar2 + Ar
+        - Ar + e -> Ar(aS) + e
+        - Ar + e -> Ar+ + 2e
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar*:
+    - rate-based-count: 6
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 6
+        - Ar* + e -> Ar^r + e
+        - 2Ar* -> Ar+ + Ar + e
+        - Ar* + Ar -> 2Ar
+        - Ar* + 2Ar -> Ar2 + Ar
+        - Ar* + e -> Ar+ + 2e
+        - Ar* + e -> Ar + e
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - e:
+    - rate-based-count: 7
+      sources:
+        - count: 3
+        - 2Ar* -> Ar+ + Ar + e
+        - Ar + e -> Ar+ + 2e
+        - Ar* + e -> Ar+ + 2e
+
+      balanced:
+        - count: 4
+        - Ar* + e -> Ar^r + e
+        - Ar + e -> Ar + e
+        - Ar + e -> Ar(aS) + e
+        - Ar* + e -> Ar + e
+
+      sinks:
+        - count: 0
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar+:
+    - rate-based-count: 3
+      sources:
+        - count: 3
+        - 2Ar* -> Ar+ + Ar + e
+        - Ar + e -> Ar+ + 2e
+        - Ar* + e -> Ar+ + 2e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar(aS):
+    - rate-based-count: 1
+      sources:
+        - count: 1
+        - Ar + e -> Ar(aS) + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar2:
+    - rate-based-count: 1
+      sources:
+        - count: 1
+        - Ar* + 2Ar -> Ar2 + Ar
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar^r:
+    - rate-based-count: 1
+      sources:
+        - count: 1
+        - Ar* + e -> Ar^r + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based-count: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+

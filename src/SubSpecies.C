@@ -202,7 +202,7 @@ SubSpecies::setChargeNumber()
 void
 SubSpecies::setMass()
 {
-  float base_mass = static_cast<float>(_subscript) * SpeciesFactory::getInstance().getMass(_base);
+  float base_mass = static_cast<float>(_subscript) * SpeciesFactory::instance().getMass(_base);
   // case for an electron
   if (_name.compare("e") == 0 || _name.compare("E") == 0)
   {
@@ -210,15 +210,14 @@ SubSpecies::setMass()
     return;
   }
 
-  float ionization_mass =
-      static_cast<float>(_charge_num) * SpeciesFactory::getInstance().getMass("e");
+  float ionization_mass = static_cast<float>(_charge_num) * SpeciesFactory::instance().getMass("e");
   _mass = base_mass - ionization_mass;
 }
 
 void
 SubSpecies::setLatexName()
 {
-  const string potential_override = SpeciesFactory::getInstance().getLatexOverride(_name);
+  const string potential_override = SpeciesFactory::instance().getLatexOverride(_name);
   if (potential_override.length() > 0)
   {
     _latex_name = potential_override;
@@ -344,13 +343,13 @@ hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const
   size_t val = 17; // Start with a prime number
 
   val += hash_factor * hash<prism::SpeciesBase>()(obj);
-  val += hash_factor * hash<string>()(obj.getBase());
-  val += hash_factor * hash<string>()(obj.getModifier());
-  val += hash_factor * hash<unsigned int>()(obj.getSubscript());
-  val += hash_factor * hash<int>()(obj.getChargeNumber());
-  val += hash_factor * hash<float>()(obj.getMass());
-  val += hash_factor * hash<float>()(obj.getCharge());
-  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
+  val += hash_factor * hash<string>()(obj.base());
+  val += hash_factor * hash<string>()(obj.modifier());
+  val += hash_factor * hash<unsigned int>()(obj.subscript());
+  val += hash_factor * hash<int>()(obj.chargeNumber());
+  val += hash_factor * hash<float>()(obj.mass());
+  val += hash_factor * hash<float>()(obj.charge());
+  val += hash_factor * hash<string>()(obj.latexRepresentation());
   // hash based on the name
   return val;
 }

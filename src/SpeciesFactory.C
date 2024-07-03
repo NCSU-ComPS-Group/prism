@@ -1,4 +1,6 @@
 #include <sys/stat.h>
+#include <iostream>
+#include <fstream>
 
 #include "SpeciesFactory.h"
 #include "Reaction.h"
@@ -7,6 +9,7 @@
 #include "YamlHelper.h"
 #include "Constants.h"
 #include "StringHelper.h"
+#include "SpeciesSummaryWriterBase.h"
 
 using namespace std;
 
@@ -17,7 +20,8 @@ SpeciesFactory::SpeciesFactory() {}
 
 SpeciesFactory* SpeciesFactory::_instance = nullptr;
 
-SpeciesFactory& SpeciesFactory::getInstance()
+SpeciesFactory &
+SpeciesFactory::instance()
 {
     // Create the _instance if it does not exist
     if (_instance == nullptr)
@@ -209,8 +213,7 @@ weak_ptr<Species>
 SpeciesFactory::getLumpedSpecies(weak_ptr<Species> s)
 {
   auto sp = s.lock();
-  const string s_name = sp->getName();
-  auto it = _lumped_map.find(s_name);
+  auto it = _lumped_map.find(sp->name());
 
   if (it == _lumped_map.end())
     return s;
@@ -222,33 +225,47 @@ void
 SpeciesFactory::indexSpecies()
 {
   std::vector<shared_ptr<Species>> temp;
-
-  for (const auto & s : _species){
-   temp.push_back(s.second);
+  // lets remove all of the species that do not have any reactions
+  // a reason they may exist is because of being lumped to extinction
+  for (auto s = _species.begin(); s != _species.end();)
+  {
+    if (s->second->rateBasedReactionData().size() +
+            s->second->unbalancedRateBasedReactionData().size() +
+            s->second->xsecBasedReactionData().size() +
+            s->second->unbalancedXSecBasedReactionData().size() ==
+        0)
+    {
+      s = _species.erase(s);
+    }
+    else
+    {
+      temp.push_back(s->second);
+      ++s;
+    }
   }
 
   sort(temp.begin(),
        temp.end(),
        [](shared_ptr<Species> & a, shared_ptr<Species> & b)
        {
-        // comparing based on how many reactions the species is in and how many it is actually
-        // used in
-        // species which have a zero stoiciometric coefficient will not have those reactions
-        // in their data but will have it in their reactions list
-        auto a_count =
-            a->getRateBasedReactionData().size() + a->getXSecBasedReactionData().size() +
-            a->getRateBasedReactions().size() + a->getXSecBasedReactions().size();
-        auto b_count =
-            b->getRateBasedReactionData().size() + b->getXSecBasedReactionData().size() +
-            b->getRateBasedReactions().size() + b->getXSecBasedReactions().size();
+         // comparing based on how many reactions the species is in and how many it is actually
+         // used in
+         // species which have a zero stoiciometric coefficient will not have those reactions
+         // in their data but will have it in their reactions list
+         auto a_count = a->rateBasedReactionData().size() + a->xsecBasedReactionData().size() +
+                        a->unbalancedRateBasedReactionData().size() +
+                        a->unbalancedXSecBasedReactionData().size();
+         auto b_count = b->rateBasedReactionData().size() + b->xsecBasedReactionData().size() +
+                        b->unbalancedRateBasedReactionData().size() +
+                        b->unbalancedXSecBasedReactionData().size();
 
-        if (a_count != b_count)
-          return a_count > b_count;
-        // now we are also comparing based on their string names just to
-        // help with testing this doesn't matter all that much in reality
-        // there are probably some weird instances when this isn't enough for
-        // truly unique ordering but it's fine for now
-        return a->getName() < b->getName();
+         if (a_count != b_count)
+           return a_count > b_count;
+         // now we are also comparing based on their string names just to
+         // help with testing this doesn't matter all that much in reality
+         // there are probably some weird instances when this isn't enough for
+         // truly unique ordering but it's fine for now
+         return a->name() < b->name();
        });
 
   SpeciesId s_idx = 0;
@@ -256,7 +273,7 @@ SpeciesFactory::indexSpecies()
   for (const auto & s : temp)
   {
     s->setId(s_idx++);
-    _species_names[s->getId()] = s->getName();
+    _species_names[s->id()] = s->name();
   }
 }
 
@@ -278,22 +295,25 @@ SpeciesFactory::addRateBasedReaction(shared_ptr<const Reaction> r)
   {
     auto s = s_wp.lock();
     auto rd = ReactionData();
-    const auto stoic_coeff = r->getStoicCoeffByName(s->getName());
-    rd.id = r->getId();
+    const auto stoic_coeff = r->getStoicCoeffByName(s->name());
+    rd.id = r->id();
     rd.stoic_coeff = stoic_coeff;
+    s->_rate_based_data.push_back(rd);
     if (stoic_coeff != 0)
-      s->_rate_based_data.push_back(rd);
+      s->_unbalanced_rate_based_data.push_back(rd);
     const auto & r_wp = s->_rate_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
       s->_tabulated_rate_based.push_back(r_wp);
+      s->_tabulated_rate_based_data.push_back(rd);
       if (stoic_coeff != 0)
-        s->_tabulated_rate_based_data.push_back(rd);
+        s->_unbalanced_tabulated_rate_based_data.push_back(rd);
       continue;
     }
     s->_function_rate_based.push_back(r_wp);
+    s->_function_rate_based_data.push_back(rd);
     if (stoic_coeff != 0)
-      s->_function_rate_based_data.push_back(rd);
+      s->_unbalanced_function_rate_based_data.push_back(rd);
   }
 }
 
@@ -305,204 +325,44 @@ SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
   {
     auto s = s_wp.lock();
     auto rd = ReactionData();
-    const auto stoic_coeff = r->getStoicCoeffByName(s->getName());
-    rd.id = r->getId();
+    const auto stoic_coeff = r->getStoicCoeffByName(s->name());
+    rd.id = r->id();
     rd.stoic_coeff = stoic_coeff;
     if (stoic_coeff != 0)
-      s->_xsec_based_data.push_back(rd);
+      s->_unbalanced_xsec_based_data.push_back(rd);
+    s->_xsec_based_data.push_back(rd);
     const auto & r_wp = s->_xsec_based.emplace_back(weak_ptr<const Reaction>(r));
     if (r->hasTabulatedData())
     {
       s->_tabulated_xsec_based.push_back(r_wp);
+      s->_tabulated_xsec_based_data.push_back(rd);
       if (stoic_coeff != 0)
-        s->_tabulated_xsec_based_data.push_back(rd);
+        s->_unbalanced_tabulated_xsec_based_data.push_back(rd);
       continue;
     }
     s->_function_xsec_based.push_back(r_wp);
+    s->_function_xsec_based_data.push_back(rd);
     if (stoic_coeff != 0)
-      s->_function_xsec_based_data.push_back(rd);
+      s->_unbalanced_function_xsec_based_data.push_back(rd);
   }
 }
 
-string
-SpeciesFactory::getSpeciesSummary() const
+void
+SpeciesFactory::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
 {
-  unsigned int lumped_count = _lumped_map.size();
-  unsigned int species_count = 0.0;
+  writer.clear();
 
-  string summary = "";
+  map<string, vector<string>> lumped_str_map;
 
-  unordered_map<string, vector<string>> lumped_string;
-  for (auto it : _lumped_map)
-  {
-    if (lumped_string.find(it.second->getName()) == lumped_string.end())
-    {
-      lumped_string[it.second->getName()] = {it.first};
-      continue;
-    }
-    lumped_string[it.second->getName()].push_back(it.first);
-  }
+  for (const auto & it : _lumped_map)
+    lumped_str_map[it.second->name()].push_back(it.first);
 
-  if (lumped_count > 0)
-  {
-    summary += "# " + to_string(lumped_count) + " species are lumped into " +
-               to_string(lumped_string.size()) + " species\n";
-    summary += "lumped-species:\n";
-    summary += "  - count: " + to_string(lumped_count) + "\n";
+  writer.addLumpedSummary(lumped_str_map);
+  writer.addMiscSummary();
+  writer.addSpeciesSummary();
 
-    for (auto it : lumped_string)
-    {
-      summary += "  - lumped: " + it.first + "\n";
-      summary += "    actual: [";
-      for (auto actual_s_it = it.second.begin(); actual_s_it != it.second.end(); ++actual_s_it)
-      {
-        string actual_s = *actual_s_it;
-
-        summary += actual_s;
-        if (next(actual_s_it) != it.second.end())
-        {
-          summary += ", ";
-        }
-      }
-      summary += "]";
-    }
-  }
-  else
-  {
-    summary += "# No lumped states in this network\n";
-    summary += "lumped-species:\n";
-    summary += "  - count: 0";
-  }
-
-  summary += "\n\n";
-
-  // summary += "species:\n";
-  string species_list = "";
-  string reaction_summary = "";
-  // map to keep track of sources sinks and balanced reactions
-  // for each species
-  map<string, vector<string>> ssb;
-
-  const string BALANCED_KEY = "blanaced";
-  const string SOURCE_KEY = "sources";
-  const string SINK_KEY = "sinks";
-
-  for (auto it : _species)
-  {
-    // don't print the species which are being lumped they aren't really being used
-    if (_lumped_map.find(it.first) == _lumped_map.end())
-    {
-      species_count++;
-      species_list += "  - " + it.first + ":\n";
-
-      auto rate_based = it.second->getRateBasedReactions();
-      species_list += "      - rate-based-reactions: " + to_string(rate_based.size()) + "\n\n";
-      ssb.clear();
-      reaction_summary = "";
-      for (auto r : rate_based)
-      {
-        auto stoic_coeff = r->getStoicCoeffByName(it.first);
-        if (stoic_coeff > 0)
-        {
-          if (ssb.find(SOURCE_KEY) == ssb.end())
-          {
-            ssb.emplace(SOURCE_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[SOURCE_KEY].push_back(r->getExpression());
-        }
-
-        if (stoic_coeff == 0)
-        {
-          if (ssb.find(BALANCED_KEY) == ssb.end())
-          {
-            ssb.emplace(BALANCED_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[BALANCED_KEY].push_back(r->getExpression());
-        }
-
-        if (stoic_coeff < 0)
-        {
-          if (ssb.find(SINK_KEY) == ssb.end())
-          {
-            ssb.emplace(SINK_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[SINK_KEY].push_back(r->getExpression());
-        }
-      }
-
-      for (auto it : ssb)
-      {
-        reaction_summary += "        " + it.first + ":\n";
-        reaction_summary += "          - count: " + to_string(it.second.size()) + "\n";
-        for (auto r : it.second)
-        {
-          reaction_summary += "          - " + r + "\n";
-        }
-        reaction_summary += "\n";
-      }
-      species_list += "\n\n" + reaction_summary;
-
-      auto xsec_based = it.second->getXSecBasedReactions();
-      species_list += "      - xsec-based-reactions: " + to_string(xsec_based.size()) + "\n\n";
-
-      ssb.clear();
-      reaction_summary = "";
-      for (auto r : xsec_based)
-      {
-        auto stoic_coeff = r->getStoicCoeffByName(it.first);
-        if (stoic_coeff > 0)
-        {
-          if (ssb.find(SOURCE_KEY) == ssb.end())
-          {
-            ssb.emplace(SOURCE_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[SOURCE_KEY].push_back(r->getExpression());
-        }
-
-        if (stoic_coeff == 0)
-        {
-          if (ssb.find(BALANCED_KEY) == ssb.end())
-          {
-            ssb.emplace(BALANCED_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[BALANCED_KEY].push_back(r->getExpression());
-        }
-
-        if (stoic_coeff < 0)
-        {
-          if (ssb.find(SINK_KEY) == ssb.end())
-          {
-            ssb.emplace(SINK_KEY, vector<string>{r->getExpression()});
-            continue;
-          }
-          ssb[SINK_KEY].push_back(r->getExpression());
-        }
-      }
-
-      for (auto it : ssb)
-      {
-        reaction_summary += "        " + it.first + ": " + to_string(it.second.size()) + "\n";
-        for (auto r : it.second)
-        {
-          reaction_summary += "          - " + r + "\n";
-        }
-        reaction_summary += "\n";
-      }
-      species_list += reaction_summary + "\n\n";
-    }
-  }
-
-  summary += "species:\n";
-  summary += "  # Number of unique species\n";
-  summary += "  - count : " + to_string(species_count) + "\n";
-  summary += species_list;
-
-  // cout << summary << endl;
-  return summary;
+  ofstream out(file);
+  out << writer.summaryString().str();
+  out.close();
 }
 }

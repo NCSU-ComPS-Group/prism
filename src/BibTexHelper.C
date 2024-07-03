@@ -13,7 +13,8 @@ namespace prism
 
   BibTexHelper* BibTexHelper::_instance = nullptr;
 
-  BibTexHelper& BibTexHelper::getInstance()
+  BibTexHelper &
+  BibTexHelper::instance()
   {
       // Create the _instance if it does not exist
       if (_instance == nullptr)

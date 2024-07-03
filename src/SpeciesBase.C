@@ -33,7 +33,7 @@ SpeciesBase::checkName(const string & s)
 bool
 SpeciesBase::operator==(const SpeciesBase & other) const
 {
-  return _name == other.getName();
+  return _name == other.name();
 }
 
 bool
@@ -43,7 +43,7 @@ SpeciesBase::operator!=(const SpeciesBase & other) const
 }
 
 double
-SpeciesBase::getCharge() const
+SpeciesBase::charge() const
 {
   return static_cast<float>(_charge_num) * ELEMENTAL_CHARGE;
 }
@@ -54,5 +54,5 @@ size_t
 hash<prism::SpeciesBase>::operator()(const prism::SpeciesBase & obj) const
 {
   // hash based on the name
-  return hash<string>()(obj.getName());
+  return hash<string>()(obj.name());
 }

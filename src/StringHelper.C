@@ -173,6 +173,8 @@ namespace prism
 
     float mantissa = val / std::pow(10, exponent);
 
+    if (exponent == 0)
+      return fmt::format("{:.2f}", mantissa);
 
     return fmt::format( "{:.2f}", mantissa) + "$\\times 10^{" + fmt::format("{:d}", exponent) + "}$";
   }

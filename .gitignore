@@ -5,10 +5,14 @@ run_tests
 .DS_Store
 output
 coverage_report
-converage.info
+*.info
 html
 site
 linux*
 osx*
 win*
 *.bak
+*.yaml
+*.yml
+*.tex
+*.vscode

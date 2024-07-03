@@ -94,11 +94,11 @@ public:
   /**
    * Self descriptive getter method
    */
-  const std::string & getExpression() const { return _expression; }
+  const std::string & expression() const { return _expression; }
   /**
    * Self descriptive getter method
    */
-  const std::string & getLatexRepresentation() const { return _latex_expression; }
+  const std::string & latexRepresentation() const { return _latex_expression; }
   /**
    * Self descriptive getter method
    * note that Reactions ids are based on the block reactions are in
@@ -106,15 +106,15 @@ public:
    * the reaction block
    * this allows quick access into vectors provided by the network parser object
    */
-  ReactionId getId() const { return _id; }
+  ReactionId id() const { return _id; }
   /**
    * Self descriptive getter method
    */
-  const std::vector<std::string> & getReferences() const { return _references; }
+  const std::vector<std::string> & references() const { return _references; }
   /**
    * Self descriptive getter method
    */
-  const std::vector<std::string> & getNotes() const { return _notes; }
+  const std::vector<std::string> & notes() const { return _notes; }
   /**
    * Self descriptive getter method
    */
@@ -122,19 +122,19 @@ public:
   /**
    * Self descriptive getter method
    */
-  double getDeltaEnergyElectron() const { return _delta_eps_e; }
+  double deltaEnergyElectron() const { return _delta_eps_e; }
   /**
    * Self descriptive getter method
    */
-  double getDeltaEnergyGas() const { return _delta_eps_g; }
+  double deltaEnergyGas() const { return _delta_eps_g; }
   /**
    * Self descriptive getter method
    */
-  const std::vector<SpeciesData> & getReactantData() const { return _reactant_data; }
+  const std::vector<SpeciesData> & reactantData() const { return _reactant_data; }
   /**
    * Self descriptive getter method
    */
-  const std::vector<SpeciesData> & getProductData() const { return _product_data; }
+  const std::vector<SpeciesData> & productData() const { return _product_data; }
   /**
    * Wether or not the user set a reaction as elastic or not
    */
@@ -143,7 +143,7 @@ public:
    * Getter method for the list of species in this reaction
    * this is a relatively expensive method and calls to this should be minimized
    */
-  const std::vector<std::shared_ptr<const Species>> getSpecies() const;
+  const std::vector<std::shared_ptr<const Species>> species() const;
   /**
    * Getter method for getting cite keys formatted for LaTeX
    */
@@ -153,13 +153,13 @@ public:
    * @throws invalid_argument if this method is called on a reaction for which tabulated data was
    * provided
    */
-  const std::vector<double> & getFunctionParams() const;
+  const std::vector<double> & functionParams() const;
   /**
    * Retrurns a reference to the struct containing data read from a file
    * @throws invalid_argument if this method is called on a reaction that has a functional
    * parameters provided
    */
-  const std::vector<TabulatedReactionData> & getTabulatedData() const;
+  const std::vector<TabulatedReactionData> & tabulatedData() const;
   /**
    * Get the stoiciometric coefficient for a species in this reaction
    * by the name that represents it

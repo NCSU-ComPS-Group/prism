@@ -11,7 +11,7 @@
 namespace prism
 {
 class Reaction;
-
+class SpeciesSummaryWriterBase;
 /**
  * This factory creates and stores, and passes around all of the species
  * that exist in a reaction mechanism
@@ -25,7 +25,7 @@ private:
 public:
 #endif
   /** Static function to get the instance of the singleton */
-  static SpeciesFactory & getInstance();
+  static SpeciesFactory & instance();
   /** resets the factory to a state as if no reactions have been parsed */
   void clear();
   // if we are in testing mode we'll give other people access to these
@@ -75,7 +75,7 @@ private:
   /**
    *
    */
-  const std::map<std::string, std::shared_ptr<Species>> & getSpeciesMap() const { return _species; }
+  const std::map<std::string, std::shared_ptr<Species>> & speciesMap() const { return _species; }
   /**
    * Method checks for lumped states of a species
    * if there is one it will return the pointer to the species the name is lumped into
@@ -114,9 +114,9 @@ private:
   /// the index to be assigned to the next species created
   ///@}
   /**
-   * Creates a string summary for all the species in the system
+   * Writes a species summary to a file
    */
-  std::string getSpeciesSummary() const;
+  void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
   /// the map that holds all of the species in the mechanism
   std::map<std::string, std::shared_ptr<Species>> _species;
   /// the map of species names to the state they are lumped into

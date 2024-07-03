@@ -65,7 +65,7 @@ Species::setMass()
 {
   float total_mass = 0;
   for (SubSpecies s : _sub_species)
-    total_mass += s.getMass();
+    total_mass += s.mass();
   _mass = total_mass;
 }
 
@@ -74,7 +74,7 @@ Species::setChargeNumber()
 {
   int total_num = 0;
   for (SubSpecies s : _sub_species)
-    total_num += s.getChargeNumber();
+    total_num += s.chargeNumber();
   _charge_num = total_num;
 }
 
@@ -83,7 +83,7 @@ Species::setLatexName()
 {
   string total_name = "";
   for (SubSpecies s : _sub_species)
-    total_name += s.getLatexRepresentation();
+    total_name += s.latexRepresentation();
   _latex_name = total_name;
 }
 
@@ -130,7 +130,7 @@ Species::setNeutralGroundState() const
 {
   string temp = "";
   for (auto sub : _sub_species)
-    temp += sub.getNeutralGroundState();
+    temp += sub.neutralGroundState();
 
   return temp;
 }
@@ -143,12 +143,12 @@ hash<prism::Species>::operator()(const prism::Species & obj) const
 
   size_t val = 17; // Start with a prime number
 
-  for (auto s : obj.getSubSpecies())
+  for (auto s : obj.subSpecies())
     val += hash_factor * hash<prism::SubSpecies>()(s);
 
-  val += hash_factor * hash<float>()(obj.getMass());
-  val += hash_factor * hash<int>()(obj.getChargeNumber());
-  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
+  val += hash_factor * hash<float>()(obj.mass());
+  val += hash_factor * hash<int>()(obj.chargeNumber());
+  val += hash_factor * hash<string>()(obj.latexRepresentation());
   // not including the sources and sinks in the hash since those
   // can change as reactions are added to the network
   return val;

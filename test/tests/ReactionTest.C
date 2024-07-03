@@ -48,21 +48,20 @@ TEST(Reaction, TestBasicReactionFromNode)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (unsigned int)0);
+  EXPECT_EQ(r.id(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
-  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
-  EXPECT_EQ(r.getNotes(), vector<string>({"something", "something else"}));
+  EXPECT_EQ(r.references(), vector<string>{"test"});
+  EXPECT_EQ(r.notes(), vector<string>({"something", "something else"}));
 
-  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
-  // EXPECT_EQ(r.getPathToData(), "inputs/data/reaction1.txt");
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+  EXPECT_THROW(r.functionParams(), invalid_argument);
+  EXPECT_FLOAT_EQ(r.deltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
 
-  EXPECT_EQ(r.getLatexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
-  EXPECT_EQ(r.getExpression(), "Ar + e -> Ar + e");
+  EXPECT_EQ(r.latexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
+  EXPECT_EQ(r.expression(), "Ar + e -> Ar + e");
 }
 
 TEST(Reaction, TestBasicReactionArrhenius)
@@ -76,20 +75,20 @@ TEST(Reaction, TestBasicReactionArrhenius)
 
   vector<double> params = {1, 2, 3, 0, 0};
 
-  EXPECT_EQ(r.getId(), (unsigned int)0);
+  EXPECT_EQ(r.id(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
-  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
-  EXPECT_EQ(r.getNotes().size(), (unsigned int)0);
+  EXPECT_EQ(r.references(), vector<string>{"test"});
+  EXPECT_EQ(r.notes().size(), (unsigned int)0);
 
-  EXPECT_EQ(r.getFunctionParams().size(), (unsigned int)5);
-  EXPECT_EQ(r.getFunctionParams(), params);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+  EXPECT_EQ(r.functionParams().size(), (unsigned int)5);
+  EXPECT_EQ(r.functionParams(), params);
+  EXPECT_FLOAT_EQ(r.deltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
-  EXPECT_EQ(r.getLatexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
-  EXPECT_EQ(r.getExpression(), "Ar + e -> Ar + e");
+  EXPECT_EQ(r.latexRepresentation(), "Ar + e $\\rightarrow$ Ar + e");
+  EXPECT_EQ(r.expression(), "Ar + e -> Ar + e");
 }
 
 TEST(Reaction, TestSpeciesWithCoeffReaction)
@@ -101,18 +100,18 @@ TEST(Reaction, TestSpeciesWithCoeffReaction)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (unsigned int)0);
+  EXPECT_EQ(r.id(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
-  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
+  EXPECT_EQ(r.references(), vector<string>{"test"});
 
-  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+  EXPECT_THROW(r.functionParams(), invalid_argument);
+  EXPECT_FLOAT_EQ(r.deltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
-  EXPECT_EQ(r.getLatexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
-  EXPECT_EQ(r.getExpression(), "4Ar + 3e -> 4Ar + 3e");
+  EXPECT_EQ(r.latexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
+  EXPECT_EQ(r.expression(), "4Ar + 3e -> 4Ar + 3e");
 }
 
 TEST(Reaction, TestSpeciesWithNoCoeffReaction)
@@ -124,18 +123,18 @@ TEST(Reaction, TestSpeciesWithNoCoeffReaction)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, false);
 
-  EXPECT_EQ(r.getId(), (unsigned int)0);
+  EXPECT_EQ(r.id(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
-  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
+  EXPECT_EQ(r.references(), vector<string>{"test"});
 
-  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+  EXPECT_THROW(r.functionParams(), invalid_argument);
+  EXPECT_FLOAT_EQ(r.deltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
-  EXPECT_EQ(r.getLatexRepresentation(), "2Ar + 2e $\\rightarrow$ 2Ar + 2e");
-  EXPECT_EQ(r.getExpression(), "Ar + Ar + e + e -> Ar + Ar + e + e");
+  EXPECT_EQ(r.latexRepresentation(), "2Ar + 2e $\\rightarrow$ 2Ar + 2e");
+  EXPECT_EQ(r.expression(), "Ar + Ar + e + e -> Ar + Ar + e + e");
 }
 
 TEST(Reaction, TestUnbalanced)
@@ -228,20 +227,20 @@ TEST(Reaction, ValidCrossSection)
     data.value = values[i];
   }
 
-  EXPECT_EQ(r.getId(), (unsigned int)0);
+  EXPECT_EQ(r.id(), (unsigned int)0);
   EXPECT_EQ(r.getReferencesAsString(), "\\cite{test}");
-  EXPECT_EQ(r.getReferences(), vector<string>{"test"});
-  EXPECT_EQ(r.getTabulatedData(), xsec_data);
+  EXPECT_EQ(r.references(), vector<string>{"test"});
+  EXPECT_EQ(r.tabulatedData(), xsec_data);
 
-  EXPECT_THROW(r.getFunctionParams(), invalid_argument);
+  EXPECT_THROW(r.functionParams(), invalid_argument);
 
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyElectron(), 0.0);
-  EXPECT_FLOAT_EQ(r.getDeltaEnergyGas(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyElectron(), 0.0);
+  EXPECT_FLOAT_EQ(r.deltaEnergyGas(), 0.0);
 
   EXPECT_EQ(r.getStoicCoeffByName("Ar"), 0);
   EXPECT_EQ(r.getStoicCoeffByName("e"), 0);
-  EXPECT_EQ(r.getLatexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
-  EXPECT_EQ(r.getExpression(), "4Ar + 3e -> 4Ar + 3e");
+  EXPECT_EQ(r.latexRepresentation(), "4Ar + 3e $\\rightarrow$ 4Ar + 3e");
+  EXPECT_EQ(r.expression(), "4Ar + 3e -> 4Ar + 3e");
 }
 
 TEST(Reaction, UnevenValidCrossSection)

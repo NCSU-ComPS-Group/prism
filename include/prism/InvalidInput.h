@@ -58,14 +58,6 @@ public:
    * @param message the error message to accompany the exception
    */
   InvalidInput(const YAML::Node & node, const std::string & message);
-  /**
-   * Constructor that will give additional context of the inputfile section that is invalid
-   * and tell the user which section to which section the input belongs to
-   * @param node the section of the input file that is invalid
-   * @param block the section of the input that has an issue
-   * @param message the error message to accompany the exception
-   */
-  InvalidInput(const YAML::Node & node, const std::string & block, const std::string & message);
   /** custom what for the custom error message */
   const char * what() const noexcept override;
 

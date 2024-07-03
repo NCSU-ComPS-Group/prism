@@ -162,10 +162,10 @@ Reaction::Reaction(const YAML::Node & rxn_input,
   for (const auto & s_wp : temp_r)
   {
     const auto s = s_wp.lock();
-    if (unique_check.find(s->getName()) != unique_check.end())
+    if (unique_check.find(s->name()) != unique_check.end())
       continue;
     _reactants.push_back(s_wp);
-    unique_check.insert(s->getName());
+    unique_check.insert(s->name());
   }
 
   auto temp_p = _products;
@@ -174,15 +174,15 @@ Reaction::Reaction(const YAML::Node & rxn_input,
   for (const auto & s_wp : temp_p)
   {
     const auto s = s_wp.lock();
-    if (unique_check.find(s->getName()) != unique_check.end())
+    if (unique_check.find(s->name()) != unique_check.end())
       continue;
     _products.push_back(s_wp);
-    unique_check.insert(s->getName());
+    unique_check.insert(s->name());
   }
 }
 
 const vector<shared_ptr<const Species>>
-Reaction::getSpecies() const
+Reaction::species() const
 {
   vector<shared_ptr<const Species>> species_sp;
 
@@ -212,7 +212,7 @@ Reaction::setSides()
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
   vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
 
-  SpeciesFactory & sf = SpeciesFactory::getInstance();
+  SpeciesFactory & sf = SpeciesFactory::instance();
   set<string> unique_check;
 
   weak_ptr<Species> s_wp;
@@ -243,10 +243,10 @@ Reaction::setSides()
       throw InvalidReaction(_expression, e.what());
     }
     // only add the species to the list once
-    if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+    if (unique_check.find(s_wp.lock()->name()) == unique_check.end())
     {
       _reactants.push_back(s_wp);
-      unique_check.insert(s_wp.lock()->getName());
+      unique_check.insert(s_wp.lock()->name());
     }
   }
 
@@ -276,10 +276,10 @@ Reaction::setSides()
       throw InvalidReaction(_expression, e.what());
     }
 
-    if (unique_check.find(s_wp.lock()->getName()) == unique_check.end())
+    if (unique_check.find(s_wp.lock()->name()) == unique_check.end())
     {
       _products.push_back(s_wp);
-      unique_check.insert(s_wp.lock()->getName());
+      unique_check.insert(s_wp.lock()->name());
     }
   }
 }
@@ -312,22 +312,22 @@ Reaction::validateReaction()
   for (auto weak_r : _reactants)
   {
     auto r = weak_r.lock();
-    s_count = _reactant_count[r->getName()];
-    r_charge_num += r->getChargeNumber() * s_count;
-    for (auto sub_r : r->getSubSpecies())
+    s_count = _reactant_count[r->name()];
+    r_charge_num += r->chargeNumber() * s_count;
+    for (auto sub_r : r->subSpecies())
     {
       // we can't keep track of the electrons and photons in the same way
       // as heavy species so we'll ignore them for this check
-      if (sub_r.getBase() == "e" || sub_r.getBase() == "E" || sub_r.getBase() == "hnu")
+      if (sub_r.base() == "e" || sub_r.base() == "E" || sub_r.base() == "hnu")
         continue;
       // lets check to see if it the element is already known
-      if (r_elements.count(sub_r.getBase()) == 0)
+      if (r_elements.count(sub_r.base()) == 0)
       {
-        r_elements[sub_r.getBase()] = sub_r.getSubscript() * s_count;
+        r_elements[sub_r.base()] = sub_r.subscript() * s_count;
         continue;
       }
       // if the element is known increase the count
-      r_elements[sub_r.getBase()] += sub_r.getSubscript() * s_count;
+      r_elements[sub_r.base()] += sub_r.subscript() * s_count;
     }
   }
   // product charge
@@ -336,32 +336,31 @@ Reaction::validateReaction()
   for (auto weak_p : _products)
   {
     auto p = weak_p.lock();
-    s_count = _product_count[p->getName()];
-    p_charge_num += p->getChargeNumber() * s_count;
+    s_count = _product_count[p->name()];
+    p_charge_num += p->chargeNumber() * s_count;
     // lets check to make sure that all of the elements that make up
     // the product also exist on the reactant side
     // no nuclear reactions here
-    for (auto sub_p : p->getSubSpecies())
+    for (auto sub_p : p->subSpecies())
     {
       // we are not checking to make sure electrons and photons are on both sides
       // can be produced without it being on both sides
-      if (sub_p.getBase() == "e" || sub_p.getBase() == "E" || sub_p.getBase() == "hnu")
+      if (sub_p.base() == "e" || sub_p.base() == "E" || sub_p.base() == "hnu")
         continue;
-      auto it = r_elements.find(sub_p.getBase());
+      auto it = r_elements.find(sub_p.base());
 
       if (it == r_elements.end())
       {
-        throw InvalidReaction(_expression,
-                              "'" + sub_p.getBase() + "' does not appear as a reactant");
+        throw InvalidReaction(_expression, "'" + sub_p.base() + "' does not appear as a reactant");
       }
       // we'll keep track of the element count on both sides
-      if (p_elements.count(sub_p.getBase()) == 0)
+      if (p_elements.count(sub_p.base()) == 0)
       {
-        p_elements[sub_p.getBase()] = sub_p.getSubscript() * s_count;
+        p_elements[sub_p.base()] = sub_p.subscript() * s_count;
         continue;
       }
       // if the element is known increase the count
-      p_elements[sub_p.getBase()] += sub_p.getSubscript() * s_count;
+      p_elements[sub_p.base()] += sub_p.subscript() * s_count;
     }
   }
 
@@ -392,7 +391,7 @@ Reaction::validateReaction()
 void
 Reaction::substituteLumped()
 {
-  SpeciesFactory & sf = SpeciesFactory::getInstance();
+  SpeciesFactory & sf = SpeciesFactory::instance();
   // string of species that have been lumped into a different state
   // I want to make sure to not add the same note several times
   set<string> lumped;
@@ -402,8 +401,8 @@ Reaction::substituteLumped()
     // exchange the pointers and get the previous unlumped name in temp_s_string
     // this points either to the same reactant or to its lumped state
     const auto lumped_state = sf.getLumpedSpecies(_reactants[i]);
-    const auto lumped_name = lumped_state.lock()->getName();
-    const auto reactant_name = _reactants[i].lock()->getName();
+    const auto lumped_name = lumped_state.lock()->name();
+    const auto reactant_name = _reactants[i].lock()->name();
     // if they are they same this species is not lumped into anything
     if (lumped_name == reactant_name)
       continue;
@@ -441,8 +440,8 @@ Reaction::substituteLumped()
     // exchange the pointers and get the previous unlumped name in temp_s_string
     // this points either to the same reactant or to its lumped state
     const auto lumped_state = sf.getLumpedSpecies(_products[i]);
-    const auto lumped_name = lumped_state.lock()->getName();
-    const auto product_name = _products[i].lock()->getName();
+    const auto lumped_name = lumped_state.lock()->name();
+    const auto product_name = _products[i].lock()->name();
     // if they are they same this species is not lumped into anything
     if (lumped_name == product_name)
       continue;
@@ -491,13 +490,13 @@ Reaction::setLatexRepresentation()
   {
     s_count++;
     auto r = weak_r.lock();
-    auto name = r->getName();
+    auto name = r->name();
     // lets check to see if we have added this reactant
     auto count_it = _reactant_count.find(name);
     if (count_it->second != 1)
       _latex_expression += fmt::format("{:d}", count_it->second);
 
-    _latex_expression += r->getLatexRepresentation();
+    _latex_expression += r->latexRepresentation();
 
     if (s_count != _reactant_count.size())
       _latex_expression += " + ";
@@ -509,13 +508,13 @@ Reaction::setLatexRepresentation()
   {
     s_count++;
     auto p = weak_p.lock();
-    auto name = p->getName();
+    auto name = p->name();
 
     auto count_it = _product_count.find(name);
     if (count_it->second != 1)
       _latex_expression += fmt::format("{:d}", count_it->second);
 
-    _latex_expression += p->getLatexRepresentation();
+    _latex_expression += p->latexRepresentation();
 
     if (s_count != _product_count.size())
       _latex_expression += " + ";
@@ -530,27 +529,27 @@ Reaction::setSpeciesData()
   {
     const auto s = s_wp.lock();
     SpeciesData temp;
-    temp.id = s->getId();
-    temp.occurances = _reactant_count[s->getName()];
+    temp.id = s->id();
+    temp.occurances = _reactant_count[s->name()];
     _reactant_data.push_back(temp);
-    _id_stoic_map[s->getId()] = _stoic_coeffs[s->getName()];
+    _id_stoic_map[s->id()] = _stoic_coeffs[s->name()];
   }
 
   for (const auto & s_wp : _products)
   {
     const auto s = s_wp.lock();
     SpeciesData temp;
-    temp.id = s->getId();
-    temp.occurances = _product_count[s->getName()];
+    temp.id = s->id();
+    temp.occurances = _product_count[s->name()];
     _product_data.push_back(temp);
-    _id_stoic_map[s->getId()] = _stoic_coeffs[s->getName()];
+    _id_stoic_map[s->id()] = _stoic_coeffs[s->name()];
   }
 }
 
 void
 Reaction::checkReferences()
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   for (auto ref : _references)
   {
     try
@@ -626,7 +625,7 @@ Reaction::fullArrhenius(const double T_e, const double T_g) const
 }
 
 const vector<double> &
-Reaction::getFunctionParams() const
+Reaction::functionParams() const
 {
   switch (_params.size())
   case 0:
@@ -636,7 +635,7 @@ Reaction::getFunctionParams() const
 }
 
 const std::vector<TabulatedReactionData> &
-Reaction::getTabulatedData() const
+Reaction::tabulatedData() const
 {
   switch (_tabulated_data.size())
   case 0:
@@ -707,20 +706,20 @@ Reaction::collectUniqueSpecies()
   for (auto s_wp : _reactants)
   {
     auto s = s_wp.lock();
-    if (unique_check.find(s->getName()) == unique_check.end())
+    if (unique_check.find(s->name()) == unique_check.end())
     {
       _species.push_back(s_wp);
-      unique_check.emplace(s->getName());
+      unique_check.emplace(s->name());
     }
   }
 
   for (auto s_wp : _products)
   {
     auto s = s_wp.lock();
-    if (unique_check.find(s->getName()) == unique_check.end())
+    if (unique_check.find(s->name()) == unique_check.end())
     {
       _species.push_back(s_wp);
-      unique_check.emplace(s->getName());
+      unique_check.emplace(s->name());
     }
   }
 }
@@ -733,9 +732,9 @@ hash<prism::Reaction>::operator()(const prism::Reaction & obj) const
 
   size_t val = 17; // Start with a prime number
 
-  val += hash_factor * hash<string>()(obj.getExpression());
-  val += hash_factor * hash<int>()(obj.getId());
-  val += hash_factor * hash<string>()(obj.getLatexRepresentation());
+  val += hash_factor * hash<string>()(obj.expression());
+  val += hash_factor * hash<int>()(obj.id());
+  val += hash_factor * hash<string>()(obj.latexRepresentation());
   // not including the reactants and products in the hash
   // this is becuase these may change if there are lumped species
   // or if i want to add a map of reactions to species while I am

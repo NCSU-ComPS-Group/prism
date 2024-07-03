@@ -20,15 +20,15 @@ public:
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const SpeciesBase & other) const;
   /** Getter method for the name of species */
-  const std::string & getName() const { return _name; }
+  const std::string & name() const { return _name; }
   /** Getter method for the molar mass of the species */
-  double getMass() const { return _mass; }
+  double mass() const { return _mass; }
   /** Getter method for the charge number of the species */
-  int getChargeNumber() const { return _charge_num; }
+  int chargeNumber() const { return _charge_num; }
   /** Getter method for the charge of the species */
-  double getCharge() const;
+  double charge() const;
   /** Getter method for the latex name of the species */
-  const std::string & getLatexRepresentation() const { return _latex_name; }
+  const std::string & latexRepresentation() const { return _latex_name; }
 
 protected:
   /// The full std::string of the species base

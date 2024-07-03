@@ -41,14 +41,6 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
     _error = message + "\n\nInvalid Input in Block:\n\n" + oss.str() + "\n\n";
   }
 
-  InvalidInput::InvalidInput(const YAML::Node & node, const string & block, const string & message)
-  {
-    ostringstream oss;
-    oss << node;
-
-    _error = message + "\n\nInvalid Input in Block:\n\n" + block + "\n\n" + oss.str() + "\n\n";
-  }
-
   const char*
   InvalidInput::what() const noexcept
   {

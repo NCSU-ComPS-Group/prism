@@ -14,7 +14,7 @@ class BibTexHelper
 {
 public:
   /** Static function to get the instance of the singleton instance */
-  static BibTexHelper & getInstance();
+  static BibTexHelper & instance();
   /** Empties all of the cite keys that are currently in the BibTexHelper */
   void clear();
   /**

@@ -6,7 +6,7 @@ using namespace std;
 
 TEST(BibTexHelper, BibNotFound)
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   bth.clear();
 
   EXPECT_THROW(bth.collectReferences("nothere"), invalid_argument);
@@ -14,7 +14,7 @@ TEST(BibTexHelper, BibNotFound)
 
 TEST(BibTexHelper, DuplicateCiteKey)
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   bth.clear();
 
   const string file = "inputs/duplicate_works.bib";
@@ -23,7 +23,7 @@ TEST(BibTexHelper, DuplicateCiteKey)
 
 TEST(BibTexHelper, MalformedKey)
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   bth.clear();
 
   const string file = "inputs/malformed.bib";
@@ -32,7 +32,7 @@ TEST(BibTexHelper, MalformedKey)
 
 TEST(BibTexHelper, SmallBib)
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   bth.clear();
   const string file = "inputs/argon_works.bib";
   bth.collectReferences(file);
@@ -44,7 +44,7 @@ TEST(BibTexHelper, SmallBib)
 
 TEST(BibTexHelper, CheckRefsErrors)
 {
-  BibTexHelper & bth = BibTexHelper::getInstance();
+  BibTexHelper & bth = BibTexHelper::instance();
   bth.clear();
 
   const string file = "inputs/argon_works.bib";

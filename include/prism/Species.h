@@ -14,7 +14,7 @@ namespace prism
  * Since we keep track of rate_based and xsec_based reactions seperately
  * there will be two sets of ids
  * a set of ids from 0-(n-1) for rate-based reactions (corrisponding to their index in the)
- * vector you can get from getRateBasedReactions
+ * vector you can get from rateBasedReactions
  * the same is true for cross section based reactions
  */
 struct ReactionData
@@ -43,9 +43,9 @@ public:
   Species(const std::string & name);
   /**
    * getter for the unique id for the species
-   * @returns its position in the vector returned by NetworkParser::getSpecies()
+   * @returns its position in the vector returned by NetworkParser::species()
    */
-  SpeciesId getId() const { return _id; }
+  SpeciesId id() const { return _id; }
   /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
@@ -55,9 +55,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getRateBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> rateBasedReactions() const
   {
     return convertToSharedPtr(_rate_based);
   }
@@ -66,9 +66,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getXSecBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> xsecBasedReactions() const
   {
     return convertToSharedPtr(_xsec_based);
   }
@@ -77,9 +77,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getTabulatedRateBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> tabulatedRateBasedReactions() const
   {
     return convertToSharedPtr(_tabulated_rate_based);
   }
@@ -88,9 +88,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getFunctionRateBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> functionRateBasedReactions() const
   {
     return convertToSharedPtr(_function_rate_based);
   }
@@ -99,9 +99,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getTabulatedXSecBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> tabulatedXSecBasedReactions() const
   {
     return convertToSharedPtr(_tabulated_xsec_based);
   }
@@ -110,9 +110,9 @@ public:
    * is either a product or reactant of
    * Warning there are expensive calls and you should use the equivelant
    * method for getting the reaction data and then index into the vectors provided
-   * by NetworkParser::getRateBasedReaction() or NetworkParser::getXSecBasedReactions
+   * by NetworkParser::rateBasedReaction() or NetworkParser::xsecBasedReactions
    */
-  const std::vector<std::shared_ptr<const Reaction>> getFunctionXSecBasedReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> functionXSecBasedReactions() const
   {
     return convertToSharedPtr(_function_xsec_based);
   }
@@ -120,15 +120,12 @@ public:
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getRateBasedReactionData() const
-  {
-    return _rate_based_data;
-  }
+  const std::vector<ReactionData> & rateBasedReactionData() const { return _rate_based_data; }
   /**
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getTabulatedRateBasedReactionData() const
+  const std::vector<ReactionData> & tabulatedRateBasedReactionData() const
   {
     return _tabulated_rate_based_data;
   }
@@ -136,7 +133,7 @@ public:
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getFunctionRateBasedReactionData() const
+  const std::vector<ReactionData> & functionRateBasedReactionData() const
   {
     return _function_rate_based_data;
   }
@@ -144,15 +141,12 @@ public:
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getXSecBasedReactionData() const
-  {
-    return _xsec_based_data;
-  }
+  const std::vector<ReactionData> & xsecBasedReactionData() const { return _xsec_based_data; }
   /**
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getTabulatedXSecBasedReactionData() const
+  const std::vector<ReactionData> & tabulatedXSecBasedReactionData() const
   {
     return _tabulated_xsec_based_data;
   }
@@ -160,17 +154,77 @@ public:
    * Getter methods for the reaction data of specific types this species
    * @returns a struct of type ReactionData for the reactions of the specific type
    */
-  const std::vector<ReactionData> & getFunctionXSecBasedReactionData() const
+  const std::vector<ReactionData> & functionXSecBasedReactionData() const
   {
     return _function_xsec_based_data;
   }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedRateBasedReactionData() const
+  {
+    return _unbalanced_rate_based_data;
+  }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedTabulatedRateBasedReactionData() const
+  {
+    return _unbalanced_tabulated_rate_based_data;
+  }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedFunctionRateBasedReactionData() const
+  {
+    return _unbalanced_function_rate_based_data;
+  }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedXSecBasedReactionData() const
+  {
+    return _unbalanced_xsec_based_data;
+  }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedTabulatedXSecBasedReactionData() const
+  {
+    return _unbalanced_tabulated_xsec_based_data;
+  }
+  /**
+   * Getter methods for the reaction data of specific types this species
+   * getting the unbalanced data only returns data for reactions in which this
+   * species has a non-zero stoichiometric coefficient
+   * @returns a struct of type ReactionData for the reactions of the specific type
+   */
+  const std::vector<ReactionData> & unbalancedFunctionXSecBasedReactionData() const
+  {
+    return _unbalanced_function_xsec_based_data;
+  }
   /** Getter method for the subspecies list */
-  const std::vector<SubSpecies> & getSubSpecies() const { return _sub_species; }
+  const std::vector<SubSpecies> & subSpecies() const { return _sub_species; }
   /**
    * Getter method for the ground neutral state
    * Ex: 2Ar* -> Ar
    */
-  const std::string & getNeutralGroundState() const { return _neutral_ground_state; }
+  const std::string & neutralGroundState() const { return _neutral_ground_state; }
 
 private:
   /// The species factory helps add reactionts to our lists
@@ -185,6 +239,9 @@ private:
   std::vector<ReactionData> _rate_based_data;
   std::vector<ReactionData> _tabulated_rate_based_data;
   std::vector<ReactionData> _function_rate_based_data;
+  std::vector<ReactionData> _unbalanced_rate_based_data;
+  std::vector<ReactionData> _unbalanced_tabulated_rate_based_data;
+  std::vector<ReactionData> _unbalanced_function_rate_based_data;
   std::vector<std::weak_ptr<const Reaction>> _rate_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_rate_based;
   std::vector<std::weak_ptr<const Reaction>> _function_rate_based;
@@ -194,6 +251,9 @@ private:
   std::vector<ReactionData> _xsec_based_data;
   std::vector<ReactionData> _tabulated_xsec_based_data;
   std::vector<ReactionData> _function_xsec_based_data;
+  std::vector<ReactionData> _unbalanced_xsec_based_data;
+  std::vector<ReactionData> _unbalanced_tabulated_xsec_based_data;
+  std::vector<ReactionData> _unbalanced_function_xsec_based_data;
   std::vector<std::weak_ptr<const Reaction>> _xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _tabulated_xsec_based;
   std::vector<std::weak_ptr<const Reaction>> _function_xsec_based;

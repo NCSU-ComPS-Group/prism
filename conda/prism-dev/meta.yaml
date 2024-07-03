@@ -10,6 +10,8 @@ requirements:
     - yaml-cpp
     - lcov
     - gtest
+    - clang-format
+    - clang-tools 
 
 
 channels:

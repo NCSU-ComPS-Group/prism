@@ -6,7 +6,6 @@
 #include <string>
 #include <unordered_map>
 #include "yaml-cpp/yaml.h"
-
 namespace prism
 {
 
@@ -14,6 +13,8 @@ class Reaction;
 class Species;
 class SpeciesFactory;
 class BibTexHelper;
+class TableWriterBase;
+class SpeciesSummaryWriterBase;
 
 /**
  * This is the class that processes reaction networks and
@@ -23,7 +24,7 @@ class NetworkParser
 {
 public:
   /** Getter for the singleton instance */
-  static NetworkParser & getInstance();
+  static NetworkParser & instance();
   /** Resets the parser to a fresh state, as if no networks have been processed */
   void clear();
   /**
@@ -67,7 +68,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<Reaction>> & getRateBasedReactions() const
+  const std::vector<std::shared_ptr<Reaction>> & rateBasedReactions() const
   {
     preventInvalidDataFetch();
     return _rate_based;
@@ -79,7 +80,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<Reaction>> & getXSecBasedReactions() const
+  const std::vector<std::shared_ptr<Reaction>> & xsecBasedReactions() const
   {
     preventInvalidDataFetch();
     return _xsec_based;
@@ -91,7 +92,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<const Reaction>> & getTabulatedXSecReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> & tabulatedXSecReactions() const
   {
     preventInvalidDataFetch();
     return _tabulated_xsec_based;
@@ -103,7 +104,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<const Reaction>> & getFunctionXSecReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> & functionXSecReactions() const
   {
     preventInvalidDataFetch();
     return _function_xsec_based;
@@ -115,7 +116,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<const Reaction>> & getTabulatedRateReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> & tabulatedRateReactions() const
   {
     preventInvalidDataFetch();
     return _tabulated_rate_based;
@@ -127,7 +128,7 @@ public:
    * reaction networks that have been parsed
    * @returns a vector of shared_ptr for all of the reactions of this type
    */
-  const std::vector<std::shared_ptr<const Reaction>> & getFunctionRateReactions() const
+  const std::vector<std::shared_ptr<const Reaction>> & functionRateReactions() const
   {
     preventInvalidDataFetch();
     return _function_rate_based;
@@ -139,7 +140,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::shared_ptr<const Species>> & getTransientSpecies() const
+  const std::vector<std::shared_ptr<const Species>> & transientSpecies() const
   {
     preventInvalidDataFetch();
     return _transient_species;
@@ -152,7 +153,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::string> & getTransientSpeciesNames() const
+  const std::vector<std::string> & transientSpeciesNames() const
   {
     preventInvalidDataFetch();
     return _transient_species_names;
@@ -165,7 +166,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::string> & getAllSpeciesNames() const
+  const std::vector<std::string> & speciesNames() const
   {
     preventInvalidDataFetch();
     return _all_species_names;
@@ -178,7 +179,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::shared_ptr<const Species>> & getAllSpecies() const
+  const std::vector<std::shared_ptr<const Species>> & species() const
   {
     preventInvalidDataFetch();
     return _all_species;
@@ -190,6 +191,12 @@ public:
    * @throws invalid_argument if you have requested a species with an id that is not in the network
    */
   const std::string & getSpeciesNameById(const SpeciesId id) const;
+
+  void writeReactionTable(const std::string & file) const;
+  void writeReactionTable(const std::string & file, TableWriterBase & writer) const;
+
+  // void writeSpeciesSummary(const std::string & file) const;
+  void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
 
 private:
   /** private constructor because only this class can create itself */
@@ -268,14 +275,11 @@ private:
                       const std::string & data_path,
                       const std::string & bib_file);
 
-  // void tableHelper(std::string & latex,
-  //                    const std::vector<std::shared_ptr<const Reaction>> & reactions,
-  //                    unsigned int & rxn_counter,
-  //                    unsigned int & note_counter,
-  //                    std::map<std::string, unsigned int> & note_numbers,
-  //                    std::map<unsigned int, std::string> & inverse_note_numbers,
-  //                    std::vector<std::string> & all_notes);
-
+  void tableHelper(TableWriterBase & writer,
+                   void (TableWriterBase::*beginTable)(),
+                   void (TableWriterBase::*endTable)(),
+                   void (TableWriterBase::*addReaction)(const std::shared_ptr<const Reaction> & r),
+                   const std::vector<std::shared_ptr<const Reaction>> & rxn_list) const;
   /**
    * This method prevents people from accessing any data when
    * there are errors in the reaction network.
