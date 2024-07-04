@@ -15,7 +15,7 @@ Species::Species(const string & name)
     _neutral_ground_state(setNeutralGroundState())
 {
   setMass();
-  setChargeNumber();
+  setCharge();
   setLatexName();
 }
 
@@ -65,17 +65,19 @@ Species::setMass()
 {
   float total_mass = 0;
   for (SubSpecies s : _sub_species)
-    total_mass += s.mass();
-  _mass = total_mass;
+    total_mass += s.molarMass();
+  _molar_mass = total_mass;
+  _mass = 1e-3 * total_mass / N_A;
 }
 
 void
-Species::setChargeNumber()
+Species::setCharge()
 {
   int total_num = 0;
   for (SubSpecies s : _sub_species)
     total_num += s.chargeNumber();
   _charge_num = total_num;
+  _charge = _charge_num * ELEMENTAL_CHARGE;
 }
 
 void

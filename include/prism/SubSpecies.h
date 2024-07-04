@@ -65,7 +65,7 @@ private:
   /**
    * Method for setting the charge number of the species base
    */
-  void setChargeNumber() override;
+  void setCharge() override;
   /** Method for setting the latex name of the species */
   void setLatexName() override;
 

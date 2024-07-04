@@ -601,27 +601,29 @@ Reaction::constantRate(const double /*T_e*/, const double /*T_g*/) const
 double
 Reaction::partialArrhenius1(const double T_e, const double /*T_g*/) const
 {
-  return _params[0] * std::pow(T_e, _params[1]);
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]);
 }
 
 double
 Reaction::partialArrhenius2(const double T_e, const double /*T_g*/) const
 {
-  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e));
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
+         std::exp(-_params[2] / (k_B * T_e));
 }
 
 double
 Reaction::partialArrhenius3(const double T_e, const double T_g) const
 {
-  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e)) *
-         std::pow(T_g, _params[3]);
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
+         std::exp(-_params[2] / (k_B * T_e)) * std::pow(T_g / ROOM_TEMP_EV, _params[3]);
 }
 
 double
 Reaction::fullArrhenius(const double T_e, const double T_g) const
 {
-  return _params[0] * std::pow(T_e, _params[1]) * std::exp(-_params[2] / (k_B * T_e)) *
-         std::pow(T_g, _params[3]) * std::exp(-_params[4] / (k_B * T_g));
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
+         std::exp(-_params[2] / (k_B * T_e)) * std::pow(T_g / ROOM_TEMP_EV, _params[3]) *
+         std::exp(-_params[4] / (k_B * T_g));
 }
 
 const vector<double> &
@@ -629,7 +631,7 @@ Reaction::functionParams() const
 {
   switch (_params.size())
   case 0:
-    throw invalid_argument("Reaction: '" + _expression + "' does not have rate parameters");
+    throw invalid_argument("Reaction: '" + _expression + "' does not have function parameters");
 
   return _params;
 }

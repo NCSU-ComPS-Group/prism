@@ -18,7 +18,7 @@ SubSpecies::SubSpecies(const string & name)
     _subscript(setSubscript()),
     _neutral_ground_state(setNeutralGroundState())
 {
-  setChargeNumber();
+  setCharge();
   setMass();
   setLatexName();
   // lets remove all of the leading numbers in the modifier
@@ -116,17 +116,19 @@ SubSpecies::setSubscript()
 }
 
 void
-SubSpecies::setChargeNumber()
+SubSpecies::setCharge()
 {
   if (_name.compare("e") == 0 || _name.compare("E") == 0)
   {
     _charge_num = -1;
+    _charge = _charge_num * ELEMENTAL_CHARGE;
     return;
   }
 
   if (_modifier.length() == 0)
   {
     _charge_num = 0;
+    _charge = _charge_num;
     return;
   }
 
@@ -144,6 +146,7 @@ SubSpecies::setChargeNumber()
   if (s.length() == 0)
   {
     _charge_num = 0;
+    _charge = _charge_num;
     return;
   }
 
@@ -159,6 +162,7 @@ SubSpecies::setChargeNumber()
   if (findFirstSpecial(s) == 0 && (s[0] != '-' && s[0] != '+'))
   {
     _charge_num = 0;
+    _charge = 0;
     return;
   }
 
@@ -172,6 +176,7 @@ SubSpecies::setChargeNumber()
   if (s.length() == 1)
   {
     _charge_num = sign;
+    _charge = _charge_num * ELEMENTAL_CHARGE;
     return;
   }
 
@@ -190,6 +195,7 @@ SubSpecies::setChargeNumber()
   if (sub_s.length() == 0)
   {
     _charge_num = sign;
+    _charge = _charge_num * ELEMENTAL_CHARGE;
     return;
   }
 
@@ -197,6 +203,7 @@ SubSpecies::setChargeNumber()
   int charge = sign * stoi(sub_s);
 
   _charge_num = charge;
+  _charge = _charge_num * ELEMENTAL_CHARGE;
 }
 
 void
@@ -206,12 +213,14 @@ SubSpecies::setMass()
   // case for an electron
   if (_name.compare("e") == 0 || _name.compare("E") == 0)
   {
-    _mass = base_mass;
+    _molar_mass = base_mass;
+    _mass = 1e-3 * _molar_mass / N_A;
     return;
   }
 
   float ionization_mass = static_cast<float>(_charge_num) * SpeciesFactory::instance().getMass("e");
-  _mass = base_mass - ionization_mass;
+  _molar_mass = base_mass - ionization_mass;
+  _mass = 1e-3 * _molar_mass / N_A;
 }
 
 void

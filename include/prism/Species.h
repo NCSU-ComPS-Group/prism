@@ -269,7 +269,7 @@ private:
   /** Method for getting the total mass based on all of the subspecies */
   void setMass() override;
   /** Method for getting the total charge number based on all of the subspecies */
-  void setChargeNumber() override;
+  void setCharge() override;
   /** Finds the grounded neutral state of a species  */
   std::string setNeutralGroundState() const;
   /** Helper for giving out shared_ptrs to the reactions that thsi species is a part of  */

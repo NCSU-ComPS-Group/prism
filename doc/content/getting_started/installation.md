@@ -1,92 +1,38 @@
 # Installation
 
+!alert note
+This package has only been tested on macOS and Linux platforms. If you are interested in using this package on a Windows device we suggest installing the [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). Please note that we have not tested using this package in this way.
+
+## Conda/Mamba
+
+Use of a package manager is recommended for use of this program. This will help avoid potentialy library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from the [MOOSE website](https://mooseframework.inl.gov/getting_started/installation/conda.html).
+
+When installing mamba using these instructions you can stop after the instruction to restart you terminal is given.
+
+## Conda Package
+
+There are several ways to download/install the PRISM parser for personal use. If you are only interested in using PRISM for input into your own modeling/analysis software the easiest way to make this happen is by installing it with the the available [conda package](https://anaconda.org/gsgall/prism). To install this you can use the following commands.
+
 ```bash
-  conda activate PRISM
-  mkdir -p ~/projects
-  cd ~/projects
-  git clone https://github.com/gsgall/PRISM
-  cd ~/projects/PRISM
+  conda config --add channels gsgall
+  conda install prism
 ```
 
-# Mamba
+## Building Directly
 
-Use of a package manager is recommended for use of this program. This will help avoid potentialy library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from [https://mooseframework.inl.gov/getting_started/installation/conda.html](https://mooseframework.inl.gov/getting_started/installation/conda.html)
-
-When installing mamba using these instructions you can stop after the instruction to restart you terminal is given
-
-# Creating a new environment
-
-To ensure no conflicts with other projects you can create a new environment to work in.
+If you do not want to use PRISM via the conda package we suggest that you add prism as a [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to the repository in which you are building your application.
 
 ```bash
-  cd ~/projects/PRISM
-  conda create --name PRISM
-  conda activate PRISM
-  conda install --file environment.yml
+  git submodule add https://github.com/NCSU-ComPS-Group/prism.git
+  git submodule update --init prism
 ```
 
-# Build
+ We also support a conda package to faciliate development work on PRISM. This package installs all of the required compilers, tools, and packages PRISM depends on. To download this use the following commands in your conda environment
 
-
-```bash
-  make -j 4
-```
-
-# Build The Docs
-
-Since this system relies on the MOOSE documentation system you will need MOOSE installed to build and host the documentation site locally. We expect you to have MOOSE installed  at `~/projects/moose` if you would like to do this.
+!alert warning
+This package adds a script to your conda environment which appends to the path where dynamically linkable libraries are searched for (LD_LIBRARY_PATH for macOS or DYLD_LIBRARY_PATH for Linux devices). This package also sets the environment variable (CXX)
 
 ```bash
-conda activate moose
-cd ~/projects/PRISM/doc
-MOOSE_DIR=~/projects/moose ROOT_DIR=./ ./moosedocs.py build --serve
-```
-
-# Running Unit Tests
-
-```bash
-  cd test
-  make
-  ./run_tests -j 4
-```
-
-# Remove Environment
-
-If you'd like to remove the environment for any reason you can use the following
-
-```bash
-  conda activate base
-  conda env remove -n PRISM
-```
-
-# Trouble Shooting
-
-If you are getting the error when running main where it is looking for the library in a different location you may need to update your search path. You can modify your conda environment variables. First you need create some files and folders
-
-```bash
-  cd $CONDA_PREFIX
-  mkdir -p ./etc/conda/activate.d
-  mkdir -p ./etc/conda/deactivate.d
-  touch ./etc/conda/activate.d/env_vars.sh
-  echo 'export DYLD_LIBRARY_PATH="$CONDA_PREFIX/lib:$DYLD_LIBRARY_PATH"' > ./etc/conda/activate.d/env_vars.sh
-  touch ./etc/conda/deactivate.d/env_vars.sh
-  echo 'unset DYLD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
-  cd -
-  conda deactivate
-  conda activate PRISM
-```
-
-The following commands are the same but for a linux system.
-
-```bash
-  cd $CONDA_PREFIX
-  mkdir -p ./etc/conda/activate.d
-  mkdir -p ./etc/conda/deactivate.d
-  touch ./etc/conda/activate.d/env_vars.sh
-  echo 'export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"' > ./etc/conda/activate.d/env_vars.sh
-  touch ./etc/conda/deactivate.d/env_vars.sh
-  echo 'unset LD_LIBRARY_PATH' > ./etc/conda/deactivate.d/env_vars.sh
-  cd -
-  conda deactivate
-  conda activate PRISM
+  conda config --add channels gsgall
+  conda install prism-dev
 ```

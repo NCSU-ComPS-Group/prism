@@ -147,19 +147,6 @@ public:
   }
 
   /**
-   * Gets the names all of the species in the network that have a non-zero
-   * This function will also exist the program if there are any errors in the
-   * reaction networks that have been parsed
-   * Species are ordered based on their ids and will always be in id order
-   * @returns a vector of shared_ptr for all unique species in the network
-   */
-  const std::vector<std::string> & transientSpeciesNames() const
-  {
-    preventInvalidDataFetch();
-    return _transient_species_names;
-  }
-
-  /**
    * Gets the names of all of the species in the network
    * This function will also exist the program if there are any errors in the
    * reaction networks that have been parsed
@@ -224,8 +211,6 @@ private:
   bool _read_xsec_files;
   /// a list of all of the unqiue species that exist in the network that have a non-zero stoichiometric coefficient in atleast one reaction
   std::vector<std::shared_ptr<const Species>> _transient_species;
-  /// a list of all of the transient species name in the same order as the transient species vector
-  std::vector<std::string> _transient_species_names;
   /// a list of all of the unqiue species that exist in the network
   std::vector<std::shared_ptr<const Species>> _all_species;
   /// a list of all of the unqiue species name in the same order as the transient species vector

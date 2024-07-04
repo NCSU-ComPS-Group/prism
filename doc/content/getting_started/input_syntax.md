@@ -1,22 +1,31 @@
-!listing prism/main.C
-
-## Input File Syntax
+# Input File Syntax
 
 The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by PRISM.
 
+- Bibliography Block
 - Data Path Block
 - Custom Species Block
 - Lumped Species Block
 - $\LaTeX$ Overrides Block
-- Custom Equations Block
 - Rate Based Reactions Block
 - Cross Section Based Reactions Block
 
-It is important to note that since this project uses the yaml file format, projects which adopt the PRISM format standard can also include additional blocks which will be ignored by the PRISM project.
+## Bibliography Block
+
+In the PRISM format every reaction is required to have at least one cite key associated with it. This blocks allows you to specify a bibliography file in which these cite keys exist.
+
+!alert note
+The bibliograpy file must be in the [BibTex](https://www.bibtex.com) format in order to better support documenting a reaction mechanism in $\LaTeX$.
+
+This block only requires a single string which is the path from the location of the executable which is reading the input file to the bibliography file
+
+```yaml
+  bibliography: path/to/bib.bib
+```
 
 ## Data Path Block
 
-To reduce the amount of user input requried the PRISM project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the file parameter used in the reaction block. It can be defined in the following manner.
+To reduce the amount of user input requried, the PRISM project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the `file` parameter of every reaction in the file. It can be defined in the following manner.
 
 ```yaml
   data-path: path/to/data/
@@ -34,13 +43,11 @@ The reaction object that is created will prvoide the path to the data file in th
   "path/to/data/data.txt"
 ```
 
-If no `data-path` parameter is defined we provide the default data path of `data/`.
-
 ## Custom Species Block
 
-The PRISM project provides the mass of neutral and ionized species for all species which are based on elements in the periodic table. This data has been collected from the following sources [!cite](baum2010nuclides) and [!cite](pubchem).
+The PRISM project provides the mass of all elements in the periodic table, and electrons. PRISM can compute the mass for any species (neutral or ionized) which is composed for elements in the periodic table based on this data. This data has been collected from the following sources [!cite](baum2010nuclides) and [!cite](pubchem).
 
-However, we understand that in some cases users may need and or want to define a custom species or override the default mass provided for an element. When defining a custom species simply define the name and mass of the species with the following syntax.
+However, we understand that in some cases users may need and or want to define a custom species or override the default mass provided for an element. When defining a custom species simply define the name and the molar mass of the neutral species with the following syntax.
 
 ```yaml
 custom-species:
@@ -52,11 +59,12 @@ You may also define an arbitrary number of custom species. This is true for all 
 
 ```yaml
 custom-species:
-  - name: A
-    mass: 1
-  - name: A
-    mass: 2
+  - name: [A, B, C]
+    mass: [1, 2, 3]
 ```
+
+!alert note
+All custom species must have a name which begins with a capital letter.
 
 ## Lumped Species Block
 
@@ -68,7 +76,17 @@ lumped-species:
     actual: [N2(rotation), N2(vibration)]
 ```
 
-With the lumped species block above the states `N2(rotational)` and `N2(vibrational)` will be substituded with `N2*` when parsing the reactions which contain those excited states.
+With the lumped species block above the states `N2(rotational)` and `N2(vibrational)` will be substituded with `N2*` when parsing the reactions which contain those excited states. You can also define an arbitrary number of lumped states.
+
+```yaml
+lumped-species:
+  - lumped: N2*
+    actual: [N2(rotation), N2(vibration)]
+  - lumped: O2*
+    actual: [O2(rotation), O2(vibration)]
+```
+
+When this is performed PRISM will first validate that the original reaction that you have provided is valid, then substitute the lumped states into the reaction and then re-validate with the lumped states in the reaction.
 
 ## $\LaTeX$ Override Block
 
@@ -80,28 +98,17 @@ latex-overrides:
     latex: N$_{2}\Delta)$
 ```
 
-## Custom Equation Block
-
-From time to time an analytic form is required for input that is not in arrehnius form. For this use case users can define custom equation types with the custom equation block. When defining a custom equation 4 parameters are requried.
-
-
-| Parameter | Description | Data Type |
-| - | - | - |
-| eqn-type | The alias for the analytic form which will be used in the reaction block | string |
-| params | The parameters which are requried to evaluate the custom equation | list of floats |
-latex-form | The $\LaTeX$ representation of the equation, used for creating the network table | string |
-
+You can also define an arbitrary number of these overrides.
 
 ```yaml
-custom-equation:
-  - eqn-type: custom
-    params: [A, B, C]
-    latex-form: $A + B + C$
+latex-overrides:
+  - species: [O^m, He^m, He2^m]
+    latex: ["O$^\\text{m}$", "He$^\\text{m}$", "He$_2$$^\\text{m}$"]
 ```
 
 ## Reaction Block
 
-The main workhorse of this standard is the reaction block. This is really two blocks to allow for cross section based reactions and rate based reactions in the same network. When using both the following syntax will be used. Note that this exact syntax is invalid and full reaction inputs must be provided.
+The bulk of the inputs for a simulation will be in the reaction block. This is really two blocks to allow for cross section based reactions and rate based reactions in the same network. When using both the following syntax will be used. Note that this exact syntax is invalid and full reaction inputs must be provided.
 
 ```yaml
 rate-based:
@@ -117,8 +124,6 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 
 ## Reaction Input Parameters
 
-The PRISM project supports two main types of reactions. The first is reactions which have cross sections or reaction rates tabulated in files. The second is reactions which have an analytic expression for their cross section or reaction rate.
-
 | Parameter | Description | Data Type | Required? | Default Value |
 | - | - | - | - | - |
 | reaction | The expression of the reaction see, [reaction_parsing.md] for the expected form |  string | always | N/A |
@@ -131,54 +136,55 @@ The PRISM project supports two main types of reactions. The first is reactions w
 | reference | The reference for where the reaction came from | string or a list of strings | always | N/A |
 
 
-## Reaction With Data File
+### Reaction Rate/Cross Section Data
+
+The PRISM project supports two main types of reactions. The first is reactions which have cross sections or reaction rates tabulated in files.
 
 ```yaml
- - reaction: e + Ar -> e + Ar*
-   delta-eps-e: -11.56
-   delta-eps-g: 0.00
-   file: data/location.txt
-   reference: source
+  - reaction: Ar + e -> Ar* + e
+    delta-eps-e: 11.56
+    file: ar_excitation.txt
+    references: lymberopoulos1993fluid
+    notes: This is a test
 ```
 
-## Reaction With Analytic Equation
-
-```yaml
- - reaction:  e + Ar -> e + Ar*
-   delta-eps-e: -11.56
-   delta-eps-g: 0.00
-   eqn-type: custom
-   params: [1, 2, 3]
-   database: database
-   reference: source
-```
-
-If no other equation type is defined we assume that any reaction which uses an analytic form for its cross section data or rate data take the following form.
+The second is reactions which have an Arrhenius expression for their cross section or reaction rates given by
 
 \begin{equation}
-  A \:\: T_e^{\:n_e}\:\exp\left(-\frac{E_e}{k_b T_e}\right) T_g^{\:n_e} \exp\left(-\frac{E_g}{k_b T_g}\right)
+  A \:\:
+  \left(
+    \frac{T_e}{0.025 \;\;[\text{eV}]}
+  \right)^{\:n_e}\:
+  \exp\left(-\frac{E_e}{k_b T_e}\right)
+  \left(
+    \frac{T_g}{0.025 \;\;[\text{eV}]}
+  \right)^{\:n_g}\:
+  \exp\left(-\frac{E_g}{k_b T_g}\right)
 \end{equation}
 
-This form required at most 5 input parameters with the index of the `params` input corrisponding to the following variables.
 
-| Index | Parameter |
-| - | - |
-| 0 | $A$ |
-| 1 | $n_e$ |
-| 2 | $E_e$ |
-| 3 | $n_g$ |
-| 4 | $E_g$ |
+| Parameter | Index | Units |
+| - | - | - |
+| $A$ | 0 | m$^{3 (n-1)}$ |
+| $n_e$ | 1 | Unitless |
+| $E_e$ | 2 | eV |
+| $n_g$ | 3 | Unitless |
+| $E_g$ | 4 | eV |
 
-If less than 5 parameters are supplied when using the default arrhenius form the remaining parameters which are not supplied will be set to 0. Constant rates are also supported by default. When you would like to use a constant rate equation simply provide a single float that is not in list form.
+Where $n$ in the parameter $A$ row is the number of reactants in a reaction.
 
+When using the provided sampling functions it is expected that the electron temperature $T_e$ and the gas temperature $T_g$ are given in \[eV\]. This is expected to be given in the form
 
 ```yaml
- - reaction:  e + Ar -> e + Ar*
-   delta-eps-e: -11.56
-   delta-eps-g: 0.00
-   eqn-type: custom
-   params: 1
-   reference: source
+  - reaction: 2Ar* -> Ar+ + Ar + e
+    params: [1, 2, 3, 4, 5]
+    references: lymberopoulos1993fluid
 ```
 
-A note for developers interested in using this project. When a single float is supplied here we still treat this an an arrhenius rate will return a vector of 5 floats where the first is the value of interest and the rest are simply zeros.
+!alert note
+You do not have to expliticty provide all of the parameters for a reaction which has data in an Arrhenius form. Any parameters which are not provided are assumed to be zero.
+
+
+## Example input files
+
+For more complete examples of input files please checkout the [inputs](https://github.com/NCSU-ComPS-Group/prism/tree/devel/test/inputs) that are used for testing PRISM.

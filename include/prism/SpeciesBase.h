@@ -21,21 +21,33 @@ public:
   bool operator!=(const SpeciesBase & other) const;
   /** Getter method for the name of species */
   const std::string & name() const { return _name; }
-  /** Getter method for the molar mass of the species */
+  /**
+   * Getter method for the mass of the species
+   * mass of the species is in kg
+   */
   double mass() const { return _mass; }
+  /**
+   * Getter method for the molar mass of the species
+   * molar mass is in g / mol
+   */
+  double molarMass() const { return _molar_mass; }
   /** Getter method for the charge number of the species */
   int chargeNumber() const { return _charge_num; }
   /** Getter method for the charge of the species */
-  double charge() const;
+  double charge() const { return _charge; }
   /** Getter method for the latex name of the species */
   const std::string & latexRepresentation() const { return _latex_name; }
 
 protected:
   /// The full std::string of the species base
   std::string _name;
-  /// The molar mass of the species
+  /// The mass of an individual instance of the species
   double _mass;
-  /// The level of ionization ex: Ar-4 this is -4
+  /// the molar mass of the species
+  double _molar_mass;
+  /// the charge of the spcies in coulomb
+  double _charge;
+  /// The level of charge ex: Ar-4 this is -4
   int _charge_num;
   /// The name of the spcies formatted for printing in a latex_table
   std::string _latex_name;
@@ -54,7 +66,7 @@ private:
   /**
    * Method for the setting the charge number of the species
    */
-  virtual void setChargeNumber() = 0;
+  virtual void setCharge() = 0;
   /** methods for setting the latex name of each species */
   virtual void setLatexName() = 0;
 };

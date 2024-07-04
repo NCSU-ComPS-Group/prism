@@ -1,5 +1,11 @@
 #include "fileComparer.h"
+#include <fstream>
+#include <iostream>
+#include <stdexcept>
+#include <cstdlib>
+#include "gtest/gtest.h"
 
+using namespace std;
 // Function to compare files after normalizing their contents
 bool compareFiles(const std::string& file1, const std::string& file2) {
     std::ifstream stream1(file1);

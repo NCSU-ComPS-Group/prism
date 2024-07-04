@@ -73,7 +73,6 @@ NetworkParser::clear()
   _all_species.clear();
   _all_species_names.clear();
   _transient_species.clear();
-  _transient_species_names.clear();
   _xsec_based.clear();
   _tabulated_xsec_based.clear();
   _function_xsec_based.clear();
@@ -226,9 +225,7 @@ NetworkParser::parseNetwork(const string & file)
   _factory.indexSpecies();
 
   _all_species.clear();
-  _all_species_names.clear();
   _transient_species.clear();
-  _transient_species_names.clear();
 
   // lets collect all of the species that
   // are still in some reactions
@@ -240,14 +237,12 @@ NetworkParser::parseNetwork(const string & file)
       continue;
 
     _all_species.push_back(s.second);
-    _all_species_names.push_back(s.second->name());
 
     if (s.second->unbalancedRateBasedReactionData().size() +
             s.second->unbalancedXSecBasedReactionData().size() ==
         0)
       continue;
     _transient_species.push_back(s.second);
-    _transient_species_names.push_back(s.second->name());
   }
   // putting them in order by species id
   sort(_transient_species.begin(),
@@ -259,6 +254,13 @@ NetworkParser::parseNetwork(const string & file)
        _all_species.end(),
        [](shared_ptr<const Species> & a, shared_ptr<const Species> & b)
        { return a->id() < b->id(); });
+
+  _all_species_names.resize(_all_species.size());
+
+  for (unsigned int i = 0; i < _all_species.size(); ++i)
+  {
+    _all_species_names[i] = _all_species[i]->name();
+  }
 
   for (auto r : _rate_based)
     r->setSpeciesData();

@@ -29,6 +29,6 @@ One of the capabilities of this program is that a $\LaTeX$ for the reaction mech
 
 # Example Species Summary
 
-Another capability of this system is that we provide a species summary with some important information about the reactions that species are involved in. At the beginning of this file we list all the species that have been lumped and the state that they have been lumped into. Then a small summary of the species which: only have sources, sinks, or which are only involved in reactions which lead to no change in their population. Finally, a summary of the species and all the reactions which is listed.
+Another capability of this system is that we provide a species summary with some important information about the reactions that species are involved in. At the beginning of this file we list all the species that have been lumped and the state that they have been lumped into. Then a small summary of the species which: only have sources, sinks, or which are only involved in reactions which lead to no change in their population. After this a summary of the species and all the reactions which is listed. Finally, the summary that has been written to file is again read in. This demontrates that your are able load output from this summary for further analysis using any standard yaml reader tool.
 
 !listing prism/example/summary.yaml

@@ -49,19 +49,20 @@ const std::vector<std::string> allowed_reaction_params = {REACTION_KEY,
                                                           FILE_KEY,
                                                           PARAM_KEY};
 
-const std::string ARRHENIUS = "arrhenius";
-const std::string TABULATED = "tabulated";
+// const std::string ARRHENIUS = "arrhenius";
+// const std::string TABULATED = "tabulated";
 
-const float MASS_EPS = 1e-5;
+const double MASS_EPS = 1e-5;
 const bool REQUIRED = true;
 const bool OPTIONAL = false;
-/** Avagadros number in 1 / mol */
-const float N_A = 6.02214179E+23;
-/** Boltzmann's constant */
-const double k_B = 1.380649E-23;
-/** Fundamental charge in C */
-const float ELEMENTAL_CHARGE = 1.602176487E-19;
-
+/// Avagadros number in 1 / mol
+const double N_A = 6.02214179E+23;
+/// Boltzmann's constant in eV / K
+const double k_B = 8.6173303E-5;
+/// Fundamental charge in C
+const double ELEMENTAL_CHARGE = 1.602176487E-19;
+/// constant needed for arrhenius functional forms
+const double ROOM_TEMP_EV = 0.025;
 typedef unsigned int ReactionId;
 typedef unsigned int SpeciesId;
 }

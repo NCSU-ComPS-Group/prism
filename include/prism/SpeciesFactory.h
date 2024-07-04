@@ -125,7 +125,8 @@ private:
   std::unordered_map<std::string, std::string> _latex_overrides;
   /// the mape between species ids and their names
   std::unordered_map<SpeciesId, std::string> _species_names;
-
+  /// the mass of every species on the periodic table
+  /// masses are in
   std::unordered_map<std::string, double> _default_masses = {{"hnu", 0.0},
                                                              {"M", 1},
                                                              {"e", 5.4857990943E-4},

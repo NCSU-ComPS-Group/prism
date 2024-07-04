@@ -2,28 +2,8 @@ data-path: test/inputs/data/
 bibliography: test/inputs/argon_works.bib
 
 rate-based:
-  - reaction: Ar* + e -> Ar^r + e
-    params: 2.0e-7
-    references: lymberopoulos1993fluid
 
-  - reaction: 2Ar* -> Ar+ + Ar + e
-    params: [6.2e-10, 0, 4.0]
-    references: lymberopoulos1993fluid
-
-  - reaction: Ar* + Ar -> 2Ar
-    params: 3.0e-15
-    references: lymberopoulos1993fluid
-
-  - reaction: Ar* + 2Ar -> Ar2 + Ar
-    params: 1.1e-31
-    references: lymberopoulos1993fluid
-
-  - reaction: Ar + e -> Ar + e
-    elastic: true
-    file: ar_elastic.txt
-    references: lymberopoulos1993fluid
-
-  - reaction: Ar + e -> Ar(aS) + e
+  - reaction: Ar + e -> Ar* + e
     delta-eps-e: 11.56
     file: ar_excitation.txt
     references: lymberopoulos1993fluid
@@ -45,4 +25,23 @@ rate-based:
     file: ar_deexcitation.txt
     references: lymberopoulos1993fluid
 
+  - reaction: Ar* + e -> Ar^r + e
+    params: 2.0e-7
+    references: lymberopoulos1993fluid
 
+  - reaction: 2Ar* -> Ar+ + Ar + e
+    params: 6.2e-10
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar* + Ar -> 2Ar
+    params: 3.0e-15
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar* + 2Ar -> Ar2 + Ar
+    params: 1.1e-31
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar + e -> Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid

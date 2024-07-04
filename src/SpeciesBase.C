@@ -41,13 +41,6 @@ SpeciesBase::operator!=(const SpeciesBase & other) const
 {
   return !(*this == other);
 }
-
-double
-SpeciesBase::charge() const
-{
-  return static_cast<float>(_charge_num) * ELEMENTAL_CHARGE;
-}
-
 }
 
 size_t

@@ -16,20 +16,28 @@ main()
 
   const auto & rate_rxns = np.rateBasedReactions();
   const auto & transient_species = np.transientSpecies();
-  const auto & transient_species_names = np.transientSpeciesNames();
+  const auto & species_names = np.speciesNames();
+
+  cout << endl;
+
+  for (const auto & r : rate_rxns)
+  {
+    cout << fmt::format("id: {:d}", r->id()) << " " << r->expression() << endl;
+  }
 
   cout << endl;
 
   for (const auto & s : transient_species)
   {
-    cout << "Species:  " << s->name() << endl;
+    cout << "Species: " << s->name() << " id: " << s->id() << endl;
     for (const auto & r : s->unbalancedRateBasedReactionData())
     {
-      cout << fmt::format("{:4d} {:>12.4e} ", r.stoic_coeff, rate_rxns[r.id]->sampleData(10));
+
+      cout << fmt::format(" {:4d} {:>12.4e} ", r.stoic_coeff, rate_rxns[r.id]->sampleData(10));
 
       for (const auto & s_data : rate_rxns[r.id]->reactantData())
       {
-        cout << fmt::format("({:s})^{:d} ", transient_species_names[s_data.id], s_data.occurances);
+        cout << fmt::format("({:s})^{:d} ", species_names[s_data.id], s_data.occurances);
       }
       cout << endl;
     }
