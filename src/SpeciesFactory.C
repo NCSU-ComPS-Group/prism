@@ -33,6 +33,9 @@ SpeciesFactory::instance()
 void
 SpeciesFactory::clear(){
   _species.clear();
+  _species_names.clear();
+  _transient_species.clear();
+  _species_indicies.clear();
   _lumped_map.clear();
   _base_masses.clear();
   _latex_overrides.clear();
@@ -122,7 +125,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
       InvalidInputExit(network[LUMPED_SPECIES][i], LUMPED_SPECIES, "'" + ACTUAL_KEY + "' parameter was parsed as 'null'");
 
     for (unsigned int j = 0; j < temp_actuals.size(); ++j)
-      _lumped_map[temp_actuals[j]] = getSpecies(temp_lumped).lock();
+      _lumped_map[temp_actuals[j]] = temp_lumped;
   }
 }
 
@@ -197,16 +200,23 @@ SpeciesFactory::getLatexOverride(const string & name) const
 weak_ptr<Species>
 SpeciesFactory::getSpecies(const string & name)
 {
-  weak_ptr<Species> wp;
 
-  auto it = _species.find(name);
+  for (const auto & it : _species_indicies)
+  {
+    cout << it.first << " " << it.second << endl;
+  }
+  auto it = _species_indicies.find(name);
+  if (it != _species_indicies.end())
+  {
+    cout << name << " " << it->second << " " << _species.size() << endl;
+    auto s = _species[it->second];
+    auto s_wp = weak_ptr<Species>(s);
+    return s_wp;
+  }
 
-  if (it == _species.end())
-    _species[name] = make_shared<Species>(name);
-
-  wp = _species[name];
-
-  return weak_ptr<Species>(wp);
+  _species_indicies[name] = _species.size();
+  auto new_species = _species.emplace_back(make_shared<Species>(name));
+  return weak_ptr<Species>(new_species);
 }
 
 weak_ptr<Species>
@@ -218,34 +228,30 @@ SpeciesFactory::getLumpedSpecies(weak_ptr<Species> s)
   if (it == _lumped_map.end())
     return s;
 
-  return it->second;
+  return getSpecies(it->second);
 }
 
 void
 SpeciesFactory::indexSpecies()
 {
-  std::vector<shared_ptr<Species>> temp;
+
+  // std::vector<shared_ptr<Species>> temp;
   // lets remove all of the species that do not have any reactions
   // a reason they may exist is because of being lumped to extinction
-  for (auto s = _species.begin(); s != _species.end();)
-  {
-    if (s->second->rateBasedReactionData().size() +
-            s->second->unbalancedRateBasedReactionData().size() +
-            s->second->xsecBasedReactionData().size() +
-            s->second->unbalancedXSecBasedReactionData().size() ==
-        0)
-    {
-      s = _species.erase(s);
-    }
-    else
-    {
-      temp.push_back(s->second);
-      ++s;
-    }
-  }
+  _species.erase(remove_if(_species.begin(),
+                           _species.end(),
+                           [](shared_ptr<Species> s)
+                           {
+                             return s->rateBasedReactionData().size() +
+                                        s->unbalancedRateBasedReactionData().size() +
+                                        s->xsecBasedReactionData().size() +
+                                        s->unbalancedXSecBasedReactionData().size() ==
+                                    0;
+                           }),
+                 _species.end());
 
-  sort(temp.begin(),
-       temp.end(),
+  sort(_species.begin(),
+       _species.end(),
        [](shared_ptr<Species> & a, shared_ptr<Species> & b)
        {
          // comparing based on how many reactions the species is in and how many it is actually
@@ -268,23 +274,19 @@ SpeciesFactory::indexSpecies()
          return a->name() < b->name();
        });
 
-  SpeciesId s_idx = 0;
-  _species_names.clear();
-  for (const auto & s : temp)
+  _species_names.resize(_species.size());
+  _species_indicies.clear();
+  for (unsigned int i = 0; i < _species.size(); ++i)
   {
-    s->setId(s_idx++);
+    auto & s = _species[i];
+    s->setId(i);
     _species_names[s->id()] = s->name();
+    _species_indicies[s->name()] = s->id();
+
+    if (s->unbalancedRateBasedReactionData().size() + s->unbalancedXSecBasedReactionData().size() !=
+        0)
+      _transient_species.push_back(s);
   }
-}
-
-const string &
-SpeciesFactory::getSpeciesNameById(const SpeciesId id) const
-{
-  auto it = _species_names.find(id);
-
-  if (it == _species_names.end())
-    throw invalid_argument("No species with id " + to_string(id) + " exists\n");
-  return it->second;
 }
 
 void
@@ -355,7 +357,7 @@ SpeciesFactory::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBas
   map<string, vector<string>> lumped_str_map;
 
   for (const auto & it : _lumped_map)
-    lumped_str_map[it.second->name()].push_back(it.first);
+    lumped_str_map[it.second].push_back(it.first);
 
   writer.addLumpedSummary(lumped_str_map);
   writer.addMiscSummary();

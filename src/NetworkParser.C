@@ -70,9 +70,6 @@ NetworkParser::clear()
   _data_paths.clear();
   _factory.clear();
   _bib_helper.clear();
-  _all_species.clear();
-  _all_species_names.clear();
-  _transient_species.clear();
   _xsec_based.clear();
   _tabulated_xsec_based.clear();
   _function_xsec_based.clear();
@@ -224,63 +221,11 @@ NetworkParser::parseNetwork(const string & file)
 
   _factory.indexSpecies();
 
-  _all_species.clear();
-  _transient_species.clear();
-
-  // lets collect all of the species that
-  // are still in some reactions
-  // species may be in the factory but not used because
-  // the user may lump states the point where they are unused
-  for (const auto & s : _factory.speciesMap())
-  {
-    if (s.second->rateBasedReactions().size() + s.second->xsecBasedReactions().size() == 0)
-      continue;
-
-    _all_species.push_back(s.second);
-
-    if (s.second->unbalancedRateBasedReactionData().size() +
-            s.second->unbalancedXSecBasedReactionData().size() ==
-        0)
-      continue;
-    _transient_species.push_back(s.second);
-  }
-  // putting them in order by species id
-  sort(_transient_species.begin(),
-       _transient_species.end(),
-       [](shared_ptr<const Species> & a, shared_ptr<const Species> & b)
-       { return a->id() < b->id(); });
-
-  sort(_all_species.begin(),
-       _all_species.end(),
-       [](shared_ptr<const Species> & a, shared_ptr<const Species> & b)
-       { return a->id() < b->id(); });
-
-  _all_species_names.resize(_all_species.size());
-
-  for (unsigned int i = 0; i < _all_species.size(); ++i)
-  {
-    _all_species_names[i] = _all_species[i]->name();
-  }
-
   for (auto r : _rate_based)
     r->setSpeciesData();
 
   for (auto r : _xsec_based)
     r->setSpeciesData();
-}
-
-void
-NetworkParser::preventInvalidDataFetch() const
-{
-  if (_network_has_errors)
-    InvalidInputExit(
-        "Errors exist in your network, you must resolved these before you can retrieve any data.");
-}
-
-const string &
-NetworkParser::getSpeciesNameById(const SpeciesId id) const
-{
-  return _factory.getSpeciesNameById(id);
 }
 
 void
@@ -373,5 +318,34 @@ void
 NetworkParser::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
 {
   _factory.writeSpeciesSummary(file, writer);
+}
+
+const std::vector<std::string> &
+NetworkParser::speciesNames() const
+{
+  preventInvalidDataFetch();
+  return _factory.speciesNames();
+}
+
+const std::vector<std::shared_ptr<Species>> &
+NetworkParser::species() const
+{
+  preventInvalidDataFetch();
+  return _factory.species();
+}
+
+const std::vector<std::shared_ptr<const Species>> &
+NetworkParser::transientSpecies() const
+{
+  preventInvalidDataFetch();
+  return _factory.transientSpecies();
+}
+
+void
+NetworkParser::preventInvalidDataFetch() const
+{
+  if (_network_has_errors)
+    InvalidInputExit(
+        "Errors exist in your network, you must resolved these before you can retrieve any data.");
 }
 }

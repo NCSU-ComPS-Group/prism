@@ -91,9 +91,6 @@ void
 DefaultSpeciesSummaryWriter::addLumpedSummary(
     std::map<std::string, std::vector<std::string>> lumped_map)
 {
-  if (lumped_map.size() == 0)
-    return;
-
   unsigned int total_lumped = 0;
 
   for (const auto & it : lumped_map)
@@ -110,7 +107,7 @@ DefaultSpeciesSummaryWriter::addLumpedSummary(
     _summary_str << fmt::format("    {:s}: [", ACTUAL_KEY);
     for (const auto & s : it.second)
     {
-      _summary_str << s + (s == it.second.back() ? "" : ", ");
+      _summary_str << s << (s == it.second.back() ? "" : ", ");
     }
     _summary_str << "]\n";
   }
@@ -186,12 +183,12 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   for (const auto & s : species)
   {
     _summary_str << fmt::format("  - {:s}:\n", s->name());
-    _summary_str << fmt::format("    - rate-based-count: {:d}\n",
-                                s->rateBasedReactionData().size());
+    _summary_str << fmt::format(
+        "    - {:s}: {:d}\n", RATE_BASED, s->rateBasedReactionData().size());
     species_summary(rate_based, s->rateBasedReactionData(), _summary_str);
 
-    _summary_str << fmt::format("    - xsec-based-count: {:d}\n",
-                                s->xsecBasedReactionData().size());
+    _summary_str << fmt::format(
+        "    - {:s}: {:d}\n", XSEC_BASED, s->xsecBasedReactionData().size());
     species_summary(xsec_based, s->xsecBasedReactionData(), _summary_str);
   }
 }

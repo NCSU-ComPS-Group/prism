@@ -9,16 +9,16 @@ class NetworkParserTest : public testing::Test {
   protected:
     void SetUp() override {
       // Save cout's buffer...
-      sbuf = std::cout.rdbuf();
-      // Redirect cout to our stringstream buffer or any other ostream
-      std::cout.rdbuf(buffer.rdbuf());
+      // sbuf = std::cout.rdbuf();
+      // // Redirect cout to our stringstream buffer or any other ostream
+      // std::cout.rdbuf(buffer.rdbuf());
       prism::NetworkParser::instance().clear();
     }
 
     void TearDown() override {
       // When done redirect cout to its old self
-      std::cout.rdbuf(sbuf);
-      sbuf = nullptr;
+      // std::cout.rdbuf(sbuf);
+      // sbuf = nullptr;
       prism::NetworkParser::instance().clear();
     }
 
@@ -69,6 +69,7 @@ TEST_F(NetworkParserTest, LumpedSpecies)
   np.writeSpeciesSummary("lumped_species_summary_out.yaml");
   np.writeReactionTable("lumped_species_table_out.yaml");
   const auto & s_list = np.species();
+  const auto & s_names = np.speciesNames();
   const auto & r_list = np.functionRateReactions();
   EXPECT_EQ(s_list.size(), (unsigned int)3);
   EXPECT_EQ(np.transientSpecies().size(), (unsigned int)2);
@@ -86,12 +87,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         EXPECT_EQ(p_data.size(), (unsigned int)2);
         for (const auto & s : r_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -99,13 +100,13 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         }
         for (const auto & s : p_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2")
+          if (s_names[s.id] == "N2")
           {
             EXPECT_EQ(s.id, SpeciesId(1));
             EXPECT_EQ(s.occurances, (unsigned int)1);
             continue;
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -118,12 +119,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         EXPECT_EQ(p_data.size(), (unsigned int)2);
         for (const auto & s : r_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2")
+          if (s_names[s.id] == "N2")
           {
             EXPECT_EQ(s.id, SpeciesId(1));
             EXPECT_EQ(s.occurances, (unsigned int)1);
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -131,13 +132,13 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         }
         for (const auto & s : p_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
             continue;
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -150,12 +151,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         EXPECT_EQ(p_data.size(), (unsigned int)2);
         for (const auto & s : r_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -163,13 +164,13 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         }
         for (const auto & s : p_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
             continue;
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -182,12 +183,12 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         EXPECT_EQ(p_data.size(), (unsigned int)2);
         for (const auto & s : r_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -195,13 +196,13 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         }
         for (const auto & s : p_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)1);
             continue;
           }
-          if (np.getSpeciesNameById(s.id) == "e")
+          if (s_names[s.id] == "e")
           {
             EXPECT_EQ(s.id, SpeciesId(2));
             EXPECT_EQ(s.occurances, (unsigned int)1);
@@ -214,7 +215,7 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         EXPECT_EQ(p_data.size(), (unsigned int)1);
         for (const auto & s : r_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)2);
@@ -222,7 +223,7 @@ TEST_F(NetworkParserTest, LumpedSpecies)
         }
         for (const auto & s : p_data)
         {
-          if (np.getSpeciesNameById(s.id) == "N2*")
+          if (s_names[s.id] == "N2*")
           {
             EXPECT_EQ(s.id, SpeciesId(0));
             EXPECT_EQ(s.occurances, (unsigned int)2);

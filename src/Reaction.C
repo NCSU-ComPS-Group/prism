@@ -208,6 +208,8 @@ void
 Reaction::setSides()
 {
 
+  cout << _expression << endl;
+
   vector<string> sides = splitByDelimiter(_expression, " -> ");
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
   vector<string> rhs_str = splitByDelimiter(sides[1], " + ");

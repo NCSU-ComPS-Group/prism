@@ -56,13 +56,6 @@ private:
   const std::string getLatexOverride(const std::string & name) const;
 
   /**
-   * Given a species id this returns its string name
-   * @param id the species id
-   * @throws invalid_argument if a species id that does not exist is provided
-   * @returns the string representation of the species name
-   */
-  const std::string & getSpeciesNameById(const SpeciesId id) const;
-  /**
    * Returns a weak_ptr to a species based on its name
    * if the factory does not contain a species with this name a new one
    * will be created
@@ -72,10 +65,16 @@ private:
    * @returns a weak_ptr to the species that has been created
    */
   std::weak_ptr<Species> getSpecies(const std::string & name);
-  /**
-   *
-   */
-  const std::map<std::string, std::shared_ptr<Species>> & speciesMap() const { return _species; }
+  // /**
+  //  *
+  //  */
+  const std::vector<std::shared_ptr<Species>> & species() const { return _species; }
+  const std::vector<std::shared_ptr<const Species>> & transientSpecies() const
+  {
+    return _transient_species;
+  }
+
+  const std::vector<std::string> & speciesNames() const { return _species_names; }
   /**
    * Method checks for lumped states of a species
    * if there is one it will return the pointer to the species the name is lumped into
@@ -117,16 +116,22 @@ private:
    * Writes a species summary to a file
    */
   void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
-  /// the map that holds all of the species in the mechanism
-  std::map<std::string, std::shared_ptr<Species>> _species;
-  /// the map of species names to the state they are lumped into
-  std::unordered_map<std::string, std::shared_ptr<Species>> _lumped_map;
+  /// the vector that holds all of the species in the mechanism
+  std::vector<std::shared_ptr<Species>> _species;
+  /// the map between Species and their position in the species vector
+  std::unordered_map<std::string, SpeciesId> _species_indicies;
+  /// the list of all of the names of species
+  /// this is only filled after indexSpecies() has been called.
+  std::vector<std::string> _species_names;
+  /// vector that holds all of the transient species in the mechanism
+  /// this is only filled after indexSpecies() has been called.
+  std::vector<std::shared_ptr<const Species>> _transient_species;
+  /// the map of species names to the name of the state they are lumped into
+  std::map<std::string, std::string> _lumped_map;
   /// the map of species names to latex overrides
   std::unordered_map<std::string, std::string> _latex_overrides;
-  /// the mape between species ids and their names
-  std::unordered_map<SpeciesId, std::string> _species_names;
   /// the mass of every species on the periodic table
-  /// masses are in
+  /// these are molar masses in g / mol
   std::unordered_map<std::string, double> _default_masses = {{"hnu", 0.0},
                                                              {"M", 1},
                                                              {"e", 5.4857990943E-4},

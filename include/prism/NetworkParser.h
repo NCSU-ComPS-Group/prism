@@ -140,12 +140,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::shared_ptr<const Species>> & transientSpecies() const
-  {
-    preventInvalidDataFetch();
-    return _transient_species;
-  }
-
+  const std::vector<std::shared_ptr<const Species>> & transientSpecies() const;
   /**
    * Gets the names of all of the species in the network
    * This function will also exist the program if there are any errors in the
@@ -153,11 +148,7 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::string> & speciesNames() const
-  {
-    preventInvalidDataFetch();
-    return _all_species_names;
-  }
+  const std::vector<std::string> & speciesNames() const;
 
   /**
    * Gets all of the species in the network
@@ -166,23 +157,10 @@ public:
    * Species are ordered based on their ids and will always be in id order
    * @returns a vector of shared_ptr for all unique species in the network
    */
-  const std::vector<std::shared_ptr<const Species>> & species() const
-  {
-    preventInvalidDataFetch();
-    return _all_species;
-  }
-
-  /**
-   * Fetchs the string representation of a species given its id
-   * @param id id of the species (the position in the vector provided by the getSpecies() method )
-   * @throws invalid_argument if you have requested a species with an id that is not in the network
-   */
-  const std::string & getSpeciesNameById(const SpeciesId id) const;
+  const std::vector<std::shared_ptr<Species>> & species() const;
 
   void writeReactionTable(const std::string & file) const;
   void writeReactionTable(const std::string & file, TableWriterBase & writer) const;
-
-  // void writeSpeciesSummary(const std::string & file) const;
   void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
 
 private:
@@ -209,12 +187,6 @@ private:
   /// wehter or not to actually read data from files
   /// this is only false in testing mode
   bool _read_xsec_files;
-  /// a list of all of the unqiue species that exist in the network that have a non-zero stoichiometric coefficient in atleast one reaction
-  std::vector<std::shared_ptr<const Species>> _transient_species;
-  /// a list of all of the unqiue species that exist in the network
-  std::vector<std::shared_ptr<const Species>> _all_species;
-  /// a list of all of the unqiue species name in the same order as the transient species vector
-  std::vector<std::string> _all_species_names;
   /// Map of YAML::Node's from all of the files which networks have been parsed
   std::unordered_map<std::string, YAML::Node> _networks;
   /// Map for keeping track of the bib files that belong to each network

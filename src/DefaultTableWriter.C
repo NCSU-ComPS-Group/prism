@@ -28,7 +28,7 @@ DefaultTableWriter::beginDocument(const std::vector<std::string> & bib_files)
   for (const auto & file : bib_files)
   {
     const auto & bib_file = splitByDelimiter(file, "/");
-    _table_str << "\\addbibresource{" + bib_file.back() + "}\n";
+    _table_str << "\\addbibresource{" << bib_file.back() << "}\n";
   }
   _table_str << "\n\n";
   _table_str << "\\begin{document}\n\n";
@@ -37,10 +37,10 @@ DefaultTableWriter::beginDocument(const std::vector<std::string> & bib_files)
 void
 DefaultTableWriter::endDocument()
 {
-  for (unsigned int i = 1; i < _inverse_note_numbers.size() + 1; ++i)
+  for (unsigned int i = 0; i < _inverse_note_numbers.size(); ++i)
   {
-    _table_str << fmt::format("\\footnotemark[{:d}]", i) + "{" + _inverse_note_numbers[i] +
-                      "}\\\\ \n";
+    _table_str << fmt::format("\\footnotemark[{:d}]", i) << "{" << _inverse_note_numbers[i + 1]
+               << "}\\\\ \n";
   }
   _table_str << "\\newpage\n";
   _table_str << "\\printbibliography\n\n";
@@ -85,15 +85,15 @@ void
 DefaultTableWriter::addFunctionalReaction(const std::shared_ptr<const Reaction> & r)
 {
   _rxn_count++;
-  _table_str << fmt::format("      {:d}", _rxn_count) + " & ";
-  _table_str << r->latexRepresentation() + " & ";
+  _table_str << fmt::format("      {:d}", _rxn_count) << " & ";
+  _table_str << r->latexRepresentation() << " & ";
   for (const auto & param : r->functionParams())
   {
-    _table_str << formatScientific(param) + " & ";
+    _table_str << formatScientific(param) << " & ";
   }
-  _table_str << formatScientific(r->deltaEnergyElectron()) + " & ";
-  _table_str << formatScientific(r->deltaEnergyGas()) + " & ";
-  _table_str << r->getReferencesAsString() + " ";
+  _table_str << formatScientific(r->deltaEnergyElectron()) << " & ";
+  _table_str << formatScientific(r->deltaEnergyGas()) << " & ";
+  _table_str << r->getReferencesAsString() << " ";
   addNotes(r->notes());
   _table_str << "\\\\\n";
 }
@@ -102,12 +102,12 @@ void
 DefaultTableWriter::addTabulatedReaction(const std::shared_ptr<const Reaction> & r)
 {
   _rxn_count++;
-  _table_str << fmt::format("      {:d}", _rxn_count) + " & ";
-  _table_str << r->latexRepresentation() + " & ";
+  _table_str << fmt::format("      {:d}", _rxn_count) << " & ";
+  _table_str << r->latexRepresentation() << " & ";
   _table_str << " & & EEDF & & & ";
-  _table_str << formatScientific(r->deltaEnergyElectron()) + " & ";
-  _table_str << formatScientific(r->deltaEnergyGas()) + " & ";
-  _table_str << r->getReferencesAsString() + " ";
+  _table_str << formatScientific(r->deltaEnergyElectron()) << " & ";
+  _table_str << formatScientific(r->deltaEnergyGas()) << " & ";
+  _table_str << r->getReferencesAsString() << " ";
   addNotes(r->notes());
   _table_str << "\\\\\n";
 }
