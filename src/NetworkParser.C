@@ -126,7 +126,7 @@ NetworkParser::parseReactions(const YAML::Node & network,
         throw InvalidReaction(rxn_list->back()->expression(),
                               "Elastic reactions can only be in the '" + RATE_BASED + "' block");
 
-      printGreen("Reaction Validated: " + rxn->expression() + "\n");
+      cout << makeGreen("Reaction Validated: " + rxn->expression()) << endl;
       if (type == RATE_BASED)
         _factory.addRateBasedReaction(rxn);
 

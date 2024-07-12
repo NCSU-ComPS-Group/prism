@@ -37,9 +37,9 @@ DefaultTableWriter::beginDocument(const std::vector<std::string> & bib_files)
 void
 DefaultTableWriter::endDocument()
 {
-  for (unsigned int i = 0; i < _inverse_note_numbers.size(); ++i)
+  for (unsigned int i = 1; i < _inverse_note_numbers.size() + 1; ++i)
   {
-    _table_str << fmt::format("\\footnotemark[{:d}]", i) << "{" << _inverse_note_numbers[i + 1]
+    _table_str << fmt::format("\\footnotemark[{:d}]", i) << "{" << _inverse_note_numbers[i]
                << "}\\\\ \n";
   }
   _table_str << "\\newpage\n";

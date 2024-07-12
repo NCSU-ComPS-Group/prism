@@ -7,9 +7,28 @@
       "type": "string",
       "default": ""
     },
+    "data-delimiter": {
+      "type": "string",
+      "default": ""
+    },
     "data-path": {
       "type": "string",
       "default": ""
+    },
+    "constant-species": {
+      "anyOf": [
+        {
+          "type": "string",
+          "default": ""
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      ]
     },
     "custom-species": {
       "type": "array",

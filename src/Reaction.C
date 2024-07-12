@@ -411,8 +411,8 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(lumped_name);
-      _notes.push_back("Species \\lq " + reactant_name + "\\rq{}  has been lumped into \\lq " +
-                       lumped_name + "\\rq");
+      _notes.push_back("Species \\lq " + _reactants[i].lock()->latexRepresentation() + "\\rq{}  has been lumped into \\lq " +
+                       lumped_state.lock()->latexRepresentation() + "\\rq");
     }
 
     // replace the data needed with the lumped state
@@ -450,8 +450,8 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(lumped_name);
-      _notes.push_back("Species \\lq " + product_name + "\\rq{}  has been lumped into \\lq " +
-                       lumped_name + "\\rq");
+      _notes.push_back("Species \\lq " +  _products[i].lock()->latexRepresentation() + "\\rq{}  has been lumped into \\lq " +
+                       lumped_state.lock()->latexRepresentation()  + "\\rq");
     }
 
     // replace the data needed with the lumped state

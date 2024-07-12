@@ -1,5 +1,7 @@
-# 0 species lumped into 0
+# 2 species lumped into 1
 lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
 
 # species which are never consumed
 all-sources:
@@ -34,19 +36,19 @@ reacion-summary:
     - rate-based: 7
       sources:
         - count: 1
-        - Ar + e -> Ar* + e
+        - Ar + e -> Ar(a) + e
 
       balanced:
         - count: 0
 
       sinks:
         - count: 6
-        - Ar* + e -> Ar+ + 2e
-        - Ar* + e -> Ar + e
-        - Ar* + e -> Ar^r + e
-        - 2Ar* -> Ar+ + Ar + e
-        - Ar* + Ar -> 2Ar
-        - Ar* + 2Ar -> Ar2 + Ar
+        - Ar(b) + e -> Ar+ + 2e
+        - Ar(a) + e -> Ar + e
+        - Ar(b) + e -> Ar^r + e
+        - 2Ar(a) -> Ar+ + Ar + e
+        - Ar(b) + Ar -> 2Ar
+        - Ar(a) + 2Ar -> Ar2 + Ar
 
     - xsec-based: 0
       sources:
@@ -63,14 +65,14 @@ reacion-summary:
       sources:
         - count: 3
         - Ar + e -> Ar+ + 2e
-        - Ar* + e -> Ar+ + 2e
-        - 2Ar* -> Ar+ + Ar + e
+        - Ar(b) + e -> Ar+ + 2e
+        - 2Ar(a) -> Ar+ + Ar + e
 
       balanced:
         - count: 4
-        - Ar + e -> Ar* + e
-        - Ar* + e -> Ar + e
-        - Ar* + e -> Ar^r + e
+        - Ar + e -> Ar(a) + e
+        - Ar(a) + e -> Ar + e
+        - Ar(b) + e -> Ar^r + e
         - Ar + e -> Ar + e
 
       sinks:
@@ -91,8 +93,8 @@ reacion-summary:
       sources:
         - count: 3
         - Ar + e -> Ar+ + 2e
-        - Ar* + e -> Ar+ + 2e
-        - 2Ar* -> Ar+ + Ar + e
+        - Ar(b) + e -> Ar+ + 2e
+        - 2Ar(a) -> Ar+ + Ar + e
 
       balanced:
         - count: 0
@@ -114,7 +116,7 @@ reacion-summary:
     - rate-based: 1
       sources:
         - count: 1
-        - Ar* + 2Ar -> Ar2 + Ar
+        - Ar(a) + 2Ar -> Ar2 + Ar
 
       balanced:
         - count: 0
@@ -136,7 +138,7 @@ reacion-summary:
     - rate-based: 1
       sources:
         - count: 1
-        - Ar* + e -> Ar^r + e
+        - Ar(b) + e -> Ar^r + e
 
       balanced:
         - count: 0
@@ -160,9 +162,9 @@ reacion-summary:
     - rate-based: 7
       sources:
         - count: 3
-        - Ar* + e -> Ar + e
-        - 2Ar* -> Ar+ + Ar + e
-        - Ar* + Ar -> 2Ar
+        - Ar(a) + e -> Ar + e
+        - 2Ar(a) -> Ar+ + Ar + e
+        - Ar(b) + Ar -> 2Ar
 
       balanced:
         - count: 1
@@ -170,9 +172,9 @@ reacion-summary:
 
       sinks:
         - count: 3
-        - Ar + e -> Ar* + e
+        - Ar + e -> Ar(a) + e
         - Ar + e -> Ar+ + 2e
-        - Ar* + 2Ar -> Ar2 + Ar
+        - Ar(a) + 2Ar -> Ar2 + Ar
 
     - xsec-based: 0
       sources:

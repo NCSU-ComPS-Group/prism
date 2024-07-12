@@ -43,12 +43,6 @@ public:
   void setReadXsecFiles(const bool read_xsec_files) { _read_xsec_files = read_xsec_files; }
 #endif
 
-  /**
-   * Writes a summary of the species in the network to a file
-   * @param file the file which you want to write the species summary to
-   */
-  void writeSpeciesSummary(const std::string & file);
-
   // Various getter methods for the different categories of reactions
   // note these methods will exit the program if you have any errors in your reaction network
   // we do not let users to perform a simulation with errors in the network or with lack of
@@ -151,8 +145,30 @@ public:
    */
   const std::vector<std::shared_ptr<Species>> & species() const;
 
+  /**
+   * Writes the latex table representation of the reaction mechanism
+   * this method uses the default table writer provided by PRISM
+   * @param file the file which you want to write the species summary to
+   */
   void writeReactionTable(const std::string & file) const;
+  /**
+   * Writes the latex table representation of the reaction mechanism
+   * this method uses whatever custom table writer that is provided to it
+   * @param file the file which you want to write the species summary to
+   */
   void writeReactionTable(const std::string & file, TableWriterBase & writer) const;
+  /**
+   * Writes a summary of the species in the network to a file
+   * this method using the default summary writer provided by PRISM
+   * @param file the file which you want to write the species summary to
+   */
+  void writeSpeciesSummary(const std::string & file);
+  /**
+   * Writes a summary of the species in the network to a file
+   * this method uses whatever custom summary writer that is provided to it
+   * @param file the file which you want to write the species summary to
+   * @param writer the custom species writer that will be used to create the species summary
+   */
   void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
 
 private:

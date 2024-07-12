@@ -1,24 +1,24 @@
 
 Starting to parse 'rate-based' reaction block
 
-Reaction Validated: Ar + e -> Ar* + e
+Reaction Validated: Ar + e -> Ar(a) + e
 Reaction Validated: Ar + e -> Ar+ + 2e
-Reaction Validated: Ar* + e -> Ar+ + 2e
-Reaction Validated: Ar* + e -> Ar + e
-Reaction Validated: Ar* + e -> Ar^r + e
-Reaction Validated: 2Ar* -> Ar+ + Ar + e
-Reaction Validated: Ar* + Ar -> 2Ar
-Reaction Validated: Ar* + 2Ar -> Ar2 + Ar
+Reaction Validated: Ar(b) + e -> Ar+ + 2e
+Reaction Validated: Ar(a) + e -> Ar + e
+Reaction Validated: Ar(b) + e -> Ar^r + e
+Reaction Validated: 2Ar(a) -> Ar+ + Ar + e
+Reaction Validated: Ar(b) + Ar -> 2Ar
+Reaction Validated: Ar(a) + 2Ar -> Ar2 + Ar
 Reaction Validated: Ar + e -> Ar + e
 
-id: 0 Ar + e -> Ar* + e
+id: 0 Ar + e -> Ar(a) + e
 id: 1 Ar + e -> Ar+ + 2e
-id: 2 Ar* + e -> Ar+ + 2e
-id: 3 Ar* + e -> Ar + e
-id: 4 Ar* + e -> Ar^r + e
-id: 5 2Ar* -> Ar+ + Ar + e
-id: 6 Ar* + Ar -> 2Ar
-id: 7 Ar* + 2Ar -> Ar2 + Ar
+id: 2 Ar(b) + e -> Ar+ + 2e
+id: 3 Ar(a) + e -> Ar + e
+id: 4 Ar(b) + e -> Ar^r + e
+id: 5 2Ar(a) -> Ar+ + Ar + e
+id: 6 Ar(b) + Ar -> 2Ar
+id: 7 Ar(a) + 2Ar -> Ar2 + Ar
 id: 8 Ar + e -> Ar + e
 
 Species: Ar* id: 0
@@ -30,27 +30,159 @@ Species: Ar* id: 0
    -1   3.0000e-15 (Ar*)^1 (Ar)^1
    -1   1.1000e-31 (Ar*)^1 (Ar)^2
 
-Species: Ar id: 1
-   -1   9.9736e+08 (Ar)^1 (e)^1
-   -1   1.8670e+09 (Ar)^1 (e)^1
-    1   1.1882e+09 (Ar*)^1 (e)^1
-    1   6.2000e-10 (Ar*)^2
-    1   3.0000e-15 (Ar*)^1 (Ar)^1
-   -1   1.1000e-31 (Ar*)^1 (Ar)^2
-
-Species: e id: 2
+Species: e id: 1
     1   1.8670e+09 (Ar)^1 (e)^1
     1   7.5471e+10 (Ar*)^1 (e)^1
     1   6.2000e-10 (Ar*)^2
 
-Species: Ar+ id: 3
+Species: Ar+ id: 2
     1   1.8670e+09 (Ar)^1 (e)^1
     1   7.5471e+10 (Ar*)^1 (e)^1
     1   6.2000e-10 (Ar*)^2
 
-Species: Ar2 id: 4
+Species: Ar2 id: 3
     1   1.1000e-31 (Ar*)^1 (Ar)^2
 
-Species: Ar^r id: 5
+Species: Ar^r id: 4
     1   2.0000e-07 (Ar*)^1 (e)^1
 
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+all-sources:
+  - species: [Ar+, Ar2, Ar^r]
+constant-species:
+  - species: [Ar]
+all-sinks:
+  - species: []
+unique-species:
+  - count: 6
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
+reacion-summary:
+  - Ar*:
+      - rate-based: 7
+        sources:
+          - count: 1
+          - Ar + e -> Ar(a) + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 6
+          - Ar(b) + e -> Ar+ + 2e
+          - Ar(a) + e -> Ar + e
+          - Ar(b) + e -> Ar^r + e
+          - 2Ar(a) -> Ar+ + Ar + e
+          - Ar(b) + Ar -> 2Ar
+          - Ar(a) + 2Ar -> Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - e:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar + e -> Ar+ + 2e
+          - Ar(b) + e -> Ar+ + 2e
+          - 2Ar(a) -> Ar+ + Ar + e
+        balanced:
+          - count: 4
+          - Ar + e -> Ar(a) + e
+          - Ar(a) + e -> Ar + e
+          - Ar(b) + e -> Ar^r + e
+          - Ar + e -> Ar + e
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar+:
+      - rate-based: 3
+        sources:
+          - count: 3
+          - Ar + e -> Ar+ + 2e
+          - Ar(b) + e -> Ar+ + 2e
+          - 2Ar(a) -> Ar+ + Ar + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar2:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(a) + 2Ar -> Ar2 + Ar
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar^r:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(b) + e -> Ar^r + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar(a) + e -> Ar + e
+          - 2Ar(a) -> Ar+ + Ar + e
+          - Ar(b) + Ar -> 2Ar
+        balanced:
+          - count: 1
+          - Ar + e -> Ar + e
+        sinks:
+          - count: 3
+          - Ar + e -> Ar(a) + e
+          - Ar + e -> Ar+ + 2e
+          - Ar(a) + 2Ar -> Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0

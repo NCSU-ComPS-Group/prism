@@ -1,3 +1,0 @@
-
-constant-species:
-  - species: [Ar]
