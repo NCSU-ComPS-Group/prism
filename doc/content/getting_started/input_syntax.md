@@ -2,13 +2,15 @@
 
 The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by PRISM.
 
-- Bibliography Block
-- Data Path Block
-- Custom Species Block
-- Lumped Species Block
-- $\LaTeX$ Overrides Block
-- Rate Based Reactions Block
-- Cross Section Based Reactions Block
+- Bibliography
+- Data Path
+- Data Delimiter
+- Constant Species
+- Custom Species
+- Lumped Species
+- $\LaTeX$ Overrides
+- Rate Based Reactions
+- Cross Section Based Reactions
 
 ## Bibliography Block
 
@@ -41,6 +43,32 @@ The reaction object that is created will prvoide the path to the data file in th
 
 ```c++
   "path/to/data/data.txt"
+```
+
+## Data Delimiter Block
+
+PRISM currently only supports data from files where the files have two columns that are seperated by a delimiter. In order to specify this delimiter you can use the `data-delimiter` block. This will set the delimiter to be used on all of the data provided by a given mechanism file.
+
+```yaml
+  data-delimiter: ","
+```
+
+If no delimiter is explicity provided then PRISM assumes data is provided in a CSV format.
+
+## Constant Species Block
+
+There may be some situations where it makes sense to have a species in a reaction network where you assume the effects of the reactions are negligible on the concentration of the species. To accomodate this you can use the `constant-species` block. This block excludes the species from being included in the list of transient species that can be obtained via `NetworkParser::transientSpecies()`. Additionally, the species will have a higher id value as a result of being held constant and it's location in the species list, obtained via `NetworkParser::species()`, will also be changed accordinly.
+
+This data be provided either as a single species
+
+```yaml
+  constant-species: Ar
+```
+
+or as a list of species
+
+```yaml
+  constant-species: [N2, Ar]
 ```
 
 ## Custom Species Block
