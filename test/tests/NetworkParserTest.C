@@ -238,7 +238,7 @@ TEST_F(NetworkParserTest, LumpedSpecies)
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
   auto & np = prism::NetworkParser::instance();
-  np.setDelimiter("\t");
+  np.setDelimiter(",");
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
 
   np.writeSpeciesSummary("simple_argon_rate_summary_out.yaml");
@@ -435,7 +435,7 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
 TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
   auto & np = prism::NetworkParser::instance();
-  np.setDelimiter("\t");
+  np.setDelimiter(",");
 
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
   np.writeSpeciesSummary("simple_argon_xsec_summary_out.yaml");

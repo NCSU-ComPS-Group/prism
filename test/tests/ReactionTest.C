@@ -276,7 +276,7 @@ TEST(Reaction, InterpolationReaction)
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
   rxn_input[FILE_KEY] = "inputs/data/ar_deexcitation.txt";
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, ",");
 
   EXPECT_REL_TOL(r.sampleData(8.580209E-01), 2.409262E+08);
   // second parameter ignored
