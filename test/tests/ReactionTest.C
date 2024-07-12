@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "prism/prism.h"
 #include "yaml-cpp/yaml.h"
+#include "RelativeError.h"
 
 using namespace std;
 using namespace prism;
@@ -262,8 +263,10 @@ TEST(Reaction, ConstantReactionData)
   Reaction r = Reaction(rxn_input, 0, "", "", false, false, "");
 
   EXPECT_EQ(r.sampleData(1), 2.0);
+  // second parameter ignored
   EXPECT_EQ(r.sampleData(1, 4), 2.0);
   EXPECT_EQ(r.sampleData(10), 2.0);
+  // second parameter ignored
   EXPECT_EQ(r.sampleData(10, 5), 2.0);
 }
 
@@ -275,16 +278,75 @@ TEST(Reaction, InterpolationReaction)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
 
-  EXPECT_EQ(r.sampleData(8.580209E-01), 2.409262E+08);
-  EXPECT_EQ(r.sampleData(8.580209E-01, 4), 2.409262E+08);
-  EXPECT_EQ(r.sampleData(1.600345E+01), 1.118470E+09);
-  EXPECT_EQ(r.sampleData(1.600345E+01, 5), 1.118470E+09);
-  EXPECT_EQ(r.sampleData(1.600345E+01), 1.118470E+09);
-  EXPECT_EQ(r.sampleData(1.600345E+01, 5), 1.118470E+09);
-
-  EXPECT_NEAR(r.sampleData(3.9927655), 7.87687850E+08, 1e-6);
-  EXPECT_NEAR(r.sampleData(3.9927655, 5), 7.87687850E+08, 1e-6);
-
+  EXPECT_REL_TOL(r.sampleData(8.580209E-01), 2.409262E+08);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(8.580209E-01, 4), 2.409262E+08);
+  EXPECT_REL_TOL(r.sampleData(1.600345E+01), 1.118470E+09);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(1.600345E+01, 5), 1.118470E+09);
+  EXPECT_REL_TOL(r.sampleData(1.600345E+01), 1.118470E+09);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(1.600345E+01, 5), 1.118470E+09);
+  EXPECT_REL_TOL(r.sampleData(3.9927655), 7.87687850E+08);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(3.9927655, 5), 7.87687850E+08);
   EXPECT_THROW(r.sampleData(5e-01), invalid_argument);
   EXPECT_THROW(r.sampleData(1.65e+01), invalid_argument);
+}
+
+TEST(Reaction, ArrheniusData1)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, 0.25]");
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+
+
+  EXPECT_REL_TOL(r.sampleData(5.0), 7.52120618617);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(5.0, 4), 7.52120618617);
+  EXPECT_REL_TOL(r.sampleData(7.0), 8.18124697847);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(7.0, 6), 8.18124697847);
+}
+
+TEST(Reaction, ArrheniusData2)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, 0.25, 4.0]");
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+
+  EXPECT_REL_TOL(r.sampleData(5.0), 3.37949578455);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(5.0, 4), 3.37949578455);
+  EXPECT_REL_TOL(r.sampleData(7.0), 4.62009842936);
+  // second parameter ignored
+  EXPECT_REL_TOL(r.sampleData(7.0, 6), 4.62009842936);
+}
+
+TEST(Reaction, ArrheniusData3)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, 0.25, 4.0, 0.75]");
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+
+  EXPECT_REL_TOL(r.sampleData(5.0, 3.0), 122.528705027);
+  EXPECT_REL_TOL(r.sampleData(7.0, 5.0), 245.710505204);
+}
+
+TEST(Reaction, FullArrhenius)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, 0.25, 4.0, 0.75, 10]");
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+
+  EXPECT_REL_TOL(r.sampleData(5.0, 3.0), 4.37108820797);
+  EXPECT_REL_TOL(r.sampleData(7.0, 5.0), 33.2533008159);
 }

@@ -16,3 +16,4 @@ win*
 *.yml
 *.tex
 *.vscode
+*.so

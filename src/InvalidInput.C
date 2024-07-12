@@ -38,7 +38,7 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
     ostringstream oss;
     oss << node;
 
-    _error = message + "\n\nInvalid Input in Block:\n\n" + oss.str() + "\n\n";
+    _error = message + "\n\nInvalid Input:\n\n" + oss.str() + "\n\n";
   }
 
   const char*

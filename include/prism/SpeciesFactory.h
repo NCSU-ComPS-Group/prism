@@ -6,7 +6,7 @@
 #include "yaml-cpp/yaml.h"
 
 #include "Species.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 
 namespace prism
 {
@@ -33,6 +33,7 @@ public:
   void collectCustomSpecies(const YAML::Node & network);
   void collectLumpedSpecies(const YAML::Node & network);
   void collectLatexOverrides(const YAML::Node & network);
+  void collectConstantSpecies(const YAML::Node & network);
   /**
    * Gets the mass of a requested species
    * @param name the string representation of the species
@@ -128,6 +129,8 @@ private:
   std::vector<std::shared_ptr<const Species>> _transient_species;
   /// the map of species names to the name of the state they are lumped into
   std::map<std::string, std::string> _lumped_map;
+  /// the set of all species in the network which are held constant
+  std::set<std::string> _constant_species;
   /// the map of species names to latex overrides
   std::unordered_map<std::string, std::string> _latex_overrides;
   /// the mass of every species on the periodic table

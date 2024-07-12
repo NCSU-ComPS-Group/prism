@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "yaml-cpp/yaml.h"
 #include "Species.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 
 namespace prism
 {

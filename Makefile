@@ -1,5 +1,5 @@
 WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
-CXXFLAGS = -std=c++17 -O3 $(WARNING_FLAGS)
+CXXFLAGS = -std=c++17 -O3 $(WARNING_FLAGS) -g
 # Source file and executable name
 SRC = main.C
 EXE = main

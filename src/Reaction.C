@@ -208,8 +208,6 @@ void
 Reaction::setSides()
 {
 
-  cout << _expression << endl;
-
   vector<string> sides = splitByDelimiter(_expression, " -> ");
   vector<string> lhs_str = splitByDelimiter(sides[0], " + ");
   vector<string> rhs_str = splitByDelimiter(sides[1], " + ");
@@ -610,22 +608,22 @@ double
 Reaction::partialArrhenius2(const double T_e, const double /*T_g*/) const
 {
   return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / (k_B * T_e));
+         std::exp(-_params[2] / T_e);
 }
 
 double
 Reaction::partialArrhenius3(const double T_e, const double T_g) const
 {
   return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / (k_B * T_e)) * std::pow(T_g / ROOM_TEMP_EV, _params[3]);
+         std::exp(-_params[2] / T_e) * std::pow(T_g / ROOM_TEMP_EV, _params[3]);
+
 }
 
 double
 Reaction::fullArrhenius(const double T_e, const double T_g) const
 {
   return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / (k_B * T_e)) * std::pow(T_g / ROOM_TEMP_EV, _params[3]) *
-         std::exp(-_params[4] / (k_B * T_g));
+         std::exp(-_params[2] / T_e) * std::pow(T_g / ROOM_TEMP_EV, _params[3]) * std::exp(-_params[4] / T_g);
 }
 
 const vector<double> &

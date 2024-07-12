@@ -1,3 +1,4 @@
-![Linux Build](https://github.com/gsgall/prism/workflows/linux-build/badge.svg)
-![macOS Build](https://github.com/gsgall/prism/workflows/macos-build/badge.svg)
+![Linux Build](https://github.com/NCSU-ComPS-Group/prism/workflows/linux-build/badge.svg)
+![macOS Build](https://github.com/NCSU-ComPS-Group/prism/workflows/macos-build/badge.svg)
+
 

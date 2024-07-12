@@ -126,14 +126,13 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 
 | Parameter | Description | Data Type | Required? | Default Value |
 | - | - | - | - | - |
-| reaction | The expression of the reaction see, [reaction_parsing.md] for the expected form |  string | always | N/A |
+| reaction | The symbolic expression of the reaction see |  string | always | N/A |
 | delta-eps-e | The change in energy of electrons | float | no | 0.00 |
 | delta-eps-g | The change in energy of the background gas | float | no | 0.00 |
 | file | The file where the tabulated data is stored | string | yes, if params is not provided | "" |
-| eqn-type | The name of the type of analytic express the rates or cross sections take | string | no | arrhenius |
-| params | The parameters required for evaluation of the analytic expression | A float or a list of floats | yes, if eqn-type is provided | [] |
-| database | The database where you got the cross sections from | string | no | N/A |
-| reference | The reference for where the reaction came from | string or a list of strings | always | N/A |
+| params | The parameters required for evaluation of the analytic expression | A float or a list of floats | yes, if file is not provided | [] |
+| reference | The cite keys for recources where the reaction came from | A string or a list of strings | always | N/A |
+| notes | Any additional helpful notes you may want to add | A string or a list of strings | never | [] |
 
 
 ### Reaction Rate/Cross Section Data
@@ -155,11 +154,11 @@ The second is reactions which have an Arrhenius expression for their cross secti
   \left(
     \frac{T_e}{0.025 \;\;[\text{eV}]}
   \right)^{\:n_e}\:
-  \exp\left(-\frac{E_e}{k_b T_e}\right)
+  \exp\left(-\frac{E_e}{T_e}\right)
   \left(
     \frac{T_g}{0.025 \;\;[\text{eV}]}
   \right)^{\:n_g}\:
-  \exp\left(-\frac{E_g}{k_b T_g}\right)
+  \exp\left(-\frac{E_g}{T_g}\right)
 \end{equation}
 
 

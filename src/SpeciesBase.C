@@ -1,6 +1,6 @@
 #include "SpeciesBase.h"
 #include "StringHelper.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 #include "InvalidInput.h"
 
 using namespace std;

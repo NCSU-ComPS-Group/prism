@@ -6,7 +6,7 @@
 #include "NetworkParser.h"
 #include "InvalidInput.h"
 #include "YamlHelper.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 #include "StringHelper.h"
 #include "SpeciesFactory.h"
 #include "BibTexHelper.h"
@@ -29,7 +29,6 @@ NetworkParser::NetworkParser()
     _read_xsec_files(true),
     _rate_id(0),
     _xsec_id(0)
-
 {
 }
 
@@ -158,6 +157,7 @@ NetworkParser::parseNetwork(const string & file)
   checkFile(file);
   const YAML::Node network = YAML::LoadFile(file);
 
+
   const auto extra_params = getExtraParams(network, allowed_network_inputs);
 
   if (extra_params.size() != 0)
@@ -178,8 +178,8 @@ NetworkParser::parseNetwork(const string & file)
     _bibs[file] = getParam<string>(BIB_KEY, network, _check_refs);
   } catch (const InvalidInput & e) {
     InvalidInputExit(e.what());
-    exit(EXIT_FAILURE);
   }
+
 
   if (_check_refs)
     checkBibFile(_bibs[file]);
@@ -192,9 +192,12 @@ NetworkParser::parseNetwork(const string & file)
     exit(EXIT_FAILURE);
   }
 
+
   _factory.collectCustomSpecies(network);
   _factory.collectLumpedSpecies(network);
   _factory.collectLatexOverrides(network);
+  _factory.collectConstantSpecies(network);
+
 
   if (!paramProvided(RATE_BASED, network, OPTIONAL) &&
       !paramProvided(XSEC_BASED, network, OPTIONAL))

@@ -9,8 +9,9 @@ using namespace std;
 namespace prism
 {
 
-Species::Species(const string & name)
+Species::Species(const string & name, const bool marked_constant)
   : SpeciesBase(name),
+    _marked_constant(marked_constant),
     _sub_species(decomposeSpecies()),
     _neutral_ground_state(setNeutralGroundState())
 {

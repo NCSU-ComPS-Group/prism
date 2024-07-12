@@ -1,21 +1,416 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PRISM Syntax",
+  "type": "object",
   "properties": {
-    "value": {
-      "oneOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "number"
+    "bibliography": {
+      "type": "string",
+      "default": ""
+    },
+    "data-path": {
+      "type": "string",
+      "default": ""
+    },
+    "custom-species": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          },
+          "mass": {
+            "anyOf": [
+              {
+                "type": "number",
+                "default": 0
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "default": []
+              }
+            ]
           }
+        },
+        "required": [
+          "name",
+          "mass"
+        ],
+        "allOf": [
+          {
+            "anyOf": [
+              {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "mass": {
+                    "type": "number"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "name": {
+                    "type": "array"
+                  },
+                  "mass": {
+                    "type": "array"
+                  },
+                  "minItems": {
+                    "$data": "1/mass/minItems"
+                  },
+                  "maxItems": {
+                    "$data": "1/mass/maxItems"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "default": [
+        {
+          "name": "",
+          "mass": 0
+        }
+      ]
+    },
+    "lumped-species": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lumped": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          },
+          "actual": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          }
+        },
+        "required": [
+          "lumped",
+          "actual"
+        ]
+      },
+      "default": [
+        {
+          "lumped": "",
+          "actual": ""
+        }
+      ]
+    },
+    "latex-overrides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "species": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          },
+          "latex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          }
+        },
+        "required": [
+          "species",
+          "latex"
+        ],
+        "allOf": [
+          {
+            "anyOf": [
+              {
+                "properties": {
+                  "species": {
+                    "type": "string"
+                  },
+                  "latex": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "species": {
+                    "type": "array"
+                  },
+                  "latex": {
+                    "type": "array"
+                  },
+                  "minItems": {
+                    "$data": "1/species/minItems"
+                  },
+                  "maxItems": {
+                    "$data": "1/species/maxItems"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "default": [
+        {
+          "species": "",
+          "latex": ""
+        }
+      ]
+    },
+    "rate-based": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reaction": {
+            "type": "string",
+            "default": ""
+          },
+          "file" : {
+            "type" : "string"
+          },
+          "params": {
+            "anyOf": [
+              {
+                "type": "number",
+                "default": 0.0
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "default": []
+              }
+            ]
+          },
+          "delta-eps-e": {
+            "type": "number"
+          },
+          "delta-eps-g": {
+            "type": "number"
+          },
+          "references": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          }
+        },
+        "required": [
+          "reaction",
+          "references"
+        ],
+        "oneOf": [
+          { "required": ["file"], "properties": { "params": { "not": {} } } },
+          { "required": ["params"], "properties": { "file": { "not": {} } } }
+        ]
+      },
+      "default": [
+        {
+          "params": [],
+          "references": "",
+          "notes": ""
+        }
+      ]
+    },
+    "xsec-based": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reaction": {
+            "type": "string",
+            "default": ""
+          },
+          "file": {
+            "type": "string"
+          },
+          "params": {
+            "anyOf": [
+              {
+                "type": "number",
+                "default": 0.0
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "default": []
+              }
+            ]
+          },
+          "delta-eps-e": {
+            "type": "number"
+          },
+          "delta-eps-g": {
+            "type": "number"
+          },
+          "references": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "default": ""
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            ]
+          }
+        },
+        "required": [
+          "reaction",
+          "references"
+        ],
+        "oneOf": [
+          {
+            "required": [
+              "file"
+            ],
+            "properties": {
+              "params": {
+                "not": {}
+              }
+            }
+          },
+          {
+            "required": [
+              "params"
+            ],
+            "properties": {
+              "file": {
+                "not": {}
+              }
+            }
+          }
+        ]
+      },
+      "default": [
+        {
+          "params": [],
+          "references": "",
+          "notes": ""
         }
       ]
     }
   },
-  "required": [
-    "value"
+  "oneOf": [
+    {
+      "required": [
+        "rate-based"
+      ]
+    },
+    {
+      "required": [
+        "xsec-based"
+      ]
+    }
   ]
 }
+

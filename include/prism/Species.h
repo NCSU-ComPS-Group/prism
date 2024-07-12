@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SpeciesBase.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 
 #include <vector>
 #include <memory>
@@ -40,13 +40,18 @@ public:
    * Constructor for the species based on its symbolic representation
    * @param name the symbol used for the species
    */
-  Species(const std::string & name);
+  Species(const std::string & name, const bool marked_constant = false);
   /**
    * getter for the unique id for the species
    * @returns its position in the vector returned by NetworkParser::species()
    */
   SpeciesId id() const { return _id; }
-  /** Comparison operator checks if the sub species have the same member variables */
+  bool markedConstant() const {return _marked_constant;}
+  bool isConstant() const {return _unbalanced_rate_based_data.size() +
+                                  _unbalanced_xsec_based_data.size() == 0
+                                  || _marked_constant;}
+
+  // /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
   /** Comparison for checking whether or not the two are not equal  */
   bool operator!=(const Species & other) const;
@@ -230,6 +235,8 @@ private:
   /// The species factory helps add reactionts to our lists
   friend class SpeciesFactory;
   SpeciesId _id;
+  /// wether or not the species is considered constant in the mechism
+  const bool _marked_constant;
   /// the list of the sub_species in the the class */
   const std::vector<SubSpecies> _sub_species;
   /// The string representation of the ground neutral state of the

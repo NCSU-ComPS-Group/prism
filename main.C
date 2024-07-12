@@ -7,9 +7,9 @@ using namespace std;
 
 int
 main()
+// main(int /*argc*/, char**argv[]*/)
 {
   auto & np = prism::NetworkParser::instance();
-  np.setDelimiter("\t");
   np.parseNetwork("example/simple_argon_rate.yaml");
   np.writeReactionTable("example/table.tex");
   np.writeSpeciesSummary("example/summary.yaml");

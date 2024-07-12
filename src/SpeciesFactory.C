@@ -7,7 +7,7 @@
 #include "SubSpecies.h"
 #include "InvalidInput.h"
 #include "YamlHelper.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 #include "StringHelper.h"
 #include "SpeciesSummaryWriterBase.h"
 
@@ -107,8 +107,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
     try {
       temp_lumped = getParam<string>(LUMPED_KEY, network[LUMPED_SPECIES][i], REQUIRED);
     } catch (const InvalidInput & e) {
-      cout << e.what();
-      exit(EXIT_FAILURE);
+      InvalidInputExit(network, LUMPED_SPECIES, e.what());
     }
 
     if (temp_lumped == "null")
@@ -117,8 +116,7 @@ SpeciesFactory::collectLumpedSpecies(const YAML::Node & network)
     try {
       temp_actuals = getParams<string>(ACTUAL_KEY, network[LUMPED_SPECIES][i], REQUIRED);
     } catch (const InvalidInput & e) {
-      cout << e.what();
-      exit(EXIT_FAILURE);
+      InvalidInputExit(network, LUMPED_SPECIES, e.what());
     }
 
     if (temp_actuals[0] == "null")
@@ -158,8 +156,7 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
     species = getParams<string>(SPECIES_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
     overrides = getParams<string>(LATEX_KEY, network[LATEX_OVERRIDES][0], REQUIRED);
   } catch(const InvalidInput & e) {
-    cout << e.what();
-    exit(EXIT_FAILURE);
+    InvalidInputExit(network, LATEX_OVERRIDES, e.what());
   }
 
   if (species.size() != overrides.size())
@@ -173,6 +170,28 @@ SpeciesFactory::collectLatexOverrides(const YAML::Node & network)
 
   for (unsigned int i = 0; i < species.size(); ++i)
     _latex_overrides[species[i]] = overrides[i];
+}
+
+void
+SpeciesFactory::collectConstantSpecies(const YAML::Node & network)
+{
+  if (!paramProvided(CONSTANT_SPECIES, network, OPTIONAL))
+    return;
+
+
+  vector<string> species;
+
+  try {
+    species = getParams<string>(CONSTANT_SPECIES, network, REQUIRED);
+  } catch(const InvalidInput & e) {
+    InvalidInputExit(network, CONSTANT_SPECIES, e.what());
+  }
+
+  if (species[0] == "null")
+    InvalidInputExit(network, CONSTANT_SPECIES, "'" + CONSTANT_SPECIES + "'" + " was parsed as 'null'");
+
+  for (const auto & s : species)
+    _constant_species.insert(s);
 }
 
 double
@@ -200,22 +219,19 @@ SpeciesFactory::getLatexOverride(const string & name) const
 weak_ptr<Species>
 SpeciesFactory::getSpecies(const string & name)
 {
-
-  for (const auto & it : _species_indicies)
-  {
-    cout << it.first << " " << it.second << endl;
-  }
   auto it = _species_indicies.find(name);
+
   if (it != _species_indicies.end())
   {
-    cout << name << " " << it->second << " " << _species.size() << endl;
     auto s = _species[it->second];
     auto s_wp = weak_ptr<Species>(s);
     return s_wp;
   }
 
   _species_indicies[name] = _species.size();
-  auto new_species = _species.emplace_back(make_shared<Species>(name));
+
+  bool marked_constant = _constant_species.find(name) == _constant_species.end() ? false : true;
+  auto new_species = _species.emplace_back(make_shared<Species>(name, marked_constant));
   return weak_ptr<Species>(new_species);
 }
 
@@ -254,6 +270,11 @@ SpeciesFactory::indexSpecies()
        _species.end(),
        [](shared_ptr<Species> & a, shared_ptr<Species> & b)
        {
+         if (!a->isConstant() && b->isConstant())
+           return true;
+
+         if (a->isConstant() && !b->isConstant())
+           return false;
          // comparing based on how many reactions the species is in and how many it is actually
          // used in
          // species which have a zero stoiciometric coefficient will not have those reactions
@@ -284,7 +305,7 @@ SpeciesFactory::indexSpecies()
     _species_indicies[s->name()] = s->id();
 
     if (s->unbalancedRateBasedReactionData().size() + s->unbalancedXSecBasedReactionData().size() !=
-        0)
+        0 && !s->isConstant())
       _transient_species.push_back(s);
   }
 }

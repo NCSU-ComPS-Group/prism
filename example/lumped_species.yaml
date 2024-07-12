@@ -5,22 +5,26 @@ lumped-species:
     actual: [N2(a), N2(b), N2(c), N2(d)]
 
 rate-based:
-  - reaction: e + N2(a) -> e + N2
-    params: 1
-    references: ionin2007physics
+  - reaction: asdflkj
+    
 
-  - reaction: e + N2 -> e + N2(a)
-    params: 1
-    references: ionin2007physics
+  # - reaction: e + N2(a) -> e + N2
+  #   params: 1
+  #   references: ionin2007physics
 
-  - reaction: e + N2(a) -> e + N2(a)
-    params: 1
-    references: ionin2007physics
 
-  - reaction: e + N2(a) -> e + N2(b)
-    params: 1
-    references: ionin2007physics
+  # - reaction: e + N2 -> e + N2(a)
+  #   params: 1
+  #   references: ionin2007physics
 
-  - reaction: N2(a) + N2(b) -> N2(c) + N2(d)
-    params: 1
-    references: ionin2007physics
+  # - reaction: e + N2(a) -> e + N2(a)
+  #   params: 1
+  #   references: ionin2007physics
+
+  # - reaction: e + N2(a) -> e + N2(b)
+  #   params: 1
+  #   references: ionin2007physics
+
+  # - reaction: N2(a) + N2(b) -> N2(c) + N2(d)
+  #   params: 1
+  #   references: ionin2007physics

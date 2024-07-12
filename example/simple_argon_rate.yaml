@@ -1,5 +1,8 @@
 data-path: test/inputs/data/
 bibliography: test/inputs/argon_works.bib
+data-delimiter: ","
+
+constant-species: [Ar]
 
 rate-based:
 

@@ -13,10 +13,19 @@ const std::string XSEC_BASED = "xsec-based";
 const std::string LATEX_OVERRIDES = "latex-overrides";
 const std::string CUSTOM_SPECIES = "custom-species";
 const std::string LUMPED_SPECIES = "lumped-species";
+const std::string CONSTANT_SPECIES = "constant-species";
+const std::string DATA_DELIMITER = "data-delimiter";
 ///@}
 /// vector of allowed upper level input blocks for param checking
-const std::vector<std::string> allowed_network_inputs = {
-    BIB_KEY, PATH_KEY, RATE_BASED, XSEC_BASED, LATEX_OVERRIDES, CUSTOM_SPECIES, LUMPED_SPECIES};
+const std::vector<std::string> allowed_network_inputs = {BIB_KEY,
+                                                         PATH_KEY,
+                                                         RATE_BASED,
+                                                         XSEC_BASED,
+                                                         LATEX_OVERRIDES,
+                                                         CUSTOM_SPECIES,
+                                                         LUMPED_SPECIES,
+                                                         CONSTANT_SPECIES,
+                                                         DATA_DELIMITER};
 /// input keys for the custom species block
 const std::string NAME_KEY = "name";
 const std::string MASS_KEY = "mass";
@@ -26,7 +35,7 @@ const std::vector<std::string> allowed_custom_params = {NAME_KEY, MASS_KEY};
 const std::string LUMPED_KEY = "lumped";
 const std::string ACTUAL_KEY = "actual";
 const std::vector<std::string> allowed_lumped_params = {LUMPED_KEY, ACTUAL_KEY};
-/// inputs keys for latex overrides
+/// inputs keys for latex overrides species key is also used by the constant-species block
 const std::string SPECIES_KEY = "species";
 const std::string LATEX_KEY = "latex";
 const std::vector<std::string> allowed_latex_override_params = {SPECIES_KEY, LATEX_KEY};

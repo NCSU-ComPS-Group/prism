@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "prism/Constants.h"
+#include "prism/PrismConstants.h"
 #include "prism/Species.h"
 #include "prism/SubSpecies.h"
 #include "prism/SpeciesFactory.h"

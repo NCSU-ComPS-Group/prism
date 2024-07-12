@@ -1,5 +1,5 @@
 #include "DefaultSpeciesSummaryWriter.h"
-#include "Constants.h"
+#include "PrismConstants.h"
 #include "fmt/core.h"
 #include "NetworkParser.h"
 #include "Species.h"
@@ -18,7 +18,9 @@ DefaultSpeciesSummaryWriter::addMiscSummary()
   const auto & species = np.species();
 
   const string const_warning =
-      "# species which are only in balanced reactions\nconstant-species:\n";
+      "# species which are only in balanced reactions\n"
+      "# or which have been explicitly marked as constant in the input file\n"
+      "constant-species:\n";
   const string all_sinks = "# species which are only consumed\nall-sinks:\n";
   const string all_srcs = "# species which are never consumed\nall-sources:\n";
 
@@ -31,9 +33,7 @@ DefaultSpeciesSummaryWriter::addMiscSummary()
     const auto & rate_data = s->rateBasedReactionData();
     const auto & xsec_data = s->xsecBasedReactionData();
     const auto rxn_count = rate_data.size() + xsec_data.size();
-
-    if (s->unbalancedRateBasedReactionData().size() + s->unbalancedXSecBasedReactionData().size() ==
-        0)
+    if (s->isConstant())
     {
       const_s.push_back(s->name());
       continue;
@@ -46,7 +46,7 @@ DefaultSpeciesSummaryWriter::addMiscSummary()
     {
       if (r.stoic_coeff < 0)
         sink_count++;
-      else
+      else if (r.stoic_coeff > 0)
         src_count++;
     }
 
@@ -54,7 +54,7 @@ DefaultSpeciesSummaryWriter::addMiscSummary()
     {
       if (r.stoic_coeff < 0)
         sink_count++;
-      else
+      else if (r.stoic_coeff > 0)
         src_count++;
     }
 
@@ -171,7 +171,8 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   _summary_str << "  - count: " << species.size() << endl;
   for (const auto & s : species)
   {
-    _summary_str << fmt::format("  - {:s}\n", s->name());
+    _summary_str << fmt::format("  - name: {:s}\n", s->name());
+    _summary_str << fmt::format("    id: {:d}\n", s->id());
   }
   _summary_str << endl << endl;
 
@@ -182,6 +183,9 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
 
   for (const auto & s : species)
   {
+    if (s->markedConstant())
+    _summary_str << fmt::format("# This species was requested to be constant in the mechanism\n"
+    "# As a result it is not included in the transient species list\n");
     _summary_str << fmt::format("  - {:s}:\n", s->name());
     _summary_str << fmt::format(
         "    - {:s}: {:d}\n", RATE_BASED, s->rateBasedReactionData().size());

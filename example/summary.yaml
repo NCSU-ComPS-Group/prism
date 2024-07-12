@@ -3,10 +3,11 @@ lumped-species:
 
 # species which are never consumed
 all-sources:
-  - species: [e, Ar+, Ar2, Ar^r]
+  - species: [Ar+, Ar2, Ar^r]
 # species which are only in balanced reactions
+# or which have been explicitly marked as constant in the input file
 constant-species:
-  - species: []
+  - species: [Ar]
 # species which are only consumed
 all-sinks:
   - species: []
@@ -14,12 +15,18 @@ all-sinks:
 
 unique-species:
   - count: 6
-  - Ar*
-  - Ar
-  - e
-  - Ar+
-  - Ar2
-  - Ar^r
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
 
 
 reacion-summary:
@@ -39,34 +46,6 @@ reacion-summary:
         - Ar* + e -> Ar^r + e
         - 2Ar* -> Ar+ + Ar + e
         - Ar* + Ar -> 2Ar
-        - Ar* + 2Ar -> Ar2 + Ar
-
-    - xsec-based: 0
-      sources:
-        - count: 0
-
-      balanced:
-        - count: 0
-
-      sinks:
-        - count: 0
-
-  - Ar:
-    - rate-based: 7
-      sources:
-        - count: 3
-        - Ar* + e -> Ar + e
-        - 2Ar* -> Ar+ + Ar + e
-        - Ar* + Ar -> 2Ar
-
-      balanced:
-        - count: 1
-        - Ar + e -> Ar + e
-
-      sinks:
-        - count: 3
-        - Ar + e -> Ar* + e
-        - Ar + e -> Ar+ + 2e
         - Ar* + 2Ar -> Ar2 + Ar
 
     - xsec-based: 0
@@ -164,6 +143,36 @@ reacion-summary:
 
       sinks:
         - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+# This species was requested to be constant in the mechanism
+# As a result it is not included in the transient species list
+  - Ar:
+    - rate-based: 7
+      sources:
+        - count: 3
+        - Ar* + e -> Ar + e
+        - 2Ar* -> Ar+ + Ar + e
+        - Ar* + Ar -> 2Ar
+
+      balanced:
+        - count: 1
+        - Ar + e -> Ar + e
+
+      sinks:
+        - count: 3
+        - Ar + e -> Ar* + e
+        - Ar + e -> Ar+ + 2e
+        - Ar* + 2Ar -> Ar2 + Ar
 
     - xsec-based: 0
       sources:
