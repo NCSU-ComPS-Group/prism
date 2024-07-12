@@ -1,4 +1,6 @@
 bibliography: inputs/works.bib
+data-path: inputs/data/
+data-delimiter: " "
 
 lumped-species:
   - lumped: N2*
@@ -7,7 +9,7 @@ lumped-species:
 
 rate-based:
   - reaction: e + N2(a) -> e + N2
-    params: 1
+    file: reaction1.txt
     references: ionin2007physics
 
   - reaction: e + N2 -> e + N2(a)

@@ -44,14 +44,6 @@ public:
 #endif
 
   /**
-   * Sets the delimiter for the networks which have
-   * some tabulated data
-   * @param delimiter the delimiter that seperates the column of energy values and xsec/rate values
-   * in the file This function will exit the program if the delimiter is an empty string or if it
-   * contains numbers
-   */
-  void setDelimiter(const std::string & delimiter);
-  /**
    * Writes a summary of the species in the network to a file
    * @param file the file which you want to write the species summary to
    */
@@ -175,8 +167,6 @@ private:
   /// Private instance of the singleton,
   /// this is the only instance of this class that will ever exist
   static NetworkParser * _instance;
-  /// the current delimiter, used when reading data from files
-  std::string _delimiter;
   /// wether or not the parser encountered any errors during parsing
   bool _network_has_errors;
   /// wether or not the parser encountered any issues with the bib files while parsing
@@ -193,6 +183,8 @@ private:
   std::unordered_map<std::string, std::string> _bibs;
   /// Map for keeping track of the location where data files are stored for each network
   std::unordered_map<std::string, std::string> _data_paths;
+  /// map for keeping track of the delimiters used for data in each mechanism file
+  std::unordered_map<std::string, std::string> _delimiters;
   ReactionId _rate_id;
   ReactionId _xsec_id;
   /**
@@ -209,7 +201,7 @@ private:
    * will exit
    * @param file the location of the bib file to collect references from
    */
-  void checkBibFile(const std::string & file) const;
+  void checkBibFile(const YAML::Node & network, const std::string & file) const;
 
   /**
    * Function parses the reactions from a given network
@@ -230,7 +222,8 @@ private:
                       std::vector<std::shared_ptr<const Reaction>> * function_rxn_list,
                       const std::string & type,
                       const std::string & data_path,
-                      const std::string & bib_file);
+                      const std::string & bib_file,
+                      const std::string & _delimiter);
 
   void tableHelper(TableWriterBase & writer,
                    void (TableWriterBase::*beginTable)(),

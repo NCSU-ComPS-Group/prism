@@ -70,7 +70,7 @@ TEST_F(NetworkParserTest, LumpedSpecies)
   np.writeReactionTable("lumped_species_table_out.yaml");
   const auto & s_list = np.species();
   const auto & s_names = np.speciesNames();
-  const auto & r_list = np.functionRateReactions();
+  const auto & r_list = np.rateBasedReactions();
   EXPECT_EQ(s_list.size(), (unsigned int)3);
   EXPECT_EQ(np.transientSpecies().size(), (unsigned int)2);
   EXPECT_EQ(r_list.size(), (unsigned int)5);
@@ -238,7 +238,6 @@ TEST_F(NetworkParserTest, LumpedSpecies)
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
   auto & np = prism::NetworkParser::instance();
-  np.setDelimiter(",");
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
 
   np.writeSpeciesSummary("simple_argon_rate_summary_out.yaml");
@@ -435,8 +434,6 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
 TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
   auto & np = prism::NetworkParser::instance();
-  np.setDelimiter(",");
-
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
   np.writeSpeciesSummary("simple_argon_xsec_summary_out.yaml");
   np.writeReactionTable("simple_argon_xsec_table_out.yaml");

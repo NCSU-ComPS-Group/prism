@@ -22,7 +22,6 @@ namespace prism
 NetworkParser::NetworkParser()
   : _factory(SpeciesFactory::instance()),
     _bib_helper(BibTexHelper::instance()),
-    _delimiter(" "),
     _network_has_errors(false),
     _network_has_bib_errors(false),
     _check_refs(true),
@@ -45,38 +44,26 @@ NetworkParser::instance()
 }
 
 void
-NetworkParser::setDelimiter(const string & delimiter)
-{
-  if (delimiter.length() == 0)
-    InvalidInputExit("The tabular data delimiter cannot be an empty string");
-
-  if (findFirstNumber(delimiter) != -1)
-    InvalidInputExit("The tabular provided data delimiter '" + delimiter +
-                     "' is invalid\nDelimiters cannot contain numbers");
-
-  _delimiter = delimiter;
-}
-
-void
 NetworkParser::clear()
 {
-  _network_has_bib_errors = false;
-  _network_has_errors = false;
+  _xsec_id = 0;
+  _rate_id = 0;
   _check_refs = true;
   _read_xsec_files = true;
-  _networks.clear();
+  _network_has_errors = false;
+  _network_has_bib_errors = false;
   _bibs.clear();
-  _data_paths.clear();
   _factory.clear();
+  _networks.clear();
+  _data_paths.clear();
   _bib_helper.clear();
   _xsec_based.clear();
-  _tabulated_xsec_based.clear();
-  _function_xsec_based.clear();
   _rate_based.clear();
-  _tabulated_rate_based.clear();
+  _delimiters.clear();
   _function_rate_based.clear();
-  _rate_id = 0;
-  _xsec_id = 0;
+  _function_xsec_based.clear();
+  _tabulated_xsec_based.clear();
+  _tabulated_rate_based.clear();
 }
 
 void
@@ -93,12 +80,12 @@ NetworkParser::checkFile(const string & file) const
 }
 
 void
-NetworkParser::checkBibFile(const string & file) const
+NetworkParser::checkBibFile(const YAML::Node & network, const string & file) const
 {
   try {
     _bib_helper.collectReferences(file);
   } catch (const invalid_argument & e) {
-    printRed("\n\n" + string(e.what()) + "\n\n");
+    InvalidInputExit(network, BIB_KEY, e.what());
   }
 
   if (_check_refs && _network_has_bib_errors)
@@ -113,7 +100,8 @@ NetworkParser::parseReactions(const YAML::Node & network,
                               vector<shared_ptr<const Reaction>> * function_rxn_list,
                               const string & type,
                               const string & data_path,
-                              const string & bib_file)
+                              const string & bib_file,
+                              const string & delimiter)
 {
   if (!paramProvided(type, network, OPTIONAL))
     return;
@@ -127,7 +115,7 @@ NetworkParser::parseReactions(const YAML::Node & network,
   {
     try {
       const auto rxn = rxn_list->emplace_back(make_shared<Reaction>(
-          input, (*rxn_id)++, data_path, bib_file, _check_refs, _read_xsec_files, _delimiter));
+          input, (*rxn_id)++, data_path, bib_file, _check_refs, _read_xsec_files, delimiter));
 
       if (rxn->hasTabulatedData())
         tabulated_rxn_list->push_back(rxn);
@@ -182,14 +170,31 @@ NetworkParser::parseNetwork(const string & file)
 
 
   if (_check_refs)
-    checkBibFile(_bibs[file]);
+    checkBibFile(_networks[file], _bibs[file]);
+
+
+  if (!paramProvided(DATA_DELIMITER, network, OPTIONAL))
+  {
+    _delimiters[file] = ",";
+  } else {
+    try {
+      _delimiters[file] = getParam<string>(DATA_DELIMITER, network, REQUIRED);
+    } catch (const InvalidInput & e) {
+      InvalidInputExit(e.what());
+    }
+
+    if (_delimiters[file].length() == 0)
+      InvalidInputExit("The tabular data delimiter cannot be an empty string");
+
+    if (findFirstNumber(_delimiters[file]) != -1)
+      InvalidInputExit("The tabular provided data delimiter '" + _delimiters[file] + "' is invalid\nDelimiters cannot contain numbers");
+  }
 
   try {
     _data_paths[file] = getParam<string>(PATH_KEY, network, OPTIONAL);
   } catch (const InvalidInput & e )
   {
     InvalidInputExit(e.what());
-    exit(EXIT_FAILURE);
   }
 
 
@@ -212,7 +217,8 @@ NetworkParser::parseNetwork(const string & file)
                  &_function_rate_based,
                  RATE_BASED,
                  _data_paths[file],
-                 _bibs[file]);
+                 _bibs[file],
+                 _delimiters[file]);
   parseReactions(network,
                  &_xsec_id,
                  &_xsec_based,
@@ -220,7 +226,8 @@ NetworkParser::parseNetwork(const string & file)
                  &_function_xsec_based,
                  XSEC_BASED,
                  _data_paths[file],
-                 _bibs[file]);
+                 _bibs[file],
+                 _delimiters[file]);
 
   _factory.indexSpecies();
 

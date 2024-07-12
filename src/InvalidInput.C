@@ -62,7 +62,7 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
     ostringstream oss;
     oss << node;
 
-    printRed("\nInvalid Input in Block:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+    printRed("\nInvalid Input:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
     #ifdef TESTING
       throw exception();
     #else

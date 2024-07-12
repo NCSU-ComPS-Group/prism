@@ -1,6 +1,6 @@
 data-path: test/inputs/data/
 bibliography: test/inputs/argon_works.bib
-data-delimiter: ","
+# data-delimiter: ","
 
 constant-species: [Ar]
 
