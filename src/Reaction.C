@@ -768,7 +768,7 @@ Reaction::to_string() const
   }
   return string_rep.str();
 }
-}
+
 
 std::string
 to_string(const std::shared_ptr<prism::Reaction> & r)
@@ -791,6 +791,7 @@ operator<<(std::ostream & os, const std::shared_ptr<const prism::Reaction> & r)
 {
   os << r->to_string();
   return os;
+}
 }
 
 size_t

@@ -160,7 +160,7 @@ Species::to_string() const
   string_rep << endl;
   return string_rep.str();
 }
-}
+
 
 string
 to_string(const std::shared_ptr<prism::Species> & s)
@@ -187,6 +187,8 @@ operator<<(std::ostream & os, const std::shared_ptr<const prism::Species> & s)
 {
   os << s->to_string();
   return os;
+}
+
 }
 
 size_t

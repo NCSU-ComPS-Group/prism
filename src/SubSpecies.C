@@ -353,7 +353,7 @@ SubSpecies::to_string() const
 
   return string_rep.str();
 }
-}
+
 
 string
 to_string(prism::SubSpecies & s)
@@ -379,6 +379,7 @@ operator<<(std::ostream & os, const prism::SubSpecies & s)
 {
   os << s.to_string();
   return os;
+}
 }
 
 size_t
