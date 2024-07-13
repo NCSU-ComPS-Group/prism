@@ -2,7 +2,6 @@
 
 #include <sys/stat.h>
 #include <algorithm>
-#include <functional>
 #include "fmt/core.h"
 #include <sstream>
 

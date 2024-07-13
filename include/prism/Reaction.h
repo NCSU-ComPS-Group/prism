@@ -7,7 +7,7 @@
 #include "yaml-cpp/yaml.h"
 #include "Species.h"
 #include "PrismConstants.h"
-
+#include <functional>
 namespace prism
 {
 /**

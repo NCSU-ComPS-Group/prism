@@ -18,3 +18,4 @@ win*
 *.vscode
 *.so
 *.out
+__pycache__
