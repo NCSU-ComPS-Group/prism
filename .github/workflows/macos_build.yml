@@ -29,6 +29,7 @@ jobs:
       run: |
         conda activate prism
         export CXX=$(which clang++)
+        echo $CXX
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build main, and library directly

@@ -11,6 +11,15 @@
 using namespace prism;
 using namespace std;
 
+// Register the PrintTo function with Google Test
+namespace testing {
+
+// Specialization of PrintTo for prism::SubSpecies
+void PrintTo(const prism::SubSpecies& s, std::ostream* os) {
+    *os << s.to_string();
+}
+}
+
 TEST(SubSpecies, EmptyString)
 {
   EXPECT_THROW(SubSpecies(""), InvalidSpecies);
