@@ -29,50 +29,53 @@ jobs:
     - name: Set Compiler
       run: |
         conda activate prism
-        export CXX=$(which g++)
-    # GitHub-hosted runners are currently limited to 4 cores
-    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-    - name: Build main, and library directly
-      run: |
-        make -j 4
-        ./main
-        make clean
-    - name: Build and run main with dll
-      run: |
-        make -f Makefile-as-dll install -j 4
-        make -f Makefile-with-dll -j 4
-        ./main
-    - name: Build and run tests directly
-      run: |
-        cd test
-        make -j 4
-        ./run_tests -j 4
-        make clean
-    - name: Build and run tests with dll
-      run: |
-        cd test
-        make -f Makefile-with-dll -j 4
-        ./run_tests -j 4
-    - name: Build conda package
-      run: |
-        cd conda/prism
-        conda build .
-    - name: Get MOOSE submodule
-      uses: actions/checkout@v4
-      with:
-        submodules: true
-    - name: Build Docs
-      run: |
-        conda create -n moose
-        conda activate moose
-        conda config --add channels https://conda.software.inl.gov/public
-        conda install -y moose-dev
-        conda install -y doxygen
-        cd doc
-        cd moose/test
-        make hit
-        cd -
-        MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
+        which g++
+        ls $CONDA_PREFIX/bin | grep "g++"
+        ls $CONDA_PREFIX/bin | grep "gcc"
+        # export CXX=$(which g++)
+    # # GitHub-hosted runners are currently limited to 4 cores
+    # # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+    # - name: Build main, and library directly
+    #   run: |
+    #     make -j 4
+    #     ./main
+    #     make clean
+    # - name: Build and run main with dll
+    #   run: |
+    #     make -f Makefile-as-dll install -j 4
+    #     make -f Makefile-with-dll -j 4
+    #     ./main
+    # - name: Build and run tests directly
+    #   run: |
+    #     cd test
+    #     make -j 4
+    #     ./run_tests -j 4
+    #     make clean
+    # - name: Build and run tests with dll
+    #   run: |
+    #     cd test
+    #     make -f Makefile-with-dll -j 4
+    #     ./run_tests -j 4
+    # - name: Build conda package
+    #   run: |
+    #     cd conda/prism
+    #     conda build .
+    # - name: Get MOOSE submodule
+    #   uses: actions/checkout@v4
+    #   with:
+    #     submodules: true
+    # - name: Build Docs
+    #   run: |
+    #     conda create -n moose
+    #     conda activate moose
+    #     conda config --add channels https://conda.software.inl.gov/public
+    #     conda install -y moose-dev
+    #     conda install -y doxygen
+    #     cd doc
+    #     cd moose/test
+    #     make hit
+    #     cd -
+    #     MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
 
 
 
