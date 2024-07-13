@@ -197,6 +197,12 @@ public:
 
   std::string to_string() const;
 
+  friend std::string to_string(const std::shared_ptr<prism::Reaction> & s);
+  friend std::string to_string(const std::shared_ptr<const prism::Reaction> & s);
+  friend std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Reaction> & s);
+  friend std::ostream & operator<<(std::ostream & os,
+                                   const std::shared_ptr<const prism::Reaction> & s);
+
 private:
   /** SpeciesFactor is a friend so that it can access the species in this reaction */
   friend class SpeciesFactory;
@@ -295,11 +301,6 @@ private:
   ///@}
 };
 }
-
-std::string to_string(const std::shared_ptr<prism::Reaction> & s);
-std::string to_string(const std::shared_ptr<const prism::Reaction> & s);
-std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Reaction> & s);
-std::ostream & operator<<(std::ostream & os, const std::shared_ptr<const prism::Reaction> & s);
 
 template <>
 struct std::hash<prism::Reaction>

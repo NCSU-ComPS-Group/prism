@@ -229,6 +229,11 @@ public:
   const std::vector<SubSpecies> & subSpecies() const { return _sub_species; }
 
   virtual std::string to_string() const override;
+  friend std::string to_string(const std::shared_ptr<prism::Species> & s);
+  friend std::string to_string(const std::shared_ptr<const prism::Species> & s);
+  friend std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Species> & s);
+  friend std::ostream & operator<<(std::ostream & os,
+                                   const std::shared_ptr<const prism::Species> & s);
 
 private:
   /// The species factory helps add reactionts to our lists
@@ -284,10 +289,6 @@ private:
 };
 }
 
-std::string to_string(const std::shared_ptr<prism::Species> & s);
-std::string to_string(const std::shared_ptr<const prism::Species> & s);
-std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Species> & s);
-std::ostream & operator<<(std::ostream & os, const std::shared_ptr<const prism::Species> & s);
 template <>
 struct std::hash<prism::Species>
 {

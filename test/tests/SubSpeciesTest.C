@@ -13,11 +13,14 @@ using namespace prism;
 using namespace std;
 
 // Register the PrintTo function with Google Test
-namespace testing {
+namespace testing
+{
 
 // Specialization of PrintTo for prism::SubSpecies
-void PrintTo(const prism::SubSpecies& s, std::ostream* os) {
-    *os << s.to_string();
+void
+PrintTo(const prism::SubSpecies & s, std::ostream * os)
+{
+  *os << s.to_string();
 }
 }
 

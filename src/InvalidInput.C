@@ -64,10 +64,10 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
 
     printRed("\nInvalid Input:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
 #ifdef TESTING
-      throw exception();
-    #else
-      exit(EXIT_FAILURE);
-    #endif
+    throw exception();
+#else
+    exit(EXIT_FAILURE);
+#endif
   }
 
 
