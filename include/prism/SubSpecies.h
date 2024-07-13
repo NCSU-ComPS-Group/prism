@@ -34,6 +34,12 @@ public:
   unsigned int subscript() const { return _subscript; }
 
   virtual std::string to_string() const override;
+
+  friend std::string to_string(const prism::SubSpecies & s);
+  friend std::string to_string(prism::SubSpecies & s);
+  friend std::ostream & operator<<(std::ostream & os, prism::SubSpecies & s);
+  friend std::ostream & operator<<(std::ostream & os, const prism::SubSpecies & s);
+
 private:
   /** This will be just the elemental name */
   const std::string _base;
@@ -67,12 +73,6 @@ private:
   virtual void setNeutralGroundState() override;
 };
 } // namespace RXN
-
-std::string to_string(const prism::SubSpecies & s);
-std::string to_string(prism::SubSpecies & s);
-std::ostream & operator<<(std::ostream & os, prism::SubSpecies & s);
-std::ostream & operator<<(std::ostream & os, const prism::SubSpecies & s);
-
 template <>
 struct std::hash<prism::SubSpecies>
 {

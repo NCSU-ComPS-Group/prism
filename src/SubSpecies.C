@@ -353,7 +353,6 @@ SubSpecies::to_string() const
 
   return string_rep.str();
 }
-}
 
 
 string
@@ -381,6 +380,10 @@ operator<<(std::ostream & os, const prism::SubSpecies & s)
   os << s.to_string();
   return os;
 }
+
+}
+
+
 
 size_t
 hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const

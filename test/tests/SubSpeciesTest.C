@@ -6,6 +6,7 @@
 #include "RelativeError.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "fileComparer.h"
 
 using namespace prism;
