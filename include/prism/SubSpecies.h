@@ -34,7 +34,6 @@ public:
   unsigned int subscript() const { return _subscript; }
 
   virtual std::string to_string() const override;
-
 private:
   /** This will be just the elemental name */
   const std::string _base;
@@ -70,6 +69,8 @@ private:
 } // namespace RXN
 
 std::string to_string(const prism::SubSpecies & s);
+std::string to_string(prism::SubSpecies & s);
+std::ostream & operator<<(std::ostream & os, prism::SubSpecies & s);
 std::ostream & operator<<(std::ostream & os, const prism::SubSpecies & s);
 
 template <>

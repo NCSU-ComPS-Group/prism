@@ -355,10 +355,24 @@ SubSpecies::to_string() const
 }
 }
 
+
+string
+to_string(prism::SubSpecies & s)
+{
+  return s.to_string();
+}
+
 string
 to_string(const prism::SubSpecies & s)
 {
   return s.to_string();
+}
+
+ostream &
+operator<<(std::ostream & os, prism::SubSpecies & s)
+{
+  os << s.to_string();
+  return os;
 }
 
 ostream &

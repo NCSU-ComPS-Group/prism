@@ -5,14 +5,20 @@ package:
 requirements:
   build:
     - make
-    - {{ compiler('cxx') }}
     - yaml-cpp
     - fmt
 
   run:
     - fmt
     - yaml-cpp
-
+    - {{ moose_ld64 }}          # [osx]
+    - {{ moose_libclang }}      # [osx]
+    - {{ moose_libclang13 }}    # [osx]
+    - {{ moose_clangcc }}       # [osx]
+    - {{ moose_clangxx }}       # [osx]
+    - {{ moose_gcc }}           # [linux]
+    - gxx                       # [linux]
+    - make
 
 channels:
   - conda-forge

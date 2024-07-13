@@ -11,8 +11,7 @@ requirements:
     - lcov
     - gtest
     - clang-format
-    - clang-tools 
-
+    - clang-tools
 
 channels:
   - conda-forge
