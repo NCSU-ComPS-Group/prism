@@ -17,3 +17,4 @@ win*
 *.tex
 *.vscode
 *.so
+*.out

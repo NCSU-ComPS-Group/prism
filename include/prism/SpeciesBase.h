@@ -37,6 +37,12 @@ public:
   double charge() const { return _charge; }
   /** Getter method for the latex name of the species */
   const std::string & latexRepresentation() const { return _latex_name; }
+  /**
+   * Gets the ground neutral state of the subspecies
+   * Ex: H3* -> H3
+   */
+  const std::string & neutralGroundState() const { return _neutral_ground_state; }
+  virtual std::string to_string() const;
 
 protected:
   /// The full std::string of the species base
@@ -51,8 +57,9 @@ protected:
   int _charge_num;
   /// The name of the spcies formatted for printing in a latex_table
   std::string _latex_name;
-
-private:
+  /// the neutral ground state for a species ex:
+  /// Ar2* -> Ar2
+  std::string _neutral_ground_state;
   /**
    * Method checks to make sure that the name is not an empty std::string
    * also checks to make sure e and E are reserved for electrons only
@@ -69,6 +76,7 @@ private:
   virtual void setCharge() = 0;
   /** methods for setting the latex name of each species */
   virtual void setLatexName() = 0;
+  virtual void setNeutralGroundState() = 0;
 };
 }
 

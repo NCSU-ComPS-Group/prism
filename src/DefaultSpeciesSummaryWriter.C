@@ -65,7 +65,7 @@ DefaultSpeciesSummaryWriter::addMiscSummary()
       all_srcs_s.push_back(s->name());
   }
 
-  auto species_lister = [](vector<string> & species, std::stringstream & _summary_str)
+  auto species_lister = [](vector<string> & species, std::ostringstream & _summary_str)
   {
     _summary_str << "  - species: [";
 
@@ -120,7 +120,7 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   auto reaction_lister = [](vector<string> & srcs,
                             vector<string> & balanced,
                             vector<string> & sinks,
-                            std::stringstream & _summary_str)
+                            std::ostringstream & _summary_str)
   {
     _summary_str << fmt::format("      sources:\n");
     _summary_str << fmt::format("        - count: {:d}\n", srcs.size());
@@ -144,7 +144,7 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
 
   auto species_summary = [reaction_lister](const vector<shared_ptr<Reaction>> & rxn_list,
                                            const vector<ReactionData> & data,
-                                           std::stringstream & _summary_str)
+                                           std::ostringstream & _summary_str)
   {
     vector<string> srcs;
     vector<string> sinks;
@@ -184,8 +184,9 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   for (const auto & s : species)
   {
     if (s->markedConstant())
-    _summary_str << fmt::format("# This species was requested to be constant in the mechanism\n"
-    "# As a result it is not included in the transient species list\n");
+      _summary_str << fmt::format(
+          "# This species was requested to be constant in the mechanism\n"
+          "# As a result it is not included in the transient species list\n");
     _summary_str << fmt::format("  - {:s}:\n", s->name());
     _summary_str << fmt::format(
         "    - {:s}: {:d}\n", RATE_BASED, s->rateBasedReactionData().size());

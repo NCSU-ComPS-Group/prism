@@ -46,10 +46,12 @@ public:
    * @returns its position in the vector returned by NetworkParser::species()
    */
   SpeciesId id() const { return _id; }
-  bool markedConstant() const {return _marked_constant;}
-  bool isConstant() const {return _unbalanced_rate_based_data.size() +
-                                  _unbalanced_xsec_based_data.size() == 0
-                                  || _marked_constant;}
+  bool markedConstant() const { return _marked_constant; }
+  bool isConstant() const
+  {
+    return _unbalanced_rate_based_data.size() + _unbalanced_xsec_based_data.size() == 0 ||
+           _marked_constant;
+  }
 
   // /** Comparison operator checks if the sub species have the same member variables */
   bool operator==(const Species & other) const;
@@ -225,11 +227,8 @@ public:
   }
   /** Getter method for the subspecies list */
   const std::vector<SubSpecies> & subSpecies() const { return _sub_species; }
-  /**
-   * Getter method for the ground neutral state
-   * Ex: 2Ar* -> Ar
-   */
-  const std::string & neutralGroundState() const { return _neutral_ground_state; }
+
+  virtual std::string to_string() const override;
 
 private:
   /// The species factory helps add reactionts to our lists
@@ -239,8 +238,6 @@ private:
   const bool _marked_constant;
   /// the list of the sub_species in the the class */
   const std::vector<SubSpecies> _sub_species;
-  /// The string representation of the ground neutral state of the
-  const std::string _neutral_ground_state;
   /** All rate based reactions */
   ///@{
   std::vector<ReactionData> _rate_based_data;
@@ -278,7 +275,7 @@ private:
   /** Method for getting the total charge number based on all of the subspecies */
   void setCharge() override;
   /** Finds the grounded neutral state of a species  */
-  std::string setNeutralGroundState() const;
+  virtual void setNeutralGroundState() override;
   /** Helper for giving out shared_ptrs to the reactions that thsi species is a part of  */
   const std::vector<std::shared_ptr<const Reaction>>
   convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & vec) const;
@@ -287,6 +284,10 @@ private:
 };
 }
 
+std::string to_string(const std::shared_ptr<prism::Species> & s);
+std::string to_string(const std::shared_ptr<const prism::Species> & s);
+std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Species> & s);
+std::ostream & operator<<(std::ostream & os, const std::shared_ptr<const prism::Species> & s);
 template <>
 struct std::hash<prism::Species>
 {

@@ -32,11 +32,8 @@ public:
   const std::string & modifier() const { return _modifier; }
   /** getter method for the subscript on the subspecies */
   unsigned int subscript() const { return _subscript; }
-  /**
-   * Gets the ground neutral state of the subspecies
-   * Ex: H3* -> H3
-   */
-  const std::string & neutralGroundState() const { return _neutral_ground_state; }
+
+  virtual std::string to_string() const override;
 
 private:
   /** This will be just the elemental name */
@@ -45,7 +42,6 @@ private:
   std::string _modifier;
   /** The subscript of the number ex: Ar2 this is 2 */
   const unsigned int _subscript;
-  const std::string _neutral_ground_state;
   /** method for the setting the element which the species modifies */
   std::string setBase();
   /**
@@ -69,9 +65,12 @@ private:
   /** Method for setting the latex name of the species */
   void setLatexName() override;
 
-  std::string setNeutralGroundState() const;
+  virtual void setNeutralGroundState() override;
 };
 } // namespace RXN
+
+std::string to_string(const prism::SubSpecies & s);
+std::ostream & operator<<(std::ostream & os, const prism::SubSpecies & s);
 
 template <>
 struct std::hash<prism::SubSpecies>

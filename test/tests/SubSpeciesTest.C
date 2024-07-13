@@ -4,6 +4,10 @@
 #include "prism/SpeciesFactory.h"
 #include "prism/InvalidInput.h"
 #include "RelativeError.h"
+#include <iostream>
+#include <fstream>
+#include "fileComparer.h"
+
 using namespace prism;
 using namespace std;
 
@@ -351,4 +355,22 @@ TEST(SubSpecies, LongCustomSpecies)
   EXPECT_FLOAT_EQ(s.charge(), -100 * ELEMENTAL_CHARGE);
   EXPECT_EQ(s.latexRepresentation(), "Polypeptide$_{2}$$^{-100}$(test)");
   EXPECT_EQ(s.neutralGroundState(), "Polypeptide2");
+}
+
+TEST(SubSpecies, PrintingMethods)
+{
+  SubSpecies s = SubSpecies("Polypeptide2-100(test)");
+
+  string gold_file = "gold/subspecies/subspecies.out";
+  string file = "subspecies_<<.out";
+  ofstream out(file);
+  out << s;
+  out.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "subspecies_to_string.out";
+  ofstream out2("subspecies_to_string.out");
+  out2 << to_string(s);
+  out2.close();
+  EXPECT_FILES_EQ(file, gold_file);
 }

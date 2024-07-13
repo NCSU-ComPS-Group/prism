@@ -195,6 +195,8 @@ public:
    */
   double sampleData(const double T_e, const double T_g = 0) const { return _sampler(T_e, T_g); }
 
+  std::string to_string() const;
+
 private:
   /** SpeciesFactor is a friend so that it can access the species in this reaction */
   friend class SpeciesFactory;
@@ -293,6 +295,11 @@ private:
   ///@}
 };
 }
+
+std::string to_string(const std::shared_ptr<prism::Reaction> & s);
+std::string to_string(const std::shared_ptr<const prism::Reaction> & s);
+std::ostream & operator<<(std::ostream & os, const std::shared_ptr<prism::Reaction> & s);
+std::ostream & operator<<(std::ostream & os, const std::shared_ptr<const prism::Reaction> & s);
 
 template <>
 struct std::hash<prism::Reaction>

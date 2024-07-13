@@ -1,0 +1,23 @@
+
+Species: Ar*
+  composition: 
+    Ar*
+  id: 0
+  name: Ar*
+  neutral ground state: Ar
+  latex: Ar*
+  mass: 6.63352e-26 [kg]
+  molar mass:39.948 [g/mol]
+  charge number: 0
+  charge: 0 [C]
+  marked constant: false
+  rate based reactions: 0
+  xsec based reactions: 7
+    Ar + e -> Ar(a) + e
+    Ar(b) + e -> Ar+ + 2e
+    Ar(a) + e -> Ar + e
+    Ar(b) + e -> Ar^r + e
+    2Ar(a) -> Ar+ + Ar + e
+    Ar(b) + Ar -> 2Ar
+    Ar(a) + 2Ar -> Ar2 + Ar
+

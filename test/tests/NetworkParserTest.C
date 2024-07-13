@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include "gtest/gtest.h"
 #include "prism/prism.h"
+#include "fileComparer.h"
+#include <iostream>
+#include <fstream>
 
 using namespace prism;
 using namespace std;
@@ -257,7 +260,7 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(tabular_rxns[0]->tabulatedData().back().value, 1.271554E+04);
   EXPECT_EQ(tabular_rxns[0]->tabulatedData().size(), (unsigned int)300);
 
-  EXPECT_EQ(tabular_rxns[1]->expression(), "Ar + e -> Ar(aS) + e");
+  EXPECT_EQ(tabular_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
   EXPECT_EQ(tabular_rxns[1]->deltaEnergyElectron(), 11.56);
   EXPECT_EQ(tabular_rxns[1]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[1]->species().size(), (unsigned int)3);
@@ -277,7 +280,7 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(tabular_rxns[2]->tabulatedData().back().value, 1.120582E+10);
   EXPECT_EQ(tabular_rxns[2]->tabulatedData().size(), (unsigned int)67);
 
-  EXPECT_EQ(tabular_rxns[3]->expression(), "Ar* + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[3]->deltaEnergyElectron(), 4.14);
   EXPECT_EQ(tabular_rxns[3]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[3]->species().size(), (unsigned int)3);
@@ -287,7 +290,7 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(tabular_rxns[3]->tabulatedData().back().value, 9.857869E+10);
   EXPECT_EQ(tabular_rxns[3]->tabulatedData().size(), (unsigned int)76);
 
-  EXPECT_EQ(tabular_rxns[4]->expression(), "Ar* + e -> Ar + e");
+  EXPECT_EQ(tabular_rxns[4]->expression(), "Ar(a) + e -> Ar + e");
   EXPECT_EQ(tabular_rxns[4]->deltaEnergyElectron(), -11.56);
   EXPECT_EQ(tabular_rxns[4]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[4]->species().size(), (unsigned int)3);
@@ -298,135 +301,131 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
   EXPECT_EQ(tabular_rxns[4]->tabulatedData().size(), (unsigned int)73);
 
   EXPECT_EQ(function_rxns.size(), (unsigned int)4);
-  EXPECT_EQ(function_rxns[0]->expression(), "Ar* + e -> Ar^r + e");
+  EXPECT_EQ(function_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
   EXPECT_EQ(function_rxns[0]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[0]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[0]->species().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[0]->functionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[1]->expression(), "2Ar* -> Ar+ + Ar + e");
+  EXPECT_EQ(function_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
   EXPECT_EQ(function_rxns[1]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[1]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[1]->species().size(), (unsigned int)4);
   EXPECT_EQ(function_rxns[1]->functionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[2]->expression(), "Ar* + Ar -> 2Ar");
+  EXPECT_EQ(function_rxns[2]->expression(), "Ar(b) + Ar -> 2Ar");
   EXPECT_EQ(function_rxns[2]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[2]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[2]->species().size(), (unsigned int)2);
   EXPECT_EQ(function_rxns[2]->functionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[3]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+  EXPECT_EQ(function_rxns[3]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
   EXPECT_EQ(function_rxns[3]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[3]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[3]->species().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[3]->functionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
   const auto & species = np.species();
-  EXPECT_EQ(species.size(), (unsigned int)7);
+  EXPECT_EQ(species.size(), (unsigned int)6);
 
   for (const auto & s : species)
   {
+    const auto & rxns = s->rateBasedReactions();
+    const auto func_rxns = s->functionRateBasedReactions();
+    const auto tab_rxns = s->tabulatedRateBasedReactions();
     if (s->name() == "Ar")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)7);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->rateBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[3]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[4]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[5]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->rateBasedReactions()[6]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[4]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(rxns[6]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)4);
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[3]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)3);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->functionRateBasedReactions()[1]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->functionRateBasedReactions()[2]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)4);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[3]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)3);
+      EXPECT_EQ(func_rxns[0]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(func_rxns[2]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
     else if (s->name() == "e")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)7);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->rateBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[3]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[4]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[5]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->rateBasedReactions()[6]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[4]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(rxns[6]->expression(), "2Ar(a) -> Ar+ + Ar + e");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)5);
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[3]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[4]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->functionRateBasedReactions()[1]->expression(), "2Ar* -> Ar+ + Ar + e");
-    }
-    else if (s->name() == "Ar(aS)")
-    {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar + e -> Ar(aS) + e");
-
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[0]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)0);
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)5);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[4]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)2);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
     }
     else if (s->name() == "Ar+")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)3);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[1]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[2]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)3);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[2]->expression(), "2Ar(a) -> Ar+ + Ar + e");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[0]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[1]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)2);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "2Ar(a) -> Ar+ + Ar + e");
     }
     else if (s->name() == "Ar*")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)6);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->rateBasedReactions()[1]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[2]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->rateBasedReactions()[3]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->rateBasedReactions()[4]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->rateBasedReactions()[5]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(rxns[4]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(rxns[6]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[0]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedRateBasedReactions()[1]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)4);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->functionRateBasedReactions()[1]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->functionRateBasedReactions()[2]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->functionRateBasedReactions()[3]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)3);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)4);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(func_rxns[2]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(func_rxns[3]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
     else if (s->name() == "Ar^r")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)1);
+      EXPECT_EQ(rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)0);
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)0);
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
     }
     else if (s->name() == "Ar2")
     {
-      EXPECT_EQ(s->rateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->rateBasedReactions()[0]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)1);
+      EXPECT_EQ(rxns[0]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedRateBasedReactions().size(), (unsigned int)0);
-      EXPECT_EQ(s->functionRateBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionRateBasedReactions()[0]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)0);
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
   }
 }
@@ -435,8 +434,9 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
   auto & np = prism::NetworkParser::instance();
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
-  np.writeSpeciesSummary("simple_argon_xsec_summary_out.yaml");
-  np.writeReactionTable("simple_argon_xsec_table_out.yaml");
+
+  np.writeSpeciesSummary("simple_argon_rate_summary_out.yaml");
+  np.writeReactionTable("simple_argon_rate_table_out.yaml");
 
   const auto & tabular_rxns = np.tabulatedXSecReactions();
   const auto & function_rxns = np.functionXSecReactions();
@@ -452,7 +452,7 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(tabular_rxns[0]->tabulatedData().back().value, 1.271554E+04);
   EXPECT_EQ(tabular_rxns[0]->tabulatedData().size(), (unsigned int)300);
 
-  EXPECT_EQ(tabular_rxns[1]->expression(), "Ar + e -> Ar(aS) + e");
+  EXPECT_EQ(tabular_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
   EXPECT_EQ(tabular_rxns[1]->deltaEnergyElectron(), 11.56);
   EXPECT_EQ(tabular_rxns[1]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[1]->species().size(), (unsigned int)3);
@@ -472,7 +472,7 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(tabular_rxns[2]->tabulatedData().back().value, 1.120582E+10);
   EXPECT_EQ(tabular_rxns[2]->tabulatedData().size(), (unsigned int)67);
 
-  EXPECT_EQ(tabular_rxns[3]->expression(), "Ar* + e -> Ar+ + 2e");
+  EXPECT_EQ(tabular_rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
   EXPECT_EQ(tabular_rxns[3]->deltaEnergyElectron(), 4.14);
   EXPECT_EQ(tabular_rxns[3]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[3]->species().size(), (unsigned int)3);
@@ -482,7 +482,7 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(tabular_rxns[3]->tabulatedData().back().value, 9.857869E+10);
   EXPECT_EQ(tabular_rxns[3]->tabulatedData().size(), (unsigned int)76);
 
-  EXPECT_EQ(tabular_rxns[4]->expression(), "Ar* + e -> Ar + e");
+  EXPECT_EQ(tabular_rxns[4]->expression(), "Ar(a) + e -> Ar + e");
   EXPECT_EQ(tabular_rxns[4]->deltaEnergyElectron(), -11.56);
   EXPECT_EQ(tabular_rxns[4]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(tabular_rxns[4]->species().size(), (unsigned int)3);
@@ -493,135 +493,199 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
   EXPECT_EQ(tabular_rxns[4]->tabulatedData().size(), (unsigned int)73);
 
   EXPECT_EQ(function_rxns.size(), (unsigned int)4);
-  EXPECT_EQ(function_rxns[0]->expression(), "Ar* + e -> Ar^r + e");
+  EXPECT_EQ(function_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
   EXPECT_EQ(function_rxns[0]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[0]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[0]->species().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[0]->functionParams(), vector<double>({2.0e-7, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[1]->expression(), "2Ar* -> Ar+ + Ar + e");
+  EXPECT_EQ(function_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
   EXPECT_EQ(function_rxns[1]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[1]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[1]->species().size(), (unsigned int)4);
   EXPECT_EQ(function_rxns[1]->functionParams(), vector<double>({6.2e-10, 0, 4.0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[2]->expression(), "Ar* + Ar -> 2Ar");
+  EXPECT_EQ(function_rxns[2]->expression(), "Ar(b) + Ar -> 2Ar");
   EXPECT_EQ(function_rxns[2]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[2]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[2]->species().size(), (unsigned int)2);
   EXPECT_EQ(function_rxns[2]->functionParams(), vector<double>({3.0e-15, 0, 0, 0, 0}));
 
-  EXPECT_EQ(function_rxns[3]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+  EXPECT_EQ(function_rxns[3]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
   EXPECT_EQ(function_rxns[3]->deltaEnergyElectron(), 0.0);
   EXPECT_EQ(function_rxns[3]->deltaEnergyGas(), 0.0);
   EXPECT_EQ(function_rxns[3]->species().size(), (unsigned int)3);
   EXPECT_EQ(function_rxns[3]->functionParams(), vector<double>({1.1e-31, 0, 0, 0, 0}));
 
   const auto & species = np.species();
-  EXPECT_EQ(species.size(), (unsigned int)7);
+  EXPECT_EQ(species.size(), (unsigned int)6);
 
   for (const auto & s : species)
   {
+    const auto & rxns = s->xsecBasedReactions();
+    const auto func_rxns = s->functionXSecBasedReactions();
+    const auto tab_rxns = s->tabulatedXSecBasedReactions();
     if (s->name() == "Ar")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)7);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->xsecBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[3]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[4]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[5]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->xsecBasedReactions()[6]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[4]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(rxns[6]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)4);
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[3]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)3);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->functionXSecBasedReactions()[1]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->functionXSecBasedReactions()[2]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)4);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[3]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)3);
+      EXPECT_EQ(func_rxns[0]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(func_rxns[2]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
     else if (s->name() == "e")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)7);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->xsecBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[3]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[4]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[5]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->xsecBasedReactions()[6]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[4]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(rxns[6]->expression(), "2Ar(a) -> Ar+ + Ar + e");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)5);
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[0]->expression(), "Ar + e -> Ar + e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[1]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[2]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[3]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[4]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->functionXSecBasedReactions()[1]->expression(), "2Ar* -> Ar+ + Ar + e");
-    }
-    else if (s->name() == "Ar(aS)")
-    {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar + e -> Ar(aS) + e");
-
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[0]->expression(), "Ar + e -> Ar(aS) + e");
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)0);
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)5);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[3]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[4]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)2);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
     }
     else if (s->name() == "Ar+")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)3);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[1]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[2]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)3);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[2]->expression(), "2Ar(a) -> Ar+ + Ar + e");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[0]->expression(), "Ar + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[1]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "2Ar* -> Ar+ + Ar + e");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)2);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "2Ar(a) -> Ar+ + Ar + e");
     }
     else if (s->name() == "Ar*")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)6);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->xsecBasedReactions()[1]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[2]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->xsecBasedReactions()[3]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->xsecBasedReactions()[4]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->xsecBasedReactions()[5]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)7);
+      EXPECT_EQ(rxns[0]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(rxns[2]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(rxns[3]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(rxns[4]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(rxns[5]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(rxns[6]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)2);
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[0]->expression(), "Ar* + e -> Ar+ + 2e");
-      EXPECT_EQ(s->tabulatedXSecBasedReactions()[1]->expression(), "Ar* + e -> Ar + e");
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)4);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
-      EXPECT_EQ(s->functionXSecBasedReactions()[1]->expression(), "2Ar* -> Ar+ + Ar + e");
-      EXPECT_EQ(s->functionXSecBasedReactions()[2]->expression(), "Ar* + Ar -> 2Ar");
-      EXPECT_EQ(s->functionXSecBasedReactions()[3]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)3);
+      EXPECT_EQ(tab_rxns[0]->expression(), "Ar + e -> Ar(a) + e");
+      EXPECT_EQ(tab_rxns[1]->expression(), "Ar(b) + e -> Ar+ + 2e");
+      EXPECT_EQ(tab_rxns[2]->expression(), "Ar(a) + e -> Ar + e");
+      EXPECT_EQ(func_rxns.size(), (unsigned int)4);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
+      EXPECT_EQ(func_rxns[1]->expression(), "2Ar(a) -> Ar+ + Ar + e");
+      EXPECT_EQ(func_rxns[2]->expression(), "Ar(b) + Ar -> 2Ar");
+      EXPECT_EQ(func_rxns[3]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
     else if (s->name() == "Ar^r")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
+      EXPECT_EQ(rxns.size(), (unsigned int)1);
+      EXPECT_EQ(rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)0);
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "Ar* + e -> Ar^r + e");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)0);
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(b) + e -> Ar^r + e");
     }
     else if (s->name() == "Ar2")
     {
-      EXPECT_EQ(s->xsecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->xsecBasedReactions()[0]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(rxns.size(), (unsigned int)1);
+      EXPECT_EQ(rxns[0]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
 
-      EXPECT_EQ(s->tabulatedXSecBasedReactions().size(), (unsigned int)0);
-      EXPECT_EQ(s->functionXSecBasedReactions().size(), (unsigned int)1);
-      EXPECT_EQ(s->functionXSecBasedReactions()[0]->expression(), "Ar* + 2Ar -> Ar2 + Ar");
+      EXPECT_EQ(tab_rxns.size(), (unsigned int)0);
+      EXPECT_EQ(func_rxns.size(), (unsigned int)1);
+      EXPECT_EQ(func_rxns[0]->expression(), "Ar(a) + 2Ar -> Ar2 + Ar");
     }
   }
+}
+
+TEST_F(NetworkParserTest, SpeciesPrintingMethods)
+{
+  auto & np = prism::NetworkParser::instance();
+  EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
+  const auto & speices_sp = np.species()[0];
+  const auto & const_species_sp = np.transientSpecies()[0];
+
+  const string gold_file = "gold/species/species.out";
+
+  string file = "shared_ptr<species>_<<.out";
+  ofstream out(file);
+  out << speices_sp;
+  out.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<species>_<<.out";
+  ofstream out2(file);
+  out2 << to_string(speices_sp);
+  out2.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<const_species>_<<.out";
+  ofstream out3(file);
+  out3 << to_string(const_species_sp);
+  out3.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<const_species>_to_string.out";
+  ofstream out4(file);
+  out4 << to_string(const_species_sp);
+  out4.close();
+  EXPECT_FILES_EQ(file, gold_file);
+}
+
+TEST_F(NetworkParserTest, ReactionPrintingMethods)
+{
+  auto & np = prism::NetworkParser::instance();
+  EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
+  const auto & reaction_sp = np.rateBasedReactions()[0];
+  const auto & const_reaction_sp = np.tabulatedRateReactions()[0];
+
+  const string gold_file = "gold/reaction/reaction.out";
+
+  string file = "shared_ptr<reaction>_<<.out";
+  ofstream out(file);
+  out << reaction_sp;
+  out.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<reaction>_to_string.out";
+  ofstream out2(file);
+  out2 << to_string(reaction_sp);
+  out2.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<cosnt_reaction>_<<.out";
+  ofstream out3(file);
+  out3 << to_string(const_reaction_sp);
+  out3.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "shared_ptr<cosnt_reaction>_to_string.out";
+  ofstream out4(file);
+  out4 << to_string(const_reaction_sp);
+  out4.close();
+  EXPECT_FILES_EQ(file, gold_file);
 }

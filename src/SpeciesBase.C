@@ -2,6 +2,7 @@
 #include "StringHelper.h"
 #include "PrismConstants.h"
 #include "InvalidInput.h"
+#include <sstream>
 
 using namespace std;
 
@@ -40,6 +41,20 @@ bool
 SpeciesBase::operator!=(const SpeciesBase & other) const
 {
   return !(*this == other);
+}
+
+string
+SpeciesBase::to_string() const
+{
+  std::ostringstream string_rep;
+  string_rep << "  name: " << _name << endl;
+  string_rep << "  neutral ground state: " << _neutral_ground_state << endl;
+  string_rep << "  latex: " << _latex_name << endl;
+  string_rep << "  mass: " << _mass << " [kg]" << endl;
+  string_rep << "  molar mass:" << _molar_mass << " [g/mol]" << endl;
+  string_rep << "  charge number: " << _charge_num << endl;
+  string_rep << "  charge: " << _charge << " [C]" << endl;
+  return string_rep.str();
 }
 }
 

@@ -302,7 +302,6 @@ TEST(Reaction, ArrheniusData1)
 
   Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
 
-
   EXPECT_REL_TOL(r.sampleData(5.0), 7.52120618617);
   // second parameter ignored
   EXPECT_REL_TOL(r.sampleData(5.0, 4), 7.52120618617);

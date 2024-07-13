@@ -1,5 +1,15 @@
 data-path: inputs/data/
 bibliography: inputs/argon_works.bib
+data-delimiter: ","
+constant-species: Ar
+
+latex-overrides:
+  - species: [Ar(a), Ar(b), Ar^r]
+    latex: [Ar$\left(\alpha\right)$, Ar$\left(\beta\right)$, Ar$^r$]
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
 
 rate-based:
   - reaction: Ar + e -> Ar + e
@@ -7,7 +17,7 @@ rate-based:
     file: ar_elastic.txt
     references: lymberopoulos1993fluid
 
-  - reaction: Ar + e -> Ar(aS) + e
+  - reaction: Ar + e -> Ar(a) + e
     delta-eps-e: 11.56
     file: ar_excitation.txt
     references: lymberopoulos1993fluid
@@ -19,28 +29,28 @@ rate-based:
     references: lymberopoulos1993fluid
     notes: [this one, has 2 notes]
 
-  - reaction: Ar* + e -> Ar+ + 2e
+  - reaction: Ar(b) + e -> Ar+ + 2e
     delta-eps-e: 4.14
     file: ar_excited_ionization.txt
     references: lymberopoulos1993fluid
 
-  - reaction: Ar* + e -> Ar + e
+  - reaction: Ar(a) + e -> Ar + e
     delta-eps-e: -11.56
     file: ar_deexcitation.txt
     references: lymberopoulos1993fluid
 
-  - reaction: Ar* + e -> Ar^r + e
+  - reaction: Ar(b) + e -> Ar^r + e
     params: 2.0e-7
     references: lymberopoulos1993fluid
 
-  - reaction: 2Ar* -> Ar+ + Ar + e
-    params: [6.2e-10, 0, 4.0, 0]
+  - reaction: 2Ar(a) -> Ar+ + Ar + e
+    params: [6.2e-10, 0, 4]
     references: lymberopoulos1993fluid
 
-  - reaction: Ar* + Ar -> 2Ar
+  - reaction: Ar(b) + Ar -> 2Ar
     params: 3.0e-15
     references: lymberopoulos1993fluid
 
-  - reaction: Ar* + 2Ar -> Ar2 + Ar
+  - reaction: Ar(a) + 2Ar -> Ar2 + Ar
     params: 1.1e-31
     references: lymberopoulos1993fluid

@@ -12,12 +12,9 @@ namespace prism
 {
 
 SubSpecies::SubSpecies(const string & name)
-  : SpeciesBase(name),
-    _base(setBase()),
-    _modifier(setModifier()),
-    _subscript(setSubscript()),
-    _neutral_ground_state(setNeutralGroundState())
+  : SpeciesBase(name), _base(setBase()), _modifier(setModifier()), _subscript(setSubscript())
 {
+  setNeutralGroundState();
   setCharge();
   setMass();
   setLatexName();
@@ -135,7 +132,7 @@ SubSpecies::setCharge()
   string s;
   if (_subscript > 1)
   {
-    const string subscript_str = to_string(_subscript);
+    const string subscript_str = std::to_string(_subscript);
     const int charge_start = _modifier.find(subscript_str) + subscript_str.length();
     s = _modifier.substr(charge_start, _modifier.length());
   }
@@ -251,8 +248,8 @@ SubSpecies::setLatexName()
   // if the subscript is there we need to add it in the math environment
   if (_subscript > 1)
   {
-    s += "$_{" + to_string(_subscript) + "}$";
-    partial_name += to_string(_subscript);
+    s += "$_{" + std::to_string(_subscript) + "}$";
+    partial_name += std::to_string(_subscript);
   }
   // now we need to add the charge superscript if it is there
   if (_charge_num != 0)
@@ -278,8 +275,8 @@ SubSpecies::setLatexName()
     // if the charge is something either lets add the number as well
     if (abs(_charge_num) > 1)
     {
-      s += to_string(abs(_charge_num)) + "}$";
-      partial_name += to_string(abs(_charge_num));
+      s += std::to_string(abs(_charge_num)) + "}$";
+      partial_name += std::to_string(abs(_charge_num));
     }
   }
   // case for only ion no other modifiers
@@ -331,26 +328,51 @@ SubSpecies::operator!=(const SubSpecies & other) const
   return !(*this == other);
 }
 
-string
-SubSpecies::setNeutralGroundState() const
+void
+SubSpecies::setNeutralGroundState()
 {
   string ngs = "";
 
   ngs += _base;
   if (_subscript != 1)
-    ngs += to_string(_subscript);
+    ngs += std::to_string(_subscript);
 
-  return ngs;
+  _neutral_ground_state = ngs;
 }
+
+string
+SubSpecies::to_string() const
+{
+  std::ostringstream string_rep;
+  string_rep << endl;
+  string_rep << "SubSpecies: " << _name << endl;
+  string_rep << "  base: " << _base << endl;
+  string_rep << SpeciesBase::to_string();
+  string_rep << "  modifier: " << _modifier << endl;
+  string_rep << "  subscript: " << _subscript << endl;
+
+  return string_rep.str();
+}
+}
+
+string
+to_string(const prism::SubSpecies & s)
+{
+  return s.to_string();
+}
+
+ostream &
+operator<<(std::ostream & os, const prism::SubSpecies & s)
+{
+  os << s.to_string();
+  return os;
 }
 
 size_t
 hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const
 {
   constexpr size_t hash_factor = 37;
-
-  size_t val = 17; // Start with a prime number
-
+  size_t val = 17;
   val += hash_factor * hash<prism::SpeciesBase>()(obj);
   val += hash_factor * hash<string>()(obj.base());
   val += hash_factor * hash<string>()(obj.modifier());

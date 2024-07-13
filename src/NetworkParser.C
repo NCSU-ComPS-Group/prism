@@ -126,7 +126,9 @@ NetworkParser::parseReactions(const YAML::Node & network,
         throw InvalidReaction(rxn_list->back()->expression(),
                               "Elastic reactions can only be in the '" + RATE_BASED + "' block");
 
-      cout << makeGreen("Reaction Validated: " + rxn->expression()) << endl;
+      printGreen("Reaction Validated: " + rxn->expression());
+      cout << endl;
+
       if (type == RATE_BASED)
         _factory.addRateBasedReaction(rxn);
 
@@ -144,7 +146,6 @@ NetworkParser::parseNetwork(const string & file)
 {
   checkFile(file);
   const YAML::Node network = YAML::LoadFile(file);
-
 
   const auto extra_params = getExtraParams(network, allowed_network_inputs);
 
@@ -168,18 +169,21 @@ NetworkParser::parseNetwork(const string & file)
     InvalidInputExit(e.what());
   }
 
-
   if (_check_refs)
     checkBibFile(_networks[file], _bibs[file]);
-
 
   if (!paramProvided(DATA_DELIMITER, network, OPTIONAL))
   {
     _delimiters[file] = ",";
-  } else {
-    try {
+  }
+  else
+  {
+    try
+    {
       _delimiters[file] = getParam<string>(DATA_DELIMITER, network, REQUIRED);
-    } catch (const InvalidInput & e) {
+    }
+    catch (const InvalidInput & e)
+    {
       InvalidInputExit(e.what());
     }
 
@@ -187,7 +191,8 @@ NetworkParser::parseNetwork(const string & file)
       InvalidInputExit("The tabular data delimiter cannot be an empty string");
 
     if (findFirstNumber(_delimiters[file]) != -1)
-      InvalidInputExit("The tabular provided data delimiter '" + _delimiters[file] + "' is invalid\nDelimiters cannot contain numbers");
+      InvalidInputExit("The tabular provided data delimiter '" + _delimiters[file] +
+                       "' is invalid\nDelimiters cannot contain numbers");
   }
 
   try {
@@ -197,12 +202,10 @@ NetworkParser::parseNetwork(const string & file)
     InvalidInputExit(e.what());
   }
 
-
   _factory.collectCustomSpecies(network);
   _factory.collectLumpedSpecies(network);
   _factory.collectLatexOverrides(network);
   _factory.collectConstantSpecies(network);
-
 
   if (!paramProvided(RATE_BASED, network, OPTIONAL) &&
       !paramProvided(XSEC_BASED, network, OPTIONAL))

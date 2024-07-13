@@ -69,6 +69,8 @@ clean:
 	@rm -rf build/*.g*
 	@rm -rf *.dSYM
 	@rm -f *.out
+	@rm -f *.yaml
+	@rm -f *.info
 
 coverage: all
 	lcov --capture --directory . --output-file coverage.info

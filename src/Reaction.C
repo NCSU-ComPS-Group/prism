@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <functional>
 #include "fmt/core.h"
+#include <sstream>
 
 #include "YamlHelper.h"
 #include "InvalidInput.h"
@@ -411,7 +412,8 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(lumped_name);
-      _notes.push_back("Species \\lq " + _reactants[i].lock()->latexRepresentation() + "\\rq{}  has been lumped into \\lq " +
+      _notes.push_back("Species \\lq " + _reactants[i].lock()->latexRepresentation() +
+                       "\\rq{}  has been lumped into \\lq " +
                        lumped_state.lock()->latexRepresentation() + "\\rq");
     }
 
@@ -450,8 +452,9 @@ Reaction::substituteLumped()
     if (it == lumped.end())
     {
       lumped.insert(lumped_name);
-      _notes.push_back("Species \\lq " +  _products[i].lock()->latexRepresentation() + "\\rq{}  has been lumped into \\lq " +
-                       lumped_state.lock()->latexRepresentation()  + "\\rq");
+      _notes.push_back("Species \\lq " + _products[i].lock()->latexRepresentation() +
+                       "\\rq{}  has been lumped into \\lq " +
+                       lumped_state.lock()->latexRepresentation() + "\\rq");
     }
 
     // replace the data needed with the lumped state
@@ -568,11 +571,11 @@ Reaction::interpolator(const double T_e, const double /*T_g*/) const
 {
   if (T_e < _tabulated_data.front().energy || T_e > _tabulated_data.back().energy)
   {
-    throw invalid_argument(
-        makeRed("\n\nYou are requesting an extrapolatory sampling from reaction\n\n" + _expression +
-                "\nMin energy: " + to_string(_tabulated_data.front().energy) + "\nMax energy: " +
-                to_string(_tabulated_data.back().energy) + "\nRequested energy: " + to_string(T_e) +
-                "\n\nThis is not supported please provide more data.\n\n"));
+    throw invalid_argument(makeRed(
+        "\n\nYou are requesting an extrapolatory sampling from reaction\n\n" + _expression +
+        "\nMin energy: " + std::to_string(_tabulated_data.front().energy) +
+        "\nMax energy: " + std::to_string(_tabulated_data.back().energy) + "\nRequested energy: " +
+        std::to_string(T_e) + "\n\nThis is not supported please provide more data.\n\n"));
   }
   // find the value in the array that if greater and or equal to the electron energy
   auto d2 = std::lower_bound(_tabulated_data.begin(), _tabulated_data.end(), T_e);
@@ -607,23 +610,21 @@ Reaction::partialArrhenius1(const double T_e, const double /*T_g*/) const
 double
 Reaction::partialArrhenius2(const double T_e, const double /*T_g*/) const
 {
-  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / T_e);
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) * std::exp(-_params[2] / T_e);
 }
 
 double
 Reaction::partialArrhenius3(const double T_e, const double T_g) const
 {
-  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / T_e) * std::pow(T_g / ROOM_TEMP_EV, _params[3]);
-
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) * std::exp(-_params[2] / T_e) *
+         std::pow(T_g / ROOM_TEMP_EV, _params[3]);
 }
 
 double
 Reaction::fullArrhenius(const double T_e, const double T_g) const
 {
-  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) *
-         std::exp(-_params[2] / T_e) * std::pow(T_g / ROOM_TEMP_EV, _params[3]) * std::exp(-_params[4] / T_g);
+  return _params[0] * std::pow(T_e / ROOM_TEMP_EV, _params[1]) * std::exp(-_params[2] / T_e) *
+         std::pow(T_g / ROOM_TEMP_EV, _params[3]) * std::exp(-_params[4] / T_g);
 }
 
 const vector<double> &
@@ -693,7 +694,7 @@ Reaction::getStoicCoeffById(const SpeciesId id) const
   auto it = _id_stoic_map.find(id);
 
   if (it == _id_stoic_map.end())
-    throw invalid_argument("No species with id " + to_string(id) + " is in reaction " +
+    throw invalid_argument("No species with id " + std::to_string(id) + " is in reaction " +
                            _expression);
 
   return it->second;
@@ -725,6 +726,72 @@ Reaction::collectUniqueSpecies()
     }
   }
 }
+
+string
+Reaction::to_string() const
+{
+  std::ostringstream string_rep;
+  string_rep << endl;
+  string_rep << "Reaction: " << _expression << endl;
+  string_rep << "  id: " << _id << endl;
+  string_rep << "  expression: " << _expression << endl;
+  string_rep << "  latex: " << _latex_expression << endl;
+  string_rep << "  delta-eps-e: " << _delta_eps_e << " [eV]" << endl;
+  string_rep << "  delta-eps-g: " << _delta_eps_g << " [eV]" << endl;
+  string_rep << "  is elastic: " << (_is_elastic ? "true" : "false") << endl;
+  string_rep << "  has tabulated data: " << (_has_tabulated_data ? "true" : "false") << endl;
+
+  if (!_has_tabulated_data)
+  {
+    string_rep << "  function parameters:" << endl;
+    for (const auto & p : _params)
+      string_rep << "    " << p << endl;
+  }
+  string_rep << "  references:" << endl;
+  for (const auto & r : _references)
+    string_rep << "    " << r << endl;
+
+  string_rep << "  notes:" << endl;
+  for (const auto & n : _notes)
+    string_rep << "    " << n << endl;
+
+  string_rep << "  reactants:" << endl;
+  for (const auto & it : _reactant_count)
+  {
+    string_rep << "    - species: " << it.first << endl;
+    string_rep << "      stoic coeff: " << _stoic_coeffs.find(it.first)->second << endl;
+  }
+  string_rep << "  products:" << endl;
+  for (const auto & it : _product_count)
+  {
+    string_rep << "    - species: " << it.first << endl;
+    string_rep << "      stoic coeff: " << _stoic_coeffs.find(it.first)->second << endl;
+  }
+  return string_rep.str();
+}
+}
+
+std::string
+to_string(const std::shared_ptr<prism::Reaction> & r)
+{
+  return r->to_string();
+}
+std::string
+to_string(const std::shared_ptr<const prism::Reaction> & r)
+{
+  return r->to_string();
+}
+std::ostream &
+operator<<(std::ostream & os, const std::shared_ptr<prism::Reaction> & r)
+{
+  os << r->to_string();
+  return os;
+}
+std::ostream &
+operator<<(std::ostream & os, const std::shared_ptr<const prism::Reaction> & r)
+{
+  os << r->to_string();
+  return os;
 }
 
 size_t

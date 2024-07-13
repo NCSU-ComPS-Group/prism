@@ -178,17 +178,20 @@ SpeciesFactory::collectConstantSpecies(const YAML::Node & network)
   if (!paramProvided(CONSTANT_SPECIES, network, OPTIONAL))
     return;
 
-
   vector<string> species;
 
-  try {
+  try
+  {
     species = getParams<string>(CONSTANT_SPECIES, network, REQUIRED);
-  } catch(const InvalidInput & e) {
+  }
+  catch (const InvalidInput & e)
+  {
     InvalidInputExit(network, CONSTANT_SPECIES, e.what());
   }
 
   if (species[0] == "null")
-    InvalidInputExit(network, CONSTANT_SPECIES, "'" + CONSTANT_SPECIES + "'" + " was parsed as 'null'");
+    InvalidInputExit(
+        network, CONSTANT_SPECIES, "'" + CONSTANT_SPECIES + "'" + " was parsed as 'null'");
 
   for (const auto & s : species)
     _constant_species.insert(s);
@@ -305,7 +308,8 @@ SpeciesFactory::indexSpecies()
     _species_indicies[s->name()] = s->id();
 
     if (s->unbalancedRateBasedReactionData().size() + s->unbalancedXSecBasedReactionData().size() !=
-        0 && !s->isConstant())
+            0 &&
+        !s->isConstant())
       _transient_species.push_back(s);
   }
 }

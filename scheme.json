@@ -247,8 +247,8 @@
             "type": "string",
             "default": ""
           },
-          "file" : {
-            "type" : "string"
+          "file": {
+            "type": "string"
           },
           "params": {
             "anyOf": [
@@ -307,8 +307,26 @@
           "references"
         ],
         "oneOf": [
-          { "required": ["file"], "properties": { "params": { "not": {} } } },
-          { "required": ["params"], "properties": { "file": { "not": {} } } }
+          {
+            "required": [
+              "file"
+            ],
+            "properties": {
+              "params": {
+                "not": {}
+              }
+            }
+          },
+          {
+            "required": [
+              "params"
+            ],
+            "properties": {
+              "file": {
+                "not": {}
+              }
+            }
+          }
         ]
       },
       "default": [
@@ -432,4 +450,3 @@
     }
   ]
 }
-

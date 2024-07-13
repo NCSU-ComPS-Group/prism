@@ -41,7 +41,7 @@ public:
   /**
    * Getter method for the stream to actually write the summary to file
    */
-  std::stringstream & tableString() { return _table_str; }
+  std::ostringstream & tableString() { return _table_str; }
   /**
    * Adds the document preamble to start of the latex doc
    */
@@ -103,7 +103,7 @@ protected:
   ///  a counter for all of the notes that have been added to the table
   unsigned int _note_count;
   /// the string stream that is used to created the summary
-  std::stringstream _table_str;
+  std::ostringstream _table_str;
   /// helper mappings between notes and their corrisponding numbering
   ///@{
   std::map<std::string, unsigned int> _note_numbers;

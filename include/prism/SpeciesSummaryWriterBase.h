@@ -32,7 +32,7 @@ public:
   /*
    * Getter method for the summary string
    */
-  std::stringstream & summaryString() { return _summary_str; }
+  std::ostringstream & summaryString() { return _summary_str; }
   /**
    * Method for adding any random summaries to the top of the summary file
    */
@@ -48,7 +48,7 @@ public:
 
 protected:
   /// the stream that is used to construct the summary
-  std::stringstream _summary_str;
+  std::ostringstream _summary_str;
 };
 
 }

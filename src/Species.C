@@ -1,7 +1,8 @@
 #include "Species.h"
 #include "SubSpecies.h"
 #include "StringHelper.h"
-
+#include "Reaction.h"
+#include <sstream>
 #include <limits>
 
 using namespace std;
@@ -10,11 +11,9 @@ namespace prism
 {
 
 Species::Species(const string & name, const bool marked_constant)
-  : SpeciesBase(name),
-    _marked_constant(marked_constant),
-    _sub_species(decomposeSpecies()),
-    _neutral_ground_state(setNeutralGroundState())
+  : SpeciesBase(name), _marked_constant(marked_constant), _sub_species(decomposeSpecies())
 {
+  setNeutralGroundState();
   setMass();
   setCharge();
   setLatexName();
@@ -128,15 +127,66 @@ Species::convertToSharedPtr(const std::vector<std::weak_ptr<const Reaction>> & v
   return temp_list;
 }
 
-string
-Species::setNeutralGroundState() const
+void
+Species::setNeutralGroundState()
 {
   string temp = "";
   for (auto sub : _sub_species)
     temp += sub.neutralGroundState();
 
-  return temp;
+  _neutral_ground_state = temp;
 }
+
+string
+Species::to_string() const
+{
+  std::ostringstream string_rep;
+  string_rep << endl << "Species: " << _name << endl;
+  string_rep << "  composition: " << endl;
+  for (const auto & sub : _sub_species)
+    string_rep << "    " << sub.name() << endl;
+  string_rep << "  id: " << _id << endl;
+  string_rep << SpeciesBase::to_string();
+  string_rep << "  marked constant: " << (_marked_constant ? "true" : "false") << endl;
+
+  string_rep << "  rate based reactions: " << _rate_based.size() << endl;
+  for (const auto & r_wp : _rate_based)
+    string_rep << "    " << r_wp.lock()->expression() << endl;
+
+  string_rep << "  xsec based reactions: " << _xsec_based.size() << endl;
+  for (const auto & r_wp : _xsec_based)
+    string_rep << "    " << r_wp.lock()->expression() << endl;
+
+  string_rep << endl;
+  return string_rep.str();
+}
+}
+
+string
+to_string(const std::shared_ptr<prism::Species> & s)
+{
+  return s->to_string();
+}
+
+string
+to_string(const std::shared_ptr<const prism::Species> & s)
+{
+  return s->to_string();
+}
+
+std::ostream &
+operator<<(std::ostream & os, const std::shared_ptr<prism::Species> & s)
+{
+
+  os << s->to_string();
+  return os;
+}
+
+std::ostream &
+operator<<(std::ostream & os, const std::shared_ptr<const prism::Species> & s)
+{
+  os << s->to_string();
+  return os;
 }
 
 size_t

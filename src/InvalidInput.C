@@ -63,7 +63,7 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
     oss << node;
 
     printRed("\nInvalid Input:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
-    #ifdef TESTING
+#ifdef TESTING
       throw exception();
     #else
       exit(EXIT_FAILURE);
