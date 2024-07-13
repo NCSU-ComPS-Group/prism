@@ -369,8 +369,22 @@ TEST(SubSpecies, PrintingMethods)
   EXPECT_FILES_EQ(file, gold_file);
 
   file = "subspecies_to_string.out";
-  ofstream out2("subspecies_to_string.out");
+  ofstream out2(file);
   out2 << to_string(s);
   out2.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  const SubSpecies const_s = SubSpecies("Polypeptide2-100(test)");
+
+  file = "const_subspecies_<<.out";
+  ofstream out3(file);
+  out3 << s;
+  out3.close();
+  EXPECT_FILES_EQ(file, gold_file);
+
+  file = "cosnt_subspecies_to_string.out";
+  ofstream out4(file);
+  out4 << to_string(s);
+  out4.close();
   EXPECT_FILES_EQ(file, gold_file);
 }
