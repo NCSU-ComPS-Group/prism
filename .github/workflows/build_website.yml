@@ -8,7 +8,7 @@ on:
 jobs:
   build-website:
     runs-on: ubuntu-latest
-    # Set up a default shell for all steps
+    # Set up a default shell for all of the steps
     # See: https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
     defaults:
       run:
