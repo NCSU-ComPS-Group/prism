@@ -27,13 +27,15 @@ jobs:
         channels: https://conda.software.inl.gov/public
     # GitHub-hosted runners are currently limited to 2 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-    - name: Build Docs
+    - name: Install Packages
       run: |
         conda create -n moose
         conda activate moose
         conda config --add channels https://conda.software.inl.gov/public
         conda install -y moose-dev
         conda install -y doxygen
+    - name: Build Docs
+      run: |
         cd doc
         cd moose/test
         make hit
