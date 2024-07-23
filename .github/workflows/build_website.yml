@@ -41,6 +41,7 @@ jobs:
         make hit
         cd -
         MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
+        ls -al
     - name: Update gh-pages branch
       uses: peaceiris/actions-gh-pages@v3
       with:
