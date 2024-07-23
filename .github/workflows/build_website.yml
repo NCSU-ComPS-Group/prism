@@ -1,0 +1,52 @@
+name: Generate PRISM Website
+
+on:
+  push:
+    branches:
+      - devel
+
+jobs:
+  build-website:
+    runs-on: ubuntu-latest
+    # Set up a default shell for all steps
+    # See: https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+    - name: Checkout site
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Set up Mambaforge3 and MOOSE environment
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        activate-environment: moose
+        channels: https://conda.software.inl.gov/public
+    # GitHub-hosted runners are currently limited to 2 cores
+    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+    - name: Build Docs
+      run: |
+        conda create -n moose
+        conda activate moose
+        conda config --add channels https://conda.software.inl.gov/public
+        conda install -y moose-dev
+        conda install -y doxygen
+        cd doc
+        cd moose/test
+        make hit
+        cd -
+        MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
+    - name: Update gh-pages branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/site
+        # This populates the gh-pages branch with only this update and removes prior history
+        force_orphan: true
+        user_name: github-actions
+        user_email: actions@github.com
+        commit_message: "Update personal website based on"
+        # The commit SHA that triggered the action is added to the end of the above message.
