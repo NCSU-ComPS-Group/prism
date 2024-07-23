@@ -1,9 +1,0 @@
-@article{lymberopoulos1993fluid,
-  title     = {Fluid simulations of glow discharges: Effect of metastable atoms in argon},
-  author    = {Lymberopoulos, Dimitris P and Economou, Demetre J},
-  journal   = {Journal of applied physics},
-  volume    = {73},
-  number    = {8},
-  pages     = {3668--3679},
-  year      = {1993}
-}

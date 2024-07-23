@@ -1,0 +1,909 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>syntax_support.md | PRISM</title><link href="../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/ncsu.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">PRISM</a><a href="https://github.ncsu.edu/NCSU-ComPS-Group/prism" class="right"><img src="../media/framework/github-logo.png" class="github-mark"></img><img src="../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="0a409519-58e8-4dc7-951f-aff6a671970e" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="contributing.html">Contributing</a></li></ul><a href="#" class="sidenav-trigger" data-target="9e3885a7-c2c7-4e39-b69e-d5b2cc8352c1"><i class="material-icons">menu</i></a><ul class="sidenav" id="9e3885a7-c2c7-4e39-b69e-d5b2cc8352c1"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="73eee8c5-936e-4a2a-9198-6e55794507e2" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="contributing.html">Contributing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="0a409519-58e8-4dc7-951f-aff6a671970e"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="syntax_support.html">Syntax Support</a></li><li><a href="example.html">Example</a></li></ul><ul class="dropdown-content" id="73eee8c5-936e-4a2a-9198-6e55794507e2"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="syntax_support.html">Syntax Support</a></li><li><a href="example.html">Example</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><span class="breadcrumb">getting_started</span><a href="#" class="breadcrumb">syntax_support</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><p>If you are using <a href="https://code.visualstudio.com">VSCode</a> we suggest installing the <a href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml">YAML Extension</a>. This extension enable suggestions and autocomplete for a custom yaml schema. PRISM provides a json file which contains the schema for the PRISM input syntax.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
+  &quot;title&quot;: &quot;PRISM Syntax&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;bibliography&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;data-delimiter&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;data-path&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;constant-species&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;default&quot;: &quot;&quot;
+        },
+        {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;default&quot;: []
+        }
+      ]
+    },
+    &quot;custom-species&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;mass&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;mass&quot;
+        ],
+        &quot;allOf&quot;: [
+          {
+            &quot;anyOf&quot;: [
+              {
+                &quot;properties&quot;: {
+                  &quot;name&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;mass&quot;: {
+                    &quot;type&quot;: &quot;number&quot;
+                  }
+                }
+              },
+              {
+                &quot;properties&quot;: {
+                  &quot;name&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;mass&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;minItems&quot;: {
+                    &quot;$data&quot;: &quot;1/mass/minItems&quot;
+                  },
+                  &quot;maxItems&quot;: {
+                    &quot;$data&quot;: &quot;1/mass/maxItems&quot;
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;name&quot;: &quot;&quot;,
+          &quot;mass&quot;: 0
+        }
+      ]
+    },
+    &quot;lumped-species&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;lumped&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;actual&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;lumped&quot;,
+          &quot;actual&quot;
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;lumped&quot;: &quot;&quot;,
+          &quot;actual&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;latex-overrides&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;species&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;latex&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;species&quot;,
+          &quot;latex&quot;
+        ],
+        &quot;allOf&quot;: [
+          {
+            &quot;anyOf&quot;: [
+              {
+                &quot;properties&quot;: {
+                  &quot;species&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;latex&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  }
+                }
+              },
+              {
+                &quot;properties&quot;: {
+                  &quot;species&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;latex&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;minItems&quot;: {
+                    &quot;$data&quot;: &quot;1/species/minItems&quot;
+                  },
+                  &quot;maxItems&quot;: {
+                    &quot;$data&quot;: &quot;1/species/maxItems&quot;
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;species&quot;: &quot;&quot;,
+          &quot;latex&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;rate-based&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;reaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;default&quot;: &quot;&quot;
+          },
+          &quot;file&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;params&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0.0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;delta-eps-e&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;delta-eps-g&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;references&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;notes&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;reaction&quot;,
+          &quot;references&quot;
+        ],
+        &quot;oneOf&quot;: [
+          {
+            &quot;required&quot;: [
+              &quot;file&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;params&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          },
+          {
+            &quot;required&quot;: [
+              &quot;params&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;file&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;params&quot;: [],
+          &quot;references&quot;: &quot;&quot;,
+          &quot;notes&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;xsec-based&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;reaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;default&quot;: &quot;&quot;
+          },
+          &quot;file&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;params&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0.0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;delta-eps-e&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;delta-eps-g&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;references&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;notes&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;reaction&quot;,
+          &quot;references&quot;
+        ],
+        &quot;oneOf&quot;: [
+          {
+            &quot;required&quot;: [
+              &quot;file&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;params&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          },
+          {
+            &quot;required&quot;: [
+              &quot;params&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;file&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;params&quot;: [],
+          &quot;references&quot;: &quot;&quot;,
+          &quot;notes&quot;: &quot;&quot;
+        }
+      ]
+    }
+  },
+  &quot;oneOf&quot;: [
+    {
+      &quot;required&quot;: [
+        &quot;rate-based&quot;
+      ]
+    },
+    {
+      &quot;required&quot;: [
+        &quot;xsec-based&quot;
+      ]
+    }
+  ]
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#fd1c04b9-92fe-4d4e-89d0-b81c0ef731ef">(../scheme.json)</a><p>To enable the features of this extension you need configure your settings to allow the extension to know that this cutsom scheme exists. This is an example of how you may do this for files ending in <code>.p</code>.</p><pre class="moose-pre"><code class="language-json">
+  &quot;yaml.schemas&quot;: {
+    &quot;scheme.json&quot;: &quot;*.p&quot;
+  }
+</code></pre><div class="moose-modal modal" id="fd1c04b9-92fe-4d4e-89d0-b81c0ef731ef"><div class="modal-content"><h4>(../scheme.json)</h4><pre class="moose-pre"><code class="language-text">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
+  &quot;title&quot;: &quot;PRISM Syntax&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;bibliography&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;data-delimiter&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;data-path&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;default&quot;: &quot;&quot;
+    },
+    &quot;constant-species&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;default&quot;: &quot;&quot;
+        },
+        {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;default&quot;: []
+        }
+      ]
+    },
+    &quot;custom-species&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;name&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;mass&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;name&quot;,
+          &quot;mass&quot;
+        ],
+        &quot;allOf&quot;: [
+          {
+            &quot;anyOf&quot;: [
+              {
+                &quot;properties&quot;: {
+                  &quot;name&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;mass&quot;: {
+                    &quot;type&quot;: &quot;number&quot;
+                  }
+                }
+              },
+              {
+                &quot;properties&quot;: {
+                  &quot;name&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;mass&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;minItems&quot;: {
+                    &quot;$data&quot;: &quot;1/mass/minItems&quot;
+                  },
+                  &quot;maxItems&quot;: {
+                    &quot;$data&quot;: &quot;1/mass/maxItems&quot;
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;name&quot;: &quot;&quot;,
+          &quot;mass&quot;: 0
+        }
+      ]
+    },
+    &quot;lumped-species&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;lumped&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;actual&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;lumped&quot;,
+          &quot;actual&quot;
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;lumped&quot;: &quot;&quot;,
+          &quot;actual&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;latex-overrides&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;species&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;latex&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;species&quot;,
+          &quot;latex&quot;
+        ],
+        &quot;allOf&quot;: [
+          {
+            &quot;anyOf&quot;: [
+              {
+                &quot;properties&quot;: {
+                  &quot;species&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;latex&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  }
+                }
+              },
+              {
+                &quot;properties&quot;: {
+                  &quot;species&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;latex&quot;: {
+                    &quot;type&quot;: &quot;array&quot;
+                  },
+                  &quot;minItems&quot;: {
+                    &quot;$data&quot;: &quot;1/species/minItems&quot;
+                  },
+                  &quot;maxItems&quot;: {
+                    &quot;$data&quot;: &quot;1/species/maxItems&quot;
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;species&quot;: &quot;&quot;,
+          &quot;latex&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;rate-based&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;reaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;default&quot;: &quot;&quot;
+          },
+          &quot;file&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;params&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0.0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;delta-eps-e&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;delta-eps-g&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;references&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;notes&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;reaction&quot;,
+          &quot;references&quot;
+        ],
+        &quot;oneOf&quot;: [
+          {
+            &quot;required&quot;: [
+              &quot;file&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;params&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          },
+          {
+            &quot;required&quot;: [
+              &quot;params&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;file&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;params&quot;: [],
+          &quot;references&quot;: &quot;&quot;,
+          &quot;notes&quot;: &quot;&quot;
+        }
+      ]
+    },
+    &quot;xsec-based&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;reaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;default&quot;: &quot;&quot;
+          },
+          &quot;file&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;params&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;default&quot;: 0.0
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;number&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;delta-eps-e&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;delta-eps-g&quot;: {
+            &quot;type&quot;: &quot;number&quot;
+          },
+          &quot;references&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          },
+          &quot;notes&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;default&quot;: &quot;&quot;
+              },
+              {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;default&quot;: []
+              }
+            ]
+          }
+        },
+        &quot;required&quot;: [
+          &quot;reaction&quot;,
+          &quot;references&quot;
+        ],
+        &quot;oneOf&quot;: [
+          {
+            &quot;required&quot;: [
+              &quot;file&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;params&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          },
+          {
+            &quot;required&quot;: [
+              &quot;params&quot;
+            ],
+            &quot;properties&quot;: {
+              &quot;file&quot;: {
+                &quot;not&quot;: {}
+              }
+            }
+          }
+        ]
+      },
+      &quot;default&quot;: [
+        {
+          &quot;params&quot;: [],
+          &quot;references&quot;: &quot;&quot;,
+          &quot;notes&quot;: &quot;&quot;
+        }
+      ]
+    }
+  },
+  &quot;oneOf&quot;: [
+    {
+      &quot;required&quot;: [
+        &quot;rate-based&quot;
+      ]
+    },
+    {
+      &quot;required&quot;: [
+        &quot;xsec-based&quot;
+      ]
+    }
+  ]
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../js/init.js"></script><script type="text/javascript" src="../js/navigation.js"></script><script type="text/javascript" src="../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../js/search_index.js"></script><script type="text/javascript" src="../js/sqa_moose.js"></script>
