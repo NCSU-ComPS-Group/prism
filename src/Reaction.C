@@ -69,17 +69,17 @@ Reaction::Reaction(const YAML::Node & rxn_input,
     _tabulated_data.resize(0);
     if (_params[0] <= 0.0)
       throw InvalidReaction(_expression,
-                            "The first value of '" + PARAM_KEY + "'cannot be zero or negative");
+                            "The first value of '" + PARAM_KEY + "' cannot be zero or negative");
 
-    if (_params.size() > 2 && _params[2] <= 0.0)
+    if (_params.size() > 2 && _params[2] < 0.0)
       throw InvalidReaction(_expression,
                             "The theshold energy E_e (index 2) in '" + PARAM_KEY +
-                                "'cannot be zero or negative");
+                                "' cannot be negative");
 
-    if (_params.size() == 5 && _params[4] <= 0.0)
+    if (_params.size() == 5 && _params[4] < 0.0)
       throw InvalidReaction(_expression,
                             "The theshold energy E_g (index 4) in '" + PARAM_KEY +
-                                "'cannot be zero or negative");
+                                "' cannot be negative");
 
     switch (_params.size())
     {
