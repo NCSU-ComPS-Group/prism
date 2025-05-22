@@ -359,3 +359,23 @@ TEST(Reaction, FullArrhenius)
   EXPECT_REL_TOL(r.sampleData(5.0, 3.0), 4.37108820797);
   EXPECT_REL_TOL(r.sampleData(7.0, 5.0), 33.2533008159);
 }
+
+TEST(Reaction, ArrheniusZeroes)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, 0, 0, 0, 0]");
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
+
+  EXPECT_NO_THROW(Reaction(rxn_input, 0, "", "", false, true, "\t"));
+}
+
+TEST(Reaction, ArrheniusZeroes2)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[0, 0.25, 4.0, 0.75, 10]");
+
+  EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, true, "\t"), InvalidReaction);
+}
