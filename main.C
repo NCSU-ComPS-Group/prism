@@ -8,7 +8,7 @@
 //* Copyright 2024, North Carolina State University
 //* ALL RIGHTS RESERVED
 //*
-
+  
 #include <stdlib.h>
 #include "prism/prism.h"
 #include "fmt/core.h"
