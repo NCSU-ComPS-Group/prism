@@ -1,6 +1,6 @@
 # Input File Syntax
 
-The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support accross programming languages. The input file is broken up into blocks, the following are supported by PRISM.
+The PRISM project utilizes the yaml file format to store reaction networks. The yaml file format was selected for its minimal syntax and wide support across programming languages. The input file is broken up into blocks, the following are supported by PRISM.
 
 - Bibliography
 - Data Path
@@ -27,7 +27,7 @@ This block only requires a single string which is the path from the location of 
 
 ## Data Path Block
 
-To reduce the amount of user input requried, the PRISM project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the `file` parameter of every reaction in the file. It can be defined in the following manner.
+To reduce the amount of user input required, the PRISM project also supports the definition of a data path. This should be used if all the data files required for your network are stored in the same location. When defined the data path will be prepended to the `file` parameter of every reaction in the file. It can be defined in the following manner.
 
 ```yaml
   data-path: path/to/data/
@@ -39,7 +39,7 @@ If we have a reaction which takes the file parameter like this
   file: data.txt
 ```
 
-The reaction object that is created will prvoide the path to the data file in the following manner.
+The reaction object that is created will provide the path to the data file in the following manner.
 
 ```c++
   "path/to/data/data.txt"
@@ -57,9 +57,9 @@ If no delimiter is explicity provided then PRISM assumes data is provided in a C
 
 ## Constant Species Block
 
-There may be some situations where it makes sense to have a species in a reaction network where you assume the effects of the reactions are negligible on the concentration of the species. To accomodate this you can use the `constant-species` block. This block excludes the species from being included in the list of transient species that can be obtained via `NetworkParser::transientSpecies()`. Additionally, the species will have a higher id value as a result of being held constant and it's location in the species list, obtained via `NetworkParser::species()`, will also be changed accordinly.
+There may be some situations where it makes sense to have a species in a reaction network where you assume the effects of the reactions are negligible on the concentration of the species. To accomodate this you can use the `constant-species` block. This block excludes the species from being included in the list of transient species that can be obtained via `NetworkParser::transientSpecies()`. Additionally, the species will have a higher id value as a result of being held constant and its location in the species list, obtained via `NetworkParser::species()`, will also be changed accordingly.
 
-This data be provided either as a single species
+This data can be provided either as a single species
 
 ```yaml
   constant-species: Ar
