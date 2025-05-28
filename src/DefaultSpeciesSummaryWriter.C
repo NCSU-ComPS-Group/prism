@@ -186,7 +186,7 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   }
   _summary_str << endl << endl;
 
-  _summary_str << "reacion-summary:" << endl;
+  _summary_str << "reaction-summary:" << endl;
 
   const auto & rate_based = np.rateBasedReactions();
   const auto & xsec_based = np.xsecBasedReactions();
