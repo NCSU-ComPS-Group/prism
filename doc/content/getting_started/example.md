@@ -19,7 +19,7 @@ The way this single API is enabled is by assigning the correct sampling function
 
 !listing prism/example/output.txt
 
-In the output from the example program you can first see that the reactions are validated by the parser. After this there are 3 main columns under each species section. The first column is the stoichiometric coefficient for the reactions. The second column is the reaction rate sampled at a value of 10. The third column is a list of all of the reactants for each reaction which is either a source a sink for the given species where each species name is raised to the power corrisponding to the number of times it appears on the left hand side of the reaction.
+In the output from the example program you can first see that the reactions are validated by the parser. After this there are 3 main columns under each species section. The first column is the stoichiometric coefficient for the reactions. The second column is the reaction rate sampled at a value of 10. The third column is a list of all of the reactants for each reaction, which is either a source or a sink for the given species where each species name is raised to the power corresponding to the number of times it appears on the left hand side of the reaction.
 
 # Example $\LaTeX$ table
 
