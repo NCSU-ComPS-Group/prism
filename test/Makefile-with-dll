@@ -41,7 +41,7 @@ $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
 	@mkdir -p output
-	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS)
+	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -o $@ $^ $(TEST_LINKS) -Wl,-rpath,$(CONDA_PREFIX)/lib
 
 .PHONY: all clean coverage clean-coverage
 

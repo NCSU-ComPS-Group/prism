@@ -5,7 +5,6 @@ GCOV_FLAGS = -fprofile-arcs -ftest-coverage
 # flags for memory leakage testing
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -fsanitize-address-use-after-scope -fsanitize=undefined
 CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Werror $(GCOV_FLAGS) $(ASAN_FLAGS) $(TESTING_FLAG)
-
 PROJECT_NAME = prism
 PROJECT_SRC_DIR = ../src
 PROJECT_INCLUDE_DIR = ../include/$(PROJECT_NAME)
@@ -42,22 +41,25 @@ all: $(TEST_EXECUTABLE)
 
 $(TEST_BUILD_DIR)/%.o: $(PROJECT_SRC_DIR)/%.C
 	@mkdir -p build
-	@echo $@
+	@echo "Building $<"
 	@$(CXX) $(CXXFLAGS) -I$(CONDA_INCLUDE_DIR) -I$(PROJECT_INCLUDE_DIR) -c $< -o $@
+	@echo "Successfully Built $<"
 
 $(TEST_BUILD_DIR)/%.o: $(HELPER_SRC_DIR)/%.C
 	@mkdir -p build
-	@echo $@
+	@echo "Building $<"
 	@$(CXX) $(CXXFLAGS) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -I$(PROJECT_INCLUDE_DIR) -c $< -o $@
+	@echo "Successfully Built $<"
 
 $(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.C
 	@mkdir -p build
-	@echo $@
+	@echo "Building $<"
 	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -c $< -o $@
+	@echo "Successfully Built $<"
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS) $(PROJECT_OBJECTS) $(HELPER_OBJECTS)
 	@mkdir -p output
-	@$(CXX) $(CXXFLAGS) -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -lgtest -lgtest_main -lyaml-cpp -lfmt -o $@ $^
+	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin -I$(PROJECT_INCLUDE) -I$(HELPER_INCLUDE) -I$(CONDA_INCLUDE_DIR) -L$(CONDA_LIB_DIR) -lgtest -lgtest_main -lyaml-cpp -lfmt -o $@ $^ -Wl,-rpath,$(CONDA_PREFIX)/lib 
 .PHONY: all clean coverage clean-coverage
 
 

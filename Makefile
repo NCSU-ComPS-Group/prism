@@ -31,14 +31,15 @@ all: $(EXE)
 # build just the reaction parser
 $(EXE): $(OBJECTS)
 	@echo "Building $(EXE)"
-	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) $(OBJECTS) $(SRC) -o $(EXE) $(LINKS)
+	@$(CXX) -B$(CONDA_PREFIX)/bin $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) $(OBJECTS) $(SRC) -o $(EXE) $(LINKS) -Wl,-rpath,$(CONDA_PREFIX)/lib
 	@echo "$(EXE) built successfully!"
 
 # build all of the source files for the parser
 $(BUILDDIR)/%.o: $(SRCDIR)/%.C
 	@mkdir -p $(@D)
-	@$(CXX) $(CXXFLAGS) -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
 	@echo "Building $<"
+	@$(CXX) $(CXXFLAGS) -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
+	@echo "$< built successfully"
 # clean up the parser
 clean:
 	@rm -rf *.dSYM
