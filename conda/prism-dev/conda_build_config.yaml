@@ -1,2 +1,65 @@
-cxx_standard:
-  - 17
+prism_cc:
+  - gcc 12.3.0 h915e2ae_13                                  # [linux]
+  - clang 18.1.8 default_h576c50e_9                         # [not arm64 and osx]
+  - clang 18.1.8 default_h474c9e2_9                         # [arm64]
+
+prism_cxx:
+  - gxx 12.3.0 h915e2ae_13                                  # [linux]
+  - clangxx 18.1.8 default_heb2e8d1_9                       # [not arm64 and osx]
+  - clangxx 18.1.8 default_h1ffe849_9                       # [arm64]
+
+prism_ccompiler:
+  - gcc_linux-64                                            # [linux]
+  - clang_osx-64                                            # [not arm64 and osx]
+  - clang_osx-arm64                                         # [arm64]
+
+prism_cxxcompiler:
+  - gxx_linux-64                                            # [linux]
+  - clangxx_osx-64                                          # [not arm64 and osx]
+  - clangxx_osx-arm64                                       # [arm64]
+
+prism_gcc_impl:                                             # [linux]
+  - gcc_impl_linux-64 12.3.0 h58ffeeb_13                    # [linux]
+
+prism_libstdcxx:                                            # [linux]
+  - libstdcxx 14.2.0 h8f9b012_2                             # [linux]
+
+prism_libstdcxx_devel:                                      # [linux]
+  - libstdcxx-devel_linux-64 12.3.0 h6b66f73_113            # [linux]
+
+prism_libcxx:
+  - libcxx 20.1.2 ha0f52bf_0                                # [linux]
+  - libcxx 20.1.2 hf95d169_0                                # [not arm64 and osx]
+  - libcxx 20.1.2 ha82da77_0                                # [arm64]
+
+prism_cctools:                                              # [osx]
+  - cctools_osx-64 1010.6 hd19c6af_6                        # [not arm64 and osx]
+  - cctools_osx-arm64 1010.6 h3b4f5d3_6                     # [arm64]
+
+prism_clang_osx:                                            # [osx]
+  - clangxx_osx-64 18.1.8 h7e5c614_24                       # [not arm64 and osx]
+  - clang_osx-arm64 18.1.8 h07b0088_24                      # [arm64]
+
+prism_llvm_tools:                                           # [osx]
+  - llvm-tools 18.1.8 hc29ff6c_3                            # [not arm64 and osx]
+  - llvm-tools 18.1.8 hc4b4ae8_3                            # [arm64]
+
+prism_libclang:
+  - libclang13 20.1.2 default_h9c6a7e4_0                    # [linux]
+  - libclang-cpp18.1 18.1.8 default_h3571c67_9              # [not arm64 and osx]
+  - libclang-cpp18.1 18.1.8 default_hf90f093_9              # [arm64]
+
+#### Darwin SDK SYSROOT
+CONDA_BUILD_SYSROOT:                                        # [osx]
+  - /opt/MacOSX13.3.sdk                                     # [osx]
+
+macos_min_version:                                          # [osx]
+  - 13.3                                                    # [osx]
+
+macos_machine:                                              # [osx]
+  - x86_64-apple-darwin13.4.0                               # [not arm64 and osx]
+  - arm64-apple-darwin22.6.0                                # [arm64]
+
+MACOSX_DEPLOYMENT_TARGET:                                   # [osx]
+  - 13.3                                                    # [osx]
+

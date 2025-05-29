@@ -28,7 +28,7 @@ LINKS = $(YAML_LINK) $(FMT_LINK)
 # Build the shared library
 $(LIBRARY_NAME): $(OBJECTS)
 	@echo "Building $(LIBRARY_NAME)"
-	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS)
+	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) -Wl,-install_name,@rpath/$(LIBRARY_NAME)
 	@echo "$(LIBRARY_NAME) built successfully!"
 
 # Build all of the source files for the library
@@ -48,9 +48,16 @@ clean:
 	@rm -rf $(BUILDDIR)/*
 
 install: all
+	@echo "Creating $(PROJECT) include folder"
 	@mkdir -p $(CONDA_PREFIX)/include/$(PROJECT)
+	@echo "$(PROJECT) include folder created"
+	@echo "Moving header files"
 	@cp -r $(INCDIR)/$(PROJECT) $(CONDA_PREFIX)/include
+	@echo "Header files moved"
+	@echo "Moving $(LIBRARY_NAME)"
 	@mv $(LIBRARY_NAME) $(CONDA_PREFIX)/lib
+	@echo "$(PROJECT) installed successfully"
+	@echo "Path to $(LIBRARY_NAME): $(CONDA_PREFIX)/lib/$(LIBRARY_NAME)"
 
 uninstall: clean
 	@rm -rf $(CONDA_PREFIX)/include/$(PROJECT)

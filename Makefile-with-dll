@@ -16,8 +16,9 @@ LINKS = $(YAML_LINK) $(FMT_LINK) $(PRISM_LINK)
 
 # build main with the rest of the code as a dll
 $(EXE):
-	@$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SRC) -o $(EXE) $(LINKS)
-
+	@echo "Building $(EXE)"
+	@$(CXX) -B$(CONDA_PREFIX)/bin $(CXXFLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SRC) -o $(EXE) $(LINKS) -Wl,-rpath,$(CONDA_PREFIX)/lib
+	@echo "$(EXE) built successfully!"
 # clean up the parser
 clean:
 	@rm -rf *.dSYM
