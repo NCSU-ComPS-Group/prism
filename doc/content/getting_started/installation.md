@@ -5,13 +5,13 @@ This package has only been tested on macOS and Linux platforms. If you are inter
 
 ## Conda/Mamba
 
-Use of a package manager is recommended for use of this program. This will help avoid potentialy library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from the [MOOSE website](https://mooseframework.inl.gov/getting_started/installation/conda.html).
+Use of a package manager is recommended for use of this program. This will help avoid potential library conflicts and ensure build instructions work. A robust manager is mamba this can be installed from the [MOOSE website](https://mooseframework.inl.gov/getting_started/installation/conda.html).
 
-When installing mamba using these instructions you can stop after the instruction to restart you terminal is given.
+When installing mamba using these instructions you can stop after the instruction to restart your terminal is given.
 
 ## Conda Package
 
-There are several ways to download/install the PRISM parser for personal use. If you are only interested in using PRISM for input into your own modeling/analysis software the easiest way to make this happen is by installing it with the the available [conda package](https://anaconda.org/gsgall/prism). To install this you can use the following commands.
+There are several ways to download/install the PRISM parser for personal use. If you are only interested in using PRISM for input into your own modeling/analysis software the easiest way to make this happen is by installing it with the available [conda package](https://anaconda.org/gsgall/prism). To install this you can use the following commands.
 
 ```bash
   conda config --add channels gsgall

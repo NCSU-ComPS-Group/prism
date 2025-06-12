@@ -1,4 +1,4 @@
-If you are using [VSCode](https://code.visualstudio.com) we suggest installing the [YAML Extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). This extension enable suggestions and autocomplete for a custom yaml schema. PRISM provides a json file which contains the schema for the PRISM input syntax.
+If you are using [VSCode](https://code.visualstudio.com) we suggest installing the [YAML Extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). This extension enables suggestions and autocomplete for a custom yaml schema. PRISM provides a json file which contains the schema for the PRISM input syntax.
 
 !listing prism/scheme.json
 

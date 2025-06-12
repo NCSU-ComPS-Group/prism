@@ -1,4 +1,4 @@
-PRISM is fully open source and we are open to outside contributions but ask that any contributers follow our development guidelines. Information in this page is intended to help facilitate this.
+PRISM is fully open source and we are open to outside contributions but ask that any contributors follow our development guidelines. Information in this page is intended to help facilitate this.
 
 # PRISM Code Standards
 
@@ -6,7 +6,7 @@ For the most part PRISM follows the MOOSE code standards for all development. Fo
 
 # Creating a new environment
 
-If you are interested in contributing you will need to download the [prism-dev](https://anaconda.org/gsgall/prism-dev) conda package to facilitate development. This package installs out dependcies and helps set environment variables needed or compilation. To create a new development evironment please use the following commands
+If you are interested in contributing you will need to download the [prism-dev](https://anaconda.org/gsgall/prism-dev) conda package to facilitate development. This package installs out dependencies and helps set environment variables needed for compilation. To create a new development environment please use the following commands
 
 ```bash
   conda create -n prism-dev
