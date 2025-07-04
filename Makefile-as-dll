@@ -25,10 +25,22 @@ FMT_LINK = -lfmt
 
 LINKS = $(YAML_LINK) $(FMT_LINK)
 
+# Getting the os type
+UNAME_S := $(shell uname -s)
+
+# Set linker flags based on OS
+ifeq ($(UNAME_S),Darwin)
+    # macOS
+    INSTALL_NAME_FLAG = -Wl,-install_name,@rpath/$(LIBRARY_NAME)
+else
+    # Linux and other Unix-like systems
+    INSTALL_NAME_FLAG = -Wl,-soname,$(LIBRARY_NAME)
+endif
+
 # Build the shared library
 $(LIBRARY_NAME): $(OBJECTS)
 	@echo "Building $(LIBRARY_NAME)"
-	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) -Wl,-install_name,@rpath/$(LIBRARY_NAME)
+	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) $(INSTALL_NAME_FLAG)
 	@echo "$(LIBRARY_NAME) built successfully!"
 
 # Build all of the source files for the library

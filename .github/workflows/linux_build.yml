@@ -28,8 +28,6 @@ jobs:
         activate-environment: initial
         channels: conda-forge
         conda-remove-defaults: true
-    # GitHub-hosted runners are currently limited to 4 cores
-    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build Package
       run: |
         conda install -y conda-build
@@ -39,6 +37,7 @@ jobs:
         conda activate prism-dev
         conda install -y prism-dev -c ./build 
     # GitHub-hosted runners are currently limited to 4 cores
+    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build main, and library directly
       run: |
         conda activate prism-dev
@@ -56,7 +55,7 @@ jobs:
         cd test
         conda activate prism-dev
         make -j 4
-        ./main
+        ./run_tests -j 4
         make clean
     - name: Build and run tests with dll
       run: |
