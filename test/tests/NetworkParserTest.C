@@ -18,25 +18,28 @@
 using namespace prism;
 using namespace std;
 
-class NetworkParserTest : public testing::Test {
-  protected:
-    void SetUp() override {
-      // Save cout's buffer...
-      // sbuf = std::cout.rdbuf();
-      // // Redirect cout to our stringstream buffer or any other ostream
-      // std::cout.rdbuf(buffer.rdbuf());
-      prism::NetworkParser::instance().clear();
-    }
+class NetworkParserTest : public testing::Test
+{
+protected:
+  void SetUp() override
+  {
+    // Save cout's buffer...
+    // sbuf = std::cout.rdbuf();
+    // // Redirect cout to our stringstream buffer or any other ostream
+    // std::cout.rdbuf(buffer.rdbuf());
+    prism::NetworkParser::instance().clear();
+  }
 
-    void TearDown() override {
-      // When done redirect cout to its old self
-      // std::cout.rdbuf(sbuf);
-      // sbuf = nullptr;
-      prism::NetworkParser::instance().clear();
-    }
+  void TearDown() override
+  {
+    // When done redirect cout to its old self
+    // std::cout.rdbuf(sbuf);
+    // sbuf = nullptr;
+    prism::NetworkParser::instance().clear();
+  }
 
-    std::stringstream buffer{};
-    std::streambuf *sbuf;
+  std::stringstream buffer{};
+  std::streambuf * sbuf;
 };
 
 TEST_F(NetworkParserTest, RepeatFile)

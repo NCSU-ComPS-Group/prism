@@ -34,10 +34,7 @@ PrintTo(const prism::SubSpecies & s, std::ostream * os)
 }
 }
 
-TEST(SubSpecies, EmptyString)
-{
-  EXPECT_THROW(SubSpecies(""), InvalidSpecies);
-}
+TEST(SubSpecies, EmptyString) { EXPECT_THROW(SubSpecies(""), InvalidSpecies); }
 
 TEST(SubSpecies, NoLetters) { EXPECT_THROW(SubSpecies(""), InvalidSpecies); }
 
@@ -331,7 +328,6 @@ TEST(SubSpecies, CustomSpeciesBase)
   EXPECT_FLOAT_EQ(s.charge(), -100 * ELEMENTAL_CHARGE);
   EXPECT_EQ(s.latexRepresentation(), "A$_{2}$$^{-100}$(test)");
 }
-
 
 TEST(SubSpecies, MassOverride)
 {

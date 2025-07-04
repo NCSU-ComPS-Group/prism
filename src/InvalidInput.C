@@ -21,77 +21,79 @@ InvalidSpecies::InvalidSpecies(const string & name, const string & message)
   _error = "\n\nInvalid Species: " + name + "\n  Reason: " + message + "\n\n";
 }
 
-  const char*
-  InvalidSpecies::what() const noexcept
-  {
-    return _error.c_str();
-  }
+const char *
+InvalidSpecies::what() const noexcept
+{
+  return _error.c_str();
+}
 
-  InvalidReaction::InvalidReaction(const string & name, const string & message)
-  {
-    _error = "\n\nInvalid Reaction: " + name + "\n  Reason: " + message + "\n\n";
-  }
+InvalidReaction::InvalidReaction(const string & name, const string & message)
+{
+  _error = "\n\nInvalid Reaction: " + name + "\n  Reason: " + message + "\n\n";
+}
 
-  const char*
-  InvalidReaction::what() const noexcept
-  {
-    return _error.c_str();
-  }
+const char *
+InvalidReaction::what() const noexcept
+{
+  return _error.c_str();
+}
 
-  InvalidInput::InvalidInput(const string & message)
-  {
-    _error = "\n\nInvalid Input:\n\n" + message + "\n\n";
-  }
+InvalidInput::InvalidInput(const string & message)
+{
+  _error = "\n\nInvalid Input:\n\n" + message + "\n\n";
+}
 
-  InvalidInput::InvalidInput(const YAML::Node & node, const string & message)
-  {
-    ostringstream oss;
-    oss << node;
+InvalidInput::InvalidInput(const YAML::Node & node, const string & message)
+{
+  ostringstream oss;
+  oss << node;
 
-    _error = message + "\n\nInvalid Input:\n\n" + oss.str() + "\n\n";
-  }
+  _error = message + "\n\nInvalid Input:\n\n" + oss.str() + "\n\n";
+}
 
-  const char*
-  InvalidInput::what() const noexcept
-  {
-    return _error.c_str();
-  }
+const char *
+InvalidInput::what() const noexcept
+{
+  return _error.c_str();
+}
 
-  void InvalidInputExit(const string& message)
-  {
-    printRed("\nInvalid Input:\n\n" + message + "\n\n");
-    #ifdef TESTING
-      throw exception();
-    #else
-      exit(EXIT_FAILURE);
-    #endif
-  }
-
-  void InvalidInputExit(const YAML::Node node, const string& message)
-  {
-    ostringstream oss;
-    oss << node;
-
-    printRed("\nInvalid Input:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+void
+InvalidInputExit(const string & message)
+{
+  printRed("\nInvalid Input:\n\n" + message + "\n\n");
 #ifdef TESTING
-    throw exception();
+  throw exception();
 #else
-    exit(EXIT_FAILURE);
+  exit(EXIT_FAILURE);
 #endif
-  }
+}
 
+void
+InvalidInputExit(const YAML::Node node, const string & message)
+{
+  ostringstream oss;
+  oss << node;
 
-  void InvalidInputExit(const YAML::Node node, const string & block, const string& message)
-  {
-    ostringstream oss;
-    oss << node;
+  printRed("\nInvalid Input:'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+#ifdef TESTING
+  throw exception();
+#else
+  exit(EXIT_FAILURE);
+#endif
+}
 
-    printRed("\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n");
-    #ifdef TESTING
-      throw exception();
-    #else
-      exit(EXIT_FAILURE);
-    #endif
-  }
+void
+InvalidInputExit(const YAML::Node node, const string & block, const string & message)
+{
+  ostringstream oss;
+  oss << node;
 
-  }
+  printRed("\nInvalid Input in Block: '" + block + "'\n\n" + oss.str() + "\n\n" + message + "\n\n");
+#ifdef TESTING
+  throw exception();
+#else
+  exit(EXIT_FAILURE);
+#endif
+}
+
+}
