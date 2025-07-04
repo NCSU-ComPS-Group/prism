@@ -30,3 +30,5 @@ Extensions:
 
 
     MooseDocs.extensions.appsyntax: disable
+    MooseDocs.extensions.sqa: disable
+    MooseDocs.extensions.versioner: disable

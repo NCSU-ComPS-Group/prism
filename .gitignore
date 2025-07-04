@@ -19,3 +19,7 @@ win*
 *.so
 *.out
 __pycache__
+*.html
+*.json
+noarch
+osx-arm64
