@@ -28,3 +28,10 @@ osx-arm64
 *.idx
 *.json
 .cache
+*.bcf
+*.aux
+*.fdb_latexmk
+*.fls *.log
+*.pdf
+*.xml
+*.gz
