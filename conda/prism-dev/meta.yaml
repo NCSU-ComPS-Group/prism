@@ -11,7 +11,6 @@ requirements:
     - clang-format
     - clang-tools
     - yaml-cpp 0.8.0.*
-    - {{ prism_linker }}
     - {{ prism_libcxx }}
     - {{ prism_cc }}
     - {{ prism_cxx }}
@@ -33,7 +32,6 @@ requirements:
     - clang-format
     - clang-tools
     - yaml-cpp 0.8.0.*
-    - {{ prism_linker }}
     - {{ prism_libcxx }}
     - {{ prism_cc }}
     - {{ prism_cxx }}
