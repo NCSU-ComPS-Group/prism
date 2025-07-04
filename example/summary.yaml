@@ -31,7 +31,7 @@ unique-species:
     id: 5
 
 
-reacion-summary:
+reaction-summary:
   - Ar*:
     - rate-based: 7
       sources:
