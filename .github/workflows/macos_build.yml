@@ -1,11 +1,11 @@
 name: macos-build
 
 on:
-#  pull_request:
-#    types: [opened, synchronize, reopened]
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches:
-      - main
+      - devel
 
 jobs:
   macos-build:
@@ -38,6 +38,7 @@ jobs:
         conda create -y -n prism-dev
         conda activate prism-dev
         conda install -y prism-dev -c ./build 
+    # GitHub-hosted runners are currently limited to 4 cores
     - name: Build main, and library directly
       run: |
         conda activate prism-dev
