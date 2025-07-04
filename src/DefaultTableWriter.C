@@ -13,6 +13,8 @@
 #include "StringHelper.h"
 #include "Reaction.h"
 #include "fmt/core.h"
+#include <algorithm>
+#include <limits>
 
 using namespace std;
 
@@ -125,19 +127,19 @@ DefaultTableWriter::addTabulatedReaction(const std::shared_ptr<const Reaction> &
 void
 DefaultTableWriter::addNotes(const std::vector<std::string> & notes)
 {
-  vector<unsigned int> numbers;
+  set<unsigned int> numbers;
   for (auto note : notes)
   {
     auto it = _note_numbers.find(note);
+    // if the note is not in the list
     if (it == _note_numbers.end())
     {
       _note_count++;
       _note_numbers[note] = _note_count;
       _inverse_note_numbers[_note_count] = note;
-      numbers.push_back(_note_count);
     }
+    numbers.insert(_note_numbers[note]);
   }
-  sort(numbers.begin(), numbers.end());
 
   for (auto it = numbers.begin(); it != numbers.end(); ++it)
   {
