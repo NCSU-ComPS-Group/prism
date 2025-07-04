@@ -171,7 +171,6 @@ Species::to_string() const
   return string_rep.str();
 }
 
-
 string
 to_string(const std::shared_ptr<prism::Species> & s)
 {
@@ -218,4 +217,3 @@ hash<prism::Species>::operator()(const prism::Species & obj) const
   // can change as reactions are added to the network
   return val;
 }
-

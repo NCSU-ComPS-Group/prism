@@ -92,9 +92,12 @@ NetworkParser::checkFile(const string & file) const
 void
 NetworkParser::checkBibFile(const YAML::Node & network, const string & file) const
 {
-  try {
+  try
+  {
     _bib_helper.collectReferences(file);
-  } catch (const invalid_argument & e) {
+  }
+  catch (const invalid_argument & e)
+  {
     InvalidInputExit(network, BIB_KEY, e.what());
   }
 
@@ -123,7 +126,8 @@ NetworkParser::parseReactions(const YAML::Node & network,
 
   for (auto input : network[type])
   {
-    try {
+    try
+    {
       const auto rxn = rxn_list->emplace_back(make_shared<Reaction>(
           input, (*rxn_id)++, data_path, bib_file, _check_refs, _read_xsec_files, delimiter));
 
@@ -144,7 +148,9 @@ NetworkParser::parseReactions(const YAML::Node & network,
 
       if (type == XSEC_BASED)
         _factory.addXSecBasedReaction(rxn);
-    } catch (const InvalidReaction & e) {
+    }
+    catch (const InvalidReaction & e)
+    {
       _network_has_errors = true;
       printRed(e.what());
     }
@@ -173,9 +179,12 @@ NetworkParser::parseNetwork(const string & file)
   _networks[file] = network;
 
   // _check refs will determine if we error or not
-  try {
+  try
+  {
     _bibs[file] = getParam<string>(BIB_KEY, network, _check_refs);
-  } catch (const InvalidInput & e) {
+  }
+  catch (const InvalidInput & e)
+  {
     InvalidInputExit(e.what());
   }
 
@@ -205,9 +214,11 @@ NetworkParser::parseNetwork(const string & file)
                        "' is invalid\nDelimiters cannot contain numbers");
   }
 
-  try {
+  try
+  {
     _data_paths[file] = getParam<string>(PATH_KEY, network, OPTIONAL);
-  } catch (const InvalidInput & e )
+  }
+  catch (const InvalidInput & e)
   {
     InvalidInputExit(e.what());
   }

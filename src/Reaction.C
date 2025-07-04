@@ -783,7 +783,6 @@ Reaction::to_string() const
   return string_rep.str();
 }
 
-
 std::string
 to_string(const std::shared_ptr<prism::Reaction> & r)
 {

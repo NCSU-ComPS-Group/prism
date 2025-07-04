@@ -22,14 +22,18 @@ using namespace std;
 namespace prism
 {
 
-template<>
-std::string getTypeName<string>() {
-    return "std::string";
+template <>
+std::string
+getTypeName<string>()
+{
+  return "std::string";
 }
 
-template<>
-std::string getTypeName<double>() {
-    return "double";
+template <>
+std::string
+getTypeName<double>()
+{
+  return "double";
 }
 
 template <>
@@ -40,15 +44,19 @@ getTypeName<bool>()
 }
 
 // Specialization for double
-template<>
-double defaultValue<double>() {
+template <>
+double
+defaultValue<double>()
+{
   return 0.0;
 }
 
 // Specialization for string
-template<>
-string defaultValue<string>() {
-    return "";
+template <>
+string
+defaultValue<string>()
+{
+  return "";
 }
 
 template <>
@@ -85,20 +93,24 @@ getParams(const string & param, const YAML::Node & node, const bool required)
   {
     values = node[param].as<vector<T>>();
   }
-  catch (const YAML::BadConversion& e)
+  catch (const YAML::BadConversion & e)
   {
 
     // before we error lets try and see if they provided a single parameter
-    try {
+    try
+    {
       T temp_value = node[param].as<T>();
       values.push_back(temp_value);
       return values;
     }
     // nothing in here so we let the error execute
-    catch (const YAML::BadConversion& e){}
+    catch (const YAML::BadConversion & e)
+    {
+    }
 
-
-    throw InvalidInput(node, "Unable to parse parameter '" + param + "' as type: std::vector<" + getTypeName<T>() + ">");
+    throw InvalidInput(node,
+                       "Unable to parse parameter '" + param + "' as type: std::vector<" +
+                           getTypeName<T>() + ">");
   }
 
   return values;
@@ -118,12 +130,15 @@ getParam(const string & param, const YAML::Node & node, const bool required)
     return defaultValue<T>();
 
   T value;
-  try {
+  try
+  {
     value = node[param].as<T>();
   }
   // nothing in here so we let the error execute
-  catch (const YAML::BadConversion& e){
-    throw InvalidInput(node, "Unable to parse parameter '" + param + "' as type: " + getTypeName<T>());
+  catch (const YAML::BadConversion & e)
+  {
+    throw InvalidInput(node,
+                       "Unable to parse parameter '" + param + "' as type: " + getTypeName<T>());
   }
 
   return value;

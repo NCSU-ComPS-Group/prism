@@ -364,7 +364,6 @@ SubSpecies::to_string() const
   return string_rep.str();
 }
 
-
 string
 to_string(prism::SubSpecies & s)
 {
