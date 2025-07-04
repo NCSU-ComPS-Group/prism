@@ -24,49 +24,42 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       with:
         miniforge-version: latest
-        activate-environment: prism-dev
+        activate-environment: initial
         channels: conda-forge
         conda-remove-defaults: true
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build Package
       run: |
-        conda activate prism-dev
         conda install -y conda-build
         mkdir -p build
         conda build conda/prism-dev --output-folder build
+        conda create -y -n prism-dev
+        conda activate prism-dev
         conda install -y prism-dev -c ./build 
-        # this will be removed in future workflows
-        echo "LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-    # this step should also be removed once conda packages are updated
-    - name: Set Compiler
-      run: |
-        export CXX=$CONDA_PREFIX/bin/x86_64-conda-linux-gnu-g++
-        echo $CXX
     # GitHub-hosted runners are currently limited to 4 cores
-    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build main, and library directly
       run: |
+        conda activate prism-dev
         make -j 4
         ./main
         make clean
     - name: Build and run main with dll
       run: |
+        conda activate prism-dev
         make -f Makefile-as-dll install -j 4
         make -f Makefile-with-dll -j 4
         ./main
     - name: Build and run tests directly
       run: |
         cd test
+        conda activate prism-dev
         make -j 4
         ./run_tests -j 4
         make clean
     - name: Build and run tests with dll
       run: |
         cd test
+        conda activate prism-dev
         make -f Makefile-with-dll -j 4
         ./run_tests -j 4
-
-
-
-
