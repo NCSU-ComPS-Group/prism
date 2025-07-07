@@ -21,5 +21,10 @@ win*
 __pycache__
 *.html
 *.json
+conda/noarch
+conda/osx-arm64
 noarch
 osx-arm64
+*.idx
+*.json
+.cache

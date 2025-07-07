@@ -1,27 +1,49 @@
 package:
   name: prism-dev
-  version: 1.0.0
+  version: 1.0.1
 
 requirements:
   build:
     - make
-    - {{ compiler('cxx') }}
     - fmt
-    - yaml-cpp
     - lcov
     - gtest
     - clang-format
     - clang-tools
+    - yaml-cpp 0.8.0.*
+    - {{ prism_libcxx }}
+    - {{ prism_cc }}
+    - {{ prism_cxx }}
+    - {{ prism_ccompiler }}
+    - {{ prism_cxxcompiler }}
+    - {{ prism_clang_osx }}                   # [osx]
+    - {{ prism_libclang }}                    # [osx]
+    - {{ prism_cctools }}                     # [osx]
+    - {{ prism_llvm_tools }}                  # [osx]
+    - {{ prism_gcc_impl }}                    # [linux]
+    - {{ prism_libstdcxx }}                   # [linux]
+    - {{ prism_libstdcxx_devel }}             # [linux]
 
   run:
     - make
-    - {{ compiler('cxx') }}
     - fmt
-    - yaml-cpp
     - lcov
     - gtest
     - clang-format
     - clang-tools
+    - yaml-cpp 0.8.0.*
+    - {{ prism_libcxx }}
+    - {{ prism_cc }}
+    - {{ prism_cxx }}
+    - {{ prism_ccompiler }}
+    - {{ prism_cxxcompiler }}
+    - {{ prism_clang_osx }}                   # [osx]
+    - {{ prism_libclang }}                    # [osx]
+    - {{ prism_cctools }}                     # [osx]
+    - {{ prism_llvm_tools }}                  # [osx]
+    - {{ prism_gcc_impl }}                    # [linux]
+    - {{ prism_libstdcxx }}                   # [linux]
+    - {{ prism_libstdcxx_devel }}             # [linux]
 
 channels:
   - conda-forge
@@ -32,6 +54,6 @@ extra:
     - gsgall
 
 about:
-  home: asdf
-  license: test
-  summary: "A simple conda package that creates activate and deactivate scripts and installs a few packages."
+  home: https://ncsu-comps-group.github.io/prism/
+  license: MIT
+  summary: Provides compilers and dependencies needed to develop and test the PRISM library.
