@@ -31,7 +31,9 @@ osx-arm64
 *.bcf
 *.aux
 *.fdb_latexmk
-*.fls *.log
+*.fls
+*.log
 *.pdf
 *.xml
 *.gz
+
