@@ -1,0 +1,25 @@
+bibliography: inputs/argon_works.bib
+data-delimiter: ","
+constant-species: Ar
+
+latex-overrides:
+  - species: [Ar(a)]
+    latex: [Ar$\left(\alpha\right)$]
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a)]
+
+rate-based:
+
+  - reaction: Ar + e -> Ar(a) + e
+    delta-eps-e: 11.56
+    params: 1
+    references: lymberopoulos1993fluid
+    notes: [note1, note2]
+
+  - reaction: Ar(a) + e -> Ar + e
+    delta-eps-e: -11.56
+    params: 1
+    notes: [note2, note3]
+    references: lymberopoulos1993fluid

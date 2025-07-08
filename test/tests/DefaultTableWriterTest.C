@@ -16,9 +16,17 @@ protected:
 
   void TearDown() override
   {
-    // When done redirect cout to its old self
-    std::cout.rdbuf(sbuf);
-    sbuf = nullptr;
+    // Check if test failed and dump output
+    if (HasFailure())
+    {
+      std::cout.rdbuf(sbuf);
+      std::cout << "\n=== CAPTURED OUTPUT ===\n"
+                << buffer.str() << "\n=== END CAPTURED OUTPUT ===\n";
+    }
+    else
+    {
+      std::cout.rdbuf(sbuf);
+    }
     prism::NetworkParser::instance().clear();
   }
 
@@ -26,7 +34,7 @@ protected:
   std::streambuf * sbuf;
 };
 
-TEST_F(DefaultTableWriterTest, RepeatFile)
+TEST_F(DefaultTableWriterTest, MultipleReactionsSameNote)
 {
   auto & np = prism::NetworkParser::instance();
 
