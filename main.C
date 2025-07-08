@@ -8,18 +8,12 @@
 //* Copyright 2024, North Carolina State University
 //* ALL RIGHTS RESERVED
 //*
-
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <stdlib.h>
-#include <system_error>
-#include "fmt/base.h"
-#include "prism/NetworkParser.h"
-#include "prism/PrismConstants.h"
 #include "prism/prism.h"
 #include "fmt/core.h"
-#include "yaml-cpp/yaml.h"
 
 const std::string SUMMARY_FLAG = "-s";
 const std::string LATEX_FLAG = "-l";
@@ -143,6 +137,5 @@ main(int argc, char * argv[])
       checkFlag(4, argv, np);
     }
   }
-
   return EXIT_SUCCESS;
 }
