@@ -7,18 +7,18 @@ class DefaultTableWriterTest : public testing::Test
 protected:
   void SetUp() override
   {
-    //    // Save cout's buffer...
-    //    sbuf = std::cout.rdbuf();
-    //    // Redirect cout to our stringstream buffer or any other ostream
-    //    std::cout.rdbuf(buffer.rdbuf());
+    // Save cout's buffer...
+    sbuf = std::cout.rdbuf();
+    // Redirect cout to our stringstream buffer or any other ostream
+    std::cout.rdbuf(buffer.rdbuf());
     prism::NetworkParser::instance().clear();
   }
 
   void TearDown() override
   {
     // When done redirect cout to its old self
-    //    std::cout.rdbuf(sbuf);
-    //    sbuf = nullptr;
+    std::cout.rdbuf(sbuf);
+    sbuf = nullptr;
     prism::NetworkParser::instance().clear();
   }
 
