@@ -681,14 +681,12 @@ const string
 Reaction::getReferencesAsString() const
 {
   string temp_refs = "\\cite{";
-  for (size_t r = 0; r < _references.size(); r++) {
-    temp_refs += _references[r];
-	if (r != _references.size() - 1)
-		temp_refs += ",";
+  for (size_t i = 0; i < _references.size(); i++) {
+    temp_refs += _references[i];
+	if (i != _references.size() - 1)
+		temp_refs += ", ";
   }
   temp_refs += "}";
-  if (temp_refs == "\\cite{}")
-	  temp_refs = "";
   return temp_refs;
 }
 
