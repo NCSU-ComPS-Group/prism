@@ -102,6 +102,22 @@ TEST(Reaction, TestBasicReactionArrhenius)
   EXPECT_EQ(r.expression(), "Ar + e -> Ar + e");
 }
 
+TEST(Reaction, TestManyReferences)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[1, 2, 3]");
+  rxn_input[REFERENCE_KEY] = "test, test2, test3";
+
+  Reaction r = Reaction(rxn_input, 0, "", "", false, false);
+
+  vector<double> params = {1, 2, 3, 0, 0};
+
+  EXPECT_EQ(r.id(), (unsigned int)0);
+  EXPECT_EQ(r.getReferencesAsString(), "\\cite{test, test2, test3}");
+  EXPECT_EQ(r.references(), vector<string>{"test, test2, test3"});
+}
+
 TEST(Reaction, TestSpeciesWithCoeffReaction)
 {
   YAML::Node rxn_input;
