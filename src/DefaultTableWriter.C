@@ -66,7 +66,7 @@ DefaultTableWriter::beginTable()
   _table_str << "  \\centering\n";
   _table_str << "  \\resizebox{\\columnwidth}{!}{\n";
   _table_str << "    \\begin{tabu}{clcccccccc}\n";
-  _table_str << "      No. & Reaction & $A$ & $n_g$ & $E_g$ & $n_e$ & $E_e$ & $\\Delta "
+  _table_str << "      No. & Reaction & $A$ & $n_e$ & $E_e$ & $n_g$ & $E_g$ & $\\Delta "
                 "\\varepsilon_e$ & $\\Delta \\varepsilon_g$ & Ref.\\\\\n";
   _table_str << "      \\hline\n";
   _table_str << "      \\hline\n";

@@ -680,9 +680,13 @@ Reaction::operator!=(const Reaction & other) const
 const string
 Reaction::getReferencesAsString() const
 {
-  string temp_refs = "";
-  for (auto r : _references)
-    temp_refs += "\\cite{" + r + "}";
+  string temp_refs = "\\cite{";
+  for (size_t i = 0; i < _references.size(); i++) {
+    temp_refs += _references[i];
+	if (i != _references.size() - 1)
+		temp_refs += ", ";
+  }
+  temp_refs += "}";
   return temp_refs;
 }
 
