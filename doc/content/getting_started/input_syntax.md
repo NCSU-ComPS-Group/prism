@@ -215,3 +215,19 @@ You do not have to expliticty provide all of the parameters for a reaction which
 ## Example input files
 
 For more complete examples of input files please checkout the [inputs](https://github.com/NCSU-ComPS-Group/prism/tree/devel/test/inputs) that are used for testing PRISM.
+
+
+## Running Input Files
+
+Input files are run with the ./main.C command, using the following format: 
+
+./main.C <input-file> -s <summary-file> -l <latex-file>
+
+| Parameter | Description | Required? |
+| - | - | - |
+| <input-file> | The path to the yaml file containing the reaction network you want to parse | yes |
+| -s <summary-file> | If this parameter is provided a species summary file will be written to <summary-file> | no |
+| -l <latex-file> | If this parameter is provided a latex file containing the reaction network will be written to <latex-file> | no |
+
+!alert note
+If no arguments are provided the example file "example/simple_argon_rate.yaml" will run, additionally creating the two files "example/table.tex" and "example/summary.yaml"
