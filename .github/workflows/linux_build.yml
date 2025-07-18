@@ -35,7 +35,7 @@ jobs:
         conda build conda/prism-dev --output-folder build
         conda create -y -n prism-dev
         conda activate prism-dev
-        conda install -y prism-dev -c ./build 
+        conda install -y prism-dev -c ./build
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build main, and library directly
@@ -73,6 +73,7 @@ jobs:
         conda list
     - name: Build Website
       run: |
+        conda activate moose
         cd doc
         cd moose/test
         make hit
