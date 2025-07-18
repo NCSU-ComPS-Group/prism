@@ -1,4 +1,4 @@
-name: Generate PRISM Website
+name: build-website
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ../doc/site
+        publish_dir: ./doc/site
         # This populates the gh-pages branch with only this update and removes prior history
         force_orphan: true
         user_name: github-actions
