@@ -221,7 +221,7 @@ For more complete examples of input files please checkout the [inputs](https://g
 
 Input files are run with the ./main.C command, using the following format: 
 
-./main.C \<input-file\> -s \<summary-file\> -l \<latex-file\>
+  > ./main.C \<input-file\> -s \<summary-file\> -l \<latex-file\>
 
 | Parameter | Description | Required? |
 | - | - | - |
