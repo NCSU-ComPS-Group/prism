@@ -63,3 +63,18 @@ jobs:
         conda activate prism-dev
         make -f Makefile-with-dll -j 4
         ./run_tests -j 4
+    - name: Install Packages For Website Build
+      run: |
+        conda create -n moose
+        conda activate moose
+        conda config --add channels https://conda.software.inl.gov/public
+        conda install -y moose-dev
+        conda install -y doxygen
+        conda list
+    - name: Build Website
+      run: |
+        cd doc
+        cd moose/test
+        make hit
+        cd -
+        MOOSE_DIR=./moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
