@@ -18,17 +18,16 @@ Renderer:
 Extensions:
     MooseDocs.extensions.navigation:
         name: PRISM
-        repo: https://github.ncsu.edu/NCSU-ComPS-Group/prism
+        repo: https://github.com/NCSU-ComPS-Group/prism
         menu:
             Doxygen: doxygen/html/annotated.html
             Getting Started:
                 Installation: getting_started/installation.md
                 Input Syntax: getting_started/input_syntax.md
-                Syntax Support: getting_started/syntax_support.md
                 Example: getting_started/example.md
             Contributing: getting_started/contributing.md
 
 
     MooseDocs.extensions.appsyntax: disable
     MooseDocs.extensions.sqa: disable
-    MooseDocs.extensions.versioner: disable
+    MooseDocs.extensions.ifelse: disable

@@ -1,6 +1,7 @@
 ![Linux Build](https://github.com/NCSU-ComPS-Group/prism/workflows/linux-build/badge.svg)
 ![macOS Build](https://github.com/NCSU-ComPS-Group/prism/workflows/macos-build/badge.svg)
-
+![Website Build](https://github.com/NCSU-ComPS-Group/prism/workflows/build-website/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # PRISM
 

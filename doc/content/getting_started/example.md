@@ -2,7 +2,7 @@
 
 One way you can use this library is for evaluating the derivatives needed for a 0D plasma species model. Below shows how you would access all of the data required for a simple 0D model.
 
-!listing prism/main.C
+!listing prism/main.C re=globalModelExample.*?^}
 
 An important thing to note in this example is that we are iterating over all of the rate based reactions. This file includes rate based reactions which have rates that come from an arrhenius form and ones that come from data read in from a tabulated data file. Sampling this data is handled with different methods based on your input but there is a single API for ease of use. Reactions which have data from an arrhenius form call a function which evaluates this function and for Reactions which have data read from a file we use linear interpolation to sample data from the file.
 
