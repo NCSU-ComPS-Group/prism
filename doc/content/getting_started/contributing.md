@@ -2,7 +2,7 @@ PRISM is fully open source and we are open to outside contributions but ask that
 
 # PRISM Code Standards
 
-For the most part PRISM follows the MOOSE code standards for all development. For information on file guidelines, naming conventions, example code, doxygen documentation, and other tips, please see [the MOOSE standard here](https://mooseframework.inl.gov/fenix/sqa/framework_scs.html). Some exceptions in the MOOSE standard that can be ignored are the sections: Index Variables in Looping Constructs, Trailing Whitespace and Tabs, Python.
+For the most part PRISM follows the MOOSE code standards for all development. For information on file guidelines, naming conventions, example code, doxygen documentation, and other tips, please see [the MOOSE standard here](https://mooseframework.inl.gov/sqa/framework_scs.html). Some exceptions in the MOOSE standard that can be ignored are the sections: Index Variables in Looping Constructs, Trailing Whitespace and Tabs, Python.
 
 # Creating a new environment
 
@@ -41,7 +41,7 @@ PRISM development follows a "Fork & Pull" development process. See more informat
 ### Fork PRISM and clone
 
 1. Navigate to [the PRISM repository](https://github.com/NCSU-ComPS-Group/prism)
-1. Click the "Fork" button on the upper right of the code file tree to have a copy of FENIX in your own account
+1. Click the "Fork" button on the upper right of the code file tree to have a copy of PRISM in your own account
 1. Clone your new fork to your local machine using the following command (this assumes you
    [have SSH set up on your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)):
 
@@ -61,7 +61,7 @@ Add the main PRISM repository as an "upstream" git remote, so that you can
 
 ```
 cd ~/projects/prism
-git remote add upstream git@github.com:idaholab/fenix.git
+git remote add upstream git@github.com:NCSU-ComPS-Group/prism.git
 ```
 
 To fetch changes, run:
@@ -127,7 +127,7 @@ Since we rely on [MooseDocs](https://mooseframework.inl.gov/python/MooseDocs/) f
     cd ~/projects/prism/doc/moose/test
     make hit
     cd ../../
-    MOOSE_DIR=moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --destination site
+    MOOSE_DIR=./moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --serve
    ```
 
 1. Type `git status` to see the status of your branch. That should show you the changed files and
@@ -191,5 +191,5 @@ At some point, you'll be ready to push your work to your fork and submit the cha
 1. A link will be printed in the terminal; visit that page.
 1. There, you’ll find instructions to create your PR. Fill out the form (one can simply copy what is
    in the commit messages, or write a custom summary of your own) and submit your PR!
-1. To notify others (or the FENIX development team), you can also tag people in your PR to get their
+1. To notify others (or the PRISM development team), you can also tag people in your PR to get their
    attention.
