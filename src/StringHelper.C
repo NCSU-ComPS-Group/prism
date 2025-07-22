@@ -172,7 +172,7 @@ splitByCapital(const string & s)
 }
 
 string
-formatScientific(const float val)
+formatScientific(const double val)
 {
   int exponent = 0;
 
@@ -181,7 +181,7 @@ formatScientific(const float val)
 
   exponent = static_cast<int>(std::floor(std::log10(std::abs(val))));
 
-  float mantissa = val / std::pow(10, exponent);
+  double mantissa = val / std::pow(10, exponent);
 
   if (exponent == 0)
     return fmt::format("{:.2f}", mantissa);
