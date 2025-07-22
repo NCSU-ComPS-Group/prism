@@ -17,7 +17,7 @@ The PRISM project utilizes the yaml file format to store reaction networks. The 
 In the PRISM format every reaction is required to have at least one cite key associated with it. This blocks allows you to specify a bibliography file in which these cite keys exist.
 
 !alert note
-The bibliograpy file must be in the [BibTex](https://www.bibtex.com) format in order to better support documenting a reaction mechanism in $\LaTeX$.
+The bibliography file must be in the [BibTex](https://www.bibtex.com) format in order to better support documenting a reaction mechanism in $\LaTeX$.
 
 This block only requires a single string which is the path from the location of the executable which is reading the input file to the bibliography file
 
@@ -104,7 +104,7 @@ lumped-species:
     actual: [N2(rotation), N2(vibration)]
 ```
 
-With the lumped species block above the states `N2(rotational)` and `N2(vibrational)` will be substituded with `N2*` when parsing the reactions which contain those excited states. You can also define an arbitrary number of lumped states.
+With the lumped species block above the states `N2(rotational)` and `N2(vibrational)` will be substituted with `N2*` when parsing the reactions which contain those excited states. You can also define an arbitrary number of lumped states.
 
 ```yaml
 lumped-species:
@@ -154,12 +154,12 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 
 | Parameter | Description | Data Type | Required? | Default Value |
 | - | - | - | - | - |
-| reaction | The symbolic expression of the reaction see |  string | always | N/A |
+| reaction | The symbolic expression of the reaction |  string | always | N/A |
 | delta-eps-e | The change in energy of electrons | float | no | 0.00 |
 | delta-eps-g | The change in energy of the background gas | float | no | 0.00 |
 | file | The file where the tabulated data is stored | string | yes, if params is not provided | "" |
 | params | The parameters required for evaluation of the analytic expression | A float or a list of floats | yes, if file is not provided | [] |
-| reference | The cite keys for recources where the reaction came from | A string or a list of strings | always | N/A |
+| reference | The cite keys for resources where the reaction came from | A string or a list of strings | always | N/A |
 | notes | Any additional helpful notes you may want to add | A string or a list of strings | never | [] |
 
 
@@ -209,9 +209,27 @@ When using the provided sampling functions it is expected that the electron temp
 ```
 
 !alert note
-You do not have to expliticty provide all of the parameters for a reaction which has data in an Arrhenius form. Any parameters which are not provided are assumed to be zero.
+You do not have to explicitly provide all of the parameters for a reaction which has data in an Arrhenius form. Any parameters which are not provided are assumed to be zero.
 
 
-## Example input files
+## Example Input Files
 
 For more complete examples of input files please checkout the [inputs](https://github.com/NCSU-ComPS-Group/prism/tree/devel/test/inputs) that are used for testing PRISM.
+
+
+## Running Input Files
+
+Input files are run with the `./main.C` command, using the following format: 
+
+```
+./main.C <input-file> -s <summary-file> -l <latex-file>
+```
+
+| Parameter | Description | Required? |
+| - | - | - |
+| <input-file> | The path to the yaml file containing the reaction network you want to parse | yes |
+| -s <summary-file> | If this parameter is provided a species summary file will be written to `<summary-file>` | no |
+| -l <latex-file> | If this parameter is provided a latex file containing the reaction network will be written to `<latex-file>` | no |
+
+!alert note
+If no arguments are provided the example file "example/simple_argon_rate.yaml" will run. This will also output two files "example/table.tex" and "example/summary.yaml"

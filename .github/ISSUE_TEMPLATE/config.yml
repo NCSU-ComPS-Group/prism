@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Questions
-    url: https://github.com/gsgall/rxn-cpp/discussions
-    about: Ask general questions about rxn-cpp and discuss with other community members.
+    url: https://github.com/NCSU-ComPS-Group/prism/discussions
+    about: Ask general questions about PRISM and discuss with other community members.

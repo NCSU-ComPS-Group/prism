@@ -6,7 +6,7 @@ body:
 - type: markdown
   attributes:
     value: >
-      #### Before submitting a bug, please make sure the issue hasn't been already addressed by searching through [the existing and past issues](https://github.com/gsgall/rxn-cpp/issues).
+      #### Before submitting a bug, please make sure the issue hasn't been already addressed by searching through [the existing and past issues](https://github.com/NCSU-ComPS-Group/prism/issues).
 - type: textarea
   attributes:
     label: Bug Description
@@ -19,7 +19,7 @@ body:
     label: Steps to Reproduce
     description: |
       In order to make it easier for us to address your issue we request that you write a test to be added to the test suite that covers your case.
-      If you need help writing a case please first look at the examples in the `test/tests` directory and if you need further assistance please reach out on the discussions forum (https://github.com/gsgall/rxn-cpp/discussions).
+      If you need help writing a case please first look at the examples in the `test/tests` directory and if you need further assistance please reach out on the discussions forum (https://github.com/NCSU-ComPS-Group/prism/discussions).
   validations:
     required: true
 - type: textarea
