@@ -216,7 +216,7 @@ SubSpecies::setCharge()
 void
 SubSpecies::setMass()
 {
-  float base_mass = static_cast<float>(_subscript) * SpeciesFactory::instance().getMass(_base);
+  double base_mass = static_cast<double>(_subscript) * SpeciesFactory::instance().getMass(_base);
   // case for an electron
   if (_name.compare("e") == 0 || _name.compare("E") == 0)
   {
@@ -225,7 +225,7 @@ SubSpecies::setMass()
     return;
   }
 
-  float ionization_mass = static_cast<float>(_charge_num) * SpeciesFactory::instance().getMass("e");
+  double ionization_mass = static_cast<double>(_charge_num) * SpeciesFactory::instance().getMass("e");
   _molar_mass = base_mass - ionization_mass;
   _mass = 1e-3 * _molar_mass / N_A;
 }
@@ -401,8 +401,8 @@ hash<prism::SubSpecies>::operator()(const prism::SubSpecies & obj) const
   val += hash_factor * hash<string>()(obj.modifier());
   val += hash_factor * hash<unsigned int>()(obj.subscript());
   val += hash_factor * hash<int>()(obj.chargeNumber());
-  val += hash_factor * hash<float>()(obj.mass());
-  val += hash_factor * hash<float>()(obj.charge());
+  val += hash_factor * hash<double>()(obj.mass());
+  val += hash_factor * hash<double>()(obj.charge());
   val += hash_factor * hash<string>()(obj.latexRepresentation());
   // hash based on the name
   return val;
