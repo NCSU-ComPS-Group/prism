@@ -149,7 +149,6 @@ TEST(StringHelper, splitByCapital)
 
 TEST(StringHelper, formatScientific)
 {
-  const string test = "10e15";
-
   EXPECT_EQ(formatScientific(3.25e14), "3.25$\\times 10^{14}$");
+  EXPECT_EQ(formatScientific(4.80e-45), "4.80$\\times 10^{-45}$");
 }

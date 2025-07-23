@@ -155,10 +155,10 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 | Parameter | Description | Data Type | Required? | Default Value |
 | - | - | - | - | - |
 | reaction | The symbolic expression of the reaction |  string | always | N/A |
-| delta-eps-e | The change in energy of electrons | float | no | 0.00 |
-| delta-eps-g | The change in energy of the background gas | float | no | 0.00 |
+| delta-eps-e | The change in energy of electrons | double | no | 0.00 |
+| delta-eps-g | The change in energy of the background gas | double | no | 0.00 |
 | file | The file where the tabulated data is stored | string | yes, if params is not provided | "" |
-| params | The parameters required for evaluation of the analytic expression | A float or a list of floats | yes, if file is not provided | [] |
+| params | The parameters required for evaluation of the analytic expression | A double or a list of doubles | yes, if file is not provided | [] |
 | reference | The cite keys for resources where the reaction came from | A string or a list of strings | always | N/A |
 | notes | Any additional helpful notes you may want to add | A string or a list of strings | never | [] |
 

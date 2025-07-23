@@ -73,7 +73,7 @@ Species::decomposeSpecies()
 void
 Species::setMass()
 {
-  float total_mass = 0;
+  double total_mass = 0;
   for (SubSpecies s : _sub_species)
     total_mass += s.molarMass();
   _molar_mass = total_mass;
@@ -105,7 +105,7 @@ Species::operator==(const Species & other) const
   if (_sub_species.size() != other._sub_species.size())
     return false;
 
-  if (abs(_mass - other._mass) > numeric_limits<float>::epsilon())
+  if (abs(_mass - other._mass) > numeric_limits<double>::epsilon())
     return false;
 
   if (_charge_num != other._charge_num)
@@ -210,7 +210,7 @@ hash<prism::Species>::operator()(const prism::Species & obj) const
   for (auto s : obj.subSpecies())
     val += hash_factor * hash<prism::SubSpecies>()(s);
 
-  val += hash_factor * hash<float>()(obj.mass());
+  val += hash_factor * hash<double>()(obj.mass());
   val += hash_factor * hash<int>()(obj.chargeNumber());
   val += hash_factor * hash<string>()(obj.latexRepresentation());
   // not including the sources and sinks in the hash since those

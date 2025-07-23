@@ -112,7 +112,7 @@ int findFirstNonSpecial(const std::string & s);
  */
 std::vector<std::string> splitByCapital(const std::string & s);
 
-std::string formatScientific(const float val);
+std::string formatScientific(const double val);
 
 /**
  * Method add the green escape color to the std::string and prints
