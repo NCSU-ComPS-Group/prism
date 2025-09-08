@@ -46,8 +46,8 @@ prism_llvm_tools:                                           # [osx]
 
 prism_libclang:
   - libclang13 20.1.2 default_h9c6a7e4_0                    # [linux]
-  - libclang-cpp18.1 18.1.8 default_h3571c67_9              # [not arm64 and osx]
-  - libclang-cpp18.1 18.1.8 default_hf90f093_9              # [arm64]
+  - libclang-cpp18.1 18.1.8 default_h3571c67_9              # [osx-64]
+  - libclang-cpp18.1 18.1.8 default_hf90f093_9              # [osx-arm64]
 
 #### Darwin SDK SYSROOT
 CONDA_BUILD_SYSROOT:                                        # [osx]
