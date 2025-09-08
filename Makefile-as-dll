@@ -1,6 +1,6 @@
 TESTING_FLAG = -DTESTING
 WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
-CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O3 -g
+CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O2
 
 PROJECT = prism
 
