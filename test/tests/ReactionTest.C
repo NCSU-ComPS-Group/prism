@@ -382,8 +382,6 @@ TEST(Reaction, ArrheniusZeroes)
   rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
   rxn_input[PARAM_KEY] = YAML::Load("[2, 0, 0, 0, 0]");
 
-  Reaction r = Reaction(rxn_input, 0, "", "", false, true, "\t");
-
   EXPECT_NO_THROW(Reaction(rxn_input, 0, "", "", false, true, "\t"));
 }
 
@@ -394,4 +392,13 @@ TEST(Reaction, ArrheniusZeroes2)
   rxn_input[PARAM_KEY] = YAML::Load("[0, 0.25, 4.0, 0.75, 10]");
 
   EXPECT_THROW(Reaction(rxn_input, 0, "", "", false, true, "\t"), InvalidReaction);
+}
+
+TEST(Reaction, ArrheniusNegativeValues)
+{
+  YAML::Node rxn_input;
+  rxn_input[REACTION_KEY] = "Ar + e -> Ar + e";
+  rxn_input[PARAM_KEY] = YAML::Load("[2, -1, -1, -1, -1]");
+
+  EXPECT_NO_THROW(Reaction(rxn_input, 0, "", "", false, true, "\t"));
 }

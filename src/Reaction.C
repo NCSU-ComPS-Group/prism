@@ -71,16 +71,6 @@ Reaction::Reaction(const YAML::Node & rxn_input,
       throw InvalidReaction(_expression,
                             "The first value of '" + PARAM_KEY + "' cannot be zero or negative");
 
-    if (_params.size() > 2 && _params[2] < 0.0)
-      throw InvalidReaction(_expression,
-                            "The theshold energy E_e (index 2) in '" + PARAM_KEY +
-                                "' cannot be negative");
-
-    if (_params.size() == 5 && _params[4] < 0.0)
-      throw InvalidReaction(_expression,
-                            "The theshold energy E_g (index 4) in '" + PARAM_KEY +
-                                "' cannot be negative");
-
     switch (_params.size())
     {
       case 1:
@@ -681,10 +671,11 @@ const string
 Reaction::getReferencesAsString() const
 {
   string temp_refs = "\\cite{";
-  for (size_t i = 0; i < _references.size(); i++) {
+  for (size_t i = 0; i < _references.size(); i++)
+  {
     temp_refs += _references[i];
-	if (i != _references.size() - 1)
-		temp_refs += ", ";
+    if (i != _references.size() - 1)
+      temp_refs += ", ";
   }
   temp_refs += "}";
   return temp_refs;
