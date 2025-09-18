@@ -22,11 +22,8 @@ namespace prism
 DefaultSpeciesSummaryWriter::DefaultSpeciesSummaryWriter() : SpeciesSummaryWriterBase() {}
 
 void
-DefaultSpeciesSummaryWriter::addMiscSummary()
+DefaultSpeciesSummaryWriter::addMiscSummary(const std::vector<std::shared_ptr<Species>> & species)
 {
-  const auto & np = NetworkParser::instance();
-  const auto & species = np.species();
-
   const string const_warning =
       "# species which are only in balanced reactions\n"
       "# or which have been explicitly marked as constant in the input file\n"
@@ -125,7 +122,10 @@ DefaultSpeciesSummaryWriter::addLumpedSummary(
 }
 
 void
-DefaultSpeciesSummaryWriter::addSpeciesSummary()
+DefaultSpeciesSummaryWriter::addSpeciesSummary(
+    const std::vector<std::shared_ptr<Species>> & species,
+    const std::vector<std::shared_ptr<Reaction>> & rate_based,
+    const std::vector<std::shared_ptr<Reaction>> & xsec_based)
 {
   auto reaction_lister = [](vector<string> & srcs,
                             vector<string> & balanced,
@@ -174,9 +174,6 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
     reaction_lister(srcs, balanced, sinks, _summary_str);
   };
 
-  const auto & np = NetworkParser::instance();
-  const auto & species = np.species();
-
   _summary_str << "unique-species:" << endl;
   _summary_str << "  - count: " << species.size() << endl;
   for (const auto & s : species)
@@ -187,9 +184,6 @@ DefaultSpeciesSummaryWriter::addSpeciesSummary()
   _summary_str << endl << endl;
 
   _summary_str << "reaction-summary:" << endl;
-
-  const auto & rate_based = np.rateBasedReactions();
-  const auto & xsec_based = np.xsecBasedReactions();
 
   for (const auto & s : species)
   {
