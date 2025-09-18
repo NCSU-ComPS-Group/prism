@@ -337,7 +337,7 @@ NetworkParser::writeSpeciesSummary(const string & file) const
   auto writer = DefaultSpeciesSummaryWriter();
   writeSpeciesSummary(file, writer);
 }
-// const std::vector<std::shared_ptr<Species>> & species
+
 void
 NetworkParser::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
 {
