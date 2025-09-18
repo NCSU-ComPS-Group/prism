@@ -126,7 +126,10 @@ private:
   /**
    * Writes a species summary to a file
    */
-  void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
+  void writeSpeciesSummary(const std::string & file,
+                           SpeciesSummaryWriterBase & writer,
+                           const std::vector<std::shared_ptr<Reaction>> & rate_based,
+                           const std::vector<std::shared_ptr<Reaction>> & xsec_based) const;
   /// the vector that holds all of the species in the mechanism
   std::vector<std::shared_ptr<Species>> _species;
   /// the map between Species and their position in the species vector
