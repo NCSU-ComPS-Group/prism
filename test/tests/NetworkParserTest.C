@@ -27,7 +27,8 @@ protected:
     sbuf = std::cout.rdbuf();
     // Redirect cout to our stringstream buffer or any other ostream
     std::cout.rdbuf(buffer.rdbuf());
-    prism::NetworkParser::instance().clear();
+    prism::NetworkParser np;
+    np.clear();
   }
 
   void TearDown() override
@@ -43,7 +44,8 @@ protected:
     {
       std::cout.rdbuf(sbuf);
     }
-    prism::NetworkParser::instance().clear();
+    prism::NetworkParser np;
+    np.clear();
   }
 
   std::stringstream buffer{};
@@ -52,7 +54,7 @@ protected:
 
 TEST_F(NetworkParserTest, RepeatFile)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
 
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
@@ -67,7 +69,7 @@ TEST_F(NetworkParserTest, RepeatFile)
 
 TEST_F(NetworkParserTest, NoFileFound)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
 
 #ifdef CONDA_TESTING
   EXPECT_DEATH(np.parseNetwork("not-a-file.txt"), "");
@@ -78,7 +80,9 @@ TEST_F(NetworkParserTest, NoFileFound)
 
 TEST_F(NetworkParserTest, LongFileWithRefs)
 {
-  auto & np = prism::NetworkParser::instance();
+
+  prism::NetworkParser np;
+
   np.setCheckRefs(false);
   np.setReadXsecFiles(false);
   EXPECT_NO_THROW(np.parseNetwork("inputs/large_network.yaml"));
@@ -88,7 +92,7 @@ TEST_F(NetworkParserTest, LongFileWithRefs)
 
 TEST_F(NetworkParserTest, LumpedSpecies)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
   EXPECT_NO_THROW(np.parseNetwork("inputs/lumped_species.yaml"));
   np.writeSpeciesSummary("lumped_species_summary_out.yaml");
   np.writeReactionTable("lumped_species_table_out.yaml");
@@ -261,9 +265,8 @@ TEST_F(NetworkParserTest, LumpedSpecies)
 
 TEST_F(NetworkParserTest, SimpleArgonRateBased)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
-
   np.writeSpeciesSummary("simple_argon_rate_summary_out.yaml");
   np.writeReactionTable("simple_argon_rate_table_out.yaml");
 
@@ -453,9 +456,8 @@ TEST_F(NetworkParserTest, SimpleArgonRateBased)
 
 TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
-
   np.writeSpeciesSummary("simple_argon_rate_summary_out.yaml");
   np.writeReactionTable("simple_argon_rate_table_out.yaml");
 
@@ -645,7 +647,7 @@ TEST_F(NetworkParserTest, SimpleArgonXSecBased)
 
 TEST_F(NetworkParserTest, SpeciesPrintingMethods)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_xsec.yaml"));
   const auto & speices_sp = np.species()[0];
   const auto & const_species_sp = np.transientSpecies()[0];
@@ -679,7 +681,7 @@ TEST_F(NetworkParserTest, SpeciesPrintingMethods)
 
 TEST_F(NetworkParserTest, ReactionPrintingMethods)
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
   EXPECT_NO_THROW(np.parseNetwork("inputs/simple_argon_rate.yaml"));
   const auto & reaction_sp = np.rateBasedReactions()[0];
   const auto & const_reaction_sp = np.tabulatedRateReactions()[0];
