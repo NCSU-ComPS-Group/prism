@@ -419,7 +419,10 @@ SpeciesFactory::addXSecBasedReaction(shared_ptr<const Reaction> r)
 }
 
 void
-SpeciesFactory::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
+SpeciesFactory::writeSpeciesSummary(const string & file,
+                                    SpeciesSummaryWriterBase & writer,
+                                    const std::vector<std::shared_ptr<Reaction>> & rate_based,
+                                    const std::vector<std::shared_ptr<Reaction>> & xsec_based) const
 {
   writer.clear();
 
@@ -429,8 +432,8 @@ SpeciesFactory::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBas
     lumped_str_map[it.second].push_back(it.first);
 
   writer.addLumpedSummary(lumped_str_map);
-  writer.addMiscSummary();
-  writer.addSpeciesSummary();
+  writer.addMiscSummary(_species);
+  writer.addSpeciesSummary(_species, rate_based, xsec_based);
 
   ofstream out(file);
   out << writer.summaryString().str();
