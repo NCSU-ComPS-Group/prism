@@ -41,17 +41,7 @@ NetworkParser::NetworkParser()
 {
 }
 
-NetworkParser * NetworkParser::_instance = nullptr;
-
-NetworkParser &
-NetworkParser::instance()
-{
-  // Create the _instance if it does not exist
-  if (_instance == nullptr)
-    _instance = new NetworkParser();
-
-  return *_instance;
-}
+auto np = NetworkParser();
 
 void
 NetworkParser::clear()
@@ -342,16 +332,16 @@ NetworkParser::tableHelper(
 }
 
 void
-NetworkParser::writeSpeciesSummary(const string & file)
+NetworkParser::writeSpeciesSummary(const string & file) const
 {
   auto writer = DefaultSpeciesSummaryWriter();
   writeSpeciesSummary(file, writer);
 }
-
+// const std::vector<std::shared_ptr<Species>> & species
 void
 NetworkParser::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
 {
-  _factory.writeSpeciesSummary(file, writer);
+  _factory.writeSpeciesSummary(file, writer, _rate_based, _xsec_based);
 }
 
 const std::vector<std::string> &
