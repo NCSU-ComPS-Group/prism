@@ -41,7 +41,6 @@ NetworkParser::NetworkParser()
 {
 }
 
-auto np = NetworkParser();
 
 void
 NetworkParser::clear()
