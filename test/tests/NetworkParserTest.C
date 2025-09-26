@@ -27,7 +27,6 @@ protected:
     sbuf = std::cout.rdbuf();
     // Redirect cout to our stringstream buffer or any other ostream
     std::cout.rdbuf(buffer.rdbuf());
-    prism::NetworkParser np;
   }
 
   void TearDown() override
