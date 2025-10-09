@@ -39,30 +39,8 @@ NetworkParser::NetworkParser()
     _rate_id(0),
     _xsec_id(0)
 {
-}
-
-
-void
-NetworkParser::clear()
-{
-  _xsec_id = 0;
-  _rate_id = 0;
-  _check_refs = true;
-  _read_xsec_files = true;
-  _network_has_errors = false;
-  _network_has_bib_errors = false;
-  _bibs.clear();
   _factory.clear();
-  _networks.clear();
-  _data_paths.clear();
   _bib_helper.clear();
-  _xsec_based.clear();
-  _rate_based.clear();
-  _delimiters.clear();
-  _function_rate_based.clear();
-  _function_xsec_based.clear();
-  _tabulated_xsec_based.clear();
-  _tabulated_rate_based.clear();
 }
 
 void
