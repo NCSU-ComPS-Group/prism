@@ -42,8 +42,6 @@ protected:
     {
       std::cout.rdbuf(sbuf);
     }
-    prism::NetworkParser np;
-    np.clear();
   }
 
   std::stringstream buffer{};
