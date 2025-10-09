@@ -35,9 +35,6 @@ class NetworkParser
 public:
   /** constructor was moved to public */
   NetworkParser();
-
-  /** Resets the parser to a fresh state, as if no networks have been processed */
-  void clear();
   /**
    * Method goes through all of the reactions in this network
    * constructs Reaction objects and then puts the reactions
