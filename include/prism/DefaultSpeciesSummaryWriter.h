@@ -19,9 +19,12 @@ class DefaultSpeciesSummaryWriter : public SpeciesSummaryWriterBase
 public:
   DefaultSpeciesSummaryWriter();
 
-  virtual void addMiscSummary() override;
+  virtual void addMiscSummary(const std::vector<std::shared_ptr<Species>> & species) override;
   virtual void
   addLumpedSummary(std::map<std::string, std::vector<std::string>> lumped_map) override;
-  virtual void addSpeciesSummary() override;
+  virtual void
+  addSpeciesSummary(const std::vector<std::shared_ptr<Species>> & species,
+                    const std::vector<std::shared_ptr<Reaction>> & rate_based,
+                    const std::vector<std::shared_ptr<Reaction>> & xsec_based) override;
 };
 }

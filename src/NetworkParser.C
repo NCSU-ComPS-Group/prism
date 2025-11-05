@@ -39,41 +39,8 @@ NetworkParser::NetworkParser()
     _rate_id(0),
     _xsec_id(0)
 {
-}
-
-NetworkParser * NetworkParser::_instance = nullptr;
-
-NetworkParser &
-NetworkParser::instance()
-{
-  // Create the _instance if it does not exist
-  if (_instance == nullptr)
-    _instance = new NetworkParser();
-
-  return *_instance;
-}
-
-void
-NetworkParser::clear()
-{
-  _xsec_id = 0;
-  _rate_id = 0;
-  _check_refs = true;
-  _read_xsec_files = true;
-  _network_has_errors = false;
-  _network_has_bib_errors = false;
-  _bibs.clear();
   _factory.clear();
-  _networks.clear();
-  _data_paths.clear();
   _bib_helper.clear();
-  _xsec_based.clear();
-  _rate_based.clear();
-  _delimiters.clear();
-  _function_rate_based.clear();
-  _function_xsec_based.clear();
-  _tabulated_xsec_based.clear();
-  _tabulated_rate_based.clear();
 }
 
 void
@@ -342,7 +309,7 @@ NetworkParser::tableHelper(
 }
 
 void
-NetworkParser::writeSpeciesSummary(const string & file)
+NetworkParser::writeSpeciesSummary(const string & file) const
 {
   auto writer = DefaultSpeciesSummaryWriter();
   writeSpeciesSummary(file, writer);
@@ -351,7 +318,7 @@ NetworkParser::writeSpeciesSummary(const string & file)
 void
 NetworkParser::writeSpeciesSummary(const string & file, SpeciesSummaryWriterBase & writer) const
 {
-  _factory.writeSpeciesSummary(file, writer);
+  _factory.writeSpeciesSummary(file, writer, _rate_based, _xsec_based);
 }
 
 const std::vector<std::string> &

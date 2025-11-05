@@ -33,10 +33,8 @@ class SpeciesSummaryWriterBase;
 class NetworkParser
 {
 public:
-  /** Getter for the singleton instance */
-  static NetworkParser & instance();
-  /** Resets the parser to a fresh state, as if no networks have been processed */
-  void clear();
+  /** constructor was moved to public */
+  NetworkParser();
   /**
    * Method goes through all of the reactions in this network
    * constructs Reaction objects and then puts the reactions
@@ -169,10 +167,11 @@ public:
   void writeReactionTable(const std::string & file, TableWriterBase & writer) const;
   /**
    * Writes a summary of the species in the network to a file
-   * this method using the default summary writer provided by PRISM
+   * this method uses whatever custom summary writer that is provided to it
    * @param file the file which you want to write the species summary to
+   * @param writer the custom species writer that will be used to create the species summary
    */
-  void writeSpeciesSummary(const std::string & file);
+  void writeSpeciesSummary(const std::string & file) const;
   /**
    * Writes a summary of the species in the network to a file
    * this method uses whatever custom summary writer that is provided to it
@@ -182,17 +181,8 @@ public:
   void writeSpeciesSummary(const std::string & file, SpeciesSummaryWriterBase & writer) const;
 
 private:
-  /** private constructor because only this class can create itself */
-  NetworkParser();
-  /** delete the copy constructor to make this a singleton */
-  NetworkParser(const NetworkParser &) = delete;
-  /** delete the copy assignment to make this a singleton */
-  NetworkParser & operator=(const NetworkParser &) = delete;
   SpeciesFactory & _factory;
   BibTexHelper & _bib_helper;
-  /// Private instance of the singleton,
-  /// this is the only instance of this class that will ever exist
-  static NetworkParser * _instance;
   /// wether or not the parser encountered any errors during parsing
   bool _network_has_errors;
   /// wether or not the parser encountered any issues with the bib files while parsing

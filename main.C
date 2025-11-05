@@ -105,7 +105,7 @@ globalModelExample(prism::NetworkParser & np)
 int
 main(int argc, char * argv[])
 {
-  auto & np = prism::NetworkParser::instance();
+  prism::NetworkParser np;
 
   if (argc > 6)
   {
