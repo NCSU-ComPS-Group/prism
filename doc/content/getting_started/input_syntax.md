@@ -157,6 +157,7 @@ Inputs can include both the `rate-based` block, and the `xsec-based` block. Eith
 | reaction | The symbolic expression of the reaction |  string | always | N/A |
 | delta-eps-e | The change in energy of electrons | double | no | 0.00 |
 | delta-eps-g | The change in energy of the background gas | double | no | 0.00 |
+| elastic | Whether or not the reaction is an elastic collision | bool | no | false |
 | file | The file where the tabulated data is stored | string | yes, if params is not provided | "" |
 | params | The parameters required for evaluation of the analytic expression | A double or a list of doubles | yes, if file is not provided | [] |
 | reference | The cite keys for resources where the reaction came from | A string or a list of strings | always | N/A |
@@ -212,6 +213,9 @@ When using the provided sampling functions it is expected that the electron temp
 You do not have to explicitly provide all of the parameters for a reaction which has data in an Arrhenius form. Any parameters which are not provided are assumed to be zero.
 
 
+!alert note
+If the `elastic` keyword is provided then you may not provide values for `delta-eps-e` or `delta-eps-g`.
+
 ## Example Input Files
 
 For more complete examples of input files please checkout the [inputs](https://github.com/NCSU-ComPS-Group/prism/tree/devel/test/inputs) that are used for testing PRISM.
@@ -219,7 +223,7 @@ For more complete examples of input files please checkout the [inputs](https://g
 
 ## Running Input Files
 
-Input files are run with the `./main.C` command, using the following format: 
+Input files are run with the `./main.C` command, using the following format:
 
 ```
 ./main.C <input-file> -s <summary-file> -l <latex-file>
