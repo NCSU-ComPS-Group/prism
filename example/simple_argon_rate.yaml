@@ -11,6 +11,13 @@ lumped-species:
   - lumped: Ar*
     actual: [Ar(a), Ar(b)]
 
+xsec-based:
+
+  - reaction: Ar + e -> Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid
+
 rate-based:
 
   - reaction: Ar + e -> Ar(a) + e

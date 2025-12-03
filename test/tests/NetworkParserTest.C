@@ -708,3 +708,9 @@ TEST_F(NetworkParserTest, ReactionPrintingMethods)
   out4.close();
   EXPECT_FILES_EQ(file, gold_file);
 }
+
+TEST(NetworkParserest, ElasticXsecReaction)
+{
+  prism::NetworkParser np;
+  EXPECT_NO_THROW(np.parseNetwork("inputs/elastic_xsec.yaml"));
+}
