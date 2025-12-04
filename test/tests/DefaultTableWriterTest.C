@@ -40,3 +40,21 @@ TEST_F(DefaultTableWriterTest, MultipleReactionsSameNote)
   np.writeReactionTable("outputs/notes_test.tex");
   EXPECT_FILES_EQ("gold/notes_test.tex", "outputs/notes_test.tex");
 }
+
+TEST_F(DefaultTableWriterTest, SimpleCrossSectionTableTest)
+{
+  prism::NetworkParser np;
+
+  np.parseNetwork("inputs/elastic_xsec.yaml");
+  np.writeReactionTable("outputs/basic_xsec_table.tex");
+  EXPECT_FILES_EQ("gold/basic_xsec_table.tex", "outputs/basic_xsec_table.tex");
+}
+
+TEST_F(DefaultTableWriterTest, SimpleRateTableTest)
+{
+  prism::NetworkParser np;
+
+  np.parseNetwork("inputs/simple_rate.yaml");
+  np.writeReactionTable("outputs/basic_rate_table.tex");
+  EXPECT_FILES_EQ("gold/basic_rate_table.tex", "outputs/basic_rate_table.tex");
+}
