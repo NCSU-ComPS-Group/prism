@@ -261,7 +261,7 @@ NetworkParser::writeReactionTable(const string & file, TableWriterBase & writer)
 
   if (_xsec_based.size() > 0)
   {
-    writer.beginRateBasedSection();
+    writer.beginXSecBasedSection();
     tableHelper(writer,
                 &TableWriterBase::beginFunctionalTable,
                 &TableWriterBase::endFunctionalTable,
