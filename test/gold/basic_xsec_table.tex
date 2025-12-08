@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[top=1cm]{geometry}
+\tabulinesep = 1.5mm
+
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+]{biblatex}
+
+\addbibresource{argon_works.bib}
+
+
+\begin{document}
+
+\newpage
+\section{Cross Section Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. & Reaction & $A$ & $n_e$ & $E_e$ & $n_g$ & $E_g$ & $\Delta \varepsilon_e$ & $\Delta \varepsilon_g$ & Ref.\\
+      \hline
+      \hline
+      1 & Ar + e $\rightarrow$ Ar + e &  & & EEDF & & & 0.00 & 0.00 & \cite{lymberopoulos1993fluid} \\
+    \end{tabu}
+  }
+\end{table}
+
+\newpage
+\printbibliography
+
+\end{document}

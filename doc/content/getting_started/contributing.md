@@ -6,16 +6,16 @@ For the most part PRISM follows the MOOSE code standards for all development. Fo
 
 # Creating a new environment
 
-If you are interested in contributing you will need to download the [prism-dev](https://anaconda.org/gsgall/prism-dev) conda package to facilitate development. This package installs out dependencies and helps set environment variables needed for compilation. To create a new development environment please use the following commands
+If you are interested in contributing you will need to install the prism-dev conda package to facilitate development. This package installs our dependencies. To create a new development environment please use the following commands
 
 ```bash
-  conda create -n prism-dev
-```
-
-```bash
-  conda activate prism-dev
-  conda config --add channels gsgall
-  conda install prism-dev
+cd ~/projects/prism
+conda install -y conda-build
+mkdir -p build
+conda build conda/prism-dev --output-folder build
+conda create -y -n prism-dev
+conda activate prism-dev
+conda install -y prism-dev -c ./build
 ```
 
 ## Creating and Referencing Issues
@@ -123,12 +123,14 @@ unrelated changes all at once.
 !alert note
 Since we rely on [MooseDocs](https://mooseframework.inl.gov/python/MooseDocs/) for our documentation you will need to run these commands in the moose environment. Instructions on this can be found [here](https://mooseframework.inl.gov/getting_started/installation/conda.html)
 
-   ```
+    ```
+    cd ~/prjects/prism
+    git submodule update --init moose
     cd ~/projects/prism/doc/moose/test
     make hit
     cd ../../
     MOOSE_DIR=./moose ROOT_DIR=./ ./moosedocs.py build --num-threads 4 --serve
-   ```
+    ```
 
 1. Type `git status` to see the status of your branch. That should show you the changed files and
    give you some commands to stage them.

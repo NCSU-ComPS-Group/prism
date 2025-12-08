@@ -103,10 +103,6 @@ NetworkParser::parseReactions(const YAML::Node & network,
       else
         function_rxn_list->push_back(rxn);
 
-      if (rxn->isElastic() && type != RATE_BASED)
-        throw InvalidReaction(rxn_list->back()->expression(),
-                              "Elastic reactions can only be in the '" + RATE_BASED + "' block");
-
       printGreen("Reaction Validated: " + rxn->expression());
       cout << endl;
 
@@ -265,7 +261,7 @@ NetworkParser::writeReactionTable(const string & file, TableWriterBase & writer)
 
   if (_xsec_based.size() > 0)
   {
-    writer.beginRateBasedSection();
+    writer.beginXSecBasedSection();
     tableHelper(writer,
                 &TableWriterBase::beginFunctionalTable,
                 &TableWriterBase::endFunctionalTable,
