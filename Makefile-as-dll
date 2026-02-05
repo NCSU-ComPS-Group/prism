@@ -40,7 +40,7 @@ endif
 # Build the shared library
 $(LIBRARY_NAME): $(OBJECTS)
 	@echo "Building $(LIBRARY_NAME)"
-	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) $(INSTALL_NAME_FLAG)
+	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) $(INSTALL_NAME_FLAG) -Wl,-rpath,$(CONDA_PREFIX)/lib
 	@echo "$(LIBRARY_NAME) built successfully!"
 
 # Build all of the source files for the library
