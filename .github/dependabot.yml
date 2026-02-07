@@ -9,7 +9,7 @@ updates:
         time: "01:00"
     directory: "/"
     commit-message:
-      prefix: "[refs #0] "
+      prefix: "[refs #36] "
     allow:
       - dependency-name: "moose"
   # Maintain dependencies for GitHub Actions once a month
@@ -18,4 +18,4 @@ updates:
       interval: "monthly"
     directory: "/"
     commit-message:
-      prefix: "[refs #0] "
+      prefix: "[refs #36] "
