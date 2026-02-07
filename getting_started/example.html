@@ -1,0 +1,1215 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Example Usage | PRISM</title><link href="../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../css/ncsu.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">PRISM</a><a href="https://github.com/NCSU-ComPS-Group/prism" class="right"><img src="../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="f0e4721f-d0d5-4ff1-8b18-2740b748617f" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="contributing.html">Contributing</a></li></ul><a href="#" class="sidenav-trigger" data-target="259ca25c-c5e4-4b86-9273-6f3f1b88997c"><i class="material-icons">menu</i></a><ul class="sidenav" id="259ca25c-c5e4-4b86-9273-6f3f1b88997c"><li><a href="../doxygen/html/annotated.html">Doxygen</a></li><li><a href="#!" class="dropdown-trigger" data-target="191ef0b3-7598-40a3-9120-286299305c23" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="contributing.html">Contributing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="f0e4721f-d0d5-4ff1-8b18-2740b748617f"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="example.html">Example</a></li></ul><ul class="dropdown-content" id="191ef0b3-7598-40a3-9120-286299305c23"><li><a href="installation.html">Installation</a></li><li><a href="input_syntax.html">Input Syntax</a></li><li><a href="example.html">Example</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><span class="breadcrumb">getting_started</span><a href="#" class="breadcrumb">example</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="6bc03edc-229e-4076-b3f7-ebf20aa0ba96" data-section-level="1" data-section-text="Example Usage"><h1 id="example-usage">Example Usage</h1><p>One way you can use this library is for evaluating the derivatives needed for a 0D plasma species model. Below shows how you would access all of the data required for a simple 0D model.</p><pre style="max-height:350px;"><code class="language-cpp">globalModelExample(prism::NetworkParser &amp; np)
+{
+  np.parseNetwork(&quot;example/simple_argon_rate.yaml&quot;);
+  np.writeReactionTable(&quot;example/table.tex&quot;);
+  np.writeSpeciesSummary(&quot;example/summary.yaml&quot;);
+
+  const auto &amp; rate_rxns = np.rateBasedReactions();
+  const auto &amp; transient_species = np.transientSpecies();
+  const auto &amp; species_names = np.speciesNames();
+
+  cout &lt;&lt; endl;
+
+  for (const auto &amp; r : rate_rxns)
+  {
+    cout &lt;&lt; fmt::format(&quot;id: {:d}&quot;, r-&gt;id()) &lt;&lt; &quot; &quot; &lt;&lt; r-&gt;expression() &lt;&lt; endl;
+  }
+
+  cout &lt;&lt; endl;
+
+  for (const auto &amp; s : transient_species)
+  {
+    cout &lt;&lt; &quot;Species: &quot; &lt;&lt; s-&gt;name() &lt;&lt; &quot; id: &quot; &lt;&lt; s-&gt;id() &lt;&lt; endl;
+    for (const auto &amp; r : s-&gt;unbalancedRateBasedReactionData())
+    {
+
+      cout &lt;&lt; fmt::format(&quot; {:4d} {:&gt;12.4e} &quot;, r.stoic_coeff, rate_rxns[r.id]-&gt;sampleData(10));
+
+      for (const auto &amp; s_data : rate_rxns[r.id]-&gt;reactantData())
+      {
+        cout &lt;&lt; fmt::format(&quot;({:s})^{:d} &quot;, species_names[s_data.id], s_data.occurances);
+      }
+      cout &lt;&lt; endl;
+    }
+    cout &lt;&lt; endl;
+  }
+
+  const YAML::Node network = YAML::LoadFile(&quot;example/summary.yaml&quot;);
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#90639d57-16c1-4c97-bee5-9a37c6c9af9b">(../main.C)</a><p>An important thing to note in this example is that we are iterating over all of the rate based reactions. This file includes rate based reactions which have rates that come from an arrhenius form and ones that come from data read in from a tabulated data file. Sampling this data is handled with different methods based on your input but there is a single API for ease of use. Reactions which have data from an arrhenius form call a function which evaluates this function and for Reactions which have data read from a file we use linear interpolation to sample data from the file.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p>Ensure that the data is in tabulated data file encompasses the entire sample space you will be probing. Extrapolatory sampling is not supported.</p></div></div></div><p>The way this single API is enabled is by assigning the correct sampling function to a function pointer when the Reaction is created and then this function pointer is called on every evaluation, so overhead for the generality of this API should be minimal.</p></section><section id="515fd57e-a763-4f5e-8c27-14a65953611f" data-section-level="1" data-section-text="Example Input File"><h1 id="example-input-file">Example Input File</h1><pre style="max-height:350px;"><code class="language-text">data-path: test/inputs/data/
+bibliography: test/inputs/argon_works.bib
+data-delimiter: &quot;,&quot;
+constant-species: Ar
+
+latex-overrides:
+  - species: [Ar(a), Ar(b), Ar^r]
+    latex: [Ar$\left(\alpha\right)$, Ar$\left(\beta\right)$, Ar$^r$]
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+
+xsec-based:
+
+  - reaction: Ar + e -&gt; Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid
+
+rate-based:
+
+  - reaction: Ar + e -&gt; Ar(a) + e
+    delta-eps-e: 11.56
+    file: ar_excitation.txt
+    references: lymberopoulos1993fluid
+    notes: This is a test
+
+  - reaction: Ar + e -&gt; Ar+ + 2e
+    delta-eps-e: 15.7
+    file: ar_ionization.txt
+    references: lymberopoulos1993fluid
+    notes: [this one, has 2 notes]
+
+  - reaction: Ar(b) + e -&gt; Ar+ + 2e
+    delta-eps-e: 4.14
+    file: ar_excited_ionization.txt
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(a) + e -&gt; Ar + e
+    delta-eps-e: -11.56
+    file: ar_deexcitation.txt
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(b) + e -&gt; Ar^r + e
+    params: 2.0e-7
+    references: lymberopoulos1993fluid
+
+  - reaction: 2Ar(a) -&gt; Ar+ + Ar + e
+    params: 6.2e-10
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(b) + Ar -&gt; 2Ar
+    params: 3.0e-15
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(a) + 2Ar -&gt; Ar2 + Ar
+    params: 1.1e-31
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar + e -&gt; Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#f27f8c3c-169c-4164-859b-bbe080c02621">(../example/simple_argon_rate.yaml)</a></section><section id="51970e66-9498-4532-aba1-d1c1850758c6" data-section-level="1" data-section-text="Example Program Output"><h1 id="example-program-output">Example Program Output</h1><pre style="max-height:350px;"><code class="language-text">Starting to parse &#x27;rate-based&#x27; reaction block
+
+Reaction Validated: Ar + e -&gt; Ar(a) + e
+Reaction Validated: Ar + e -&gt; Ar+ + 2e
+Reaction Validated: Ar(b) + e -&gt; Ar+ + 2e
+Reaction Validated: Ar(a) + e -&gt; Ar + e
+Reaction Validated: Ar(b) + e -&gt; Ar^r + e
+Reaction Validated: 2Ar(a) -&gt; Ar+ + Ar + e
+Reaction Validated: Ar(b) + Ar -&gt; 2Ar
+Reaction Validated: Ar(a) + 2Ar -&gt; Ar2 + Ar
+Reaction Validated: Ar + e -&gt; Ar + e
+
+id: 0 Ar + e -&gt; Ar(a) + e
+id: 1 Ar + e -&gt; Ar+ + 2e
+id: 2 Ar(b) + e -&gt; Ar+ + 2e
+id: 3 Ar(a) + e -&gt; Ar + e
+id: 4 Ar(b) + e -&gt; Ar^r + e
+id: 5 2Ar(a) -&gt; Ar+ + Ar + e
+id: 6 Ar(b) + Ar -&gt; 2Ar
+id: 7 Ar(a) + 2Ar -&gt; Ar2 + Ar
+id: 8 Ar + e -&gt; Ar + e
+
+Species: Ar* id: 0
+    1   9.9736e+08 (Ar)^1 (e)^1
+   -1   7.5471e+10 (Ar*)^1 (e)^1
+   -1   1.1882e+09 (Ar*)^1 (e)^1
+   -1   2.0000e-07 (Ar*)^1 (e)^1
+   -2   6.2000e-10 (Ar*)^2
+   -1   3.0000e-15 (Ar*)^1 (Ar)^1
+   -1   1.1000e-31 (Ar*)^1 (Ar)^2
+
+Species: e id: 1
+    1   1.8670e+09 (Ar)^1 (e)^1
+    1   7.5471e+10 (Ar*)^1 (e)^1
+    1   6.2000e-10 (Ar*)^2
+
+Species: Ar+ id: 2
+    1   1.8670e+09 (Ar)^1 (e)^1
+    1   7.5471e+10 (Ar*)^1 (e)^1
+    1   6.2000e-10 (Ar*)^2
+
+Species: Ar2 id: 3
+    1   1.1000e-31 (Ar*)^1 (Ar)^2
+
+Species: Ar^r id: 4
+    1   2.0000e-07 (Ar*)^1 (e)^1
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+all-sources:
+  - species: [Ar+, Ar2, Ar^r]
+constant-species:
+  - species: [Ar]
+all-sinks:
+  - species: []
+unique-species:
+  - count: 6
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
+reacion-summary:
+  - Ar*:
+      - rate-based: 7
+        sources:
+          - count: 1
+          - Ar + e -&gt; Ar(a) + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 6
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - Ar(a) + e -&gt; Ar + e
+          - Ar(b) + e -&gt; Ar^r + e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+          - Ar(b) + Ar -&gt; 2Ar
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - e:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+        balanced:
+          - count: 4
+          - Ar + e -&gt; Ar(a) + e
+          - Ar(a) + e -&gt; Ar + e
+          - Ar(b) + e -&gt; Ar^r + e
+          - Ar + e -&gt; Ar + e
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar+:
+      - rate-based: 3
+        sources:
+          - count: 3
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar2:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar^r:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(b) + e -&gt; Ar^r + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar(a) + e -&gt; Ar + e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+          - Ar(b) + Ar -&gt; 2Ar
+        balanced:
+          - count: 1
+          - Ar + e -&gt; Ar + e
+        sinks:
+          - count: 3
+          - Ar + e -&gt; Ar(a) + e
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#d2a56214-f12b-42f6-9624-ef0dcf7b600a">(../example/output.txt)</a><p>In the output from the example program you can first see that the reactions are validated by the parser. After this there are 3 main columns under each species section. The first column is the stoichiometric coefficient for the reactions. The second column is the reaction rate sampled at a value of 10. The third column is a list of all of the reactants for each reaction, which is either a source or a sink for the given species where each species name is raised to the power corresponding to the number of times it appears on the left hand side of the reaction.</p></section><section id="36bce41c-e54e-4ab1-80e9-aedb2d4de487" data-section-level="1" data-section-text="Example table var element = document.getElementById("moose-equation-e00ac87b-9789-4606-84c1-36554df5a0df");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});"><h1 id="example-table">Example <span class="moose-katex-inline-equation" id="moose-equation-e00ac87b-9789-4606-84c1-36554df5a0df"><script>var element = document.getElementById("moose-equation-e00ac87b-9789-4606-84c1-36554df5a0df");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});</script></span> table</h1><p>One of the capabilities of this program is that a <span class="moose-katex-inline-equation" id="moose-equation-0131016a-ef36-4c24-a8f7-e8d94eb72c24"><script>var element = document.getElementById("moose-equation-0131016a-ef36-4c24-a8f7-e8d94eb72c24");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});</script></span> for the reaction mechanism is automatically generated. This is generated by calling the <code>writeReactionTable</code> method of the <code>NetworkParser</code>. There is a default implementation for this table generation which is available for customization if needed. In this system we generate a footnote for each unique note in the input file and every reaction that has notes references these footnotes in sorted order. This table will compile in a <span class="moose-katex-inline-equation" id="moose-equation-a83fc3ee-6e78-4949-8cf0-04af6957d1b1"><script>var element = document.getElementById("moose-equation-a83fc3ee-6e78-4949-8cf0-04af6957d1b1");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});</script></span> project so long as your project is configured with the proper bib files and you have provided <span class="moose-katex-inline-equation" id="moose-equation-2d1d6cc5-4878-4685-963b-389cb79a929d"><script>var element = document.getElementById("moose-equation-2d1d6cc5-4878-4685-963b-389cb79a929d");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});</script></span> overrides for all species whose names cannot be directly used in a <span class="moose-katex-inline-equation" id="moose-equation-dfc04fff-3ecf-4ffe-aeda-6182db0abc94"><script>var element = document.getElementById("moose-equation-dfc04fff-3ecf-4ffe-aeda-6182db0abc94");katex.render("\\LaTeX", element, {displayMode:false,throwOnError:false});</script></span> table. To view the compiled version of this table please click <a href="https://www.overleaf.com/read/wdrqbpchzpny#0abfa5">here to open the table in Overleaf</a></p><pre style="max-height:350px;"><code class="language-text">\documentclass{article}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[top=1cm]{geometry}
+\tabulinesep = 1.5mm
+
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+]{biblatex}
+
+\addbibresource{argon_works.bib}
+
+\begin{document}
+
+\newpage
+\section{Rate Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      1 &amp; Ar$\left(\beta\right)$ + e $\rightarrow$ Ar$^r$ + e &amp; 2.00$\times 10^{-7}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      2 &amp; 2Ar$\left(\alpha\right)$ $\rightarrow$ Ar$^{+}$ + Ar + e &amp; 6.20$\times 10^{-10}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+      3 &amp; Ar$\left(\beta\right)$ + Ar $\rightarrow$ 2Ar &amp; 3.00$\times 10^{-15}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      4 &amp; Ar$\left(\alpha\right)$ + 2Ar $\rightarrow$ Ar$_{2}$ + Ar &amp; 1.10$\times 10^{-31}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+    \end{tabu}
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      5 &amp; Ar + e $\rightarrow$ Ar$\left(\alpha\right)$ + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 1.16$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]$^{,}$\footnotemark[3]\\
+      6 &amp; Ar + e $\rightarrow$ Ar$^{+}$ + 2e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 1.57$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[4]$^{,}$\footnotemark[5]\\
+      7 &amp; Ar$\left(\beta\right)$ + e $\rightarrow$ Ar$^{+}$ + 2e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 4.14 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      8 &amp; Ar$\left(\alpha\right)$ + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; -1.16$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+      9 &amp; Ar + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \\
+    \end{tabu}
+  }
+\end{table}
+
+\newpage
+\section{Cross Section Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      10 &amp; Ar + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \\
+    \end{tabu}
+  }
+\end{table}
+
+\footnotemark[1]{Species \lq Ar$\left(\beta\right)$\rq{}  has been lumped into \lq Ar*\rq}\\
+\footnotemark[2]{Species \lq Ar$\left(\alpha\right)$\rq{}  has been lumped into \lq Ar*\rq}\\
+\footnotemark[3]{This is a test}\\
+\footnotemark[4]{this one}\\
+\footnotemark[5]{has 2 notes}\\
+\newpage
+\printbibliography
+
+\end{document}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#716380d4-75fb-4f41-9069-ec803ff762bc">(../example/table.tex)</a></section><section id="9214211c-73b8-416b-96de-4ce78f6edf8f" data-section-level="1" data-section-text="Example Species Summary"><h1 id="example-species-summary">Example Species Summary</h1><p>Another capability of this system is that we provide a species summary with some important information about the reactions that species are involved in. At the beginning of this file we list all the species that have been lumped and the state that they have been lumped into. Then a small summary of the species which: only have sources, sinks, or which are only involved in reactions which lead to no change in their population. After this a summary of the species and all the reactions which is listed. Finally, the summary that has been written to file is again read in. This demontrates that your are able load output from this summary for further analysis using any standard yaml reader tool.</p><pre style="max-height:350px;"><code class="language-text"># 2 species lumped into 1
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+
+# species which are never consumed
+all-sources:
+  - species: [Ar+, Ar2, Ar^r]
+# species which are only in balanced reactions
+# or which have been explicitly marked as constant in the input file
+constant-species:
+  - species: [Ar]
+# species which are only consumed
+all-sinks:
+  - species: []
+
+unique-species:
+  - count: 6
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
+
+reaction-summary:
+  - Ar*:
+    - rate-based: 7
+      sources:
+        - count: 1
+        - Ar + e -&gt; Ar(a) + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 6
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - Ar(a) + e -&gt; Ar + e
+        - Ar(b) + e -&gt; Ar^r + e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+        - Ar(b) + Ar -&gt; 2Ar
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - e:
+    - rate-based: 7
+      sources:
+        - count: 3
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+
+      balanced:
+        - count: 4
+        - Ar + e -&gt; Ar(a) + e
+        - Ar(a) + e -&gt; Ar + e
+        - Ar(b) + e -&gt; Ar^r + e
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 1
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+
+  - Ar+:
+    - rate-based: 3
+      sources:
+        - count: 3
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar2:
+    - rate-based: 1
+      sources:
+        - count: 1
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar^r:
+    - rate-based: 1
+      sources:
+        - count: 1
+        - Ar(b) + e -&gt; Ar^r + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+# This species was requested to be constant in the mechanism
+# As a result it is not included in the transient species list
+  - Ar:
+    - rate-based: 7
+      sources:
+        - count: 3
+        - Ar(a) + e -&gt; Ar + e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+        - Ar(b) + Ar -&gt; 2Ar
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 3
+        - Ar + e -&gt; Ar(a) + e
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+    - xsec-based: 1
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#d950ae10-3758-489f-be1d-45abef781eea">(../example/summary.yaml)</a></section><div class="moose-modal modal" id="90639d57-16c1-4c97-bee5-9a37c6c9af9b"><div class="modal-content"><h4>(../main.C)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is a part of PRISM: Plasma Reaction Input SysteM,
+// A library for parcing chemical reaction networks for plasma chemistry
+// https://github.com/NCSU-ComPS-Group/prism
+//
+// Licensed under MIT, please see LICENSE for details
+// https://opensource.org/license/mit
+//
+// Copyright 2024, North Carolina State University
+// ALL RIGHTS RESERVED
+//
+#include &lt;cstdlib&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;prism/prism.h&quot;
+#include &quot;fmt/core.h&quot;
+
+const std::string SUMMARY_FLAG = &quot;-s&quot;;
+const std::string LATEX_FLAG = &quot;-l&quot;;
+using namespace std;
+
+void
+useageInformation()
+{
+  std::cout &lt;&lt; &quot;\nUsage:\n\n&quot;
+            &lt;&lt; &quot;./main.C\n\n&quot;
+            &lt;&lt; &quot;  When no arguments are provided the example file &quot;
+            &lt;&lt; std::quoted(&quot;example/simple_argon_rate.yaml&quot;) &lt;&lt; &quot; will run.\n&quot;
+            &lt;&lt; &quot;  Additionally two files will be created &quot; &lt;&lt; std::quoted(&quot;example/table.tex&quot;)
+            &lt;&lt; &quot; and &quot; &lt;&lt; std::quoted(&quot;example/summary.yaml&quot;) &lt;&lt; &quot;.\n\n&quot;
+            &lt;&lt; &quot;./main.C &lt;input-file&gt; &quot; &lt;&lt; SUMMARY_FLAG &lt;&lt; &quot; &lt;summary-file&gt; &quot; &lt;&lt; LATEX_FLAG
+            &lt;&lt; &quot; &lt;latex-file&gt;\n\n&quot;
+            &lt;&lt; &quot;  &lt;input-file&gt;: REQUIRED\n&quot;
+            &lt;&lt; &quot;    The path to the yaml file containing the reaction network you &quot;
+               &quot;want to parse.\n&quot;
+            &lt;&lt; &quot;  &quot; &lt;&lt; SUMMARY_FLAG &lt;&lt; &quot; &lt;summary-file&gt;: OPTIONAL\n&quot;
+            &lt;&lt; &quot;    If this parameter is provided a species summary file will be written to &quot;
+               &quot;&lt;summary-file&gt;.\n&quot;
+            &lt;&lt; &quot;  &quot; &lt;&lt; LATEX_FLAG &lt;&lt; &quot; &lt;latex-file&gt;: OPTIONAL\n&quot;
+            &lt;&lt; &quot;    If ths parameter is provided a latex file containing the reaction network &quot;
+               &quot;will be written to &lt;latex-file&gt;.\n&quot;
+            &lt;&lt; std::endl;
+}
+
+void
+checkFlag(int flag_idx, char * argv[], prism::NetworkParser &amp; np)
+{
+  if (std::string(argv[flag_idx]) == LATEX_FLAG)
+  {
+    np.writeReactionTable(std::string(argv[flag_idx + 1]));
+    return;
+  }
+
+  if (std::string(argv[flag_idx]) == SUMMARY_FLAG)
+  {
+    np.writeSpeciesSummary(std::string(argv[flag_idx + 1]));
+    return;
+  }
+
+  std::cerr &lt;&lt; &quot;\nInvalid Usage&quot; &lt;&lt; std::endl;
+  useageInformation();
+  exit(EXIT_FAILURE);
+}
+
+void
+globalModelExample(prism::NetworkParser &amp; np)
+{
+  np.parseNetwork(&quot;example/simple_argon_rate.yaml&quot;);
+  np.writeReactionTable(&quot;example/table.tex&quot;);
+  np.writeSpeciesSummary(&quot;example/summary.yaml&quot;);
+
+  const auto &amp; rate_rxns = np.rateBasedReactions();
+  const auto &amp; transient_species = np.transientSpecies();
+  const auto &amp; species_names = np.speciesNames();
+
+  cout &lt;&lt; endl;
+
+  for (const auto &amp; r : rate_rxns)
+  {
+    cout &lt;&lt; fmt::format(&quot;id: {:d}&quot;, r-&gt;id()) &lt;&lt; &quot; &quot; &lt;&lt; r-&gt;expression() &lt;&lt; endl;
+  }
+
+  cout &lt;&lt; endl;
+
+  for (const auto &amp; s : transient_species)
+  {
+    cout &lt;&lt; &quot;Species: &quot; &lt;&lt; s-&gt;name() &lt;&lt; &quot; id: &quot; &lt;&lt; s-&gt;id() &lt;&lt; endl;
+    for (const auto &amp; r : s-&gt;unbalancedRateBasedReactionData())
+    {
+
+      cout &lt;&lt; fmt::format(&quot; {:4d} {:&gt;12.4e} &quot;, r.stoic_coeff, rate_rxns[r.id]-&gt;sampleData(10));
+
+      for (const auto &amp; s_data : rate_rxns[r.id]-&gt;reactantData())
+      {
+        cout &lt;&lt; fmt::format(&quot;({:s})^{:d} &quot;, species_names[s_data.id], s_data.occurances);
+      }
+      cout &lt;&lt; endl;
+    }
+    cout &lt;&lt; endl;
+  }
+
+  const YAML::Node network = YAML::LoadFile(&quot;example/summary.yaml&quot;);
+}
+
+int
+main(int argc, char * argv[])
+{
+  prism::NetworkParser np;
+
+  if (argc &gt; 6)
+  {
+    std::cerr &lt;&lt; &quot;\nYou may provide at most 5 arguments&quot; &lt;&lt; std::endl;
+    useageInformation();
+    return EXIT_FAILURE;
+  }
+
+  if (argc == 2 &amp;&amp; (std::string(argv[1]) == &quot;-h&quot; || std::string(argv[1]) == &quot;--help&quot;))
+  {
+    useageInformation();
+    return EXIT_SUCCESS;
+  }
+
+  if (argc == 1)
+  {
+    globalModelExample(np);
+  }
+  else
+  {
+    if (argc % 2 != 0)
+    {
+      std::cerr &lt;&lt; &quot;\nInvalid Usage\n&quot; &lt;&lt; std::endl;
+      useageInformation();
+      return EXIT_FAILURE;
+    }
+
+    np.parseNetwork(argv[1]);
+
+    if (argc == 4)
+      checkFlag(2, argv, np);
+    else if (argc == 6)
+    {
+      checkFlag(2, argv, np);
+      checkFlag(4, argv, np);
+    }
+  }
+  return EXIT_SUCCESS;
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="f27f8c3c-169c-4164-859b-bbe080c02621"><div class="modal-content"><h4>(../example/simple_argon_rate.yaml)</h4><pre style="max-height:350px;"><code class="language-text">data-path: test/inputs/data/
+bibliography: test/inputs/argon_works.bib
+data-delimiter: &quot;,&quot;
+constant-species: Ar
+
+latex-overrides:
+  - species: [Ar(a), Ar(b), Ar^r]
+    latex: [Ar$\left(\alpha\right)$, Ar$\left(\beta\right)$, Ar$^r$]
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+
+xsec-based:
+
+  - reaction: Ar + e -&gt; Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid
+
+rate-based:
+
+  - reaction: Ar + e -&gt; Ar(a) + e
+    delta-eps-e: 11.56
+    file: ar_excitation.txt
+    references: lymberopoulos1993fluid
+    notes: This is a test
+
+  - reaction: Ar + e -&gt; Ar+ + 2e
+    delta-eps-e: 15.7
+    file: ar_ionization.txt
+    references: lymberopoulos1993fluid
+    notes: [this one, has 2 notes]
+
+  - reaction: Ar(b) + e -&gt; Ar+ + 2e
+    delta-eps-e: 4.14
+    file: ar_excited_ionization.txt
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(a) + e -&gt; Ar + e
+    delta-eps-e: -11.56
+    file: ar_deexcitation.txt
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(b) + e -&gt; Ar^r + e
+    params: 2.0e-7
+    references: lymberopoulos1993fluid
+
+  - reaction: 2Ar(a) -&gt; Ar+ + Ar + e
+    params: 6.2e-10
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(b) + Ar -&gt; 2Ar
+    params: 3.0e-15
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar(a) + 2Ar -&gt; Ar2 + Ar
+    params: 1.1e-31
+    references: lymberopoulos1993fluid
+
+  - reaction: Ar + e -&gt; Ar + e
+    elastic: true
+    file: ar_elastic.txt
+    references: lymberopoulos1993fluid
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="d2a56214-f12b-42f6-9624-ef0dcf7b600a"><div class="modal-content"><h4>(../example/output.txt)</h4><pre style="max-height:350px;"><code class="language-text">
+Starting to parse &#x27;rate-based&#x27; reaction block
+
+Reaction Validated: Ar + e -&gt; Ar(a) + e
+Reaction Validated: Ar + e -&gt; Ar+ + 2e
+Reaction Validated: Ar(b) + e -&gt; Ar+ + 2e
+Reaction Validated: Ar(a) + e -&gt; Ar + e
+Reaction Validated: Ar(b) + e -&gt; Ar^r + e
+Reaction Validated: 2Ar(a) -&gt; Ar+ + Ar + e
+Reaction Validated: Ar(b) + Ar -&gt; 2Ar
+Reaction Validated: Ar(a) + 2Ar -&gt; Ar2 + Ar
+Reaction Validated: Ar + e -&gt; Ar + e
+
+id: 0 Ar + e -&gt; Ar(a) + e
+id: 1 Ar + e -&gt; Ar+ + 2e
+id: 2 Ar(b) + e -&gt; Ar+ + 2e
+id: 3 Ar(a) + e -&gt; Ar + e
+id: 4 Ar(b) + e -&gt; Ar^r + e
+id: 5 2Ar(a) -&gt; Ar+ + Ar + e
+id: 6 Ar(b) + Ar -&gt; 2Ar
+id: 7 Ar(a) + 2Ar -&gt; Ar2 + Ar
+id: 8 Ar + e -&gt; Ar + e
+
+Species: Ar* id: 0
+    1   9.9736e+08 (Ar)^1 (e)^1
+   -1   7.5471e+10 (Ar*)^1 (e)^1
+   -1   1.1882e+09 (Ar*)^1 (e)^1
+   -1   2.0000e-07 (Ar*)^1 (e)^1
+   -2   6.2000e-10 (Ar*)^2
+   -1   3.0000e-15 (Ar*)^1 (Ar)^1
+   -1   1.1000e-31 (Ar*)^1 (Ar)^2
+
+Species: e id: 1
+    1   1.8670e+09 (Ar)^1 (e)^1
+    1   7.5471e+10 (Ar*)^1 (e)^1
+    1   6.2000e-10 (Ar*)^2
+
+Species: Ar+ id: 2
+    1   1.8670e+09 (Ar)^1 (e)^1
+    1   7.5471e+10 (Ar*)^1 (e)^1
+    1   6.2000e-10 (Ar*)^2
+
+Species: Ar2 id: 3
+    1   1.1000e-31 (Ar*)^1 (Ar)^2
+
+Species: Ar^r id: 4
+    1   2.0000e-07 (Ar*)^1 (e)^1
+
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+all-sources:
+  - species: [Ar+, Ar2, Ar^r]
+constant-species:
+  - species: [Ar]
+all-sinks:
+  - species: []
+unique-species:
+  - count: 6
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
+reacion-summary:
+  - Ar*:
+      - rate-based: 7
+        sources:
+          - count: 1
+          - Ar + e -&gt; Ar(a) + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 6
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - Ar(a) + e -&gt; Ar + e
+          - Ar(b) + e -&gt; Ar^r + e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+          - Ar(b) + Ar -&gt; 2Ar
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - e:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+        balanced:
+          - count: 4
+          - Ar + e -&gt; Ar(a) + e
+          - Ar(a) + e -&gt; Ar + e
+          - Ar(b) + e -&gt; Ar^r + e
+          - Ar + e -&gt; Ar + e
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar+:
+      - rate-based: 3
+        sources:
+          - count: 3
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(b) + e -&gt; Ar+ + 2e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar2:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar^r:
+      - rate-based: 1
+        sources:
+          - count: 1
+          - Ar(b) + e -&gt; Ar^r + e
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+  - Ar:
+      - rate-based: 7
+        sources:
+          - count: 3
+          - Ar(a) + e -&gt; Ar + e
+          - 2Ar(a) -&gt; Ar+ + Ar + e
+          - Ar(b) + Ar -&gt; 2Ar
+        balanced:
+          - count: 1
+          - Ar + e -&gt; Ar + e
+        sinks:
+          - count: 3
+          - Ar + e -&gt; Ar(a) + e
+          - Ar + e -&gt; Ar+ + 2e
+          - Ar(a) + 2Ar -&gt; Ar2 + Ar
+      - xsec-based: 0
+        sources:
+          - count: 0
+        balanced:
+          - count: 0
+        sinks:
+          - count: 0
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="716380d4-75fb-4f41-9069-ec803ff762bc"><div class="modal-content"><h4>(../example/table.tex)</h4><pre style="max-height:350px;"><code class="language-text">\documentclass{article}
+\usepackage{tabu}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[top=1cm]{geometry}
+\tabulinesep = 1.5mm
+
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+]{biblatex}
+
+\addbibresource{argon_works.bib}
+
+
+\begin{document}
+
+\newpage
+\section{Rate Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      1 &amp; Ar$\left(\beta\right)$ + e $\rightarrow$ Ar$^r$ + e &amp; 2.00$\times 10^{-7}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      2 &amp; 2Ar$\left(\alpha\right)$ $\rightarrow$ Ar$^{+}$ + Ar + e &amp; 6.20$\times 10^{-10}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+      3 &amp; Ar$\left(\beta\right)$ + Ar $\rightarrow$ 2Ar &amp; 3.00$\times 10^{-15}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      4 &amp; Ar$\left(\alpha\right)$ + 2Ar $\rightarrow$ Ar$_{2}$ + Ar &amp; 1.10$\times 10^{-31}$ &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+    \end{tabu}
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      5 &amp; Ar + e $\rightarrow$ Ar$\left(\alpha\right)$ + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 1.16$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]$^{,}$\footnotemark[3]\\
+      6 &amp; Ar + e $\rightarrow$ Ar$^{+}$ + 2e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 1.57$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[4]$^{,}$\footnotemark[5]\\
+      7 &amp; Ar$\left(\beta\right)$ + e $\rightarrow$ Ar$^{+}$ + 2e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 4.14 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[1]\\
+      8 &amp; Ar$\left(\alpha\right)$ + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; -1.16$\times 10^{1}$ &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \footnotemark[2]\\
+      9 &amp; Ar + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \\
+    \end{tabu}
+  }
+\end{table}
+
+\newpage
+\section{Cross Section Reactions}
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{
+    \begin{tabu}{clcccccccc}
+      No. &amp; Reaction &amp; $A$ &amp; $n_e$ &amp; $E_e$ &amp; $n_g$ &amp; $E_g$ &amp; $\Delta \varepsilon_e$ &amp; $\Delta \varepsilon_g$ &amp; Ref.\\
+      \hline
+      \hline
+      10 &amp; Ar + e $\rightarrow$ Ar + e &amp;  &amp; &amp; EEDF &amp; &amp; &amp; 0.00 &amp; 0.00 &amp; \cite{lymberopoulos1993fluid} \\
+    \end{tabu}
+  }
+\end{table}
+
+\footnotemark[1]{Species \lq Ar$\left(\beta\right)$\rq{}  has been lumped into \lq Ar*\rq}\\
+\footnotemark[2]{Species \lq Ar$\left(\alpha\right)$\rq{}  has been lumped into \lq Ar*\rq}\\
+\footnotemark[3]{This is a test}\\
+\footnotemark[4]{this one}\\
+\footnotemark[5]{has 2 notes}\\
+\newpage
+\printbibliography
+
+\end{document}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="d950ae10-3758-489f-be1d-45abef781eea"><div class="modal-content"><h4>(../example/summary.yaml)</h4><pre style="max-height:350px;"><code class="language-text"># 2 species lumped into 1
+lumped-species:
+  - lumped: Ar*
+    actual: [Ar(a), Ar(b)]
+
+# species which are never consumed
+all-sources:
+  - species: [Ar+, Ar2, Ar^r]
+# species which are only in balanced reactions
+# or which have been explicitly marked as constant in the input file
+constant-species:
+  - species: [Ar]
+# species which are only consumed
+all-sinks:
+  - species: []
+
+
+unique-species:
+  - count: 6
+  - name: Ar*
+    id: 0
+  - name: e
+    id: 1
+  - name: Ar+
+    id: 2
+  - name: Ar2
+    id: 3
+  - name: Ar^r
+    id: 4
+  - name: Ar
+    id: 5
+
+
+reaction-summary:
+  - Ar*:
+    - rate-based: 7
+      sources:
+        - count: 1
+        - Ar + e -&gt; Ar(a) + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 6
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - Ar(a) + e -&gt; Ar + e
+        - Ar(b) + e -&gt; Ar^r + e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+        - Ar(b) + Ar -&gt; 2Ar
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - e:
+    - rate-based: 7
+      sources:
+        - count: 3
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+
+      balanced:
+        - count: 4
+        - Ar + e -&gt; Ar(a) + e
+        - Ar(a) + e -&gt; Ar + e
+        - Ar(b) + e -&gt; Ar^r + e
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 1
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+
+  - Ar+:
+    - rate-based: 3
+      sources:
+        - count: 3
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(b) + e -&gt; Ar+ + 2e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar2:
+    - rate-based: 1
+      sources:
+        - count: 1
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+  - Ar^r:
+    - rate-based: 1
+      sources:
+        - count: 1
+        - Ar(b) + e -&gt; Ar^r + e
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+    - xsec-based: 0
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 0
+
+      sinks:
+        - count: 0
+
+# This species was requested to be constant in the mechanism
+# As a result it is not included in the transient species list
+  - Ar:
+    - rate-based: 7
+      sources:
+        - count: 3
+        - Ar(a) + e -&gt; Ar + e
+        - 2Ar(a) -&gt; Ar+ + Ar + e
+        - Ar(b) + Ar -&gt; 2Ar
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 3
+        - Ar + e -&gt; Ar(a) + e
+        - Ar + e -&gt; Ar+ + 2e
+        - Ar(a) + 2Ar -&gt; Ar2 + Ar
+
+    - xsec-based: 1
+      sources:
+        - count: 0
+
+      balanced:
+        - count: 1
+        - Ar + e -&gt; Ar + e
+
+      sinks:
+        - count: 0
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../js/init.js"></script><script type="text/javascript" src="../js/navigation.js"></script><script type="text/javascript" src="../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../js/search_index.js"></script><script type="text/javascript" src="../js/sqa_moose.js"></script>
