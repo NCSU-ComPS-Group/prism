@@ -20,7 +20,7 @@ jobs:
       with:
         submodules: true
     - name: Set up Mambaforge3 and MOOSE environment
-      uses: conda-incubator/setup-miniconda@v3
+      uses: conda-incubator/setup-miniconda@v4
       with:
         miniforge-version: latest
         activate-environment: moose
