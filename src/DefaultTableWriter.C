@@ -12,7 +12,7 @@
 #include "DefaultTableWriter.h"
 #include "StringHelper.h"
 #include "Reaction.h"
-#include "fmt/core.h"
+#include "fmt/format.h"
 #include <algorithm>
 #include <limits>
 

@@ -9,7 +9,7 @@
 //* ALL RIGHTS RESERVED
 //*
 #include <vector>
-#include "fmt/core.h"
+#include "fmt/format.h"
 #include <sys/stat.h>
 #include <fstream>
 #include <iostream>

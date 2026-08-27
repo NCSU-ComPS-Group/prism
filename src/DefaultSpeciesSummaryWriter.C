@@ -10,7 +10,7 @@
 //*
 #include "DefaultSpeciesSummaryWriter.h"
 #include "PrismConstants.h"
-#include "fmt/core.h"
+#include "fmt/format.h"
 #include "NetworkParser.h"
 #include "Species.h"
 #include "Reaction.h"

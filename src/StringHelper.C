@@ -14,7 +14,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include "fmt/core.h"
+#include "fmt/format.h"
 #include "InvalidInput.h"
 
 using namespace std;

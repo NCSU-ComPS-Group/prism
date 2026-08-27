@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <iostream>
-#include "fmt/core.h"
+#include "fmt/format.h"
 
 #include "NetworkParser.h"
 #include "InvalidInput.h"

@@ -11,7 +11,7 @@
 #include "SubSpecies.h"
 
 #include <limits>
-#include "fmt/core.h"
+#include "fmt/format.h"
 #include "StringHelper.h"
 #include "SpeciesFactory.h"
 #include "InvalidInput.h"
@@ -225,7 +225,8 @@ SubSpecies::setMass()
     return;
   }
 
-  double ionization_mass = static_cast<double>(_charge_num) * SpeciesFactory::instance().getMass("e");
+  double ionization_mass =
+      static_cast<double>(_charge_num) * SpeciesFactory::instance().getMass("e");
   _molar_mass = base_mass - ionization_mass;
   _mass = 1e-3 * _molar_mass / N_A;
 }

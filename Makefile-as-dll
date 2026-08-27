@@ -1,10 +1,45 @@
-TESTING_FLAG = -DTESTING
-WARNING_FLAGS = -Wall -Wextra -Wpedantic -Werror
-CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O2
+########################################
+# Detect operating system
+########################################
+UNAME_S := $(shell uname -s 2>/dev/null)
+
+ifeq ($(OS),Windows_NT)
+    OS_TYPE := Windows
+else ifeq ($(UNAME_S),Linux)
+    OS_TYPE := Linux
+else ifeq ($(UNAME_S),Darwin)
+    OS_TYPE := Mac
+else
+    $(error Unsupported operating system)
+endif
+
+########################################
+# Compiler settings
+########################################
+ifeq ($(OS_TYPE),Windows)
+	CXX = cl
+	# TESTING_FLAG = -DTESTING
+	WARNING_FLAGS = # /W4
+	CXXFLAGS = /TP /std:c++17 $(WARNING_FLAGS) /O2 /utf-8 /MD
+else
+	CXX = g++
+	TESTING_FLAG = -DTESTING
+	WARNING_FLAGS = -Wall -Wextra -Wpedantic # -Werror -Wno-error=attributes
+	CXXFLAGS = -std=c++17 $(WARNING_FLAGS) -O2
+endif
+
+$(info CONDA_PREFIX=$(CONDA_PREFIX))
+$(info CXX=$(CXX))
 
 PROJECT = prism
 
-LIBRARY_NAME = lib$(PROJECT).so
+ifeq ($(OS_TYPE),Windows)
+    LIBRARY_NAME = prism.lib # prism.dll
+else ifeq ($(OS_TYPE),Mac)
+    LIBRARY_NAME = libprism.dylib
+else
+    LIBRARY_NAME = libprism.so
+endif
 
 # Directories
 SRCDIR = src
@@ -14,62 +49,150 @@ BUILDDIR = build
 # Source and header files
 SOURCES = $(wildcard $(SRCDIR)/*.C)
 HEADERS = $(wildcard $(INCDIR)/*.h)
-OBJECTS = $(patsubst $(SRCDIR)/%.C,$(BUILDDIR)/%.o,$(SOURCES))
+ifeq ($(OS_TYPE),Windows)
+    OBJECTS = $(patsubst $(SRCDIR)/%.C,$(BUILDDIR)/%.obj,$(SOURCES))
+else
+    OBJECTS = $(patsubst $(SRCDIR)/%.C,$(BUILDDIR)/%.o,$(SOURCES))
+endif
 
 # Include and library paths
-INCLUDE_PATH = -I$(CONDA_PREFIX)/include
-LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
 
-YAML_LINK = -lyaml-cpp
-FMT_LINK = -lfmt
+ifeq ($(OS_TYPE),Windows)
+
+    INCLUDE_PATH = /I$(CONDA_PREFIX)/Library/include
+    LIBRARY_PATH = /LIBPATH:$(CONDA_PREFIX)/Library/lib
+
+    INSTALL_INCLUDE = $(CONDA_PREFIX)/Library/include
+    INSTALL_LIB = $(CONDA_PREFIX)/Library/lib
+
+    PIC_FLAG =
+    INSTALL_NAME_FLAG =
+
+else ifeq ($(OS_TYPE),Mac)
+
+    INCLUDE_PATH = -I$(CONDA_PREFIX)/include
+    LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
+
+    INSTALL_INCLUDE = $(CONDA_PREFIX)/include
+    INSTALL_LIB = $(CONDA_PREFIX)/lib
+
+    PIC_FLAG = -fPIC
+    INSTALL_NAME_FLAG = -Wl,-install_name,@rpath/$(LIBRARY_NAME)
+
+else
+
+    INCLUDE_PATH = -I$(CONDA_PREFIX)/include
+    LIBRARY_PATH = -L$(CONDA_PREFIX)/lib
+
+    INSTALL_INCLUDE = $(CONDA_PREFIX)/include
+    INSTALL_LIB = $(CONDA_PREFIX)/lib
+
+    PIC_FLAG = -fPIC
+    INSTALL_NAME_FLAG = -Wl,-soname,$(LIBRARY_NAME)
+
+endif
+
+ifeq ($(OS_TYPE),Windows)
+    YAML_LINK = "$(CONDA_PREFIX)/Library/lib/yaml-cpp.lib"
+else
+    YAML_LINK = -lyaml-cpp
+endif
+
+ifeq ($(OS_TYPE),Windows)
+    FMT_LINK = "$(CONDA_PREFIX)/Library/lib/fmt.lib"
+else
+    FMT_LINK = -lfmt
+endif
 
 LINKS = $(YAML_LINK) $(FMT_LINK)
 
-# Getting the os type
-UNAME_S := $(shell uname -s)
-
-# Set linker flags based on OS
-ifeq ($(UNAME_S),Darwin)
-    # macOS
-    INSTALL_NAME_FLAG = -Wl,-install_name,@rpath/$(LIBRARY_NAME)
-else
-    # Linux and other Unix-like systems
-    INSTALL_NAME_FLAG = -Wl,-soname,$(LIBRARY_NAME)
-endif
-
 # Build the shared library
+
+# for dll, use: link /DLL $(OBJECTS) $(LIBRARY_PATH) /IMPLIB:lib$(PROJECT).lib /OUT:$@ $(LINKS) 
+
+$(info OS_TYPE=$(OS_TYPE))
+$(info LIBRARY_NAME=$(LIBRARY_NAME))
 $(LIBRARY_NAME): $(OBJECTS)
 	@echo "Building $(LIBRARY_NAME)"
-	@$(CXX) $(CXXFLAGS) -B$(CONDA_PREFIX)/bin $(INCLUDE_PATH) $(LIBRARY_PATH) -I$(INCDIR) -shared -o $@ $(OBJECTS) $(LINKS) $(INSTALL_NAME_FLAG)
+ifeq ($(OS_TYPE),Windows)
+	lib /OUT:$@ $(OBJECTS)
+else
+	$(CXX) $(CXXFLAGS) \
+	    $(INCLUDE_PATH) \
+	    $(LIBRARY_PATH) \
+	    -I$(INCDIR) \
+	    -shared \
+	    $(INSTALL_NAME_FLAG) \
+	    -o $@ \
+	    $(OBJECTS) \
+	    $(LINKS)
+endif
 	@echo "$(LIBRARY_NAME) built successfully!"
 
 # Build all of the source files for the library
 # -fPIC flag is required for linux shared_object build
-$(BUILDDIR)/%.o: $(SRCDIR)/%.C
-	@mkdir -p $(@D)
+ifeq ($(OS_TYPE),Windows)
+    PIC_FLAG =
+    MKDIR_P = if not exist "$(@D)" mkdir "$(@D)"
+else
+    PIC_FLAG = -fPIC
+    MKDIR_P = mkdir -p "$(@D)"
+endif
+
+ifeq ($(OS_TYPE),Windows)
+
+$(BUILDDIR)/%.obj: $(SRCDIR)/%.C
+	@$(MKDIR_P)
 	@echo "Building $<"
-	@$(CXX) $(CXXFLAGS) -fPIC -I$(INCDIR)/$(PROJECT) $(INCLUDE_PATH) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDE_PATH) /I$(INCDIR)/$(PROJECT) /c $< /Fo$@
+else
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.C
+	@$(MKDIR_P)
+	@echo "Building $<"
+	$(CXX) $(CXXFLAGS) $(PIC_FLAG) \
+	    -I$(INCDIR)/$(PROJECT) \
+	    $(INCLUDE_PATH) \
+	    -c $< -o $@
+
+endif
 
 # Rule to create the library and executable
 all: $(LIBRARY_NAME)
 
 # Clean the build artifacts
 clean:
+ifeq ($(OS_TYPE),Windows)
+	@if exist $(LIBRARY_NAME) del /Q $(LIBRARY_NAME)
+	@if exist $(BUILDDIR) rmdir /S /Q $(BUILDDIR)
+else
 	@rm -rf *.dSYM
 	@rm -f $(LIBRARY_NAME)
-	@rm -rf $(BUILDDIR)/*
+	@rm -rf $(BUILDDIR)
+endif
 
 install: all
 	@echo "Creating $(PROJECT) include folder"
-	@mkdir -p $(CONDA_PREFIX)/include/$(PROJECT)
+ifeq ($(OS_TYPE),Windows)
+	@if not exist "$(INSTALL_INCLUDE)\$(PROJECT)" mkdir "$(INSTALL_INCLUDE)\$(PROJECT)"
+		@echo "Moving header files"
+		xcopy "$(INCDIR)\$(PROJECT)" "$(INSTALL_INCLUDE)\$(PROJECT)" /E /I /Y > nul
+		@echo "Header files moved"
+		@echo "Moving $(LIBRARY_NAME)"
+		@copy "$(LIBRARY_NAME)" "$(INSTALL_LIB)" > nul
+else
+	@mkdir -p $(INSTALL_INCLUDE)/$(PROJECT)
 	@echo "$(PROJECT) include folder created"
 	@echo "Moving header files"
-	@cp -r $(INCDIR)/$(PROJECT) $(CONDA_PREFIX)/include
+	@cp -r $(INCDIR)/$(PROJECT) $(INSTALL_INCLUDE)
 	@echo "Header files moved"
 	@echo "Moving $(LIBRARY_NAME)"
-	@mv $(LIBRARY_NAME) $(CONDA_PREFIX)/lib
+	@cp $(LIBRARY_NAME) $(INSTALL_LIB)
+
+endif
+
 	@echo "$(PROJECT) installed successfully"
-	@echo "Path to $(LIBRARY_NAME): $(CONDA_PREFIX)/lib/$(LIBRARY_NAME)"
+	@echo "Path to $(LIBRARY_NAME): $(INSTALL_INCLUDE)/$(LIBRARY_NAME)"
 
 uninstall: clean
 	@rm -rf $(CONDA_PREFIX)/include/$(PROJECT)
